@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <head lang="ko">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>[Sample - TEST]</title>
+
+    <link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css">
+    <style type="text/css">
+      body {
+        font-family: 'Nanum Gothic', dotum, verdana, Arial, applegothic, sans-serif;
+        font-weight: normal;
+        font-style: normal;
+      }
+      a {text-decoration:none;}
+    </style>
+  </head>
+
+  <body>
+    <div class="wrap">
+    </div>
+
+    <script src="js/lib/jquery-1.7.0.min.js"></script>
+    <script src="js/lib/dragmove/commonUtil.js"></script>
+    <script>
+      (function($) {
+        $(document).ready(function() {
+          function Person(name) {
+            this.name = name || 'person';
+          }
+          Person.prototype.getName = function() {
+            return this.name;
+          };
+
+          function Ninja(name) {
+            this.name = name || 'ninja';
+          }
+          dm.commonUtil.inherit(Ninja, Person);
+
+          Ninja.prototype.jump = function() {
+            console.log('ninja can jump!');
+          };
+
+          var ninja = new Ninja();
+          console.log('ninja :', ninja);
+          console.log('ninja.getName() :', ninja.getName());
+          ninja.jump();
+        });
+      })(jQuery);
+    </script>
+  </body>
+  
+</html>

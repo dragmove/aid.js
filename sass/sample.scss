@@ -1,0 +1,13 @@
+@import "compass/css3";
+
+@import "mixin/mixin";
+@import "helpers/variables";
+@import "base/reset";
+
+.test-bg {
+  @include setBg("#{imgUrl}/test/img.png", 10px, 10px);
+}
+
+.test-retinizeBg {
+  @include retinizeBg("#{imgUrl}/test/img", "png", 100px);
+}
