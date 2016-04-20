@@ -423,6 +423,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   };
 
   /**
+   * trim string
+   *
+   * @static
+   * @method trim
+   * @return {String} return trimed string
+   * @example
+   */
+  string.trim = function(str) {
+    return str.replace(/^\s+/, '').replace(/\s+$/, '');
+  };
+
+  /**
    * check email string.
    *
    * @static
