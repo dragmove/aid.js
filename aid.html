@@ -29,6 +29,10 @@
         function init() {
           test_isDefined();
           test_inherit();
+
+          test_isWindow();
+          test_isMac();
+          test_isUbuntu();
         }
 
         function test_isDefined() {
@@ -62,6 +66,18 @@
           console.log('ninja :', ninja);
           console.log('ninja.getName() :', ninja.getName());
           ninja.jump();
+        }
+
+        function test_isWindow() {
+          console.log('aid.platform.isWindow :', aid.platform.isWindow);
+        }
+
+        function test_isMac() {
+          console.log('aid.platform.isMac :', aid.platform.isMac);
+        }
+
+        function test_isUbuntu() {
+          console.log('aid.platform.isUbuntu :', aid.platform.isUbuntu);
         }
       })(jQuery);
     </script>

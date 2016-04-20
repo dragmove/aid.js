@@ -15,6 +15,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 	"use strict";
 
 	var aid = {},
+    platform = {},
 		browser = {},
 		string = {},
 		array = {},
@@ -155,6 +156,45 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       ChildClass.super = ParentClass.prototype;
     };
 	}());
+
+  /**
+   * is window platform
+   *
+   * @static
+   * @method isWindow
+   * @return {Boolean} return boolean
+   * @example
+   */
+  platform.isWindow = (function() {
+    var flag = /Windows/i.test(ua);
+    return flag;
+  }());
+
+  /**
+   * is Macintosh platform
+   *
+   * @static
+   * @method isMac
+   * @return {Boolean} return boolean
+   * @example
+   */
+  platform.isMac = (function() {
+    var flag = /Macintosh/i.test(ua);
+    return flag;
+  }());
+
+  /**
+   * is Ubuntu platform
+   *
+   * @static
+   * @method isUbuntu
+   * @return {Boolean} return boolean
+   * @example
+   */
+  platform.isUbuntu = (function() {
+    var flag = /Ubuntu/i.test(ua);
+    return flag;
+  }());
 
 	/**
    * is IE browser 
@@ -614,6 +654,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 	};
 	*/
 
+  aid.platform = platform;
 	aid.browser = browser;
 	aid.string = string;
 	aid.array = array;
