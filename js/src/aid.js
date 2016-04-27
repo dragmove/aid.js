@@ -17,6 +17,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 	var aid = {},
 		browser = {},
 		string = {},
+    date = {},
 		array = {},
 		element = {};
 
@@ -508,6 +509,56 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   };
 
   /**
+   * days name
+   *
+   * @static
+   * @property date.DAYS
+   * @return {Array} return Array
+   * @example
+   */
+  date.DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  /**
+   * months name
+   *
+   * @static
+   * @property date.MONTHS
+   * @return {Array} return Array
+   * @example
+   */
+  date.MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+  /**
+   * 1 minutes to second unit (60 sec)
+   *
+   * @static
+   * @property date.MIN_TO_SEC
+   * @return {Number} return Int
+   * @example
+   */
+  date.MIN_TO_SEC = 60;
+
+  /**
+   * 1 hour to second unit (60 * 60 = 3600 sec)
+   *
+   * @static
+   * @property date.HOUR_TO_SEC
+   * @return {Number} return Int
+   * @example
+   */
+  date.HOUR_TO_SEC = 3600;
+
+  /**
+   * 1 day to second unit (60 * 60 * 24 = 86400 sec)
+   *
+   * @static
+   * @property date.DAY_TO_SEC
+   * @return {Number} return Int
+   * @example
+   */
+  date.DAY_TO_SEC = 86400;
+
+  /**
    * equal to Array.indexOf
    *
    * @static
@@ -616,6 +667,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 	aid.browser = browser;
 	aid.string = string;
+  aid.date = date;
 	aid.array = array;
 	aid.element = element;
 
