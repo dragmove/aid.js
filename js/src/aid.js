@@ -350,7 +350,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @method isSupportDraggable
-   * @return {Object} return boolean
+   * @return {Boolean} return boolean
    * @example
    */
   browser.isSupportDraggable = function() {
@@ -363,7 +363,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @method isSupportDragAndDrop
-   * @return {Object} return boolean
+   * @return {Boolean} return boolean
    * @example
    */
   browser.isSupportDragAndDrop = function() {
@@ -376,11 +376,76 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @method isSupportFileApi
-   * @return {Object} return boolean
+   * @return {Boolean} return boolean
    * @example
    */
   browser.isSupportFileApi = function() {
     return !!(global.File && global.FileReader && global.FileList && global.Blob);
+  };
+
+  /**
+   * is chrome extension.
+   *
+   * @static
+   * @method isChromeExtension
+   * @return {Boolean} return boolean
+   * @example
+   */
+  browser.isChromeExtension = (function() {
+    if(browser.isChrome && window.chrome) {
+      if(!chrome.cookies) {
+        if(chrome.experimental) chrome.cookies = chrome.experimental.cookies;
+      }
+
+      if(chrome.cookies) return true;
+      return false;
+    }
+    return false;
+  }());
+
+  /**
+   * get cookie
+   *
+   * @static
+   * @method getCookie
+   * @return {String} return string
+   * @example
+   */
+  browser.getCookie = function(key) {
+    var cookieArr = document.cookie.split('; '),
+      splitArr = [],
+      keyStr = '',
+      valueStr = '';
+
+    for(var i=0,max=cookieArr.length; i<max; ++i) {
+      splitArr = cookieArr[i].split('=');
+      keyStr = splitArr[0];
+      valueStr = window.decodeURIComponent( splitArr[1] );
+      if(keyStr === key) return valueStr;
+    }
+
+    return null;
+  };
+
+  /**
+   * set cookie
+   *
+   * @static
+   * @method setCookie
+   * @example
+   */
+  browser.setCookie = function(key, value, expireSecond, path, domain) {
+    var expires = '',
+      pathStr = '; path=' + ( (path) ? path : '/' ),
+      domainStr = (domain) ? '; domain=' + domain : '';
+
+    if(expireSecond) {
+      var date = new Date();
+      date.setTime( date.getTime() + (expireSecond * 1000) );
+      expires = '; expires=' + date.toGMTString();
+    }
+
+    document.cookie = key + '=' + window.encodeURIComponent(value) + pathStr + domainStr + expires;
   };
 
   /**
@@ -573,8 +638,27 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   	return -1;
   };
 
+  /**
+   * get 2 x 2 Matrix Array
+   *
+   * @static
+   * @method getMatrixArr
+   * @return {Array} return array
+   * @example
+   */
+  array.getMatrixArr = function(rowNum, columnNum, initialVal) {
+    var arr = [];
+    for(var i=0; i<rowNum; ++i) {
+      var columns = [];
 
+      for(var j=0; j<columnNum; ++j) {
+        columns[j] = initialVal;
+      }
+      arr[i] = columns;
+    }
 
+    return arr;
+  };
 
 
 
