@@ -700,9 +700,39 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 		this._top = 0;
 	};
 
-	aid.getStack = function() {
+	aid.createStack = function() {
 		return new Stack();
 	};
+
+  // Queue
+  var Queue = function() {
+    this._dataStore = [];
+  };
+
+  Queue.prototype.enqueue = function(element) {
+    this._dataStore.push(element);
+  };
+
+  Queue.prototype.dequeue = function() {
+    return this._dataStore.shift();
+  };
+
+  Queue.prototype.front = function() {
+    return this._dataStore[0];
+  };
+
+  Queue.prototype.rear = function() {
+    return this._dataStore[ this._dataStore.length - 1 ];
+  };
+
+  Queue.prototype.length = function() {
+    return this._dataStore.length;
+  };
+
+  Queue.prototype.isEmpty = function() {
+    if( this._dataStore.length <= 0 ) return true;
+    return false;
+  };
 
 	/**
 	 * element text ellipsis function
