@@ -1,20 +1,22 @@
-# aid.js
+# aid.js ( This Lib is not released. )
 
-Sorry! I'm tuning this Library! This Lib is not ready!  
+Sorry! I'm tuning this Library! This Lib is not ready!
+
 Please, wait launching of aid.js. :)
 
 ## About
 
-aid.js is a bundle of Javascript util Library for help developers.  
-aid.js has no dependency to other Libraries.  
+* A bundle of Javascript util Library for help developers.
+* No dependency to other Libraries.
+
 Thanks to whoever use aid.js.  
 
 
 ## Contact
 
-@Private Website : http://www.dragmove.com
-@Blog : http://blog.naver.com/dragmove
-@E-mail : dragmove@naver.com
+* @Private Website : http://www.dragmove.com
+* @Blog : http://blog.naver.com/dragmove
+* @E-mail : dragmove@naver.com
 
 
 ## MIT License
