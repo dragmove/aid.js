@@ -1,9 +1,7 @@
 # aid.js
 
 Sorry! I'm tuning this Library!
-
 This Lib is not ready!
-
 Please, wait launching of aid.js. :)
 
 ## About
