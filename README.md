@@ -1,4 +1,4 @@
-# aid.js ( This Lib is not released. )
+# aid.js
 
 Sorry! I'm tuning this Library! This Lib is not ready!
 
@@ -14,7 +14,7 @@ Thanks to whoever use aid.js.
 
 ## Contact
 
-* @Private Website : http://www.dragmove.com
+* @Website : http://www.dragmove.com
 * @Blog : http://blog.naver.com/dragmove
 * @E-mail : dragmove@naver.com
 
