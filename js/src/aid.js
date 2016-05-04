@@ -63,7 +63,7 @@
    */
   aid.isBoolean = function (obj) {
     if (!aid.isDefined(obj)) return false;
-    return (object.constructor === Boolean);
+    return (obj.constructor === Boolean);
   };
 
   /**
@@ -77,7 +77,7 @@
    */
   aid.isNumber = function (obj) {
     if (!aid.isDefined(obj)) return false;
-    return (object.constructor === Number);
+    return (obj.constructor === Number);
   };
 
   /**
@@ -91,7 +91,7 @@
    */
   aid.isString = function (obj) {
     if (!aid.isDefined(obj)) return false;
-    return (object.constructor === String);
+    return (obj.constructor === String);
   };
 
   /**
@@ -105,7 +105,7 @@
    */
   aid.isArray = function (obj) {
     if (!aid.isDefined(obj)) return false;
-    return (object.constructor === Array);
+    return (obj.constructor === Array);
   };
 
   /**
@@ -119,7 +119,7 @@
    */
   aid.isObject = function (obj) {
     if (!aid.isDefined(obj)) return false;
-    return (object.constructor === Object);
+    return (obj.constructor === Object);
   };
 
   /**
@@ -133,7 +133,7 @@
    */
   aid.isFunction = function (obj) {
     if (!aid.isDefined(obj)) return false;
-    return (object.constructor === Function);
+    return (obj.constructor === Function);
   };
 
   /**
@@ -426,11 +426,11 @@
    */
   browser.isChromeExtension = (function () {
     if (browser.isChrome && window.chrome) {
-      if (!chrome.cookies) {
-        if (chrome.experimental) chrome.cookies = chrome.experimental.cookies;
+      if (!window.chrome.cookies) {
+        if (window.chrome.experimental) window.chrome.cookies = window.chrome.experimental.cookies;
       }
 
-      if (chrome.cookies) return true;
+      if (window.chrome.cookies) return true;
       return false;
     }
     return false;
