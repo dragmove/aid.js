@@ -1,16 +1,13 @@
 # aid.js
 
-Sorry! I'm tuning this Library!
-This Lib is not ready!
+Sorry! I'm tuning this Library! This Lib is not ready!  
 Please, wait launching of aid.js. :)
 
 ## About
 
-aid.js is a bundle of Javascript util Library for help developers.
-
-aid.js has no dependency to other Libraries.
-
-Thanks to whoever use aid.js.
+aid.js is a bundle of Javascript util Library for help developers.  
+aid.js has no dependency to other Libraries.  
+Thanks to whoever use aid.js.  
 
 
 ## Contact
