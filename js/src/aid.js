@@ -489,7 +489,7 @@
    * @returns {String} return trimmed string
    * @example
    */
-  string.trim = function(str) {
+  string.trim = function (str) {
     return str.replace(/^\s+/, '').replace(/\s+$/, '');
   };
 

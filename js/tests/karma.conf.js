@@ -1,7 +1,7 @@
 // Karma configuration
 // Generated on Tue Jul 08 2014 08:51:45 GMT+0900 (대한민국 표준시)
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -15,23 +15,19 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        'lib/jquery-1.7.0.min.js',
-        'src/object.js',
-        'tests/unit/app/**/*.spec.js'
+      'lib/jquery-1.7.0.min.js',
+      'src/aid.js',
+      'tests/unit/app/**/*.spec.js'
     ],
 
 
     // list of files to exclude
-    exclude: [
-    
-    ],
+    exclude: [],
 
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {
-    
-    },
+    preprocessors: {},
 
 
     // test results reporter to use
@@ -62,26 +58,26 @@ module.exports = function(config) {
     browsers: ['PhantomJS' /*, 'IE', 'IE7', 'Chrome', 'Firefox', 'Safari' */],
     plugins: ['karma-jasmine', 'karma-phantomjs-launcher' /*, 'karma-ie-launcher' , /'karma-chrome-launcher', 'karma-firefox-launcher', 'karma-safari-launcher' */],
     customLaunchers: {
-        IE11: {
-            base: 'IE',
-            'x-ua-compatible': 'IE=edge'
-        },
-        IE10: {
-            base: 'IE',
-            'x-ua-compatible': 'IE=EmulateIE10'
-        },
-        IE9: {
-            base: 'IE',
-            'x-ua-compatible': 'IE=EmulateIE9'
-        },
-        IE8: {
-            base: 'IE',
-            'x-ua-compatible': 'IE=EmulateIE8'
-        },
-        IE7: {
-            base: 'IE',
-            'x-ua-compatible': 'IE=EmulateIE7'
-        }
+      IE11: {
+        base: 'IE',
+        'x-ua-compatible': 'IE=edge'
+      },
+      IE10: {
+        base: 'IE',
+        'x-ua-compatible': 'IE=EmulateIE10'
+      },
+      IE9: {
+        base: 'IE',
+        'x-ua-compatible': 'IE=EmulateIE9'
+      },
+      IE8: {
+        base: 'IE',
+        'x-ua-compatible': 'IE=EmulateIE8'
+      },
+      IE7: {
+        base: 'IE',
+        'x-ua-compatible': 'IE=EmulateIE7'
+      }
     },
 
 
