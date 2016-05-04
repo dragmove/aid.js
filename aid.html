@@ -33,6 +33,11 @@
           test_isWindow();
           test_isMac();
           test_isUbuntu();
+
+          test_isEmail();
+          test_getUriParam();
+          test_isValidYoutubeVideoId();
+          test_getObjCheckYoutubeURI();
         }
 
         function test_isDefined() {
@@ -78,6 +83,56 @@
 
         function test_isUbuntu() {
           console.log('aid.platform.isUbuntu :', aid.platform.isUbuntu);
+        }
+
+        function test_isEmail() {
+          console.log('aid.string.isEmail :', aid.string.isEmail('dragmove@naver.com'));
+        }
+
+        function test_getUriParam() {
+          console.log( 'getUriParam :', aid.string.getUriParam('http://www.youtube.com/watch?NR=1&feature=endscreen&v=yVpbFMhOAwE', 'v') );
+        }
+
+        function test_isValidYoutubeVideoId() {
+          console.log('isValidYoutubeVideoId :', aid.string.isValidYoutubeVideoId('FZu097wb8wU'));
+        }
+
+        function test_getObjCheckYoutubeURI() {
+          var getObjCheckYoutubeURI = aid.string.getObjCheckYoutubeURI;
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('youtube.com/watch?v=ZeGm7MDq2fo') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('//youtube.com/watch?v=ZeGm7MDq2fo') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('www.youtube.com/watch?v=ZeGm7MDq2fo') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('//www.youtube.com/watch?v=ZeGm7MDq2fo') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://www.youtube.com/watch?v=ZeGm7MDq2fo') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('https://www.youtube.com/watch?v=ZeGm7MDq2fo') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://www.youtube.com/watch?v=yVpbFMhOAwE') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://www.youtube.com/watch?v=yVpbFMhOAwE&feature=g-vrec') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://www.youtube.com/watch?v=yVpbFMhOAwE&feature=player_embedded') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://www.youtube.com/watch?NR=1&feature=endscreen&v=yVpbFMhOAwE') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('https://www.youtube.com/watch?v=FZu097wb8wU&list=RDFZu097wb8wU') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://www.youtube.com/watch?feature=g-vrec&v=yVpbFMhOAwE') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://www.youtube.com/watch?feature=player_embedded&v=yVpbFMhOAwE') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('https://www.youtube.com/watch?list=RDFZu097wb8wU&v=FZu097wb8wU') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('https://www.youtube.com/watch?v=YgZpL-3IVoI') );
+
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('youtube.com/embed/ZeGm7MDq2fo') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('//youtube.com/embed/ZeGm7MDq2fo') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('www.youtube.com/embed/ZeGm7MDq2fo') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('//www.youtube.com/embed/ZeGm7MDq2fo') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://www.youtube.com/embed/ZeGm7MDq2fo') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('https://www.youtube.com/embed/ZeGm7MDq2fo') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('youtube.com/embed/YgZpL-3IVoI') );
+
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://www.youtube.com/v/yVpbFMhOAwE?fs=1&hl=en_US') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://www.youtube.com/v/YgZpL-3IVoI?fs=1&hl=en_US') );
+
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('youtu.be/ZeGm7MDq2fo') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('//youtu.be/ZeGm7MDq2fo') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('youtu.be/ZeGm7MDq2fo') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('//youtu.be/ZeGm7MDq2fo') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://youtu.be/ZeGm7MDq2fo') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('https://youtu.be/ZeGm7MDq2fo') );
+          console.log( 'getObjCheckYoutubeURI :', getObjCheckYoutubeURI('https://youtu.be/YgZpL-3IVoI') );
         }
       })(jQuery);
     </script>
