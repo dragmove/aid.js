@@ -41,6 +41,8 @@
             test_getUriParam();
             test_isValidYoutubeVideoId();
             test_getObjCheckYoutubeURI();
+
+            test_linkedListNode();
         }
 
         function test_isDefined() {
@@ -137,6 +139,13 @@
             console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://youtu.be/ZeGm7MDq2fo'));
             console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('https://youtu.be/ZeGm7MDq2fo'));
             console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('https://youtu.be/YgZpL-3IVoI'));
+        }
+
+        function test_linkedListNode() {
+            var linkedList = aid.getLinkedList();
+            linkedList.insert('Conway', 'head');
+            linkedList.insert('Russellville', 'Conway');
+            linkedList.insert('Alma', 'Russellville');
         }
     })(jQuery);
 </script>

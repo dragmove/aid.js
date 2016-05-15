@@ -731,6 +731,65 @@
     return new Stack();
   };
 
+  // LinkedList node
+  var LinkedListNode = function(data) {
+    this.data = data;
+    this.next = null;
+  };
+
+  // LinkedList
+  var LinkedList = function() {
+    this.head = new LinkedListNode('head');
+  };
+
+  LinkedList.prototype.find = function(data) {
+    var node = this.head;
+    while(node.data !== data) {
+      node = node.next;
+      if(node === null) return node;
+    }
+    return node;
+  };
+
+  LinkedList.prototype.findPrevious = function(data) {
+    if(this.head.data === data) return null;
+
+    var node = this.head;
+    while( (node.next !== null) && (node.next.data !== data) ) {
+      node = node.next;
+    }
+    return node;
+  };
+
+  LinkedList.prototype.insert = function(data, prevNodeData) {
+    var insertNode = new LinkedListNode(data),
+      prevNode = this.find(prevNodeData);
+    insertNode.next = prevNode.next;
+    prevNode.next = insertNode;
+  };
+
+  LinkedList.prototype.remove = function(data) {
+    var prevNode = this.findPrevious(data);
+    if( prevNode.next !== null ) {
+      prevNode.next = prevNode.next.next;
+    }
+  };
+
+  LinkedList.prototype.getAllNodes = function() {
+    var nodes = [ this.head ],
+      node = this.head;
+
+    while( node.next !== null ) {
+      nodes.push(node.next);
+      node = node.next;
+    }
+    return nodes;
+  };
+
+  aid.getLinkedList = function() {
+    return new LinkedList();
+  };
+
   /**
    * element text ellipsis function
    *
