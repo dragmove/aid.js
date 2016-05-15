@@ -1,77 +1,160 @@
 <!doctype html>
 <html>
-  <head lang="ko">
+<head lang="ko">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>aid.js</title>
 
     <link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css">
     <style type="text/css">
-      body {
-        font-family: 'Nanum Gothic', dotum, verdana, Arial, applegothic, sans-serif;
-        font-weight: normal;
-        font-style: normal;
-      }
-      a {text-decoration:none;}
+        body {
+            font-family: 'Nanum Gothic', dotum, verdana, Arial, applegothic, sans-serif;
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        a {
+            text-decoration: none;
+        }
     </style>
-  </head>
+</head>
 
-  <body>
-    <div class="wrap">
-    </div>
+<body>
+<div class="wrap">
+</div>
 
-    <script src="js/lib/jquery-1.7.0.min.js"></script>
-    <script src="js/src/aid.js"></script>
-    <script>
-      (function($) {
+<script src="js/lib/jquery-1.7.0.min.js"></script>
+<script src="js/src/aid.js"></script>
+<script>
+    (function ($) {
         $(document).ready(init);
 
         function init() {
-          test_isDefined();
-          test_inherit();
+            test_isDefined();
+            test_inherit();
 
-          test_queue();
+            test_isWindow();
+            test_isMac();
+            test_isUbuntu();
+
+            test_isEmail();
+            test_getUriParam();
+            test_isValidYoutubeVideoId();
+            test_getObjCheckYoutubeURI();
+
+            test_queue();
+            test_linkedListNode();
         }
 
         function test_isDefined() {
-          console.log('aid.isDefined() :', aid.isDefined());
-          console.log('aid.isDefined(undefined) :', aid.isDefined(undefined));
-          console.log('aid.isDefined(null) :', aid.isDefined(null));
-          console.log('aid.isDefined("") :', aid.isDefined(""));
-          console.log('aid.isDefined(0) :', aid.isDefined(0));
-          console.log('aid.isDefined(false) :', aid.isDefined(false));
+            console.log('aid.isDefined() :', aid.isDefined());
+            console.log('aid.isDefined(undefined) :', aid.isDefined(undefined));
+            console.log('aid.isDefined(null) :', aid.isDefined(null));
+            console.log('aid.isDefined("") :', aid.isDefined(""));
+            console.log('aid.isDefined(0) :', aid.isDefined(0));
+            console.log('aid.isDefined(false) :', aid.isDefined(false));
         }
 
         function test_inherit() {
-          function Person(name) {
-            this.name = name || 'person';
-          }
-          Person.prototype.getName = function() {
-            return this.name;
-          };
+            function Person(name) {
+                this.name = name || 'person';
+            }
 
-          function Ninja(name) {
-            this.name = name || 'ninja';
-          }
+            Person.prototype.getName = function () {
+                return this.name;
+            };
 
-          aid.inherit(Ninja, Person);
+            function Ninja(name) {
+                this.name = name || 'ninja';
+            }
 
-          Ninja.prototype.jump = function() {
-            console.log('child ninja can own jump!');
-          };
+            aid.inherit(Ninja, Person);
 
-          var ninja = new Ninja();
-          console.log('ninja :', ninja);
-          console.log('ninja.getName() :', ninja.getName());
-          ninja.jump();
+            Ninja.prototype.jump = function () {
+                console.log('child ninja can own jump!');
+            };
+
+            var ninja = new Ninja();
+            console.log('ninja :', ninja);
+            console.log('ninja.getName() :', ninja.getName());
+            ninja.jump();
+        }
+
+        function test_isWindow() {
+            console.log('aid.platform.isWindow :', aid.platform.isWindow);
+        }
+
+        function test_isMac() {
+            console.log('aid.platform.isMac :', aid.platform.isMac);
+        }
+
+        function test_isUbuntu() {
+            console.log('aid.platform.isUbuntu :', aid.platform.isUbuntu);
+        }
+
+        function test_isEmail() {
+            console.log('aid.string.isEmail :', aid.string.isEmail('dragmove@naver.com'));
+        }
+
+        function test_getUriParam() {
+            console.log('getUriParam :', aid.string.getUriParam('http://www.youtube.com/watch?NR=1&feature=endscreen&v=yVpbFMhOAwE', 'v'));
+        }
+
+        function test_isValidYoutubeVideoId() {
+            console.log('isValidYoutubeVideoId :', aid.string.isValidYoutubeVideoId('FZu097wb8wU'));
+        }
+
+        function test_getObjCheckYoutubeURI() {
+            var getObjCheckYoutubeURI = aid.string.getObjCheckYoutubeURI;
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('youtube.com/watch?v=ZeGm7MDq2fo'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('//youtube.com/watch?v=ZeGm7MDq2fo'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('www.youtube.com/watch?v=ZeGm7MDq2fo'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('//www.youtube.com/watch?v=ZeGm7MDq2fo'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://www.youtube.com/watch?v=ZeGm7MDq2fo'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('https://www.youtube.com/watch?v=ZeGm7MDq2fo'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://www.youtube.com/watch?v=yVpbFMhOAwE'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://www.youtube.com/watch?v=yVpbFMhOAwE&feature=g-vrec'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://www.youtube.com/watch?v=yVpbFMhOAwE&feature=player_embedded'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://www.youtube.com/watch?NR=1&feature=endscreen&v=yVpbFMhOAwE'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('https://www.youtube.com/watch?v=FZu097wb8wU&list=RDFZu097wb8wU'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://www.youtube.com/watch?feature=g-vrec&v=yVpbFMhOAwE'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://www.youtube.com/watch?feature=player_embedded&v=yVpbFMhOAwE'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('https://www.youtube.com/watch?list=RDFZu097wb8wU&v=FZu097wb8wU'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('https://www.youtube.com/watch?v=YgZpL-3IVoI'));
+
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('youtube.com/embed/ZeGm7MDq2fo'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('//youtube.com/embed/ZeGm7MDq2fo'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('www.youtube.com/embed/ZeGm7MDq2fo'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('//www.youtube.com/embed/ZeGm7MDq2fo'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://www.youtube.com/embed/ZeGm7MDq2fo'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('https://www.youtube.com/embed/ZeGm7MDq2fo'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('youtube.com/embed/YgZpL-3IVoI'));
+
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://www.youtube.com/v/yVpbFMhOAwE?fs=1&hl=en_US'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://www.youtube.com/v/YgZpL-3IVoI?fs=1&hl=en_US'));
+
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('youtu.be/ZeGm7MDq2fo'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('//youtu.be/ZeGm7MDq2fo'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('youtu.be/ZeGm7MDq2fo'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('//youtu.be/ZeGm7MDq2fo'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('http://youtu.be/ZeGm7MDq2fo'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('https://youtu.be/ZeGm7MDq2fo'));
+            console.log('getObjCheckYoutubeURI :', getObjCheckYoutubeURI('https://youtu.be/YgZpL-3IVoI'));
         }
 
         function test_queue() {
-          
+          // 
         }
 
-        
-      })(jQuery);
-    </script>
-  </body>
+        function test_linkedListNode() {
+            var linkedList = aid.createLinkedList();
+            linkedList.insert('Conway', 'head');
+            linkedList.insert('Russellville', 'Conway');
+            linkedList.insert('Alma', 'Russellville');
+
+            console.log( 'linkedList.getAllNodes() :', linkedList.getAllNodes() );
+        }
+    })(jQuery);
+</script>
+</body>
 </html>

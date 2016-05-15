@@ -39,7 +39,7 @@ gulp.task('lint', function() {
 });
 
 gulp.task('concat', function() {
-	return gulp.src(['js/lib/doT.js', 'js/template/sample.tmpl.js', 'js/template/test.tmpl.js','js/src/util.js', 'js/src/object.js'])
+	return gulp.src(['js/lib/doT.js', 'js/template/sample.tmpl.js', 'js/template/test.tmpl.js'])
 		.pipe(plugins.concat('BUILD_FILE_NAME.js'))
 		.pipe( plugins.header(banner, {pkg: pkg}) )
 		.pipe(gulp.dest('build'))

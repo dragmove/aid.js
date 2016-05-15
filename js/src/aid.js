@@ -1,225 +1,258 @@
 /*
-The MIT License (MIT)
-Copyright (c) 2016 dragmove
+ The MIT License (MIT)
+ Copyright (c) 2016 dragmove
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 
 /*
  * aid.js 0.1.0
  * https://github.com/dragmove/aid.js
  */
-;(function(global) {
-	"use strict";
+;(function (global) {
+  "use strict";
 
-	var aid = {},
-		browser = {},
-		string = {},
+  var aid = {},
+    platform = {},
+    browser = {},
+    string = {},
     date = {},
-		array = {},
-		element = {};
+    array = {},
+    element = {};
 
-	var ua = global.navigator.userAgent;
+  var ua = global.navigator.userAgent;
 
-	/**
-	 * get object is null/undefined or other
-	 *
-	 * @static
-	 * @method isDefined
-   * @param {object}
-   * @return {Boolean} return boolean
-	 * @example
-	 */
-	aid.existy  = function(obj) {
-		return obj != null;
-	};
+  /**
+   * get object is null/undefined or other
+   *
+   * @static
+   * @method isDefined
+   * @param {Object} obj
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  aid.existy = function (obj) {
+    return obj != null;
+  };
 
-	/**
-	 * check object is defined function
-	 *
-	 * @static
-	 * @method isDefined
-   * @param {object}
-   * @return {Boolean} return boolean
-	 * @example
-	 * console.log('aid.isDefined(null) :', aid.isDefined(null));
-	 */
-	aid.isDefined = function(obj) {
-		var flag = true;
-		if(obj === null || typeof obj === 'undefined') return false;
-		return flag;
-	};
+  /**
+   * check object is defined function
+   *
+   * @static
+   * @method isDefined
+   * @param {Object} obj
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  aid.isDefined = function (obj) {
+    var flag = true;
+    if (obj === null || typeof obj === 'undefined') return false;
+    return flag;
+  };
 
-	/**
-	 * check object type is Boolean
-	 *
-	 * @static
-	 * @method isBoolean
-   * @param {object}
-   * @return {Boolean} return boolean
-	 * @example
-	 */
-	aid.isBoolean = function(obj) {
-		if(!aid.isDefined(obj)) return false;
-		return (object.constructor === Boolean);
-	};
+  /**
+   * check object type is Boolean
+   *
+   * @static
+   * @method isBoolean
+   * @param {Object} obj
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  aid.isBoolean = function (obj) {
+    if (!aid.isDefined(obj)) return false;
+    return (obj.constructor === Boolean);
+  };
 
-	/**
-	 * check object type is Number
-	 *
-	 * @static
-	 * @method isNumber
-   * @param {object}
-   * @return {Boolean} return boolean
-	 * @example
-	 */
-	aid.isNumber = function(obj) {
-		if(!aid.isDefined(obj)) return false;
-		return (object.constructor === Number);
-	};
+  /**
+   * check object type is Number
+   *
+   * @static
+   * @method isNumber
+   * @param {Object} obj
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  aid.isNumber = function (obj) {
+    if (!aid.isDefined(obj)) return false;
+    return (obj.constructor === Number);
+  };
 
-	/**
-	 * check object type is String
-	 *
-	 * @static
-	 * @method isString
-   * @param {object}
-   * @return {Boolean} return boolean
-	 * @example
-	 */
-	aid.isString = function(obj) {
-		if(!aid.isDefined(obj)) return false;
-		return (object.constructor === String);
-	};
+  /**
+   * check object type is String
+   *
+   * @static
+   * @method isString
+   * @param {Object} obj
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  aid.isString = function (obj) {
+    if (!aid.isDefined(obj)) return false;
+    return (obj.constructor === String);
+  };
 
-	/**
-	 * check object type is Array
-	 *
-	 * @static
-	 * @method isArray
-   * @param {object}
-   * @return {Boolean} return boolean
-	 * @example
-	 */
-	aid.isArray = function(obj) {
-		if(!aid.isDefined(obj)) return false;
-		return (object.constructor === Array);
-	};
+  /**
+   * check object type is Array
+   *
+   * @static
+   * @method isArray
+   * @param {Object} obj
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  aid.isArray = function (obj) {
+    if (!aid.isDefined(obj)) return false;
+    return (obj.constructor === Array);
+  };
 
-	/**
-	 * check object type is Object
-	 *
-	 * @static
-	 * @method isObject
-   * @param {object}
-   * @return {Boolean} return boolean
-	 * @example
-	 */
-	aid.isObject = function(obj) {
-		if(!aid.isDefined(obj)) return false;
-		return (object.constructor === Object);
-	};
+  /**
+   * check object type is Object
+   *
+   * @static
+   * @method isObject
+   * @param {Object} obj
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  aid.isObject = function (obj) {
+    if (!aid.isDefined(obj)) return false;
+    return (obj.constructor === Object);
+  };
 
-	/**
-	 * check object type is Function
-	 *
-	 * @static
-	 * @method isFunction
-   * @param {object}
-   * @return {Boolean} return boolean
-	 * @example
-	 */
-	aid.isFunction = function(obj) {
-		if(!aid.isDefined(obj)) return false;
-		return (object.constructor === Function);
-	};
+  /**
+   * check object type is Function
+   *
+   * @static
+   * @method isFunction
+   * @param {Object} obj
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  aid.isFunction = function (obj) {
+    if (!aid.isDefined(obj)) return false;
+    return (obj.constructor === Function);
+  };
 
-	/**
-	 * inherit Class function
-	 *
-	 * @static
-	 * @method inherit
-   * @param {Child Class, Parent Class}
-	 * @example
-	 */
-	aid.inherit = (function() {
-		// use closure, protect gabarge collection.
-    var F = function() {}; 
+  /**
+   * inherit Class function
+   *
+   * @static
+   * @method inherit
+   * @param {class} ChildClass - child class function
+   * @param {class} ParentClass - parent class function
+   * @example
+   */
+  aid.inherit = (function () {
+    // use closure, protect gabarge collection.
+    var F = function () {
+    };
 
-    return function(ChildClass, ParentClass) {
+    return function (ChildClass, ParentClass) {
       F.prototype = ParentClass.prototype;
-      
+
       ChildClass.prototype = new F();
       ChildClass.prototype.constructor = ChildClass;
       ChildClass.super = ParentClass.prototype;
     };
-	}());
+  }());
 
-	/**
-   * is IE browser 
+  /**
+   * is window platform
+   *
+   * @static
+   * @method isWindow
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  platform.isWindow = (function () {
+    return /Windows/i.test(ua);
+  }());
+
+  /**
+   * is Macintosh platform
+   *
+   * @static
+   * @method isMac
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  platform.isMac = (function () {
+    return /Macintosh/i.test(ua);
+  }());
+
+  /**
+   * is Ubuntu platform
+   *
+   * @static
+   * @method isUbuntu
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  platform.isUbuntu = (function () {
+    return /Ubuntu/i.test(ua);
+  }());
+
+  /**
+   * is IE browser
    *
    * @static
    * @method isIE
-   * @return {Boolean} return boolean
+   * @returns {Boolean} return boolean
    * @example
    */
-  browser.isIE = (function() {
-    var flag = /msie/i.test(ua) || /trident/i.test(ua);
-    return flag;
+  browser.isIE = (function () {
+    return /msie/i.test(ua) || /trident/i.test(ua);
   }());
 
   /**
-   * is Firefox browser 
+   * is Firefox browser
    *
    * @static
    * @method isFF
-   * @return {Boolean} return boolean
+   * @returns {Boolean} return boolean
    * @example
    */
-  browser.isFF = (function() {
-    var flag = /Firefox/i.test(ua);
-    return flag;
+  browser.isFF = (function () {
+    return /Firefox/i.test(ua);
   }());
 
   /**
-   * is Opera browser 
+   * is Opera browser
    *
    * @static
    * @method isOpera
-   * @return {Boolean} return boolean
+   * @returns {Boolean} return boolean
    * @example
    */
-  browser.isOpera = (function() {
-    var flag = /Opera/i.test(ua) || /OPR\//i.test(ua);
-    return flag;
+  browser.isOpera = (function () {
+    return ( /Opera/i.test(ua) || /OPR\//i.test(ua) );
   }());
 
   /**
-   * is Chrome browser 
+   * is Chrome browser
    *
    * @static
    * @method isChrome
-   * @return {Boolean} return boolean
+   * @returns {Boolean} return boolean
    * @example
    */
-  browser.isChrome = (function() {
-    var flag = !browser.isOpera && /Chrome/i.test(ua);
-    return flag;
+  browser.isChrome = (function () {
+    return ( !browser.isOpera && /Chrome/i.test(ua) );
   }());
 
   /**
-   * is Safari browser 
+   * is Safari browser
    *
    * @static
    * @method isSafari
-   * @return {Boolean} return boolean
+   * @returns {Boolean} return boolean
    * @example
    */
-  browser.isSafari = (function() {
-    var flag =  !/Chrome/i.test(ua) && /Safari/i.test(ua);
-    return flag;
+  browser.isSafari = (function () {
+    return ( !/Chrome/i.test(ua) && /Safari/i.test(ua) );
   }());
 
   /**
@@ -227,13 +260,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @method getIEVersion
-   * @return {Float} return version number
+   * @returns {Number} return version float number
    * @example
    */
-  browser.getIEVersion = function() {
-    if(browser.isIE) {
-      if(/msie (\d+\.\d+);/i.test(ua)) return parseFloat(RegExp.$1, 10);
-      if(/trident.*rv:(\d+)\.(\d+)/i.test(ua)) return parseFloat(RegExp.$1, 10);
+  browser.getIEVersion = function () {
+    if (browser.isIE) {
+      if (/msie (\d+\.\d+);/i.test(ua)) return parseFloat(RegExp.$1, 10);
+      if (/trident.*rv:(\d+)\.(\d+)/i.test(ua)) return parseFloat(RegExp.$1, 10);
     }
     return -1;
   };
@@ -243,12 +276,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @method getFFVersion
-   * @return {Float} return version number
+   * @returns {Number} return version float number
    * @example
    */
-  browser.getFFVersion = function() {
-    if(browser.isFF) {
-      if(/Firefox[\/\s](\d+\.\d+)/i.test(ua)) return parseFloat(RegExp.$1, 10);
+  browser.getFFVersion = function () {
+    if (browser.isFF) {
+      if (/Firefox[\/\s](\d+\.\d+)/i.test(ua)) return parseFloat(RegExp.$1, 10);
     }
     return -1;
   };
@@ -258,16 +291,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @method getOperaVersion
-   * @return {Float} return version number
+   * @returns {Number} return version float number
    * @example
    */
-  browser.getOperaVersion = function() {
-    if(browser.isOpera) {
-      if(/Opera/i.test(ua)) {
-        if(/Version[\/\s](\d+\.\d+)/i.test(ua)) return parseFloat(RegExp.$1, 10);
-        if(/Opera[\/\s](\d+\.\d+)/i.test(ua)) return parseFloat(RegExp.$1, 10);
+  browser.getOperaVersion = function () {
+    if (browser.isOpera) {
+      if (/Opera/i.test(ua)) {
+        if (/Version[\/\s](\d+\.\d+)/i.test(ua)) return parseFloat(RegExp.$1, 10);
+        if (/Opera[\/\s](\d+\.\d+)/i.test(ua)) return parseFloat(RegExp.$1, 10);
       }
-      if(/OPR[\/\s](\d+\.\d+)/i.test(ua)) return parseFloat(RegExp.$1, 10);
+      if (/OPR[\/\s](\d+\.\d+)/i.test(ua)) return parseFloat(RegExp.$1, 10);
     }
     return -1;
   };
@@ -277,14 +310,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @method getChromeVersion
-   * @return {Float} return version number
+   * @returns {Number} return version float number
    * @example
    */
-  browser.getChromeVersion = function() {
-	  if(browser.isChrome) {
-      if(/Chrome[\/\s](\d+\.\d+)/i.test(ua)) return parseFloat(RegExp.$1, 10);
-	  }
-	  return -1;
+  browser.getChromeVersion = function () {
+    if (browser.isChrome) {
+      if (/Chrome[\/\s](\d+\.\d+)/i.test(ua)) return parseFloat(RegExp.$1, 10);
+    }
+    return -1;
   };
 
   /**
@@ -292,12 +325,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @method getSafariVersion
-   * @return {Float} return version number
+   * @returns {Number} return version float number
    * @example
    */
-  browser.getSafariVersion = function() {
-    if(browser.isSafari) {
-      if(/Version[\/\s](\d+\.\d+)/i.test(ua)) return parseFloat(RegExp.$1, 10);
+  browser.getSafariVersion = function () {
+    if (browser.isSafari) {
+      if (/Version[\/\s](\d+\.\d+)/i.test(ua)) return parseFloat(RegExp.$1, 10);
     }
     return -1;
   };
@@ -308,11 +341,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    * @static
    * @method getIECompatibility
    * @param {String} optionUserAgentStr
-   * @return {Object} return {isIE:true/false, isCompatibilityMode:true/false, compatibilityVersion:number}
+   * @returns {Object} return { isIE:true/false, isCompatibilityMode:true/false, compatibilityVersion:number }
    * @example
    */
-  browser.getIECompatibility = function(optionUserAgentStr) {
-		var ua = (optionUserAgentStr) ? optionUserAgentStr : global.navigator.userAgent.toLowerCase(),
+  browser.getIECompatibility = function (optionUserAgentStr) {
+    var ua = (optionUserAgentStr) ? optionUserAgentStr : global.navigator.userAgent.toLowerCase(),
       regex_msie = /msie/i,
       regex_msie7 = /msie 7/i,
       regex_msie8 = /msie 8/i,
@@ -322,27 +355,27 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       regex_trident = /trident/i,
       regex_trident7 = /trident\/7/;
 
-    if( !regex_msie.test(ua) && !regex_msie11.test(ua)) {
+    if (!regex_msie.test(ua) && !regex_msie11.test(ua)) {
       // not IE
-      return { isIE : false, isCompatibilityMode : false, compatibilityVersion : -1 };
+      return {isIE: false, isCompatibilityMode: false, compatibilityVersion: -1};
     }
-    if(regex_msie11.test(ua) && regex_trident7.test(ua)) {
+    if (regex_msie11.test(ua) && regex_trident7.test(ua)) {
       // IE11 standard
-      return { isIE : true, isCompatibilityMode : false, compatibilityVersion : -1 };
+      return {isIE: true, isCompatibilityMode: false, compatibilityVersion: -1};
     }
-    if(regex_msie.test(ua) && regex_trident7.test(ua)) {
+    if (regex_msie.test(ua) && regex_trident7.test(ua)) {
       // IE11 compatibility mode
-      if(regex_msie7.test(ua)) return { isIE : true, isCompatibilityMode : true, compatibilityVersion : 7 };
-      if(regex_msie8.test(ua)) return { isIE : true, isCompatibilityMode : true, compatibilityVersion : 8 };
-      if(regex_msie9.test(ua)) return { isIE : true, isCompatibilityMode : true, compatibilityVersion : 9 };
-      if(regex_msie10.test(ua)) return { isIE : true, isCompatibilityMode : true, compatibilityVersion : 10 };
+      if (regex_msie7.test(ua)) return {isIE: true, isCompatibilityMode: true, compatibilityVersion: 7};
+      if (regex_msie8.test(ua)) return {isIE: true, isCompatibilityMode: true, compatibilityVersion: 8};
+      if (regex_msie9.test(ua)) return {isIE: true, isCompatibilityMode: true, compatibilityVersion: 9};
+      if (regex_msie10.test(ua)) return {isIE: true, isCompatibilityMode: true, compatibilityVersion: 10};
     }
-    if(regex_msie7.test(ua) && regex_trident.test(ua)) {
+    if (regex_msie7.test(ua) && regex_trident.test(ua)) {
       // IE8 ~ 10 compatibility mode
-      return { isIE : true, isCompatibilityMode : true, compatibilityVersion : 7 };
+      return {isIE: true, isCompatibilityMode: true, compatibilityVersion: 7};
     }
     // IE8 ~ 10 standard
-    return { isIE : true, isCompatibilityMode : false, compatibilityVersion : -1 };
+    return {isIE: true, isCompatibilityMode: false, compatibilityVersion: -1};
   };
 
   /**
@@ -350,10 +383,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @method isSupportDraggable
-   * @return {Boolean} return boolean
+   * @returns {Boolean} return boolean
    * @example
    */
-  browser.isSupportDraggable = function() {
+  browser.isSupportDraggable = function () {
     var div = document.createElement('div');
     return ('draggable' in div);
   };
@@ -363,10 +396,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @method isSupportDragAndDrop
-   * @return {Boolean} return boolean
+   * @returns {Boolean} return boolean
    * @example
    */
-  browser.isSupportDragAndDrop = function() {
+  browser.isSupportDragAndDrop = function () {
     var div = document.createElement('div');
     return ('ondragstart' in div && 'ondrop' in div);
   };
@@ -376,10 +409,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @method isSupportFileApi
-   * @return {Boolean} return boolean
+   * @returns {Boolean} return boolean
    * @example
    */
-  browser.isSupportFileApi = function() {
+  browser.isSupportFileApi = function () {
     return !!(global.File && global.FileReader && global.FileList && global.Blob);
   };
 
@@ -388,16 +421,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @method isChromeExtension
-   * @return {Boolean} return boolean
+   * @returns {Boolean} return boolean
    * @example
    */
-  browser.isChromeExtension = (function() {
-    if(browser.isChrome && window.chrome) {
-      if(!chrome.cookies) {
-        if(chrome.experimental) chrome.cookies = chrome.experimental.cookies;
+  browser.isChromeExtension = (function () {
+    if (browser.isChrome && window.chrome) {
+      if (!window.chrome.cookies) {
+        if (window.chrome.experimental) window.chrome.cookies = window.chrome.experimental.cookies;
       }
 
-      if(chrome.cookies) return true;
+      if (window.chrome.cookies) return true;
       return false;
     }
     return false;
@@ -408,20 +441,20 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @method getCookie
-   * @return {String} return string
+   * @returns {String} return string
    * @example
    */
-  browser.getCookie = function(key) {
+  browser.getCookie = function (key) {
     var cookieArr = document.cookie.split('; '),
       splitArr = [],
       keyStr = '',
       valueStr = '';
 
-    for(var i=0,max=cookieArr.length; i<max; ++i) {
+    for (var i = 0, max = cookieArr.length; i < max; ++i) {
       splitArr = cookieArr[i].split('=');
       keyStr = splitArr[0];
-      valueStr = window.decodeURIComponent( splitArr[1] );
-      if(keyStr === key) return valueStr;
+      valueStr = window.decodeURIComponent(splitArr[1]);
+      if (keyStr === key) return valueStr;
     }
 
     return null;
@@ -434,14 +467,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    * @method setCookie
    * @example
    */
-  browser.setCookie = function(key, value, expireSecond, path, domain) {
+  browser.setCookie = function (key, value, expireSecond, path, domain) {
     var expires = '',
       pathStr = '; path=' + ( (path) ? path : '/' ),
       domainStr = (domain) ? '; domain=' + domain : '';
 
-    if(expireSecond) {
+    if (expireSecond) {
       var date = new Date();
-      date.setTime( date.getTime() + (expireSecond * 1000) );
+      date.setTime(date.getTime() + (expireSecond * 1000));
       expires = '; expires=' + date.toGMTString();
     }
 
@@ -449,18 +482,29 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   };
 
   /**
+   * trim string
+   *
+   * @static
+   * @method trim
+   * @returns {String} return trimmed string
+   * @example
+   */
+  string.trim = function (str) {
+    return str.replace(/^\s+/, '').replace(/\s+$/, '');
+  };
+
+  /**
    * check email string.
    *
    * @static
    * @method isEmail
-   * @return {Boolean} return boolean
+   * @returns {Boolean} return boolean
    * @example
    */
-  string.isEmail = function(emailStr) {
-  	// html5 form email check regex - https://www.w3.org/TR/html5/forms.html#e-mail-state-(type=email)
-  	var emailRegex = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"),
-    	flag = emailRegex.exec(emailStr) ? true : false;
-    return flag;
+  string.isEmail = function (emailStr) {
+    // html5 form email check regex - https://www.w3.org/TR/html5/forms.html#e-mail-state-(type=email)
+    var emailRegex = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
+    return ( emailRegex.exec(emailStr) ? true : false );
   };
 
   /**
@@ -468,23 +512,23 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @method getUriParam
-   * @return {String} return string
+   * @returns {String} return string
    * @example
    */
-  string.getUriParam = function(uri, paramName) {
+  string.getUriParam = function (uri, paramName) {
     var str = uri;
-    if(str.length < 1) return '';
+    if (str.length < 1) return '';
 
     var tmpArr = str.split('?');
-    if(tmpArr.length < 2) return '';
+    if (tmpArr.length < 2) return '';
 
     var paramStr = tmpArr[1],
       params = paramStr.split('&');
 
-    for(var i=0,max=params.length; i<max; ++i) {
+    for (var i = 0, max = params.length; i < max; ++i) {
       var keyValueArr = params[i].split('=');
-      if(keyValueArr.length <= 1) keyValueArr.push('');
-      if(keyValueArr[0] === paramName) return window.decodeURIComponent( keyValueArr[1] );
+      if (keyValueArr.length <= 1) keyValueArr.push('');
+      if (keyValueArr[0] === paramName) return window.decodeURIComponent(keyValueArr[1]);
     }
 
     return '';
@@ -495,10 +539,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @method isValidYoutubeVideoId
-   * @return {Boolean} return boolean
+   * @returns {Boolean} return boolean
    * @example
    */
-  string.isValidYoutubeVideoId = function(youtubeId) {
+  string.isValidYoutubeVideoId = function (youtubeId) {
     var regex = /^(\w|-|_){11}$/;
     return regex.exec(youtubeId) ? true : false;
   };
@@ -508,68 +552,59 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @method getObjCheckYoutubeURI
-   * @return {Object} return { youtubeId: String, isValidYoutubeURI: Boolean }
+   * @returns {Object} return { youtubeId: String, isValidYoutubeURI: Boolean }
    * @example
    */
-  string.getObjCheckYoutubeURI = function(uri) {
+  string.getObjCheckYoutubeURI = function (uri) {
     var YOUTUBE_REGEXES = {
-      'watch' : /^(?:(?:https?:)?\/\/)?(?:www\.)?youtube\.com\/watch/,
-      'embed' : /^(?:(?:https?:)?\/\/)?(?:www\.)?youtube\.com\/(?:embed\/((?:\w|-|_){11}))/,
-      'v' : /^(?:(?:https?:)?\/\/)?(?:www\.)?youtube\.com\/(?:v\/((?:\w|-|_){11}))/,
-      'youtu.be' : /^(?:(?:https?:)?\/\/)?(?:www\.)?youtu\.be\/((?:\w|-|_){11})/
+      'watch': /^(?:(?:https?:)?\/\/)?(?:www\.)?youtube\.com\/watch/,
+      'embed': /^(?:(?:https?:)?\/\/)?(?:www\.)?youtube\.com\/(?:embed\/((?:\w|-|_){11}))/,
+      'v': /^(?:(?:https?:)?\/\/)?(?:www\.)?youtube\.com\/(?:v\/((?:\w|-|_){11}))/,
+      'youtu.be': /^(?:(?:https?:)?\/\/)?(?:www\.)?youtu\.be\/((?:\w|-|_){11})/
     };
 
-    var flag = false,
-      uriType = null;
-
-    for(var key in YOUTUBE_REGEXES) {
+    var uriType = null;
+    for (var key in YOUTUBE_REGEXES) {
       var val = YOUTUBE_REGEXES[key];
-      if(!val) continue;
+      if (!val) continue;
 
-      flag = YOUTUBE_REGEXES[key].exec(uri) ? true : false;
-      if(flag) {
+      var flag = YOUTUBE_REGEXES[key].exec(uri) ? true : false;
+      if (flag) {
         uriType = key;
         break;
       }
     }
 
     var youtubeId = '',
-      isValidYoutubeURI = false;
-
-    var tmpArr = [];
-    switch(uriType) {
+      tmpArr = [];
+    switch (uriType) {
       case 'watch' :
         youtubeId = string.getUriParam(uri, 'v') || '';
-      break;
+        break;
 
       case 'embed' :
         tmpArr = uri.split('?')[0].split('/');
-        youtubeId = tmpArr[ tmpArr.length - 1 ] || '';
-      break;
+        youtubeId = tmpArr[tmpArr.length - 1] || '';
+        break;
 
       case 'v' :
         tmpArr = uri.split('?')[0].split('/');
-        youtubeId = tmpArr[ tmpArr.length - 1 ] || '';
-      break;
+        youtubeId = tmpArr[tmpArr.length - 1] || '';
+        break;
 
       case 'youtu.be' :
         tmpArr = uri.split('?')[0].split('/');
-        youtubeId = tmpArr[ tmpArr.length - 1 ] || '';
-      break;
-    
+        youtubeId = tmpArr[tmpArr.length - 1] || '';
+        break;
+
       default :
         youtubeId = '';
     }
 
-    if( youtubeId && string.isValidYoutubeVideoId(youtubeId) ) {
-      isValidYoutubeURI = true;
-    }else{
-      isValidYoutubeURI = false;
-    }
-
+    var isValidYoutubeURI = ( youtubeId && string.isValidYoutubeVideoId(youtubeId) );
     return {
-      youtubeId : youtubeId,
-      isValidYoutubeURI : isValidYoutubeURI
+      youtubeId: youtubeId,
+      isValidYoutubeURI: isValidYoutubeURI
     };
   };
 
@@ -578,7 +613,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @property date.DAYS
-   * @return {Array} return Array
+   * @returns {Array} return Array
    * @example
    */
   date.DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -588,7 +623,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @property date.MONTHS
-   * @return {Array} return Array
+   * @returns {Array} return Array
    * @example
    */
   date.MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -598,7 +633,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @property date.MIN_TO_SEC
-   * @return {Number} return Int
+   * @returns {Number} return Int number
    * @example
    */
   date.MIN_TO_SEC = 60;
@@ -608,7 +643,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @property date.HOUR_TO_SEC
-   * @return {Number} return Int
+   * @returns {Number} return Int number
    * @example
    */
   date.HOUR_TO_SEC = 3600;
@@ -618,7 +653,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @property date.DAY_TO_SEC
-   * @return {Number} return Int
+   * @returns {Number} return Int number
    * @example
    */
   date.DAY_TO_SEC = 86400;
@@ -628,14 +663,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @method indexOf
-   * @return {Number} return Int
+   * @returns {Number} return Int number
    * @example
    */
-  array.indexOf = function(array, target) {
-  	for(var i=0,max=array.length; i<max; ++i) {
-  		if(array[i] === target) return i;
-  	}
-  	return -1;
+  array.indexOf = function (array, target) {
+    for (var i = 0, max = array.length; i < max; ++i) {
+      if (array[i] === target) return i;
+    }
+    return -1;
   };
 
   /**
@@ -643,15 +678,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    *
    * @static
    * @method getMatrixArr
-   * @return {Array} return array
+   * @returns {Array} return array
    * @example
    */
-  array.getMatrixArr = function(rowNum, columnNum, initialVal) {
+  array.getMatrixArr = function (rowNum, columnNum, initialVal) {
     var arr = [];
-    for(var i=0; i<rowNum; ++i) {
+    for (var i = 0; i < rowNum; ++i) {
       var columns = [];
 
-      for(var j=0; j<columnNum; ++j) {
+      for (var j = 0; j < columnNum; ++j) {
         columns[j] = initialVal;
       }
       arr[i] = columns;
@@ -661,48 +696,40 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   };
 
 
+  /*
+   * Data Structure
+   */
+  // Stack
+  var Stack = function () {
+    this._dataStore = [];
+    this._top = 0;
+  };
 
+  Stack.prototype.push = function (element) {
+    if (this._top < 0) this._top = 0;
+    this._dataStore[this._top++] = element;
+  };
 
+  Stack.prototype.pop = function () {
+    return this._dataStore[--this._top];
+  };
 
+  Stack.prototype.peek = function () {
+    return this._dataStore[this._top - 1];
+  };
 
+  Stack.prototype.length = function () {
+    return (this._top > 0) ? this._top : 0;
+  };
 
+  Stack.prototype.clear = function () {
+    this._dataStore = [];
+    this._top = 0;
+  };
 
-	
-
-	/*
-	 * Data Structure
-	 */
-	// Stack
-	var Stack = function() {
-		this._dataStore = [];
-		this._top = 0;
-	};
-
-	Stack.prototype.push = function(element) {
-		if(this._top < 0) this._top = 0;
-		this._dataStore[this._top++] = element;
-	};
-
-	Stack.prototype.pop = function() {
-		return this._dataStore[--this._top];
-	};
-
-	Stack.prototype.peek = function() {
-		return this._dataStore[this._top - 1];
-	};
-
-	Stack.prototype.length = function() {
-		return (this._top > 0) ? this._top : 0;
-	};
-
-	Stack.prototype.clear = function() {
-		this._dataStore = [];
-		this._top = 0;
-	};
-
-	aid.createStack = function() {
-		return new Stack();
-	};
+  aid.createStack = function() {
+    return new Stack();
+  };
 
   // Queue
   var Queue = function() {
@@ -734,67 +761,131 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     return false;
   };
 
-	/**
-	 * element text ellipsis function
-	 *
-	 * @static
-	 * @method ellipsis
-     * @param {element, left margin offset, right margin offset}
-	 * @example
-	 */
-	/*
-	element.ellipsis = function(_element, _leftMargin, _rightMargin) {
-		var ELLIPSIS_STR = '...';
+  aid.createQueue = function() {
+    return new Queue();
+  };
 
-		var ele = $(_element);
-		if(ele.length <= 0) return;
+  // LinkedList node
+  var LinkedListNode = function(data) {
+    this.data = data;
+    this.next = null;
+  };
 
-		var leftMargin = commonUtil.isDefined(_leftMargin) ? _leftMargin : 0,
-			rightMargin = commonUtil.isDefined(_rightMargin) ? _rightMargin : 0,
-			text = ele.text(),
-			limitWidth = ele.width();
+  // LinkedList
+  var LinkedList = function() {
+    this.head = new LinkedListNode('head');
+  };
 
-		var parent = ele.parent(),
-			eleClone = ele.clone();
-		eleClone.css( {display: 'none', position: 'absolute', width: 'auto', height: 'auto'} );
-		parent.append(eleClone);
+  LinkedList.prototype.find = function(data) {
+    var node = this.head;
+    while(node.data !== data) {
+      node = node.next;
+      if(node === null) return node;
+    }
+    return node;
+  };
 
-		var isNeedEllipsis = false,
-			tmpStr = '';
-		for(var i=0,max=text.length; i<max; i++) {
-			tmpStr += text.charAt(i);
-			eleClone.text(tmpStr);
-			if(ele.width() <= eleClone.width() + leftMargin + rightMargin) {
-				tmpStr = tmpStr.substr(0, tmpStr.length - 1);
-				isNeedEllipsis = true;
-				break;
-			}
-		}
+  LinkedList.prototype.findPrevious = function(data) {
+    if(this.head.data === data) return null;
 
-		if(isNeedEllipsis) {
-			tmpStr = ( tmpStr.substr(0, tmpStr.length - ELLIPSIS_STR.length) ) + ELLIPSIS_STR;
-			ele.text(tmpStr);
-		}
-		eleClone.remove();
-	};
-	*/
+    var node = this.head;
+    while( (node.next !== null) && (node.next.data !== data) ) {
+      node = node.next;
+    }
+    return node;
+  };
 
-	aid.browser = browser;
-	aid.string = string;
+  LinkedList.prototype.insert = function(data, prevNodeData) {
+    var insertNode = new LinkedListNode(data),
+      prevNode = this.find(prevNodeData);
+    insertNode.next = prevNode.next;
+    prevNode.next = insertNode;
+  };
+
+  LinkedList.prototype.remove = function(data) {
+    var prevNode = this.findPrevious(data);
+    if( prevNode.next !== null ) {
+      prevNode.next = prevNode.next.next;
+    }
+  };
+
+  LinkedList.prototype.getAllNodes = function() {
+    var nodes = [ this.head ],
+      node = this.head;
+
+    while( node.next !== null ) {
+      nodes.push(node.next);
+      node = node.next;
+    }
+    return nodes;
+  };
+
+  aid.createLinkedList = function() {
+    return new LinkedList();
+  };
+
+  /**
+   * element text ellipsis function
+   *
+   * @static
+   * @method ellipsis
+   * @param {element, left margin offset, right margin offset}
+   * @example
+   */
+  /*
+   element.ellipsis = function(_element, _leftMargin, _rightMargin) {
+   var ELLIPSIS_STR = '...';
+
+   var ele = $(_element);
+   if(ele.length <= 0) return;
+
+   var leftMargin = commonUtil.isDefined(_leftMargin) ? _leftMargin : 0,
+   rightMargin = commonUtil.isDefined(_rightMargin) ? _rightMargin : 0,
+   text = ele.text(),
+   limitWidth = ele.width();
+
+   var parent = ele.parent(),
+   eleClone = ele.clone();
+   eleClone.css( {display: 'none', position: 'absolute', width: 'auto', height: 'auto'} );
+   parent.append(eleClone);
+
+   var isNeedEllipsis = false,
+   tmpStr = '';
+   for(var i=0,max=text.length; i<max; i++) {
+   tmpStr += text.charAt(i);
+   eleClone.text(tmpStr);
+   if(ele.width() <= eleClone.width() + leftMargin + rightMargin) {
+   tmpStr = tmpStr.substr(0, tmpStr.length - 1);
+   isNeedEllipsis = true;
+   break;
+   }
+   }
+
+   if(isNeedEllipsis) {
+   tmpStr = ( tmpStr.substr(0, tmpStr.length - ELLIPSIS_STR.length) ) + ELLIPSIS_STR;
+   ele.text(tmpStr);
+   }
+   eleClone.remove();
+   };
+   */
+
+  aid.platform = platform;
+  aid.browser = browser;
+  aid.string = string;
   aid.date = date;
-	aid.array = array;
-	aid.element = element;
+  aid.array = array;
+  aid.element = element;
 
-	if (typeof exports !== 'undefined') {
-		if (typeof modules !== 'undefined' && module.exports) {
-			exports = module.exports = aid;
-		}
-	} else if(typeof define === 'function' && define.amd) {
-		define('aid', function() {
-			return aid;
-		});
-	} else {
-		global.aid = aid;
-	}
+  if (typeof exports !== 'undefined') {
+    if (typeof modules !== 'undefined' && module.exports) {
+      exports = module.exports = aid;
+    }
+  } else if (typeof define === 'function' && define.amd) {
+    define('aid', function () {
+      return aid;
+    });
+  } else {
+    global.aid = aid;
+  }
 }(window));
 
