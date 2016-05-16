@@ -739,8 +739,101 @@
     this._top = 0;
   };
 
-  aid.getStack = function () {
+  aid.createStack = function() {
     return new Stack();
+  };
+
+  // Queue
+  var Queue = function() {
+    this._dataStore = [];
+  };
+
+  Queue.prototype.enqueue = function(element) {
+    this._dataStore.push(element);
+  };
+
+  Queue.prototype.dequeue = function() {
+    return this._dataStore.shift();
+  };
+
+  Queue.prototype.front = function() {
+    return this._dataStore[0];
+  };
+
+  Queue.prototype.rear = function() {
+    return this._dataStore[ this._dataStore.length - 1 ];
+  };
+
+  Queue.prototype.length = function() {
+    return this._dataStore.length;
+  };
+
+  Queue.prototype.isEmpty = function() {
+    if( this._dataStore.length <= 0 ) return true;
+    return false;
+  };
+
+  aid.createQueue = function() {
+    return new Queue();
+  };
+
+  // LinkedList node
+  var LinkedListNode = function(data) {
+    this.data = data;
+    this.next = null;
+  };
+
+  // LinkedList
+  var LinkedList = function() {
+    this.head = new LinkedListNode('head');
+  };
+
+  LinkedList.prototype.find = function(data) {
+    var node = this.head;
+    while(node.data !== data) {
+      node = node.next;
+      if(node === null) return node;
+    }
+    return node;
+  };
+
+  LinkedList.prototype.findPrevious = function(data) {
+    if(this.head.data === data) return null;
+
+    var node = this.head;
+    while( (node.next !== null) && (node.next.data !== data) ) {
+      node = node.next;
+    }
+    return node;
+  };
+
+  LinkedList.prototype.insert = function(data, prevNodeData) {
+    var insertNode = new LinkedListNode(data),
+      prevNode = this.find(prevNodeData);
+    insertNode.next = prevNode.next;
+    prevNode.next = insertNode;
+  };
+
+  LinkedList.prototype.remove = function(data) {
+    var prevNode = this.findPrevious(data);
+    if( prevNode.next !== null ) {
+      prevNode.next = prevNode.next.next;
+    }
+  };
+
+  LinkedList.prototype.getAllNodes = function() {
+    var nodes = [ this.head ],
+      node = this.head;
+
+    while( node.next !== null ) {
+      nodes.push(node.next);
+      node = node.next;
+    }
+    return nodes;
+  };
+
+  aid.createLinkedList = function() {
+    return new LinkedList();
   };
 
   /**
