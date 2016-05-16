@@ -508,6 +508,18 @@
   };
 
   /**
+   * check iframe string.
+   *
+   * @static
+   * @method isIFrame
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  string.isIFrame = function (iframeStr) {
+    return /^(<iframe).*(<\/iframe>|\/>)$/.test(iframeStr);
+  };
+
+  /**
    * get param value from uri.
    *
    * @static
