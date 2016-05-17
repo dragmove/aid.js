@@ -547,6 +547,56 @@
   };
 
   /**
+   * get param values from uri.
+   *
+   * @static
+   * @method getUriParams
+   * @returns {Object} return object
+   * @example
+   */
+  string.getUriParams = function (uri) {
+    var str = uri;
+    if (str.length < 1) return null;
+
+    var tmpArr = str.split('?');
+    if (tmpArr.length < 2) return null;
+
+    var paramStr = tmpArr[1],
+      params = paramStr.split('&');
+
+    var obj = {};
+    for (var i = 0, max = params.length; i < max; ++i) {
+      var keyValueArr = params[i].split('=');
+      if (keyValueArr.length <= 1) return null;
+
+      obj[ keyValueArr[0] ] = keyValueArr[1];
+    }
+    return obj;
+  };
+
+  /**
+   * get uri combined params
+   *
+   * @static
+   * @method getUriCombinedParams
+   * @returns {String} return string
+   * @example
+   */
+  string.getUriCombinedParams = function(uri, params) {
+    if(!uri) return '';
+    if(!params) return uri;
+
+    var str = '';
+    for( var key in params) {
+      str += '&' + key + '=' + String( params[key] );
+    }
+    if(str === '') return uri;
+
+    uri = uri + '?' + str.substr(1);
+    return uri;
+  };
+
+  /**
    * check youtube video id.
    *
    * @static
