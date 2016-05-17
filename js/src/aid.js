@@ -137,6 +137,7 @@
    * @param {Object} obj
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.isFunction(function(){}) ); // true
    */
   aid.isFunction = function (obj) {
     if (!aid.isDefined(obj)) return false;
@@ -763,7 +764,6 @@
 
     return arr;
   };
-
 
   /*
    * Data Structure
