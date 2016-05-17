@@ -32,6 +32,7 @@
    * @param {Object} obj
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.existy(null) ); // false
    */
   aid.existy = function (obj) {
     return obj != null;
@@ -45,6 +46,7 @@
    * @param {Object} obj
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.isDefined(null) ); // false
    */
   aid.isDefined = function (obj) {
     var flag = true;
@@ -60,6 +62,7 @@
    * @param {Object} obj
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.isBoolean(false) ); // true
    */
   aid.isBoolean = function (obj) {
     if (!aid.isDefined(obj)) return false;
@@ -74,6 +77,7 @@
    * @param {Object} obj
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.isNumber(-1) ); // true
    */
   aid.isNumber = function (obj) {
     if (!aid.isDefined(obj)) return false;
@@ -88,6 +92,7 @@
    * @param {Object} obj
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.isString('') ); // true
    */
   aid.isString = function (obj) {
     if (!aid.isDefined(obj)) return false;
@@ -102,6 +107,7 @@
    * @param {Object} obj
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.isArray([]) ); // true
    */
   aid.isArray = function (obj) {
     if (!aid.isDefined(obj)) return false;
@@ -116,6 +122,7 @@
    * @param {Object} obj
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.isObject({}) ); // true
    */
   aid.isObject = function (obj) {
     if (!aid.isDefined(obj)) return false;
