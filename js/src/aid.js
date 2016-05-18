@@ -496,6 +496,7 @@
    * @method trim
    * @returns {String} return trimmed string
    * @example
+   * console.log( aid.string.trim('   foo   ') ); // 'foo'
    */
   string.trim = function (str) {
     return str.replace(/^\s+/, '').replace(/\s+$/, '');
@@ -508,6 +509,7 @@
    * @method isEmail
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.string.isEmail('dragmove@gmail.com') ); // true
    */
   string.isEmail = function (emailStr) {
     // html5 form email check regex - https://www.w3.org/TR/html5/forms.html#e-mail-state-(type=email)
@@ -522,6 +524,7 @@
    * @method isIFrame
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.string.isIFrame('<iframe src=""></iframe>') ); // true
    */
   string.isIFrame = function (iframeStr) {
     return /^(<iframe).*(<\/iframe>|\/>)$/.test(iframeStr);

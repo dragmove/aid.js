@@ -22,7 +22,7 @@ describe('aid.js', function () {
 
       IE11_UA = 'mozilla/5.0 (windows nt 6.1; win64; x64; trident/7.0; .net clr 2.0.50727; slcc2; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; .net4.0c; .net4.0e; infopath.3; rv:11.0) like gecko',
       IE11_COMPAT_UA = 'mozilla/4.0 (compatible; msie 8.0; windows nt 6.1; win64; x64; trident/7.0; .net clr 2.0.50727; slcc2; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; .net4.0c; .net4.0e; infopath.3)';
-
+    
     describe('.getIECompatibility().isIE', function () {
       it('at chrome browser, return false.', function () {
         expect(browser.getIECompatibility(CHROME_UA).isIE).toEqual(false);
