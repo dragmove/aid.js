@@ -580,7 +580,7 @@
       var keyValueArr = params[i].split('=');
       if (keyValueArr.length <= 1) return null;
 
-      obj[ keyValueArr[0] ] = keyValueArr[1];
+      obj[keyValueArr[0]] = keyValueArr[1];
     }
     return obj;
   };
@@ -593,15 +593,15 @@
    * @returns {String} return string
    * @example
    */
-  string.getUriCombinedParams = function(uri, params) {
-    if(!uri) return '';
-    if(!params) return uri;
+  string.getUriCombinedParams = function (uri, params) {
+    if (!uri) return '';
+    if (!params) return uri;
 
     var str = '';
-    for( var key in params) {
-      str += '&' + key + '=' + String( params[key] );
+    for (var key in params) {
+      str += '&' + key + '=' + String(params[key]);
     }
-    if(str === '') return uri;
+    if (str === '') return uri;
 
     uri = uri + '?' + str.substr(1);
     return uri;
@@ -625,7 +625,7 @@
    *
    * @static
    * @method getObjCheckYoutubeURI
-   * @returns {Object} return { youtubeId: String, isValidYoutubeURI: Boolean }
+   * @returns {Object} return { type:'youtube', uri: String, youtubeId: String, isValidURI: Boolean }
    * @example
    */
   string.getObjCheckYoutubeURI = function (uri) {
@@ -671,13 +671,126 @@
         break;
 
       default :
-        youtubeId = '';
     }
 
-    var isValidYoutubeURI = ( youtubeId && string.isValidYoutubeVideoId(youtubeId) );
+    var isValidURI = ( youtubeId && string.isValidYoutubeVideoId(youtubeId) );
     return {
+      type: 'youtube',
+      uri: uri,
       youtubeId: youtubeId,
-      isValidYoutubeURI: isValidYoutubeURI
+      isValidYoutubeURI: isValidURI
+    };
+  };
+
+  /**
+   * check twitch uri is valid.
+   *
+   * @static
+   * @method getObjCheckTwitchURI
+   * @returns {Object} return { type:'twitch', uri: String, channelName: String, videoId: Boolean, isChatting: Boolean, isValidURI: Boolean }
+   * @example
+   */
+  string.getObjCheckTwitchURI = function (uri) {
+    /*
+     + Live
+     https://www.twitch.tv/surrenderhs // channel link
+     https://player.twitch.tv/?channel=surrenderhs // iframe, Flash player
+     https://www.twitch.tv/surrenderhs/chat?popout= // iframe chatting
+
+     + Past Video
+     https://www.twitch.tv/surrenderhs/v/56097351 // channel link
+     https://player.twitch.tv/?video=v56097351 // iframe, Flash player
+
+     + URI TEST
+     https://www.twitch.tv/surrenderhs
+     //www.twitch.tv/surrenderhs
+     www.twitch.tv/surrenderhs
+     twitch.tv/surrenderhs
+
+     https://player.twitch.tv/?channel=surrenderhs
+     //player.twitch.tv/?channel=surrenderhs
+     player.twitch.tv/?channel=surrenderhs
+
+     https://www.twitch.tv/surrenderhs/v/56097351
+     //www.twitch.tv/surrenderhs/v/56097351
+     www.twitch.tv/surrenderhs/v/56097351
+
+     https://player.twitch.tv/?video=v56097351
+     //player.twitch.tv/?video=v56097351
+     player.twitch.tv/?video=v56097351
+     */
+
+    var TWITCH_REGEXES = {
+      'liveChannel': /^(?:(?:https?:)?\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9][\w]{2,24})$/,
+      'liveVideo': /^(?:(?:https?:)?\/\/)?player\.twitch\.tv\/\?channel\=([a-zA-Z0-9][\w]{2,24})$/,
+      'chatting': /^(?:(?:https?:)?\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9][\w]{2,24})\/chat/,
+      'pastChannel': /^(?:(?:https?:)?\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9][\w]{2,24})\/v\/(\d+)/,
+      'pastVideo': /^(?:(?:https?:)?\/\/)?player\.twitch\.tv\/\?video\=v(\d+)/
+    };
+
+    var channelName = '',
+      videoId = '',
+      isChatting = false,
+      isValidURI = false;
+
+    var uriType = null;
+    for (var key in TWITCH_REGEXES) {
+      var val = TWITCH_REGEXES.hasOwnProperty(key);
+      if (!val) continue;
+
+      var flag = TWITCH_REGEXES[key].exec(uri) ? true : false;
+      if (flag) {
+        uriType = key;
+        isValidURI = true;
+        break;
+      }
+    }
+
+    var tmpArr = [];
+    switch (uriType) {
+      // https://www.twitch.tv/surrenderhs
+      case 'liveChannel' :
+        tmpArr = TWITCH_REGEXES[uriType].exec(uri);
+        channelName = tmpArr[1];
+        break;
+
+      // https://player.twitch.tv/?channel=surrenderhs
+      case 'liveVideo' :
+        tmpArr = TWITCH_REGEXES[uriType].exec(uri);
+        channelName = tmpArr[1];
+        break;
+
+      // https://www.twitch.tv/surrenderhs/chat?popout=
+      case 'chatting' :
+        tmpArr = TWITCH_REGEXES[uriType].exec(uri);
+        channelName = tmpArr[1];
+        isChatting = true;
+        break;
+
+      // https://www.twitch.tv/surrenderhs/v/56097351
+      case 'pastChannel' :
+        tmpArr = TWITCH_REGEXES[uriType].exec(uri);
+        channelName = tmpArr[1];
+        videoId = tmpArr[2];
+        break;
+
+      // https://player.twitch.tv/?video=v56097351
+      case 'pastVideo' :
+        tmpArr = TWITCH_REGEXES[uriType].exec(uri);
+        videoId = tmpArr[1];
+        break;
+
+      default :
+    }
+
+    isValidURI = (channelName || videoId) ? true : false;
+    return {
+      type: 'twitch',
+      uri: uri,
+      channelName: channelName,
+      videoId: videoId,
+      isChatting: isChatting,
+      isValidURI: isValidURI
     };
   };
 
@@ -799,100 +912,100 @@
     this._top = 0;
   };
 
-  aid.createStack = function() {
+  aid.createStack = function () {
     return new Stack();
   };
 
   // Queue
-  var Queue = function() {
+  var Queue = function () {
     this._dataStore = [];
   };
 
-  Queue.prototype.enqueue = function(element) {
+  Queue.prototype.enqueue = function (element) {
     this._dataStore.push(element);
   };
 
-  Queue.prototype.dequeue = function() {
+  Queue.prototype.dequeue = function () {
     return this._dataStore.shift();
   };
 
-  Queue.prototype.front = function() {
+  Queue.prototype.front = function () {
     return this._dataStore[0];
   };
 
-  Queue.prototype.rear = function() {
-    return this._dataStore[ this._dataStore.length - 1 ];
+  Queue.prototype.rear = function () {
+    return this._dataStore[this._dataStore.length - 1];
   };
 
-  Queue.prototype.length = function() {
+  Queue.prototype.length = function () {
     return this._dataStore.length;
   };
 
-  Queue.prototype.isEmpty = function() {
-    if( this._dataStore.length <= 0 ) return true;
+  Queue.prototype.isEmpty = function () {
+    if (this._dataStore.length <= 0) return true;
     return false;
   };
 
-  aid.createQueue = function() {
+  aid.createQueue = function () {
     return new Queue();
   };
 
   // LinkedList node
-  var LinkedListNode = function(data) {
+  var LinkedListNode = function (data) {
     this.data = data;
     this.next = null;
   };
 
   // LinkedList
-  var LinkedList = function() {
+  var LinkedList = function () {
     this.head = new LinkedListNode('head');
   };
 
-  LinkedList.prototype.find = function(data) {
+  LinkedList.prototype.find = function (data) {
     var node = this.head;
-    while(node.data !== data) {
+    while (node.data !== data) {
       node = node.next;
-      if(node === null) return node;
+      if (node === null) return node;
     }
     return node;
   };
 
-  LinkedList.prototype.findPrevious = function(data) {
-    if(this.head.data === data) return null;
+  LinkedList.prototype.findPrevious = function (data) {
+    if (this.head.data === data) return null;
 
     var node = this.head;
-    while( (node.next !== null) && (node.next.data !== data) ) {
+    while ((node.next !== null) && (node.next.data !== data)) {
       node = node.next;
     }
     return node;
   };
 
-  LinkedList.prototype.insert = function(data, prevNodeData) {
+  LinkedList.prototype.insert = function (data, prevNodeData) {
     var insertNode = new LinkedListNode(data),
       prevNode = this.find(prevNodeData);
     insertNode.next = prevNode.next;
     prevNode.next = insertNode;
   };
 
-  LinkedList.prototype.remove = function(data) {
+  LinkedList.prototype.remove = function (data) {
     var prevNode = this.findPrevious(data);
-    if( prevNode.next !== null ) {
+    if (prevNode.next !== null) {
       prevNode.next = prevNode.next.next;
     }
   };
 
-  LinkedList.prototype.getAllNodes = function() {
-    var nodes = [ this.head ],
+  LinkedList.prototype.getAllNodes = function () {
+    var nodes = [this.head],
       node = this.head;
 
-    while( node.next !== null ) {
+    while (node.next !== null) {
       nodes.push(node.next);
       node = node.next;
     }
     return nodes;
   };
 
-  aid.createLinkedList = function() {
+  aid.createLinkedList = function () {
     return new LinkedList();
   };
 
