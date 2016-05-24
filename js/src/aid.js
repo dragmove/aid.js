@@ -174,6 +174,7 @@
    * @method isWindow
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.platform.isWindow );
    */
   platform.isWindow = (function () {
     return /Windows/i.test(ua);
@@ -186,6 +187,7 @@
    * @method isMac
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.platform.isMac );
    */
   platform.isMac = (function () {
     return /Macintosh/i.test(ua);
@@ -198,6 +200,7 @@
    * @method isUbuntu
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.platform.isUbuntu );
    */
   platform.isUbuntu = (function () {
     return /Ubuntu/i.test(ua);
@@ -210,6 +213,7 @@
    * @method isIE
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.browser.isIE );
    */
   browser.isIE = (function () {
     return /msie/i.test(ua) || /trident/i.test(ua);
@@ -222,6 +226,7 @@
    * @method isFF
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.browser.isFF );
    */
   browser.isFF = (function () {
     return /Firefox/i.test(ua);
@@ -234,6 +239,7 @@
    * @method isOpera
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.browser.isOpera );
    */
   browser.isOpera = (function () {
     return ( /Opera/i.test(ua) || /OPR\//i.test(ua) );
@@ -246,6 +252,7 @@
    * @method isChrome
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.browser.isChrome );
    */
   browser.isChrome = (function () {
     return ( !browser.isOpera && /Chrome/i.test(ua) );
@@ -258,6 +265,7 @@
    * @method isSafari
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.browser.isSafari );
    */
   browser.isSafari = (function () {
     return ( !/Chrome/i.test(ua) && /Safari/i.test(ua) );
@@ -270,6 +278,7 @@
    * @method getIEVersion
    * @returns {Number} return version float number
    * @example
+   * console.log( aid.browser.getIEVersion() );
    */
   browser.getIEVersion = function () {
     if (browser.isIE) {
@@ -286,6 +295,7 @@
    * @method getFFVersion
    * @returns {Number} return version float number
    * @example
+   * console.log( aid.browser.getFFVersion() );
    */
   browser.getFFVersion = function () {
     if (browser.isFF) {
@@ -301,6 +311,7 @@
    * @method getOperaVersion
    * @returns {Number} return version float number
    * @example
+   * console.log( aid.browser.getOperaVersion() );
    */
   browser.getOperaVersion = function () {
     if (browser.isOpera) {
@@ -320,6 +331,7 @@
    * @method getChromeVersion
    * @returns {Number} return version float number
    * @example
+   * console.log( aid.browser.getChromeVersion() );
    */
   browser.getChromeVersion = function () {
     if (browser.isChrome) {
@@ -335,6 +347,7 @@
    * @method getSafariVersion
    * @returns {Number} return version float number
    * @example
+   * console.log( aid.browser.getSafariVersion() );
    */
   browser.getSafariVersion = function () {
     if (browser.isSafari) {
@@ -349,8 +362,10 @@
    * @static
    * @method getIECompatibility
    * @param {String} optionUserAgentStr
-   * @returns {Object} return { isIE:true/false, isCompatibilityMode:true/false, compatibilityVersion:number }
+   * @returns {Object} return { isIE: Boolean, isCompatibilityMode: Boolean, compatibilityVersion: Number }
    * @example
+   * console.log( aid.browser.getIECompatibility() );
+   * console.log( aid.browser.getIECompatibility('mozilla/5.0 (windows nt 6.1; wow64) applewebkit/537.36 (khtml, like gecko) hrome/39.0.2171.65 safari/537.36') );
    */
   browser.getIECompatibility = function (optionUserAgentStr) {
     var ua = (optionUserAgentStr) ? optionUserAgentStr : global.navigator.userAgent.toLowerCase(),
@@ -365,25 +380,68 @@
 
     if (!regex_msie.test(ua) && !regex_msie11.test(ua)) {
       // not IE
-      return {isIE: false, isCompatibilityMode: false, compatibilityVersion: -1};
+      return {
+        isIE: false, 
+        isCompatibilityMode: false, 
+        compatibilityVersion: -1
+      };
     }
+
     if (regex_msie11.test(ua) && regex_trident7.test(ua)) {
       // IE11 standard
-      return {isIE: true, isCompatibilityMode: false, compatibilityVersion: -1};
+      return {
+        isIE: true, 
+        isCompatibilityMode: false, 
+        compatibilityVersion: -1
+      };
     }
+
     if (regex_msie.test(ua) && regex_trident7.test(ua)) {
       // IE11 compatibility mode
-      if (regex_msie7.test(ua)) return {isIE: true, isCompatibilityMode: true, compatibilityVersion: 7};
-      if (regex_msie8.test(ua)) return {isIE: true, isCompatibilityMode: true, compatibilityVersion: 8};
-      if (regex_msie9.test(ua)) return {isIE: true, isCompatibilityMode: true, compatibilityVersion: 9};
-      if (regex_msie10.test(ua)) return {isIE: true, isCompatibilityMode: true, compatibilityVersion: 10};
+      if (regex_msie7.test(ua))
+        return {
+          isIE: true, 
+          isCompatibilityMode: true, 
+          compatibilityVersion: 7
+        };
+
+      if (regex_msie8.test(ua))
+        return {
+          isIE: true, 
+          isCompatibilityMode: true, 
+          compatibilityVersion: 8
+        };
+
+      if (regex_msie9.test(ua))
+        return {
+          isIE: true, 
+          isCompatibilityMode: true, 
+          compatibilityVersion: 9
+        };
+
+      if (regex_msie10.test(ua))
+        return {
+          isIE: true, 
+          isCompatibilityMode: true, 
+          compatibilityVersion: 10
+        };
     }
+
     if (regex_msie7.test(ua) && regex_trident.test(ua)) {
       // IE8 ~ 10 compatibility mode
-      return {isIE: true, isCompatibilityMode: true, compatibilityVersion: 7};
+      return {
+        isIE: true, 
+        isCompatibilityMode: true, 
+        compatibilityVersion: 7
+      };
     }
+
     // IE8 ~ 10 standard
-    return {isIE: true, isCompatibilityMode: false, compatibilityVersion: -1};
+    return {
+      isIE: true, 
+      isCompatibilityMode: false, 
+      compatibilityVersion: -1
+    };
   };
 
   /**
@@ -393,6 +451,7 @@
    * @method isSupportDraggable
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.browser.isSupportDraggable() );
    */
   browser.isSupportDraggable = function () {
     var div = document.createElement('div');
@@ -406,6 +465,7 @@
    * @method isSupportDragAndDrop
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.browser.isSupportDragAndDrop() );
    */
   browser.isSupportDragAndDrop = function () {
     var div = document.createElement('div');
@@ -419,6 +479,7 @@
    * @method isSupportFileApi
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.browser.isSupportFileApi() );
    */
   browser.isSupportFileApi = function () {
     return !!(global.File && global.FileReader && global.FileList && global.Blob);
@@ -431,6 +492,7 @@
    * @method isChromeExtension
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.browser.isChromeExtension() );
    */
   browser.isChromeExtension = (function () {
     if (browser.isChrome && window.chrome) {
@@ -451,6 +513,7 @@
    * @method getCookie
    * @returns {String} return string
    * @example
+   * console.log( aid.browser.getCookie('sampleCookieKey') );
    */
   browser.getCookie = function (key) {
     var cookieArr = document.cookie.split('; '),
@@ -474,6 +537,7 @@
    * @static
    * @method setCookie
    * @example
+   * aid.browser.setCookie('sampleCookieKey', 'sampleValue', 3600, '/samplePath', 'sample.com');
    */
   browser.setCookie = function (key, value, expireSecond, path, domain) {
     var expires = '',
@@ -537,6 +601,7 @@
    * @method getUriParam
    * @returns {String} return string
    * @example
+   * console.log( aid.string.getUriParam('http://www.google.com?name=foo&age=99&address=seoul', 'name') ); // 'foo'
    */
   string.getUriParam = function (uri, paramName) {
     var str = uri;
@@ -564,6 +629,7 @@
    * @method getUriParams
    * @returns {Object} return object
    * @example
+   * console.log( aid.string.getUriParams('http://www.google.com?name=foo&age=99&address=seoul') ); // {name: 'foo', age: '99', address: 'seoul'}
    */
   string.getUriParams = function (uri) {
     var str = uri;
@@ -592,6 +658,7 @@
    * @method getUriCombinedParams
    * @returns {String} return string
    * @example
+   * console.log( aid.string.getUriCombinedParams('http://www.google.com', {name: "foo", age: "99", address: "seoul"}) ) // http://www.google.com?name=foo&age=99&address=seoul
    */
   string.getUriCombinedParams = function (uri, params) {
     if (!uri) return '';
