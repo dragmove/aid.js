@@ -567,6 +567,29 @@
   };
 
   /**
+   * check string has unique characters
+   *
+   * @static
+   * @method hasUniqueChars
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.string.hasUniqueChars('12345') );
+   */
+  string.hasUniqueChars = function(str) {
+    if(!str.length) return true;
+
+    var obj = {}, char = '';
+    for(var i=0,max=str.length; i<max; i++) {
+      char = str.charAt(i);
+
+      if( obj[char] === true ) return false;
+      obj[char] = true;
+    }
+
+    return true;
+  };
+
+  /**
    * check email string.
    *
    * @static

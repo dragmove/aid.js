@@ -23,6 +23,20 @@ describe('aid.js', function () {
       });
     });
 
+    describe('.hasUniqueChars()', function () {
+      it('input "abcdefghijklmnopqrstuvwxyz", return true.', function () {
+        expect( string.hasUniqueChars("abcdefghijklmnopqrstuvwxyz") ).toEqual(true);
+      });
+
+      it('input "abcdefghijklmnopqrstuvwxyzz", return false.', function () {
+        expect( string.hasUniqueChars("abcdefghijklmnopqrstuvwxyzz") ).toEqual(false);
+      });
+
+      it('input "123451", return false.', function () {
+        expect( string.hasUniqueChars("123451") ).toEqual(false);
+      });
+    });
+
     describe('.isEmail()', function () {
       it('input "dragmove@naver.com", return true.', function () {
         expect( string.isEmail("dragmove@naver.com") ).toEqual(true);
