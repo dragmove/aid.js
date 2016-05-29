@@ -573,7 +573,7 @@
    * @method hasUniqueChars
    * @returns {Boolean} return boolean
    * @example
-   * console.log( aid.string.hasUniqueChars('12345') );
+   * console.log( aid.string.hasUniqueChars('abcdea') );
    */
   string.hasUniqueChars = function(str) {
     if(!str.length) return true;
