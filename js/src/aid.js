@@ -943,6 +943,8 @@
    * @example
    */
   array.indexOf = function (array, target) {
+    if( !aid.isArray(array) ) return -1;
+
     for (var i = 0, max = array.length; i < max; ++i) {
       if (array[i] === target) return i;
     }

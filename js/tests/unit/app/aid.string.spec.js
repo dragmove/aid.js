@@ -145,8 +145,10 @@ describe('aid.js', function () {
       });
     });
     
-    /*
     describe('.isValidYoutubeVideoId()', function () {
+      // TODO
+
+      /*
       it('input "", return false', function () {
         expect( string.isValidYoutubeVideoId('') ).toEqual(false);
       });
@@ -163,7 +165,15 @@ describe('aid.js', function () {
         expect( string.isValidYoutubeVideoId('9R-VcUReR8s') ).toEqual(true);
         expect( string.isValidYoutubeVideoId('DAz_W_W7C9U') ).toEqual(true);
       });
+      */
     });
-    */
+
+    describe('.getObjCheckYoutubeURI()', function () {
+      // TODO
+    });
+
+    describe('.getObjCheckTwitchURI()', function () {
+      // TODO
+    });
   });
 });

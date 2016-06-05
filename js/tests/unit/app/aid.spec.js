@@ -328,6 +328,10 @@ describe('aid.js', function () {
       });
     });
 
+    describe('.inherit()', function() {
+      // TODO
+    });
+
     describe('.createStack()', function () {
       var stack = aid.createStack();
 
