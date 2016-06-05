@@ -386,5 +386,13 @@ describe('aid.js', function () {
         expect( val ).toEqual(undefined);
       });
     });
+
+    describe('.createQueue()', function () {
+      // TODO
+    });
+
+    describe('.createLinkedList()', function () {
+      // TODO
+    });
   });
 });
