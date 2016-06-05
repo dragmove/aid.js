@@ -768,7 +768,7 @@
       type: 'youtube',
       uri: uri,
       youtubeId: youtubeId,
-      isValidYoutubeURI: isValidURI
+      isValidURI: isValidURI
     };
   };
 
@@ -782,7 +782,7 @@
    */
   string.getObjCheckTwitchURI = function (uri) {
     /*
-     + Live
+     + Live Video
      https://www.twitch.tv/surrenderhs // channel link
      https://player.twitch.tv/?channel=surrenderhs // iframe, Flash player
      https://www.twitch.tv/surrenderhs/chat?popout= // iframe chatting
