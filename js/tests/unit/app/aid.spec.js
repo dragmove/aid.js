@@ -329,7 +329,32 @@ describe('aid.js', function () {
     });
 
     describe('.inherit()', function() {
-      // TODO
+      var Parent = function() {
+        this.name = 'daddy';
+      };
+      Parent.prototype.getName = function() {
+        return this.name;
+      };
+
+      var Child = function() {
+        this.name = 'son';
+      };
+
+      aid.inherit(Child, Parent);
+
+      var child = new Child();
+
+      it('child has getName() method', function () {
+        expect( typeof child.getName ).toEqual('function');
+      });
+
+      it('child.getName() is "son"', function () {
+        expect( child.getName() ).toEqual( 'son' );
+      });
+
+      it('child.hasOwnProperty("name") is true', function () {
+        expect( child.hasOwnProperty('name') ).toEqual( true );
+      });
     });
 
     describe('.createStack()', function () {
