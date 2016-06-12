@@ -35,5 +35,39 @@ describe('aid.js', function () {
     describe('.getMatrixArr()', function () {
       // TODO
     });
+
+    describe('.binaryIndexOf()', function () {
+      function compare(a, b) {
+        if( a < b ) return -1;
+        if( a > b ) return 1;
+        return 0;
+      }
+
+      it('if array is not array, return -1', function () {
+        expect( array.binaryIndexOf(99, 99) ).toEqual(-1);
+      });
+
+      it('if array length is 0, return -1', function () {
+        expect( array.binaryIndexOf([], 99) ).toEqual(-1);
+      });
+
+      it('if there is not element in array, return -1', function () {
+        var arr = [0, 2, 4, 6, 8, 1, 3, 5, 7, 9]
+        arr.sort(compare);
+        expect( array.binaryIndexOf(arr, 3.5) ).toEqual(-1);
+      });
+      
+      it('if elements in array are sorted, return index of element', function () {
+        var arr = [0, 2, 4, 6, 8, 1, 3, 5, 7, 9]
+        arr.sort(compare);
+        expect( array.binaryIndexOf(arr, 7) ).toEqual(7);
+      });
+
+      it('if elements in array are sorted, return index of element', function () {
+        var arr = ['b', 'a', 'd', 'c', 'e', 'g', 'f'];
+        arr.sort(compare);
+        expect( array.binaryIndexOf(arr, 'c') ).toEqual(2);
+      });
+    });
   });
 });

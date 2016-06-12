@@ -984,6 +984,7 @@
    */
   array.binaryIndexOf = function(sortedArray, target) {
     if( !aid.isArray(sortedArray) || sortedArray.length <= 0 ) return -1;
+    if( !aid.existy(target) ) return -1;
 
     var first = 0,
         last = sortedArray.length - 1,
