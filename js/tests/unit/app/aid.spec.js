@@ -327,5 +327,97 @@ describe('aid.js', function () {
         expect( aid.isFunction(func) ).toEqual(true);
       });
     });
+
+    describe('.inherit()', function() {
+      var Parent = function() {
+        this.name = 'daddy';
+      };
+      Parent.prototype.getName = function() {
+        return this.name;
+      };
+
+      var Child = function() {
+        this.name = 'son';
+      };
+
+      aid.inherit(Child, Parent);
+
+      var child = new Child();
+
+      it('child has getName() method', function () {
+        expect( typeof child.getName ).toEqual('function');
+      });
+
+      it('child.getName() is "son"', function () {
+        expect( child.getName() ).toEqual( 'son' );
+      });
+
+      it('child.hasOwnProperty("name") is true', function () {
+        expect( child.hasOwnProperty('name') ).toEqual( true );
+      });
+    });
+
+    describe('.createStack()', function () {
+      var stack = aid.createStack();
+
+      it('created Stack is exist', function () {
+        expect( stack ).not.toEqual(null);
+      });
+
+      it('new statck.length() is 0', function () {
+        expect( stack.length() ).toEqual(0);
+      });
+
+      it('new stack.peek() is undefined', function () {
+        expect( stack.peek() ).toEqual(undefined);
+      });
+
+      it('after execute stack.push("foo"), stack.length() is increased', function () {
+        stack.push('foo');
+        expect( stack.length() ).toEqual(1);
+        expect( stack.peek() ).toEqual('foo');
+
+        stack.push('bar');
+        expect( stack.length() ).toEqual(2);
+        expect( stack.peek() ).toEqual('bar');
+      });
+
+      it('after execute stack.pop(), stack.length() is decreased.', function () {
+        var val = stack.pop();
+        expect( val ).toEqual('bar');
+        expect( stack.peek() ).toEqual('foo');
+        expect( stack.length() ).toEqual(1);
+
+        val = stack.pop();
+        expect( val ).toEqual('foo');
+        expect( stack.peek() ).toEqual(undefined);
+        expect( stack.length() ).toEqual(0);
+
+        val = stack.pop();
+        expect( val ).toEqual(undefined);
+        expect( stack.length() ).toEqual(0);
+      });
+
+      it('after execute stack.clear(), stack.length() is 0.', function () {
+        for(var i=0; i<5; ++i) {
+          stack.push(i);
+        }
+        expect( stack.length() ).toEqual(5);
+
+        stack.clear();
+        expect( stack.length() ).toEqual(0);
+
+        var val = stack.pop();
+        expect( val ).toEqual(undefined);
+      });
+    });
+
+    describe('.createQueue()', function () {
+      // TODO
+    });
+
+    describe('.createLinkedList()', function () {
+      // TODO
+    });
   });
 });

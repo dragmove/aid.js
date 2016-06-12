@@ -144,5 +144,36 @@ describe('aid.js', function () {
         expect( string.getUriCombinedParams('http://www.google.com', params) ).toEqual("http://www.google.com?name=foo&age=99&address=seoul");
       });
     });
+    
+    describe('.isValidYoutubeVideoId()', function () {
+      // TODO
+
+      /*
+      it('input "", return false', function () {
+        expect( string.isValidYoutubeVideoId('') ).toEqual(false);
+      });
+
+      it('input gathered youtube ids, return true', function () {
+        expect( string.isValidYoutubeVideoId('0lUSlV37-f8') ).toEqual(true);
+        expect( string.isValidYoutubeVideoId('QYhgIUi4kyc') ).toEqual(true);
+        expect( string.isValidYoutubeVideoId('2xhXTk0GW5A') ).toEqual(true);
+        expect( string.isValidYoutubeVideoId('Tl5toysUhzk') ).toEqual(true);
+        expect( string.isValidYoutubeVideoId('_cBo5qlczV0') ).toEqual(true);
+        expect( string.isValidYoutubeVideoId('GZjt_sA2eso') ).toEqual(true);
+        expect( string.isValidYoutubeVideoId('sno_genwMz8') ).toEqual(true);
+        expect( string.isValidYoutubeVideoId('A_4iqJn_OuM') ).toEqual(true);
+        expect( string.isValidYoutubeVideoId('9R-VcUReR8s') ).toEqual(true);
+        expect( string.isValidYoutubeVideoId('DAz_W_W7C9U') ).toEqual(true);
+      });
+      */
+    });
+
+    describe('.getObjCheckYoutubeURI()', function () {
+      // TODO
+    });
+
+    describe('.getObjCheckTwitchURI()', function () {
+      // TODO
+    });
   });
 });

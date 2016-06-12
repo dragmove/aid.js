@@ -22,7 +22,7 @@
     array = {},
     element = {};
 
-  var ua = global.navigator.userAgent;
+  var _ua = global.navigator.userAgent;
 
   /**
    * get object is null/undefined or other
@@ -177,7 +177,7 @@
    * console.log( aid.platform.isWindow );
    */
   platform.isWindow = (function () {
-    return /Windows/i.test(ua);
+    return /Windows/i.test(_ua);
   }());
 
   /**
@@ -190,7 +190,7 @@
    * console.log( aid.platform.isMac );
    */
   platform.isMac = (function () {
-    return /Macintosh/i.test(ua);
+    return /Macintosh/i.test(_ua);
   }());
 
   /**
@@ -203,7 +203,7 @@
    * console.log( aid.platform.isUbuntu );
    */
   platform.isUbuntu = (function () {
-    return /Ubuntu/i.test(ua);
+    return /Ubuntu/i.test(_ua);
   }());
 
   /**
@@ -216,7 +216,7 @@
    * console.log( aid.browser.isIE );
    */
   browser.isIE = (function () {
-    return /msie/i.test(ua) || /trident/i.test(ua);
+    return /msie/i.test(_ua) || /trident/i.test(_ua);
   }());
 
   /**
@@ -229,7 +229,7 @@
    * console.log( aid.browser.isFF );
    */
   browser.isFF = (function () {
-    return /Firefox/i.test(ua);
+    return /Firefox/i.test(_ua);
   }());
 
   /**
@@ -242,7 +242,7 @@
    * console.log( aid.browser.isOpera );
    */
   browser.isOpera = (function () {
-    return ( /Opera/i.test(ua) || /OPR\//i.test(ua) );
+    return ( /Opera/i.test(_ua) || /OPR\//i.test(_ua) );
   }());
 
   /**
@@ -255,7 +255,7 @@
    * console.log( aid.browser.isChrome );
    */
   browser.isChrome = (function () {
-    return ( !browser.isOpera && /Chrome/i.test(ua) );
+    return ( !browser.isOpera && /Chrome/i.test(_ua) );
   }());
 
   /**
@@ -268,7 +268,7 @@
    * console.log( aid.browser.isSafari );
    */
   browser.isSafari = (function () {
-    return ( !/Chrome/i.test(ua) && /Safari/i.test(ua) );
+    return ( !/Chrome/i.test(_ua) && /Safari/i.test(_ua) );
   }());
 
   /**
@@ -282,8 +282,8 @@
    */
   browser.getIEVersion = function () {
     if (browser.isIE) {
-      if (/msie (\d+\.\d+);/i.test(ua)) return parseFloat(RegExp.$1, 10);
-      if (/trident.*rv:(\d+)\.(\d+)/i.test(ua)) return parseFloat(RegExp.$1, 10);
+      if (/msie (\d+\.\d+);/i.test(_ua)) return parseFloat(RegExp.$1, 10);
+      if (/trident.*rv:(\d+)\.(\d+)/i.test(_ua)) return parseFloat(RegExp.$1, 10);
     }
     return -1;
   };
@@ -299,7 +299,7 @@
    */
   browser.getFFVersion = function () {
     if (browser.isFF) {
-      if (/Firefox[\/\s](\d+\.\d+)/i.test(ua)) return parseFloat(RegExp.$1, 10);
+      if (/Firefox[\/\s](\d+\.\d+)/i.test(_ua)) return parseFloat(RegExp.$1, 10);
     }
     return -1;
   };
@@ -315,11 +315,11 @@
    */
   browser.getOperaVersion = function () {
     if (browser.isOpera) {
-      if (/Opera/i.test(ua)) {
-        if (/Version[\/\s](\d+\.\d+)/i.test(ua)) return parseFloat(RegExp.$1, 10);
-        if (/Opera[\/\s](\d+\.\d+)/i.test(ua)) return parseFloat(RegExp.$1, 10);
+      if (/Opera/i.test(_ua)) {
+        if (/Version[\/\s](\d+\.\d+)/i.test(_ua)) return parseFloat(RegExp.$1, 10);
+        if (/Opera[\/\s](\d+\.\d+)/i.test(_ua)) return parseFloat(RegExp.$1, 10);
       }
-      if (/OPR[\/\s](\d+\.\d+)/i.test(ua)) return parseFloat(RegExp.$1, 10);
+      if (/OPR[\/\s](\d+\.\d+)/i.test(_ua)) return parseFloat(RegExp.$1, 10);
     }
     return -1;
   };
@@ -335,7 +335,7 @@
    */
   browser.getChromeVersion = function () {
     if (browser.isChrome) {
-      if (/Chrome[\/\s](\d+\.\d+)/i.test(ua)) return parseFloat(RegExp.$1, 10);
+      if (/Chrome[\/\s](\d+\.\d+)/i.test(_ua)) return parseFloat(RegExp.$1, 10);
     }
     return -1;
   };
@@ -351,7 +351,7 @@
    */
   browser.getSafariVersion = function () {
     if (browser.isSafari) {
-      if (/Version[\/\s](\d+\.\d+)/i.test(ua)) return parseFloat(RegExp.$1, 10);
+      if (/Version[\/\s](\d+\.\d+)/i.test(_ua)) return parseFloat(RegExp.$1, 10);
     }
     return -1;
   };
@@ -397,6 +397,7 @@
     }
 
     if (regex_msie.test(ua) && regex_trident7.test(ua)) {
+
       // IE11 compatibility mode
       if (regex_msie7.test(ua))
         return {
@@ -768,7 +769,7 @@
       type: 'youtube',
       uri: uri,
       youtubeId: youtubeId,
-      isValidYoutubeURI: isValidURI
+      isValidURI: isValidURI
     };
   };
 
@@ -782,7 +783,7 @@
    */
   string.getObjCheckTwitchURI = function (uri) {
     /*
-     + Live
+     + Live Video
      https://www.twitch.tv/surrenderhs // channel link
      https://player.twitch.tv/?channel=surrenderhs // iframe, Flash player
      https://www.twitch.tv/surrenderhs/chat?popout= // iframe chatting
@@ -943,6 +944,8 @@
    * @example
    */
   array.indexOf = function (array, target) {
+    if( !aid.isArray(array) ) return -1;
+
     for (var i = 0, max = array.length; i < max; ++i) {
       if (array[i] === target) return i;
     }
