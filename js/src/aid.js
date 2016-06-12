@@ -971,6 +971,37 @@
     return arr;
   };
 
+  /**
+   * binary search version of Array.indexOf
+   *
+   * @static
+   * @method binaryIndexOf
+   * @returns {Number} return Int number
+   * @example
+   */
+  array.binaryIndexOf = function(sortedArray, target) {
+    if( !aid.isArray(sortedArray) || sortedArray.length <= 0 ) return -1;
+
+    var first = 0,
+        last = sortedArray.length - 1,
+        middle;
+
+    while(first <= last) {
+        middle = Math.floor( (first + last) / 2 );
+
+        if( target === sortedArray[middle] ) {
+            return middle;
+        }else{
+            if( target < sortedArray[middle] ) {
+                last = middle - 1;
+            }else{
+                first = middle + 1;
+            }
+        }
+    }
+    return -1;
+  };
+
   /*
    * Data Structure
    */
