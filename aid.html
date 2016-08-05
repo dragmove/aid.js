@@ -1,6 +1,6 @@
 <!doctype html>
 <html>
-<head lang="ko">
+<head lang="en">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>aid.js</title>
@@ -30,10 +30,121 @@
         $(document).ready(init);
 
         function init() {
+
+            /*
+             * combine function that apply mixin functions to Class
+             */
+            function extend(destination, source) {
+                for(var key in source) {
+                    if( source.hasOwnProperty(key) ) {
+                        destination[key] = source[key];
+                    }
+                }
+
+                return destination;
+            }
+
+            /*
+             * mixin functions
+             */
+            var circleFns = {
+                area: function() {
+                    return Math.PI * this.radius * this.radius;
+                },
+                grow: function() {
+                    console.log('grow');
+                    this.radius++;
+                },
+                shrink: function() {
+                    this.radius--;
+                }
+            },
+            clickableFns = {
+                hover: function() {
+                    console.log('hover');
+                },
+                press: function() {
+                    console.log('button pressed');
+                },
+                release: function() {
+                    console.log('button released');
+                },
+                fire: function() {
+                    console.log('fire');
+                    if(this.action) this.action.fire();
+                }
+            };
+
+            /*
+             * example : set mixin functions to Class
+             */
+            function RoundBtn(radius, label) {
+                this.radius = radius;
+                this.label = label;
+            }
+
+            extend(RoundBtn.prototype, circleFns);
+            extend(RoundBtn.prototype, clickableFns);
+
+            var roundBtn = new RoundBtn(3, 'send');
+            roundBtn.grow();
+            roundBtn.fire();
+
+            /*
+             * example : implement mixin structure with no extend() function.
+             */
+            var withCircle = function() {
+                this.area = function() {
+                    return Math.PI * this.radius * this.radius;
+                };
+
+                this.grow = function() {
+                    this.radius++;
+                };
+
+                this.shrink = function() {
+                    this.radius--;
+                };
+            },
+            withClickable = function() {
+                this.hover = function() {
+                    console.log('hover');
+                };
+
+                this.press = function() {
+                    console.log('press');
+                };
+
+                this.release = function() {
+                    console.log('release');
+                };
+
+                this.fire = function() {
+                    console.log('fire');
+                };
+            };
+
+            var RoundButton = function(radius, label, action) {
+                this.radius = radius;
+                this.label = label;
+                this.action = action;
+            };
+
+            withCircle.call(RoundButton.prototype);
+            withClickable.call(RoundButton.prototype);
+
+            var button = new RoundButton(4, 'yes!', function() {
+                return 'you said yes!';
+            });
+
+            button.hover();
+            button.press();
+            button.release();
+            button.fire();
         }
 
         function test_queue() {
-          // 
+          //
         }
 
         function test_linkedListNode() {
