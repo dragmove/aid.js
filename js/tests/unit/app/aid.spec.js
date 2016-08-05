@@ -328,6 +328,10 @@ describe('aid.js', function () {
       });
     });
 
+    describe('.extend()', function() {
+      // TODO
+    });
+
     describe('.inherit()', function() {
       var Parent = function() {
         this.name = 'daddy';

@@ -145,6 +145,24 @@
   };
 
   /**
+   * extend function
+   *
+   * @static
+   * @method extend
+   * @param {Object} prototype of class function
+   * @param {Object} object has variables or methods
+   * @example
+   */
+  aid.extend = function (destination, source) {
+    for (var key in source) {
+      if (source.hasOwnProperty(key)) {
+        destination[key] = source[key];
+      }
+    }
+    return destination;
+  };
+
+  /**
    * inherit Class function
    *
    * @static
@@ -381,8 +399,8 @@
     if (!regex_msie.test(ua) && !regex_msie11.test(ua)) {
       // not IE
       return {
-        isIE: false, 
-        isCompatibilityMode: false, 
+        isIE: false,
+        isCompatibilityMode: false,
         compatibilityVersion: -1
       };
     }
@@ -390,8 +408,8 @@
     if (regex_msie11.test(ua) && regex_trident7.test(ua)) {
       // IE11 standard
       return {
-        isIE: true, 
-        isCompatibilityMode: false, 
+        isIE: true,
+        isCompatibilityMode: false,
         compatibilityVersion: -1
       };
     }
@@ -401,29 +419,29 @@
       // IE11 compatibility mode
       if (regex_msie7.test(ua))
         return {
-          isIE: true, 
-          isCompatibilityMode: true, 
+          isIE: true,
+          isCompatibilityMode: true,
           compatibilityVersion: 7
         };
 
       if (regex_msie8.test(ua))
         return {
-          isIE: true, 
-          isCompatibilityMode: true, 
+          isIE: true,
+          isCompatibilityMode: true,
           compatibilityVersion: 8
         };
 
       if (regex_msie9.test(ua))
         return {
-          isIE: true, 
-          isCompatibilityMode: true, 
+          isIE: true,
+          isCompatibilityMode: true,
           compatibilityVersion: 9
         };
 
       if (regex_msie10.test(ua))
         return {
-          isIE: true, 
-          isCompatibilityMode: true, 
+          isIE: true,
+          isCompatibilityMode: true,
           compatibilityVersion: 10
         };
     }
@@ -431,16 +449,16 @@
     if (regex_msie7.test(ua) && regex_trident.test(ua)) {
       // IE8 ~ 10 compatibility mode
       return {
-        isIE: true, 
-        isCompatibilityMode: true, 
+        isIE: true,
+        isCompatibilityMode: true,
         compatibilityVersion: 7
       };
     }
 
     // IE8 ~ 10 standard
     return {
-      isIE: true, 
-      isCompatibilityMode: false, 
+      isIE: true,
+      isCompatibilityMode: false,
       compatibilityVersion: -1
     };
   };
@@ -576,14 +594,14 @@
    * @example
    * console.log( aid.string.hasUniqueChars('abcdea') );
    */
-  string.hasUniqueChars = function(str) {
-    if(!str.length) return true;
+  string.hasUniqueChars = function (str) {
+    if (!str.length) return true;
 
     var obj = {}, char = '';
-    for(var i=0,max=str.length; i<max; i++) {
+    for (var i = 0, max = str.length; i < max; i++) {
       char = str.charAt(i);
 
-      if( obj[char] === true ) return false;
+      if (obj[char] === true) return false;
       obj[char] = true;
     }
 
@@ -944,7 +962,7 @@
    * @example
    */
   array.indexOf = function (array, target) {
-    if( !aid.isArray(array) ) return -1;
+    if (!aid.isArray(array)) return -1;
 
     for (var i = 0, max = array.length; i < max; ++i) {
       if (array[i] === target) return i;
@@ -982,26 +1000,26 @@
    * @returns {Number} return Int number
    * @example
    */
-  array.binaryIndexOf = function(sortedArray, target) {
-    if( !aid.isArray(sortedArray) || sortedArray.length <= 0 ) return -1;
-    if( !aid.existy(target) ) return -1;
+  array.binaryIndexOf = function (sortedArray, target) {
+    if (!aid.isArray(sortedArray) || sortedArray.length <= 0) return -1;
+    if (!aid.existy(target)) return -1;
 
     var first = 0,
-        last = sortedArray.length - 1,
-        middle;
+      last = sortedArray.length - 1,
+      middle;
 
-    while(first <= last) {
-        middle = Math.floor( (first + last) / 2 );
+    while (first <= last) {
+      middle = Math.floor((first + last) / 2);
 
-        if( target === sortedArray[middle] ) {
-            return middle;
-        }else{
-            if( target < sortedArray[middle] ) {
-                last = middle - 1;
-            }else{
-                first = middle + 1;
-            }
+      if (target === sortedArray[middle]) {
+        return middle;
+      } else {
+        if (target < sortedArray[middle]) {
+          last = middle - 1;
+        } else {
+          first = middle + 1;
         }
+      }
     }
     return -1;
   };
