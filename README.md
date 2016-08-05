@@ -16,6 +16,7 @@ Thanks to whoever use aid.js.
 
 * @Website : http://www.dragmove.com
 * @Blog : http://blog.naver.com/dragmove
+* @Blog (Wordpress) : http://dragmove.synology.me/wordpress/
 * @E-mail : dragmove@naver.com
 
 
