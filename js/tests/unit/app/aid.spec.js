@@ -421,7 +421,20 @@ describe('aid.js', function () {
     });
 
     describe('.createLinkedList()', function () {
-      // TODO
+      var linkedList = aid.createLinkedList();
+
+      it('created LinkedList is exist', function () {
+        expect( linkedList ).not.toEqual(null);
+      });
+
+      it('getAllNodes() return head node, when LinkedList created.', function () {
+        var node = linkedList.getAllNodes();
+        expect( node[0] ).toEqual( linkedList.head );
+      });
+
+      /*
+       * TODO - working
+       */
     });
   });
 });
