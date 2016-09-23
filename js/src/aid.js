@@ -1153,6 +1153,52 @@
   };
 
   /**
+   * check element is in viewport entirely.
+   *
+   * @static
+   * @method isEntirelyInViewport
+   * @param {element}
+   * @example
+   */
+  element.isEntirelyInViewport = function(_element) {
+    var ele = _element;
+    if (typeof jQuery === 'function' && ele instanceof jQuery) ele = ele.get(0);
+    if(!ele) return false;
+
+    var rect = ele.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
+    );
+  };
+
+  /**
+   * check element is in viewport partially.
+   *
+   * @static
+   * @method isPartiallyInViewport
+   * @param {element}
+   * @example
+   */
+  element.isPartiallyInViewport = function(_element) {
+    var ele = _element;
+    if (typeof jQuery === 'function' && ele instanceof jQuery) ele = ele.get(0);
+    if(!ele) return false;
+
+    var rect = ele.getBoundingClientRect(),
+      windowHeight = (window.innerHeight || document.documentElement.clientHeight),
+      windowWidth = (window.innerWidth || document.documentElement.clientWidth);
+
+    // http://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap
+    var vertInView = (rect.top <= windowHeight) && ((rect.top + rect.height) >= 0);
+    var horInView = (rect.left <= windowWidth) && ((rect.left + rect.width) >= 0);
+
+    return (vertInView && horInView);
+  };
+
+  /**
    * element text ellipsis function
    *
    * @static
