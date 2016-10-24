@@ -226,6 +226,7 @@
 
   /**
    * is iOS platform
+   * http://stackoverflow.com/questions/9038625/detect-if-device-is-ios/9039885#9039885
    *
    * @static
    * @method isIOS
@@ -235,6 +236,19 @@
    */
   platform.isIOS = (function () {
     return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  }());
+
+  /**
+   * is Android platform
+   *
+   * @static
+   * @method isAndroid
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.platform.isAndroid );
+   */
+  platform.isAndroid = (function () {
+    return /android/i.test(navigator.userAgent);
   }());
 
   /**
