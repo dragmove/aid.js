@@ -712,7 +712,7 @@
     }
     if (str === '') return uri;
 
-    uri = uri + '?' + str.substr(1);
+    uri = (uri.indexOf('?') >= 0) ? (uri + str) : (uri + '?' + str.substr(1));
     return uri;
   };
 
