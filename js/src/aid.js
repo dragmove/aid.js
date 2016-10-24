@@ -225,6 +225,19 @@
   }());
 
   /**
+   * is iOS platform
+   *
+   * @static
+   * @method isIOS
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.platform.isIOS );
+   */
+  platform.isIOS = (function () {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  }());
+
+  /**
    * is IE browser
    *
    * @static
