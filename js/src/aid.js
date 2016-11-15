@@ -18,6 +18,7 @@
     platform = {},
     browser = {},
     string = {},
+    math = {},
     date = {},
     array = {},
     element = {};
@@ -235,7 +236,7 @@
    * console.log( aid.platform.isIOS );
    */
   platform.isIOS = (function () {
-    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    return /iPad|iPhone|iPod/.test(_ua) && !window.MSStream;
   }());
 
   /**
@@ -248,7 +249,7 @@
    * console.log( aid.platform.isAndroid );
    */
   platform.isAndroid = (function () {
-    return /android/i.test(navigator.userAgent);
+    return /android/i.test(_ua);
   }());
 
   /**
@@ -931,6 +932,69 @@
   };
 
   /**
+   * get aspectFill content size
+   *
+   * @static
+   * @method getSizeAspectFill
+   * @returns {Object} return { width: Number, height: Number }
+   * @example
+   * console.log( aid.math.getSizeAspectFill(960, 640, window.innerWidth, window.innerHeight) );
+   */
+  math.getSizeAspectFill = function(srcWidth, srcHeight, maxWidth, maxHeight) {
+    var modifiedSizeW = maxWidth,
+      modifiedSizeH = Math.ceil((maxWidth / srcWidth) * srcHeight);
+
+    if(modifiedSizeH < maxHeight) {
+      modifiedSizeW = Math.ceil((maxHeight / srcHeight) * srcWidth);
+      modifiedSizeH = maxHeight;
+    }
+
+    return {
+      width: modifiedSizeW,
+      height: modifiedSizeH
+    };
+  };
+
+  /**
+   * get aspectFit content size
+   *
+   * @static
+   * @method getSizeAspectFit
+   * @returns {Object} return { width: Number, height: Number }
+   * @example
+   * console.log( aid.math.getSizeAspectFit(960, 640, window.innerWidth, window.innerHeight) );
+   */
+  math.getSizeAspectFit = function(srcWidth, srcHeight, maxWidth, maxHeight) {
+    var ratio = Math.min( maxWidth / srcWidth, maxHeight / srcHeight ),
+      modifiedSizeW = Math.ceil(srcWidth * ratio),
+      modifiedSizeH = Math.ceil(srcHeight * ratio);
+
+    return {
+      width: modifiedSizeW,
+      height: modifiedSizeH
+    };
+  };
+
+  /**
+   * get widthFit content size
+   *
+   * @static
+   * @method getSizeWidthFit
+   * @returns {Object} return { width: Number, height: Number }
+   * @example
+   * console.log( aid.math.getSizeWidthFit(960, 640, window.innerWidth) );
+   */
+  math.getSizeWidthFit = function(srcWidth, srcHeight, maxWidth) {
+    let modifiedSizeW = maxWidth,
+      modifiedSizeH = Math.ceil((maxWidth / srcWidth) * srcHeight);
+
+    return {
+      width: modifiedSizeW,
+      height: modifiedSizeH
+    };
+  };
+
+  /**
    * days name
    *
    * @static
@@ -1273,6 +1337,7 @@
   aid.platform = platform;
   aid.browser = browser;
   aid.string = string;
+  aid.math = math;
   aid.date = date;
   aid.array = array;
   aid.element = element;
