@@ -932,6 +932,90 @@
   };
 
   /**
+   * get prefixed document property string
+   *
+   * @static
+   * @method getDocumentPrefixedProperty
+   * @returns {Object} return string
+   * @example
+   * console.log( aid.string.getPrefixedProperty('visibilityState', true) ); // if call function in webkit browser, return 'webkitVisibilityState'.
+   * console.log( aid.string.getPrefixedProperty('visibilitychange', false) ); // if call function in webkit browser, return 'webkitvisibilitychange'.
+   * console.log( aid.string.getPrefixedProperty('12345', false) ); // if browser doesn't have property, return '';
+   */
+  string.getDocumentPrefixedProperty = function (propertyName, isPropertyFirstCharToUpperCase) {
+    if (propertyName in document) return propertyName;
+
+    var PREFIXES = ['webkit', 'moz', 'ms', 'o'],
+      isPropFirstCharUppercase = (isPropertyFirstCharToUpperCase === true) ? true : false;
+
+    var prop = '';
+    for (var i = 0, max = PREFIXES.length; i < max; i++) {
+      prop = (isPropFirstCharUppercase) ? propertyName.charAt(0).toUpperCase() + propertyName.slice(1) : propertyName;
+
+      prop = PREFIXES[i] + prop;
+      if( prop in document  ) return prop;
+    }
+
+    return '';
+  };
+
+  /**
+   * get prefixed document property string
+   *
+   * @static
+   * @method getDocumentPrefixedProperty
+   * @returns {Object} return string
+   * @example
+   * console.log( aid.string.getDocumentPrefixedProperty('visibilityState', true) ); // return 'visibilityState' or 'webkitVisibilityState' or 'mozVisibilityState' or 'msVisibilityState' or 'oVisibilityState'.
+   * console.log( aid.string.getDocumentPrefixedProperty('visibilitychange', false) ); // return 'visibilitychange' or 'webkitvisibilitychange', or 'mozvisibilitychange' or 'msvisibilitychange' or 'webkitvisibilitychange'.
+   * console.log( aid.string.getDocumentPrefixedProperty('12345', false) ); // if browser doesn't have property, return ''.
+   */
+  string.getDocumentPrefixedProperty = function (propertyName, isPropertyFirstCharToUpperCase) {
+    if (propertyName in document) return propertyName;
+
+    var PREFIXES = ['webkit', 'moz', 'ms', 'o'],
+      isPropFirstCharUppercase = (isPropertyFirstCharToUpperCase === true) ? true : false;
+
+    var prop = '';
+    for (var i = 0, max = PREFIXES.length; i < max; i++) {
+      prop = (isPropFirstCharUppercase) ? propertyName.charAt(0).toUpperCase() + propertyName.slice(1) : propertyName;
+
+      prop = PREFIXES[i] + prop;
+      if( prop in document  ) return prop;
+    }
+
+    return '';
+  };
+
+  /**
+   * get prefixed element style property string
+   *
+   * @static
+   * @method getElementPrefixedStyle
+   * @returns {Object} return string
+   * @example
+   * console.log( aid.string.getElementPrefixedStyle('transform', true) ); // return 'transform' or 'wekitTransform' or 'mozTransform' or 'msTransform' or 'oTransform'.
+   * console.log( aid.string.getElementPrefixedStyle('12345', false) ); // if browser doesn't have style property, return ''.
+   */
+  string.getElementPrefixedStyle = function (propertyName, isPropertyFirstCharToUpperCase) {
+    var style = document.createElement('div').style;
+    if (propertyName in style) return propertyName;
+
+    var PREFIXES = ['webkit', 'moz', 'ms', 'o'],
+      isPropFirstCharUppercase = (isPropertyFirstCharToUpperCase === true) ? true : false;
+
+    var prop = '';
+    for (var i = 0, max = PREFIXES.length; i < max; i++) {
+      prop = (isPropFirstCharUppercase) ? propertyName.charAt(0).toUpperCase() + propertyName.slice(1) : propertyName;
+
+      prop = PREFIXES[i] + prop;
+      if( prop in style  ) return prop;
+    }
+
+    return '';
+  };
+
+  /**
    * get aspectFill content size
    *
    * @static
@@ -940,11 +1024,11 @@
    * @example
    * console.log( aid.math.getSizeAspectFill(960, 640, window.innerWidth, window.innerHeight) );
    */
-  math.getSizeAspectFill = function(srcWidth, srcHeight, maxWidth, maxHeight) {
+  math.getSizeAspectFill = function (srcWidth, srcHeight, maxWidth, maxHeight) {
     var modifiedSizeW = maxWidth,
       modifiedSizeH = Math.ceil((maxWidth / srcWidth) * srcHeight);
 
-    if(modifiedSizeH < maxHeight) {
+    if (modifiedSizeH < maxHeight) {
       modifiedSizeW = Math.ceil((maxHeight / srcHeight) * srcWidth);
       modifiedSizeH = maxHeight;
     }
@@ -964,8 +1048,8 @@
    * @example
    * console.log( aid.math.getSizeAspectFit(960, 640, window.innerWidth, window.innerHeight) );
    */
-  math.getSizeAspectFit = function(srcWidth, srcHeight, maxWidth, maxHeight) {
-    var ratio = Math.min( maxWidth / srcWidth, maxHeight / srcHeight ),
+  math.getSizeAspectFit = function (srcWidth, srcHeight, maxWidth, maxHeight) {
+    var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight),
       modifiedSizeW = Math.ceil(srcWidth * ratio),
       modifiedSizeH = Math.ceil(srcHeight * ratio);
 
@@ -984,8 +1068,8 @@
    * @example
    * console.log( aid.math.getSizeWidthFit(960, 640, window.innerWidth) );
    */
-  math.getSizeWidthFit = function(srcWidth, srcHeight, maxWidth) {
-    let modifiedSizeW = maxWidth,
+  math.getSizeWidthFit = function (srcWidth, srcHeight, maxWidth) {
+    var modifiedSizeW = maxWidth,
       modifiedSizeH = Math.ceil((maxWidth / srcWidth) * srcHeight);
 
     return {
@@ -1251,10 +1335,10 @@
    * @param {element}
    * @example
    */
-  element.isEntirelyInViewport = function(_element) {
+  element.isEntirelyInViewport = function (_element) {
     var ele = _element;
     if (typeof jQuery === 'function' && ele instanceof jQuery) ele = ele.get(0);
-    if(!ele) return false;
+    if (!ele) return false;
 
     var rect = ele.getBoundingClientRect();
     return (
@@ -1273,10 +1357,10 @@
    * @param {element}
    * @example
    */
-  element.isPartiallyInViewport = function(_element) {
+  element.isPartiallyInViewport = function (_element) {
     var ele = _element;
     if (typeof jQuery === 'function' && ele instanceof jQuery) ele = ele.get(0);
-    if(!ele) return false;
+    if (!ele) return false;
 
     var rect = ele.getBoundingClientRect(),
       windowHeight = (window.innerHeight || document.documentElement.clientHeight),
