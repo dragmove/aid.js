@@ -938,36 +938,7 @@
    * @method getDocumentPrefixedProperty
    * @returns {Object} return string
    * @example
-   * console.log( aid.string.getPrefixedProperty('visibilityState', true) ); // if call function in webkit browser, return 'webkitVisibilityState'.
-   * console.log( aid.string.getPrefixedProperty('visibilitychange', false) ); // if call function in webkit browser, return 'webkitvisibilitychange'.
-   * console.log( aid.string.getPrefixedProperty('12345', false) ); // if browser doesn't have property, return '';
-   */
-  string.getDocumentPrefixedProperty = function (propertyName, isPropertyFirstCharToUpperCase) {
-    if (propertyName in document) return propertyName;
-
-    var PREFIXES = ['webkit', 'moz', 'ms', 'o'],
-      isPropFirstCharUppercase = (isPropertyFirstCharToUpperCase === true) ? true : false;
-
-    var prop = '';
-    for (var i = 0, max = PREFIXES.length; i < max; i++) {
-      prop = (isPropFirstCharUppercase) ? propertyName.charAt(0).toUpperCase() + propertyName.slice(1) : propertyName;
-
-      prop = PREFIXES[i] + prop;
-      if( prop in document  ) return prop;
-    }
-
-    return '';
-  };
-
-  /**
-   * get prefixed document property string
-   *
-   * @static
-   * @method getDocumentPrefixedProperty
-   * @returns {Object} return string
-   * @example
    * console.log( aid.string.getDocumentPrefixedProperty('visibilityState', true) ); // return 'visibilityState' or 'webkitVisibilityState' or 'mozVisibilityState' or 'msVisibilityState' or 'oVisibilityState'.
-   * console.log( aid.string.getDocumentPrefixedProperty('visibilitychange', false) ); // return 'visibilitychange' or 'webkitvisibilitychange', or 'mozvisibilitychange' or 'msvisibilitychange' or 'webkitvisibilitychange'.
    * console.log( aid.string.getDocumentPrefixedProperty('12345', false) ); // if browser doesn't have property, return ''.
    */
   string.getDocumentPrefixedProperty = function (propertyName, isPropertyFirstCharToUpperCase) {
