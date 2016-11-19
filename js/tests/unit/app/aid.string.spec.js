@@ -4,7 +4,6 @@ describe('aid.js', function () {
 
   describe('aid.string', function () {
     var string = aid.string;
-
     console.log('string :', string);
 
     describe('.trim()', function () {
@@ -178,14 +177,16 @@ describe('aid.js', function () {
       // TODO
     });
 
-    describe('.getProfixedProperty()', function() {
-      expect( string.getDocumentPrefixedProperty('visibilityState', true).toEqual('visibilityState') );
-      expect( string.getDocumentPrefixedProperty('visibilitychange', false).toEqual('visibilitychange') );
+    describe('.getDocumentPrefixedProperty()', function() {
+      it('input ("visibilityState", true) return "" when document does not have "visibilityState" property.', function () {
+        expect( string.getDocumentPrefixedProperty('visibilityState', true) ).toEqual('');
+      });
     });
 
     describe('.getElementPrefixedStyle()', function() {
-      expect( string.getElementPrefixedStyle('transform', true).toEqual('transform') );
-      expect( string.getElementPrefixedStyle('transition', false).toEqual('transition') );
+      it('input ("transform", true) return "webkitTransform" when browser is based on webkit.', function () {
+        expect( string.getElementPrefixedStyle('transform', true) ).toEqual('webkitTransform');
+      });
     });
   });
 });
