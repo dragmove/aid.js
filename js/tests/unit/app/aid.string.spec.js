@@ -1,10 +1,12 @@
-'use strict';
+"use strict";
 describe('aid.js', function () {
   // sample - http://jasmine.github.io/2.0/introduction.html
 
   describe('aid.string', function () {
     var string = aid.string;
-    
+
+    console.log('string :', string);
+
     describe('.trim()', function () {
       it('input "", return "".', function () {
         expect( string.trim("") ).toEqual("");
@@ -174,6 +176,16 @@ describe('aid.js', function () {
 
     describe('.getObjCheckTwitchURI()', function () {
       // TODO
+    });
+
+    describe('.getProfixedProperty()', function() {
+      expect( string.getDocumentPrefixedProperty('visibilityState', true).toEqual('visibilityState') );
+      expect( string.getDocumentPrefixedProperty('visibilitychange', false).toEqual('visibilitychange') );
+    });
+
+    describe('.getElementPrefixedStyle()', function() {
+      expect( string.getElementPrefixedStyle('transform', true).toEqual('transform') );
+      expect( string.getElementPrefixedStyle('transition', false).toEqual('transition') );
     });
   });
 });
