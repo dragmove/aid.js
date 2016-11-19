@@ -28,7 +28,7 @@
    * get object is null/undefined or other
    *
    * @static
-   * @method isDefined
+   * @method existy
    * @param {Object} obj
    * @returns {Boolean} return boolean
    * @example
