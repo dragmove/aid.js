@@ -189,5 +189,19 @@ describe('aid.js', function () {
         expect( string.getElementPrefixedStyle('transform', true) ).toEqual('webkitTransform');
       });
     });
+
+    describe('.absentToEmpty()', function() {
+      it('input (null) return "".', function () {
+        expect( string.absentToEmpty(null) ).toEqual('');
+      });
+
+      it('input (undefined) return "".', function () {
+        expect( string.absentToEmpty(undefined) ).toEqual('');
+      });
+
+      it('input ("javascript") return "".', function () {
+        expect( string.absentToEmpty('javascript') ).toEqual('javascript');
+      });
+    });
   });
 });

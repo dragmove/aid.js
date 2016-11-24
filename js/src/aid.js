@@ -936,7 +936,7 @@
    *
    * @static
    * @method getDocumentPrefixedProperty
-   * @returns {Object} return string
+   * @returns {String} return string
    * @example
    * console.log( aid.string.getDocumentPrefixedProperty('visibilityState', true) ); // return 'visibilityState' or 'webkitVisibilityState' or 'mozVisibilityState' or 'msVisibilityState' or 'oVisibilityState'.
    * console.log( aid.string.getDocumentPrefixedProperty('12345', false) ); // if browser doesn't have property, return ''.
@@ -952,7 +952,7 @@
       prop = (isPropFirstCharUppercase) ? propertyName.charAt(0).toUpperCase() + propertyName.slice(1) : propertyName;
 
       prop = PREFIXES[i] + prop;
-      if( prop in document  ) return prop;
+      if (prop in document) return prop;
     }
 
     return '';
@@ -963,7 +963,7 @@
    *
    * @static
    * @method getElementPrefixedStyle
-   * @returns {Object} return string
+   * @returns {String} return string
    * @example
    * console.log( aid.string.getElementPrefixedStyle('transform', true) ); // return 'transform' or 'wekitTransform' or 'mozTransform' or 'msTransform' or 'oTransform'.
    * console.log( aid.string.getElementPrefixedStyle('12345', false) ); // if browser doesn't have style property, return ''.
@@ -980,10 +980,26 @@
       prop = (isPropFirstCharUppercase) ? propertyName.charAt(0).toUpperCase() + propertyName.slice(1) : propertyName;
 
       prop = PREFIXES[i] + prop;
-      if( prop in style  ) return prop;
+      if (prop in style) return prop;
     }
 
     return '';
+  };
+
+  /**
+   * null, undefined to empty string. if parameter is not null or undefined, return parameter.
+   *
+   * @static
+   * @method absentToEmpty
+   * @returns {String} return string
+   * @example
+   * console.log( aid.string.absentToEmpty(null) ); // null to ''.
+   * console.log( aid.string.absentToEmpty(undefined) ); // undefined to ''.
+   * console.log( aid.string.absentToEmpty('javascript') ); // if parameter is exist, return parameter.
+   */
+  string.absentToEmpty = function (absentableStr) {
+    if (!aid.existy(absentableStr)) return '';
+    return absentableStr;
   };
 
   /**
