@@ -4,7 +4,6 @@ describe('aid.js', function () {
 
   describe('aid.string', function () {
     var string = aid.string;
-    console.log('string :', string);
 
     describe('.trim()', function () {
       it('input "", return "".', function () {
@@ -169,6 +168,7 @@ describe('aid.js', function () {
       */
     });
 
+    /*
     describe('.getObjCheckYoutubeURI()', function () {
       // TODO
     });
@@ -176,6 +176,7 @@ describe('aid.js', function () {
     describe('.getObjCheckTwitchURI()', function () {
       // TODO
     });
+    */
 
     describe('.getDocumentPrefixedProperty()', function() {
       it('input ("visibilityState", true) return "" when document does not have "visibilityState" property.', function () {
