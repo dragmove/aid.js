@@ -69,5 +69,37 @@ describe('aid.js', function () {
         expect( array.binaryIndexOf(arr, 'c') ).toEqual(2);
       });
     });
+
+    describe('.getFirstObjectHasProperty()', function () {
+      var arrayHasObjects = [];
+
+      it('if array is not array, return null', function () {
+        arrayHasObjects = 1;
+        expect( array.getFirstObjectHasProperty(arrayHasObjects, 'no', 1) ).toEqual(null);
+      });
+
+      it('if array.length is 0, return null', function () {
+        arrayHasObjects = [];
+        expect( array.getFirstObjectHasProperty(arrayHasObjects, 'no', 1) ).toEqual(null);
+      });
+
+      it('if propertyKey is not string, return null', function () {
+        arrayHasObjects = [];
+        expect( array.getFirstObjectHasProperty(arrayHasObjects, undefined, 1) ).toEqual(null);
+        expect( array.getFirstObjectHasProperty(arrayHasObjects, null, 1) ).toEqual(null);
+        expect( array.getFirstObjectHasProperty(arrayHasObjects, 1, 1) ).toEqual(null);
+        expect( array.getFirstObjectHasProperty(arrayHasObjects, [], 1) ).toEqual(null);
+      });
+
+      it('if property key is "index", target value is 1, return null', function () {
+        arrayHasObjects = [{ no: 1 }, { no: 2 }];
+        expect( array.getFirstObjectHasProperty(arrayHasObjects, 'index', 1) ).toEqual(null);
+      });
+
+      it('if property key is "no", target value is 1, return {no: 1}', function () {
+        arrayHasObjects = [{ no: 1 }, { no: 2 }];
+        expect( array.getFirstObjectHasProperty(arrayHasObjects, 'no', 1) ).toEqual({no: 1});
+      });
+    });
   });
 });

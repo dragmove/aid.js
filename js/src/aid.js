@@ -1164,7 +1164,6 @@
    */
   array.binaryIndexOf = function (sortedArray, target) {
     if (!aid.isArray(sortedArray) || sortedArray.length <= 0) return -1;
-    if (!aid.existy(target)) return -1;
 
     var first = 0,
       last = sortedArray.length - 1,
@@ -1183,7 +1182,26 @@
         }
       }
     }
+
     return -1;
+  };
+
+  array.getFirstObjectHasProperty = function (arrayHasObjects, propertyKey, targetPropertyValue) {
+    if (!aid.isArray(arrayHasObjects) || arrayHasObjects.length <= 0) return null;
+    if (!aid.isString(propertyKey)) return null;
+
+    var obj, result = null;
+    for (var i = 0, max = arrayHasObjects.length; i < max; ++i) {
+      obj = arrayHasObjects[i];
+      if(!obj.hasOwnProperty(propertyKey)) continue;
+
+      if(obj[propertyKey] === targetPropertyValue) {
+        result = obj;
+        break;
+      }
+    }
+
+    return result;
   };
 
   /*
