@@ -328,6 +328,10 @@ describe('aid.js', function () {
       });
     });
 
+    describe('.isRegExp()', function() {
+      // TODO
+    });
+
     describe('.extend()', function() {
       // TODO
     });

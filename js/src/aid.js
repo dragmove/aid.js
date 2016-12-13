@@ -146,6 +146,22 @@
   };
 
   /**
+   * check object type is RegExp
+   *
+   * @static
+   * @method isRegExp
+   * @param {Object} obj
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.isRegExp(new RegExp('^aid')) ); // true
+   * console.log( aid.isRegExp(/^aid/) ); // true
+   */
+  aid.isRegExp = function(obj) {
+    if (!aid.isDefined(obj)) return false;
+    return (obj.constructor === RegExp);
+  };
+
+  /**
    * extend function
    *
    * @static
