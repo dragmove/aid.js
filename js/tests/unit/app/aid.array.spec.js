@@ -73,7 +73,7 @@ describe('aid.js', function () {
     describe('.getFirstObjectHasProperty()', function () {
       var arrayHasObjects = [];
 
-      it('if array is not array, return null', function () {
+      it('if 1st element is not array, return null', function () {
         arrayHasObjects = 1;
         expect( array.getFirstObjectHasProperty(arrayHasObjects, 'no', 1) ).toEqual(null);
       });
@@ -94,11 +94,15 @@ describe('aid.js', function () {
       it('if property key is "index", target value is 1, return null', function () {
         arrayHasObjects = [{ no: 1 }, { no: 2 }];
         expect( array.getFirstObjectHasProperty(arrayHasObjects, 'index', 1) ).toEqual(null);
+        expect( array.getFirstObjectHasProperty(arrayHasObjects, 'index', new RegExp('^1')) ).toEqual(null);
+        expect( array.getFirstObjectHasProperty(arrayHasObjects, 'index', /^(1)\d/) ).toEqual(null);
       });
 
-      it('if property key is "no", target value is 1, return {no: 1}', function () {
-        arrayHasObjects = [{ no: 1 }, { no: 2 }];
-        expect( array.getFirstObjectHasProperty(arrayHasObjects, 'no', 1) ).toEqual({no: 1});
+      it('if property key is "no", target value is 11, return {no: 11}', function () {
+        arrayHasObjects = [{ no: 11 }, { no: 22 }];
+        expect( array.getFirstObjectHasProperty(arrayHasObjects, 'no', 11) ).toEqual({no: 11});
+        expect( array.getFirstObjectHasProperty(arrayHasObjects, 'no', new RegExp('^1')) ).toEqual({no: 11});
+        expect( array.getFirstObjectHasProperty(arrayHasObjects, 'no', /^(1)\d/) ).toEqual({no: 11});
       });
     });
   });

@@ -156,7 +156,7 @@
    * console.log( aid.isRegExp(new RegExp('^aid')) ); // true
    * console.log( aid.isRegExp(/^aid/) ); // true
    */
-  aid.isRegExp = function(obj) {
+  aid.isRegExp = function (obj) {
     if (!aid.isDefined(obj)) return false;
     return (obj.constructor === RegExp);
   };
@@ -662,7 +662,7 @@
    * console.log( aid.string.getFileExtension('aid.png') );
    */
   string.getFileExtension = function (fileName) {
-    if (!aid.isString(fileName) || !fileName.length) return '';
+    if (!aid.isString(fileName) || fileName.length <= 0) return '';
 
     var lastDotIndex = fileName.lastIndexOf('.'),
       extension = fileName.substr(lastDotIndex + 1);
@@ -1220,18 +1220,40 @@
     return -1;
   };
 
-  array.getFirstObjectHasProperty = function (arrayHasObjects, propertyKey, targetPropertyValue) {
+  /**
+   * get object has property in array.
+   * this object is first matched element in array by value or regex.
+   *
+   * @static
+   * @method getFirstObjectHasProperty
+   * @returns {Object} return object
+   * @example
+   * var arrayHasObjects = [{ no: 11 }, { no: 22 }];
+   * array.getFirstObjectHasProperty(arrayHasObjects, 'index', 11) // null
+   * array.getFirstObjectHasProperty(arrayHasObjects, 'no', 11) // {no: 11}
+   * array.getFirstObjectHasProperty(arrayHasObjects, 'no', new RegExp('^1')) // {no: 11}
+   * array.getFirstObjectHasProperty(arrayHasObjects, 'no', /^(1)\d/) // {no: 11}
+   *
+   */
+  array.getFirstObjectHasProperty = function (arrayHasObjects, propertyKey, findPropertyValueOrRegex) {
     if (!aid.isArray(arrayHasObjects) || arrayHasObjects.length <= 0) return null;
     if (!aid.isString(propertyKey)) return null;
 
     var obj, result = null;
     for (var i = 0, max = arrayHasObjects.length; i < max; ++i) {
       obj = arrayHasObjects[i];
-      if(!obj.hasOwnProperty(propertyKey)) continue;
+      if (!obj.hasOwnProperty(propertyKey)) continue;
 
-      if(obj[propertyKey] === targetPropertyValue) {
-        result = obj;
-        break;
+      if (aid.isRegExp(findPropertyValueOrRegex)) {
+        if (findPropertyValueOrRegex.test(obj[propertyKey])) {
+          result = obj;
+          break;
+        }
+      } else {
+        if (obj[propertyKey] === findPropertyValueOrRegex) {
+          result = obj;
+          break;
+        }
       }
     }
 
