@@ -653,6 +653,24 @@
   };
 
   /**
+   * get extension(png, jpg ...) string.
+   *
+   * @static
+   * @method getFileExtension
+   * @returns {String} return string
+   * @example
+   * console.log( aid.string.getFileExtension('aid.png') );
+   */
+  string.getFileExtension = function (fileName) {
+    if (!aid.isString(fileName) || !fileName.length) return '';
+
+    var lastDotIndex = fileName.lastIndexOf('.'),
+      extension = fileName.substr(lastDotIndex + 1);
+
+    return extension;
+  };
+
+  /**
    * check email string.
    *
    * @static

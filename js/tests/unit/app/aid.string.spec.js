@@ -37,6 +37,32 @@ describe('aid.js', function () {
       });
     });
 
+    describe('.getFileExtension()', function () {
+      it('input not string, return "".', function () {
+        expect( string.getFileExtension(undefined) ).toEqual('');
+        expect( string.getFileExtension(null) ).toEqual('');
+        expect( string.getFileExtension(99) ).toEqual('');
+        expect( string.getFileExtension(true) ).toEqual('');
+        expect( string.getFileExtension([]) ).toEqual('');
+      });
+
+      it('input "", return "".', function () {
+        expect( string.getFileExtension('') ).toEqual('');
+      });
+
+      it('input "aid.png", return "png".', function () {
+        expect( string.getFileExtension("aid.png") ).toEqual('png');
+      });
+
+      it('input "aid.jpg", return "jpg".', function () {
+        expect( string.getFileExtension("aid.jpg") ).toEqual('jpg');
+      });
+
+      it('input "aid.js.jpg", return "jpg".', function () {
+        expect( string.getFileExtension("aid.js.jpg") ).toEqual('jpg');
+      });
+    });
+
     describe('.isEmail()', function () {
       it('input "dragmove@naver.com", return true.', function () {
         expect( string.isEmail("dragmove@naver.com") ).toEqual(true);
