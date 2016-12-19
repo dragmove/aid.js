@@ -1163,7 +1163,30 @@
     for (var i = 0, max = array.length; i < max; ++i) {
       if (array[i] === target) return i;
     }
+
     return -1;
+  };
+
+  /**
+   * remove element in Array.
+   *
+   * @static
+   * @method remove
+   * @returns {Array} return Array
+   * @example
+   * var arr = [1, 2, 3, 4, 5, 99];
+   * aid.array.remove(arr, 99); // [1, 2, 3, 4, 5]
+   */
+  array.remove = function (arrayHasElements, target) {
+    if (!aid.isArray(arrayHasElements)) {
+      throw new TypeError('1st parameter type of array.remove() must be Array');
+    }
+
+    var arr = arrayHasElements,
+      index = array.indexOf(arr, target);
+    if (index >= 0) arr.splice(index, 1);
+
+    return arr;
   };
 
   /**
