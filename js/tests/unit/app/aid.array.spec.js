@@ -42,7 +42,11 @@ describe('aid.js', function () {
       /*
       // TODO
       it('1st parameter is not Array, throw error.', function () {
-        expect(array.remove(null, 99)).toThrowError(TypeError);
+       expect(array.remove(undefined, 99)).toThrowError(TypeError);
+       expect(array.remove(null, 99)).toThrowError(TypeError);
+       expect(array.remove(99, 99)).toThrowError(TypeError);
+       expect(array.remove('aid', 99)).toThrowError(TypeError);
+       expect(array.remove(true, 99)).toThrowError(TypeError);
       });
       */
 
@@ -53,14 +57,17 @@ describe('aid.js', function () {
 
       it('remove 99, return [1, 2, 3, 4, 5]', function () {
         expect(array.remove(arr, 99)).toEqual([1, 2, 3, 4, 5]);
+        expect(arr).toEqual([1, 2, 3, 4, 5, 99]);
       });
 
       it('remove 3, return [1, 2, 4, 5, 99]', function () {
         expect(array.remove(arr, 3)).toEqual([1, 2, 4, 5, 99]);
+        expect(arr).toEqual([1, 2, 3, 4, 5, 99]);
       });
 
       it('remove 9999, return [1, 2, 3, 4, 5, 99]', function () {
         expect(array.remove(arr, 9999)).toEqual([1, 2, 3, 4, 5, 99]);
+        expect(arr).toEqual([1, 2, 3, 4, 5, 99]);
       });
     });
 

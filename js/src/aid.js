@@ -1168,7 +1168,7 @@
   };
 
   /**
-   * remove element in Array.
+   * remove element in Array, and return cloned Array.
    *
    * @static
    * @method remove
@@ -1182,11 +1182,11 @@
       throw new TypeError('1st parameter type of array.remove() must be Array');
     }
 
-    var arr = arrayHasElements,
-      index = array.indexOf(arr, target);
-    if (index >= 0) arr.splice(index, 1);
+    var clonedArr = arrayHasElements.slice(0),
+      index = array.indexOf(clonedArr, target);
+    if (index >= 0) clonedArr.splice(index, 1);
 
-    return arr;
+    return clonedArr;
   };
 
   /**
