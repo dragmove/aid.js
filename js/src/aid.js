@@ -1100,6 +1100,22 @@
   };
 
   /**
+   * get flag whether 2 numbers are equal by Number.EPSILON
+   *
+   * @static
+   * @method isEpsilonEqual
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.math.isEpsilonEqual(0.1 + 0.2, 0.3) );
+   */
+  math.isEpsilonEqual = function (number_a, number_b) {
+    if (!Number.EPSILON) {
+      throw new Error('Number.EPSILON is not exist.');
+    }
+    return (Math.abs(number_a - number_b) < Number.EPSILON);
+  };
+
+  /**
    * days name
    *
    * @static
