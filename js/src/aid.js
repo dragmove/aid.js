@@ -21,7 +21,8 @@
     math = {},
     date = {},
     array = {},
-    element = {};
+    element = {},
+    control = {};
 
   var _ua = global.navigator.userAgent;
 
@@ -1432,7 +1433,7 @@
    *
    * @static
    * @method isEntirelyInViewport
-   * @param {element}
+   * @param {Element}
    * @example
    */
   element.isEntirelyInViewport = function (_element) {
@@ -1454,7 +1455,7 @@
    *
    * @static
    * @method isPartiallyInViewport
-   * @param {element}
+   * @param {Element}
    * @example
    */
   element.isPartiallyInViewport = function (_element) {
@@ -1478,7 +1479,7 @@
    *
    * @static
    * @method ellipsis
-   * @param {element, left margin offset, right margin offset}
+   * @param {Element, left margin offset, right margin offset}
    * @example
    */
   /*
@@ -1518,6 +1519,42 @@
    };
    */
 
+  /**
+   * prevent document scroll from scrallable child element.
+   *
+   * @static
+   * @method preventDocumentScrollFromScrollableElement
+   * @param {Element} element
+   * @param {Event} jQuery event
+   * @example
+   * var ele = ${element}, event = (browser.isFF) ? 'DOMMouseScroll' : 'mousewheel';
+   * ele.on(event, function(evt) {
+   * util.preventDocumentScrollFromScrollableElement(ele, evt);
+   * });
+   */
+  control.preventDocumentScrollFromScrollableElement = function (_element, event) {
+    var ele = $(_element);
+    if (!ele.length) return;
+
+    var height = ele.height(),
+      scrollHeight = ele.get(0).scrollHeight;
+
+    if (height < scrollHeight) {
+      let scrollTop = ele.scrollTop();
+
+      let isMouseWheelDown = false;
+      if (browser.isFF) {
+        isMouseWheelDown = (event.originalEvent.detail > 0) ? true : false;
+      } else {
+        isMouseWheelDown = (event.originalEvent.wheelDelta < 0) ? true : false;
+      }
+
+      if ((scrollTop >= (scrollHeight - height) && isMouseWheelDown) || (scrollTop <= 0 && !isMouseWheelDown)) {
+        event.preventDefault();
+      }
+    }
+  };
+
   aid.platform = platform;
   aid.browser = browser;
   aid.string = string;
@@ -1525,6 +1562,7 @@
   aid.date = date;
   aid.array = array;
   aid.element = element;
+  aid.control = control;
 
   if (typeof exports !== 'undefined') {
     if (typeof modules !== 'undefined' && module.exports) {
