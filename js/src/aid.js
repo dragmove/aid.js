@@ -1038,6 +1038,20 @@
   };
 
   /**
+   * convert number to string type with commas.
+   * http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+   *
+   * @static
+   * @method numberWithCommas
+   * @returns {String} return string
+   * @example
+   * console.log( aid.string.numberWithCommas(1000000) ); // 1000000 to '1,000,000'.
+   */
+  string.numberWithCommas = function (number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
+
+  /**
    * get aspectFill content size
    *
    * @static
