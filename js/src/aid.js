@@ -1199,6 +1199,33 @@
   };
 
   /**
+   * get index of minimum number in Array.
+   *
+   * @static
+   * @method indexOf
+   * @returns {Number} return Int number
+   * @example
+   */
+  array.indexOfMin = function (array, startSearchIndex) {
+    if (!aid.isArray(array)) return -1;
+
+    var startIndex = (startSearchIndex > 0) ? startSearchIndex : 0;
+    if (array.length <= startIndex) return -1;
+
+    var minVal = array[startIndex],
+      minIndex = startIndex;
+
+    for (var i = minIndex + 1, max = array.length; i < max; i++) {
+      if (array[i] < minVal) {
+        minVal = array[i];
+        minIndex = i;
+      }
+    }
+
+    return minIndex;
+  };
+
+  /**
    * remove element in Array, and return cloned Array.
    *
    * @static
@@ -1554,9 +1581,9 @@
       scrollHeight = ele.get(0).scrollHeight;
 
     if (height < scrollHeight) {
-      let scrollTop = ele.scrollTop();
+      var scrollTop = ele.scrollTop();
 
-      let isMouseWheelDown = false;
+      var isMouseWheelDown = false;
       if (browser.isFF) {
         isMouseWheelDown = (event.originalEvent.detail > 0) ? true : false;
       } else {

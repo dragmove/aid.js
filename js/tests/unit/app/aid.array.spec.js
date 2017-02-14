@@ -32,6 +32,32 @@ describe('aid.js', function () {
       });
     });
 
+    describe('.indexOfMin()', function () {
+      var tmpArr = [18, 6, 66, 44, 9, 22, 14];
+
+      it('return -1 when 1st parameter type is not array.', function () {
+        expect(array.indexOfMin(null, 0)).toEqual(-1);
+        expect(array.indexOfMin(undefined, 1)).toEqual(-1);
+        expect(array.indexOfMin(99, 2)).toEqual(-1);
+        expect(array.indexOfMin('string', 3)).toEqual(-1);
+        expect(array.indexOfMin(false, 3)).toEqual(-1);
+      });
+
+      it('return -1 when startSearchIndex is greater than array.length', function () {
+        expect(array.indexOfMin(tmpArr, 7)).toEqual(-1);
+      });
+
+      it('return index of minimum element.', function () {
+        expect(array.indexOfMin(tmpArr, 0)).toEqual(1);
+        expect(array.indexOfMin(tmpArr, 1)).toEqual(1);
+        expect(array.indexOfMin(tmpArr, 2)).toEqual(4);
+        expect(array.indexOfMin(tmpArr, 2)).toEqual(4);
+        expect(array.indexOfMin(tmpArr, 4)).toEqual(4);
+        expect(array.indexOfMin(tmpArr, 5)).toEqual(6);
+        expect(array.indexOfMin(tmpArr, 6)).toEqual(6);
+      });
+    });
+
     describe('.remove()', function () {
       var arr = [1, 2, 3, 4, 5, 99];
 
