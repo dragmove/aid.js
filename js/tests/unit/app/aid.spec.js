@@ -171,6 +171,52 @@ describe('aid.js', function () {
       });
     });
 
+    describe('.isInteger()', function () {
+      it('input undefined, return false', function () {
+        expect( aid.isInteger(undefined) ).toEqual(false);
+      });
+
+      it('input "undefined", return false', function () {
+        expect( aid.isInteger("undefined") ).toEqual(false);
+      });
+
+      it('input null, return false', function () {
+        expect( aid.isInteger(null) ).toEqual(false);
+      });
+
+      it('input false, return false', function () {
+        expect( aid.isInteger(false) ).toEqual(false);
+      });
+
+      it('input true, return false', function () {
+        expect( aid.isInteger(true) ).toEqual(false);
+      });
+
+      it('input "", return false', function () {
+        expect( aid.isInteger("") ).toEqual(false);
+      });
+
+      it('input {}, return false', function () {
+        expect( aid.isInteger({}) ).toEqual(false);
+      });
+
+      it('input infinity, return true', function () {
+        expect( aid.isInteger(Infinity) ).toEqual(false);
+        expect( aid.isInteger(-Infinity) ).toEqual(false);
+      });
+
+      it('input float, return true', function () {
+        expect( aid.isInteger(-0.99) ).toEqual(false);
+        expect( aid.isInteger(0.99) ).toEqual(false);
+      });
+
+      it('input int, return true', function () {
+        expect( aid.isInteger(-99) ).toEqual(true);
+        expect( aid.isInteger(0) ).toEqual(true);
+        expect( aid.isInteger(99) ).toEqual(true);
+      });
+    });
+
     describe('.isString()', function () {
       it('input undefined, return false', function () {
         expect( aid.isString(undefined) ).toEqual(false);

@@ -43,11 +43,18 @@ describe('aid.js', function () {
         expect(array.indexOfMin(false, 3)).toEqual(-1);
       });
 
+      it('return -1 when startSearchIndex is not Int.', function () {
+        expect(array.indexOfMin(tmpArr, -0.5)).toEqual(-1);
+        expect(array.indexOfMin(tmpArr, 0.5)).toEqual(-1);
+      });
+
       it('return -1 when startSearchIndex is greater than array.length', function () {
         expect(array.indexOfMin(tmpArr, 7)).toEqual(-1);
+        expect(array.indexOfMin(tmpArr, 99)).toEqual(-1);
       });
 
       it('return index of minimum element.', function () {
+        expect(array.indexOfMin(tmpArr, -1)).toEqual(1);
         expect(array.indexOfMin(tmpArr, 0)).toEqual(1);
         expect(array.indexOfMin(tmpArr, 1)).toEqual(1);
         expect(array.indexOfMin(tmpArr, 2)).toEqual(4);

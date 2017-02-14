@@ -87,6 +87,23 @@
   };
 
   /**
+   * check object type is Number, and Integer.
+   *
+   * @static
+   * @method isInteger
+   * @param {Object} obj
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.isInteger(-1) ); // true
+   */
+  aid.isInteger = function (obj) {
+    if (!aid.isDefined(obj) || obj.constructor !== Number) return false;
+
+    // https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger
+    return (isFinite(obj) && Math.floor(obj) === obj);
+  };
+
+  /**
    * check object type is String
    *
    * @static
@@ -1202,12 +1219,12 @@
    * get index of minimum number in Array.
    *
    * @static
-   * @method indexOf
+   * @method indexOfMin
    * @returns {Number} return Int number
    * @example
    */
   array.indexOfMin = function (array, startSearchIndex) {
-    if (!aid.isArray(array)) return -1;
+    if (!aid.isArray(array) || !aid.isInteger(startSearchIndex)) return -1;
 
     var startIndex = (startSearchIndex > 0) ? startSearchIndex : 0;
     if (array.length <= startIndex) return -1;
