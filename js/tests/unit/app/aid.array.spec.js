@@ -65,6 +65,78 @@ describe('aid.js', function () {
       });
     });
 
+    describe('.swap()', function () {
+      var tmpArr = [18, 6, 66, 44, 9, 22, 14];
+
+      beforeEach(function () {
+        tmpArr = [18, 6, 66, 44, 9, 22, 14];
+      });
+
+      it('no change when parameter length is not 3.', function () {
+        array.swap(tmpArr);
+        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+
+        array.swap(tmpArr, 0);
+        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+
+        array.swap(tmpArr, 0, 1, 2);
+        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+      });
+
+      it('no change when 1st parameter type is not array.', function () {
+        array.swap(null, 1, 2);
+        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+
+        array.swap(undefined, 1, 2);
+        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+
+        array.swap(99, 1, 2);
+        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+
+        array.swap('string', 1, 2);
+        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+
+        array.swap(false, 1, 2);
+        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+
+        array.swap({}, 1, 2);
+        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+      });
+
+      it('no change when 2nd, 3rd parameter is not Integer.', function () {
+        array.swap(tmpArr, 1.5, 2);
+        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+
+        array.swap(tmpArr, 1, 2.5);
+        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+
+        array.swap(tmpArr, 1.5, 2.5);
+        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+      });
+
+      it('no change when array does not include firstIndex, secondIndex elements', function () {
+        array.swap(tmpArr, -1, 3);
+        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+
+        array.swap(tmpArr, 99, 3);
+        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+
+        array.swap(tmpArr, 3, -1);
+        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+
+        array.swap(tmpArr, 3, 99);
+        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+      });
+
+      it('no change when array does not include firstIndex, secondIndex elements', function () {
+        expect(array.swap(tmpArr, 0, 1)).toEqual([6, 18, 66, 44, 9, 22, 14]);
+        expect(array.swap(tmpArr, 0, 2)).toEqual([66, 18, 6, 44, 9, 22, 14]);
+        expect(array.swap(tmpArr, 1, 2)).toEqual([66, 6, 18, 44, 9, 22, 14]);
+        expect(array.swap(tmpArr, 3, 5)).toEqual([66, 6, 18, 22, 9, 44, 14]);
+        expect(array.swap(tmpArr, 3, 1)).toEqual([66, 22, 18, 6, 9, 44, 14]);
+      });
+    });
+
     describe('.remove()', function () {
       var arr = [1, 2, 3, 4, 5, 99];
 

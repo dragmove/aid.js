@@ -1243,6 +1243,26 @@
   };
 
   /**
+   * swap two elements in Array.
+   *
+   * @static
+   * @method swap
+   * @returns {Array} return Array
+   * @example
+   */
+  array.swap = function (array, firstIndex, secondIndex) {
+    if (arguments.length !== 3) return null;
+    if (!aid.isArray(array) || !aid.isInteger(firstIndex) || !aid.isInteger(secondIndex)) return null;
+    if (firstIndex < 0 || firstIndex >= array.length || secondIndex < 0 || secondIndex >= array.length) return null;
+
+    var tmp = array[firstIndex];
+    array[firstIndex] = array[secondIndex];
+    array[secondIndex] = tmp;
+
+    return array;
+  };
+
+  /**
    * remove element in Array, and return cloned Array.
    *
    * @static
