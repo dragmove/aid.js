@@ -1205,11 +1205,11 @@
    * @returns {Number} return Int number
    * @example
    */
-  array.indexOf = function (array, target) {
-    if (!aid.isArray(array)) return -1;
+  array.indexOf = function (arr, target) {
+    if (!aid.isArray(arr)) return -1;
 
-    for (var i = 0, max = array.length; i < max; ++i) {
-      if (array[i] === target) return i;
+    for (var i = 0, max = arr.length; i < max; ++i) {
+      if (arr[i] === target) return i;
     }
 
     return -1;
@@ -1223,18 +1223,18 @@
    * @returns {Number} return Int number
    * @example
    */
-  array.indexOfMin = function (array, startSearchIndex) {
-    if (!aid.isArray(array) || !aid.isInteger(startSearchIndex)) return -1;
+  array.indexOfMin = function (arr, startSearchIndex) {
+    if (!aid.isArray(arr) || !aid.isInteger(startSearchIndex)) return -1;
 
     var startIndex = (startSearchIndex > 0) ? startSearchIndex : 0;
-    if (array.length <= startIndex) return -1;
+    if (arr.length <= startIndex) return -1;
 
-    var minVal = array[startIndex],
+    var minVal = arr[startIndex],
       minIndex = startIndex;
 
-    for (var i = minIndex + 1, max = array.length; i < max; i++) {
-      if (array[i] < minVal) {
-        minVal = array[i];
+    for (var i = minIndex + 1, max = arr.length; i < max; i++) {
+      if (arr[i] < minVal) {
+        minVal = arr[i];
         minIndex = i;
       }
     }
@@ -1247,19 +1247,43 @@
    *
    * @static
    * @method swap
-   * @returns {Array} return Array
+   * @returns {Array} return Array or null
    * @example
+   * var arr = [18, 6, 66, 44, 9, 22, 14];
+   * aid.array.swap(arr, 0, 1); // [6, 18, 66, 44, 9, 22, 14]
    */
-  array.swap = function (array, firstIndex, secondIndex) {
+  array.swap = function (arr, firstIndex, secondIndex) {
     if (arguments.length !== 3) return null;
-    if (!aid.isArray(array) || !aid.isInteger(firstIndex) || !aid.isInteger(secondIndex)) return null;
-    if (firstIndex < 0 || firstIndex >= array.length || secondIndex < 0 || secondIndex >= array.length) return null;
+    if (!aid.isArray(arr) || !aid.isInteger(firstIndex) || !aid.isInteger(secondIndex)) return null;
+    if (firstIndex < 0 || firstIndex >= arr.length || secondIndex < 0 || secondIndex >= arr.length) return null;
 
-    var tmp = array[firstIndex];
-    array[firstIndex] = array[secondIndex];
-    array[secondIndex] = tmp;
+    var tmp = arr[firstIndex];
+    arr[firstIndex] = arr[secondIndex];
+    arr[secondIndex] = tmp;
 
-    return array;
+    return arr;
+  };
+
+  /**
+   * selection sort in Array.
+   *
+   * @static
+   * @method selectionSort
+   * @returns {Array} return Array or null
+   * @example
+   * var arr = [18, 6, 66, 44, 9, 22, 14];
+   * aid.array.selectionSort(arr); // [6, 9, 14, 18, 22, 44, 66]
+   */
+  array.selectionSort = function (arr) {
+    if (!aid.isArray(arr) || arr.length <= 0) return null;
+
+    var minIndex = 0;
+    for (var i = 0, max = arr.length - 1; i < max; i++) {
+      minIndex = array.indexOfMin(arr, i);
+      array.swap(arr, i, minIndex);
+    }
+
+    return arr;
   };
 
   /**
@@ -1272,12 +1296,12 @@
    * var arr = [1, 2, 3, 4, 5, 99];
    * aid.array.remove(arr, 99); // [1, 2, 3, 4, 5]
    */
-  array.remove = function (arrayHasElements, target) {
-    if (!aid.isArray(arrayHasElements)) {
+  array.remove = function (arr, target) {
+    if (!aid.isArray(arr)) {
       throw new TypeError('1st parameter type of array.remove() must be Array');
     }
 
-    var clonedArr = arrayHasElements.slice(0),
+    var clonedArr = arr.slice(0),
       index = array.indexOf(clonedArr, target);
     if (index >= 0) clonedArr.splice(index, 1);
 

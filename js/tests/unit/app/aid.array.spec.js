@@ -137,6 +137,30 @@ describe('aid.js', function () {
       });
     });
 
+    describe('.selectionSort()', function () {
+      var tmpArr = [18, 6, 66, 44, 9, 22, 14];
+
+      beforeEach(function () {
+        tmpArr = [18, 6, 66, 44, 9, 22, 14];
+      });
+
+      it('return null when parameter is not array.', function () {
+        expect(array.selectionSort(null)).toEqual(null);
+        expect(array.selectionSort(undefined)).toEqual(null);
+        expect(array.selectionSort(99)).toEqual(null);
+        expect(array.selectionSort('string')).toEqual(null);
+        expect(array.selectionSort(false)).toEqual(null);
+      });
+
+      it('return null when array length is 0.', function () {
+        expect(array.selectionSort([])).toEqual(null);
+      });
+
+      it('return sorted array.', function () {
+        expect(array.selectionSort(tmpArr)).toEqual([6, 9, 14, 18, 22, 44, 66]);
+      });
+    });
+
     describe('.remove()', function () {
       var arr = [1, 2, 3, 4, 5, 99];
 
