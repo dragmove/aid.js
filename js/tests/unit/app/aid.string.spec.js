@@ -229,5 +229,64 @@ describe('aid.js', function () {
         expect( string.absentToEmpty('javascript') ).toEqual('javascript');
       });
     });
+
+    describe('.numberWithCommas()', function() {
+      // TODO
+    });
+
+    describe('.getPositionFromTranslateStr()', function() {
+      it('return {x: 99, y: 999}, when input "translate(99px, 999px)" string.', function () {
+        expect( string.getPositionFromTranslateStr('translate(99px, 999px)') ).toEqual({x: 99, y: 999});
+      });
+      it('return {x: 99, y: 999}, when input "translate(99 999)" string.', function () {
+        expect( string.getPositionFromTranslateStr('translate(99 999)') ).toEqual({x: 99, y: 999});
+      });
+      it('return {x: -99, y: 999}, when input "translate(-99px, 999px)" string.', function () {
+        expect( string.getPositionFromTranslateStr('translate(-99px, 999px)') ).toEqual({x: -99, y: 999});
+      });
+      it('return {x: -99, y: 999}, when input "translate(-99 999)" string.', function () {
+        expect( string.getPositionFromTranslateStr('translate(-99 999)') ).toEqual({x: -99, y: 999});
+      });
+
+      it('return {x: 99, y: 0}, when input "translate(99px)" string.', function () {
+        expect( string.getPositionFromTranslateStr('translate(99px)') ).toEqual({x: 99, y: 0});
+      });
+      it('return {x: 99, y: 0}, when input "translate(99)" string.', function () {
+        expect( string.getPositionFromTranslateStr('translate(99)') ).toEqual({x: 99, y: 0});
+      });
+      it('return {x: -99, y: 0}, when input "translate(-99px)" string.', function () {
+        expect( string.getPositionFromTranslateStr('translate(-99px)') ).toEqual({x: -99, y: 0});
+      });
+      it('return {x: -99, y: 0}, when input "translate(-99)" string.', function () {
+        expect( string.getPositionFromTranslateStr('translate(-99)') ).toEqual({x: -99, y: 0});
+      });
+
+      it('return {x: 99, y: 0}, when input "translateX(99px)" string.', function () {
+        expect( string.getPositionFromTranslateStr('translateX(99px)') ).toEqual({x: 99, y: 0});
+      });
+      it('return {x: 99, y: 0}, when input "translateX(99)" string.', function () {
+        expect( string.getPositionFromTranslateStr('translateX(99)') ).toEqual({x: 99, y: 0});
+      });
+      it('return {x: -99, y: 0}, when input "translateX(-99px)" string.', function () {
+        expect( string.getPositionFromTranslateStr('translateX(-99px)') ).toEqual({x: -99, y: 0});
+      });
+      it('return {x: -99, y: 0}, when input "translateX(-99)" string.', function () {
+        expect( string.getPositionFromTranslateStr('translateX(-99)') ).toEqual({x: -99, y: 0});
+      });
+
+      it('return {x: 0, y: 99}, when input "translateY(99px)" string.', function () {
+        expect( string.getPositionFromTranslateStr('translateY(99px)') ).toEqual({x: 0, y: 99});
+      });
+      it('return {x: 0, y: 99}, when input "translateY(99)" string.', function () {
+        expect( string.getPositionFromTranslateStr('translateY(99)') ).toEqual({x: 0, y: 99});
+      });
+      it('return {x: 0, y: -99}, when input "translateY(-99px)" string.', function () {
+        expect( string.getPositionFromTranslateStr('translateY(-99px)') ).toEqual({x: 0, y: -99});
+      });
+      it('return {x: 0, y: -99}, when input "translateY(-99)" string.', function () {
+        expect( string.getPositionFromTranslateStr('translateY(-99)') ).toEqual({x: 0, y: -99});
+      });
+    });
+
   });
 });

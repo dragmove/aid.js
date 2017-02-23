@@ -1069,6 +1069,37 @@
   };
 
   /**
+   * convert 'translate(0px, 0px)' or 'translateX(0px)' or 'translateY(0px)' format string to { x: 0, y: 0 }.
+   *
+   * @static
+   * @method getPositionFromTranslateStr
+   * @returns {Object} return object
+   * @example
+   */
+  string.getPositionFromTranslateStr = function (str) {
+    var obj = {x: 0, y: 0};
+    if (!aid.isDefined(str)) return obj;
+
+    var values = str.match(/[+-]?(\d*\.)?\d+/g);
+    if (values.length <= 0) return obj;
+
+    if (/translateX/g.test(str)) {
+      obj.x = parseFloat(values[0]);
+      return obj;
+    }
+
+    if (/translateY/g.test(str)) {
+      obj.y = parseFloat(values[0]);
+      return obj;
+    }
+
+    obj.x = parseFloat(values[0]);
+    if (values.length > 1) obj.y = parseFloat(values[1]);
+
+    return obj;
+  };
+
+  /**
    * get aspectFill content size
    *
    * @static
@@ -1145,6 +1176,111 @@
       throw new Error('Number.EPSILON is not exist.');
     }
     return (Math.abs(number_a - number_b) < Number.EPSILON);
+  };
+
+  /**
+   * get flag that looped values in 1 ~ totalLength has searchIndex.
+   * value increases from startIndex to (firstIndex + loopGap - 1).
+   * if value is bigger than totalLength, change value to 1.
+   * if searchIndex in values, return true.
+   * otherwise, return false.
+   *
+   * @static
+   * @method isIndexInLoop
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.math.isIndexInLoop(8, 5, 6, 3) ); // false
+   * console.log( aid.math.isIndexInLoop(8, 5, 6, 6) ); // true
+   */
+  math.isIndexInLoop = function (totalLength, loopGap, firstIndex, searchIndex) {
+    if (arguments.length < 4) {
+      throw Error('isIndexInLoop function requires 4 arguments.');
+    }
+    if (!aid.isInteger(totalLength) || !aid.isInteger(loopGap) || !aid.isInteger(firstIndex) || !aid.isInteger(searchIndex)) {
+      throw Error('arguments must be Integer Number.');
+    }
+    if (totalLength < 1 || firstIndex < 1) {
+      throw Error('totalLength and firstIndex can not smaller than 1.');
+    }
+    if (loopGap > totalLength) {
+      throw Error('loopGap can not bigger than totalLength.');
+    }
+
+    var index = firstIndex;
+    for (var i = 0; i < loopGap; i++) {
+      if (index === searchIndex) return true;
+      index = (index + 1 > totalLength) ? 1 : index + 1;
+    }
+
+    return false;
+  };
+
+  /**
+   * get looped index from firstIndex in 1 ~ totalLength.
+   * value increases from firstIndex to (firstIndex + loopGap - 1).
+   * if value is bigger than totalLength, change value to 1. and, return value.
+   *
+   * @static
+   * @method getLoopedLastIndex
+   * @returns {Number} return Int Number
+   * @example
+   * console.log( aid.math.getLoopedLastIndex(8, 1, 7) ); // 7
+   * console.log( aid.math.getLoopedLastIndex(8, 4, 7) ); // 2
+   */
+  math.getLoopedLastIndex = function (totalLength, loopGap, firstIndex) {
+    if (arguments.length < 3) {
+      throw Error('getLoopedLastIndex function requires 3 arguments.');
+    }
+    if (!aid.isInteger(totalLength) || !aid.isInteger(loopGap) || !aid.isInteger(firstIndex)) {
+      throw Error('arguments must be Integer Number.');
+    }
+    if (totalLength < 1 || firstIndex < 1) {
+      throw Error('totalLength and firstIndex can not smaller than 1.');
+    }
+    if (loopGap > totalLength || firstIndex > totalLength) {
+      throw Error('loopGap and firstIndex can not bigger than totalLength.');
+    }
+
+    var index = firstIndex;
+    for (var i = 0; i < loopGap - 1; i++) {
+      index = (index + 1 > totalLength) ? 1 : index + 1;
+    }
+
+    return index;
+  };
+
+  /**
+   * get reverse looped index from lastIndex in 1 ~ totalLength.
+   * value decreases from lastIndex to (lastIndex - loopGap - 1).
+   * if value is smaller than 0, change value to totalLength. and return value.
+   *
+   * @static
+   * @method getReverseLoopedFirstIndex
+   * @returns {Number} return Int Number
+   * @example
+   * console.log( aid.math.getReverseLoopedFirstIndex(8, 4, 2) ); // 7
+   * console.log( aid.math.getReverseLoopedFirstIndex(8, 8, 2) ); // 3
+   */
+  math.getReverseLoopedFirstIndex = function (totalLength, loopGap, lastIndex) {
+    if (arguments.length < 3) {
+      throw Error('getReverseLoopedFirstIndex function requires 3 arguments.');
+    }
+    if (!aid.isInteger(totalLength) || !aid.isInteger(loopGap) || !aid.isInteger(lastIndex)) {
+      throw Error('arguments must be Integer Number.');
+    }
+    if (totalLength < 1 || lastIndex < 1) {
+      throw Error('totalLength and lastIndex can not smaller than 1.');
+    }
+    if (loopGap > totalLength || lastIndex > totalLength) {
+      throw Error('loopGap and lastIndex can not bigger than totalLength.');
+    }
+
+    var index = lastIndex;
+    for (var i = 0; i < loopGap - 1; i++) {
+      index = (index - 1 < 1) ? totalLength : index - 1;
+    }
+
+    return index;
   };
 
   /**
@@ -1285,6 +1421,7 @@
 
     return arr;
   };
+
 
   /**
    * remove element in Array, and return cloned Array.
