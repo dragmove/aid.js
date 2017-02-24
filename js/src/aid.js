@@ -1401,7 +1401,7 @@
   };
 
   /**
-   * selection sort in Array.
+   * apply selection sort in Array.
    *
    * @static
    * @method selectionSort
@@ -1422,6 +1422,32 @@
     return arr;
   };
 
+  /**
+   * apply insertion sort in Array.
+   * https://ko.khanacademy.org/computing/computer-science/algorithms/insertion-sort/a/insertion-sort
+   *
+   * @static
+   * @method insertionSort
+   * @returns {Array} return Array or null
+   * @example
+   * var arr = [18, 6, 66, 44, 9, 22, 14];
+   * aid.array.insertionSort(arr); // [6, 9, 14, 18, 22, 44, 66]
+   */
+  array.insertionSort = function (arr) {
+    if (!aid.isArray(arr) || arr.length <= 0) return null;
+
+    var value;
+    for (var i = 1, max = arr.length; i < max; i++) {
+      value = arr[i];
+
+      for (var j = i - 1; j >= 0 && arr[j] > value; j--) {
+        arr[j + 1] = arr[j];
+      }
+      arr[j + 1] = value;
+    }
+
+    return arr;
+  };
 
   /**
    * remove element in Array, and return cloned Array.

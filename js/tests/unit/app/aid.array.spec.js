@@ -161,6 +161,26 @@ describe('aid.js', function () {
       });
     });
 
+    describe('.insertionSort()', function () {
+      var arr = [18, 6, 66, 44, 9, 22, 14];
+
+      beforeEach(function () {
+        arr = [18, 6, 66, 44, 9, 22, 14];
+      });
+
+      it('return null when parameter is not array.', function () {
+        expect(array.insertionSort(null)).toEqual(null);
+        expect(array.insertionSort(undefined)).toEqual(null);
+        expect(array.insertionSort(99)).toEqual(null);
+        expect(array.insertionSort('string')).toEqual(null);
+        expect(array.insertionSort(false)).toEqual(null);
+      });
+
+      it('return sorted array.', function () {
+        expect(array.insertionSort(arr)).toEqual([6, 9, 14, 18, 22, 44, 66]);
+      });
+    });
+
     describe('.remove()', function () {
       var arr = [1, 2, 3, 4, 5, 99];
 
