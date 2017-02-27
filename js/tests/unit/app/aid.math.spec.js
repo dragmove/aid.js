@@ -106,5 +106,26 @@ describe('aid.js', function () {
         expect(math.getReverseLoopedFirstIndex(8, 8, 2)).toEqual(3);
       });
     });
+
+    describe('.factorial()', function () {
+      it('return 1, when factorial param is minus value', function () {
+        expect(math.factorial(-99)).toEqual(1);
+      });
+      it('return 1, when factorial param is 0', function () {
+        expect(math.factorial(0)).toEqual(1);
+      });
+      it('return 1, when factorial param is 1', function () {
+        expect(math.factorial(1)).toEqual(1);
+      });
+      it('return 2, when factorial param is 2', function () {
+        expect(math.factorial(2)).toEqual(2);
+      });
+      it('return 3, when factorial param is 3', function () {
+        expect(math.factorial(3)).toEqual(6);
+      });
+      it('return 120, when factorial param is 5', function () {
+        expect(math.factorial(5)).toEqual(120);
+      });
+    });
   });
 });

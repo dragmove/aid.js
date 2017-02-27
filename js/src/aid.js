@@ -1284,6 +1284,25 @@
   };
 
   /**
+   * get factorial value
+   *
+   * @static
+   * @method factorial
+   * @returns {Number} return Number
+   * @example
+   * aid.math.factorial(-99); // 1
+   * aid.math.factorial(5); // 5 * 4 * 3 * 2 * 1 = 120
+   */
+  math.factorial = function (n) {
+    if (!aid.isInteger(n)) {
+      throw Error('argument must be Integer Number.');
+    }
+
+    if (n < 1) return 1;
+    return n * aid.math.factorial(n - 1);
+  };
+
+  /**
    * days name
    *
    * @static
