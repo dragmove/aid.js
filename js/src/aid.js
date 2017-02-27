@@ -1075,6 +1075,10 @@
    * @method getPositionFromTranslateStr
    * @returns {Object} return object
    * @example
+   * string.getPositionFromTranslateStr('translate(99px)'); // {x: 99, y: 0}
+   * string.getPositionFromTranslateStr('translate(99px, 999px)'); // {x: 99, y: 999}
+   * string.getPositionFromTranslateStr('translateX(99px)'); // {x: 99, y: 0}
+   * string.getPositionFromTranslateStr('translateY(99px)'); // {x: 0, y: 99}
    */
   string.getPositionFromTranslateStr = function (str) {
     var obj = {x: 0, y: 0};
@@ -1097,6 +1101,23 @@
     if (values.length > 1) obj.y = parseFloat(values[1]);
 
     return obj;
+  };
+
+  /**
+   * get flag string is palindrome.
+   *
+   * @static
+   * @method isPalindrome
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  string.isPalindrome = function (str) {
+    if (!aid.isString(str)) return false;
+
+    if (str.length <= 1) return true;
+    if (str.slice(0, 1) !== str.slice(-1)) return false;
+
+    return aid.string.isPalindrome(str.slice(-1, 1));
   };
 
   /**

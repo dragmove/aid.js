@@ -288,5 +288,31 @@ describe('aid.js', function () {
       });
     });
 
+    describe('.isPalindrome()', function() {
+      it('return false when parameter is not string.', function () {
+        expect(string.isPalindrome(null)).toEqual(false);
+        expect(string.isPalindrome(undefined)).toEqual(false);
+        expect(string.isPalindrome(99)).toEqual(false);
+        expect(string.isPalindrome('string')).toEqual(false);
+        expect(string.isPalindrome(false)).toEqual(false);
+      });
+
+      it('return true, when input "r" string.', function () {
+        expect( string.isPalindrome('r') ).toEqual(true);
+      });
+
+      it('return true, when input "rotor" string.', function () {
+        expect( string.isPalindrome('rotor') ).toEqual(true);
+      });
+
+      it('return true, when input "abcdeedcba" string.', function () {
+        expect( string.isPalindrome('abcdeedcba') ).toEqual(true);
+      });
+
+      it('return true, when input "motor" string.', function () {
+        expect( string.isPalindrome('motor') ).toEqual(false);
+      });
+    });
+
   });
 });
