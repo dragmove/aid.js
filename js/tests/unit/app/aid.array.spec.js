@@ -181,6 +181,156 @@ describe('aid.js', function () {
       });
     });
 
+    describe('.merge()', function () {
+      var arr = [18, 6, 66, 44, 9, 22, 14];
+
+      beforeEach(function () {
+        arr = [18, 6, 66, 44, 9, 22, 14];
+      });
+
+      it('return null when parameter is not array.', function () {
+        expect(array.merge(null)).toEqual(null);
+        expect(array.merge(undefined)).toEqual(null);
+        expect(array.merge(99)).toEqual(null);
+        expect(array.merge('string')).toEqual(null);
+        expect(array.merge(false)).toEqual(null);
+      });
+
+      it('return null when startIndex > middleIndex.', function () {
+        expect(array.merge(arr, 2, 1, 99)).toEqual(null);
+      });
+
+      it('return null when middleIndex > endIndex.', function () {
+        expect(array.merge(arr, 1, 99, 2)).toEqual(null);
+      });
+
+      it('return sorted array when array has 3 elements.', function () {
+        arr = [1, 22, 33];
+
+        var startIndex = 0,
+          endIndex = arr.length - 1,
+          middleIndex = Math.floor((startIndex + endIndex) / 2);
+
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([1, 22, 33]);
+
+        arr = [1, 33, 22];
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([1, 22, 33]);
+
+        arr = [22, 33, 1];
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([1, 22, 33]);
+
+        arr = [22, 1, 33];
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual([1, 22, 33]);
+
+        arr = [33, 1, 22];
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual([1, 22, 33]);
+
+        arr = [33, 22, 1];
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual([1, 22, 33]);
+      });
+
+      it('return sorted array when array has 4 elements.', function () {
+        arr = [1, 22, 33, 44];
+
+        var startIndex = 0,
+          endIndex = arr.length - 1,
+          middleIndex = Math.floor((startIndex + endIndex) / 2);
+
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([1, 22, 33, 44]);
+
+        arr = [1, 33, 22, 44];
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([1, 22, 33, 44]);
+
+        arr = [1, 44, 22, 33];
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([1, 22, 33, 44]);
+
+        arr = [22, 33, 1, 44];
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([1, 22, 33, 44]);
+
+        arr = [22, 44, 1, 33];
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([1, 22, 33, 44]);
+
+        arr = [33, 44, 1, 22];
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([1, 22, 33, 44]);
+
+        arr = [1, 22, 44, 33];
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual([1, 22, 33, 44]);
+
+        arr = [1, 33, 44, 22];
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual([1, 22, 33, 44]);
+
+        arr = [1, 44, 33, 22];
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual([1, 22, 33, 44]);
+
+        arr = [22, 1, 33, 44];
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual([1, 22, 33, 44]);
+
+        arr = [22, 44, 33, 1];
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual([1, 22, 33, 44]);
+
+        arr = [33, 22, 1, 44];
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual([1, 22, 33, 44]);
+      });
+    });
+
+    describe('.mergeSort()', function () {
+      var arr = [18, 6, 66, 44, 9, 22, 14];
+
+      beforeEach(function () {
+        arr = [18, 6, 66, 44, 9, 22, 14];
+      });
+
+      it('return null when parameter is not array.', function () {
+        expect(array.mergeSort(null)).toEqual(null);
+        expect(array.mergeSort(undefined)).toEqual(null);
+        expect(array.mergeSort(99)).toEqual(null);
+        expect(array.mergeSort('string')).toEqual(null);
+        expect(array.mergeSort(false)).toEqual(null);
+      });
+
+      it('return null when array has 1 element.', function () {
+        arr = [1];
+        expect(array.mergeSort([1], 99, 99)).toEqual(null);
+        expect(arr).toEqual([1]);
+      });
+
+      it('return null when startIndex is equal to endIndex', function () {
+        expect(array.mergeSort(arr, 1, 1)).toEqual(null);
+      });
+
+      it('return sorted array when array has 2 elements.', function () {
+        arr = [2, 1];
+        expect(array.mergeSort(arr, 0, 1)).toEqual([1, 2]);
+
+        arr = [1, 2];
+        expect(array.mergeSort(arr, 0, 1)).toEqual([1, 2]);
+      });
+
+      it('return sorted array when array has 3 elements.', function () {
+        arr = [1, 22, 33];
+        expect(array.mergeSort(arr, 0, arr.length - 1)).toEqual([1, 22, 33]);
+
+        arr = [1, 33, 22];
+        expect(array.mergeSort(arr, 0, arr.length - 1)).toEqual([1, 22, 33]);
+
+        arr = [22, 1, 33];
+        expect(array.mergeSort(arr, 0, arr.length - 1)).toEqual([1, 22, 33]);
+
+        arr = [22, 33, 1];
+        expect(array.mergeSort(arr, 0, arr.length - 1)).toEqual([1, 22, 33]);
+
+        arr = [33, 1, 22];
+        expect(array.mergeSort(arr, 0, arr.length - 1)).toEqual([1, 22, 33]);
+
+        arr = [33, 22, 1];
+        expect(array.mergeSort(arr, 0, arr.length - 1)).toEqual([1, 22, 33]);
+      });
+
+      it('return sorted array.', function () {
+        expect(array.mergeSort(arr, 0, arr.length - 1)).toEqual([6, 9, 14, 18, 22, 44, 66]);
+      });
+    });
+
     describe('.remove()', function () {
       var arr = [1, 2, 3, 4, 5, 99];
 
@@ -189,15 +339,15 @@ describe('aid.js', function () {
       });
 
       /*
-      // TODO
-      it('1st parameter is not Array, throw error.', function () {
+       // TODO
+       it('1st parameter is not Array, throw error.', function () {
        expect(array.remove(undefined, 99)).toThrowError(TypeError);
        expect(array.remove(null, 99)).toThrowError(TypeError);
        expect(array.remove(99, 99)).toThrowError(TypeError);
        expect(array.remove('aid', 99)).toThrowError(TypeError);
        expect(array.remove(true, 99)).toThrowError(TypeError);
-      });
-      */
+       });
+       */
 
       it('array has no element, return []', function () {
         arr = [];

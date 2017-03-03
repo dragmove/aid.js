@@ -1489,6 +1489,97 @@
     return arr;
   };
 
+
+  /**
+   * merge sort to startIndex ~ middleIndex elements, and middleIndex ~ endIndex elements.
+   * this function is only used by aid.array.mergeSort function.
+   *
+   * @static
+   * @method merge
+   * @returns {Array} return Array or null
+   * @example
+   * var arr = [1, 33, 22];
+   *
+   * var startIndex = 0,
+   * endIndex = arr.length - 1,
+   * middleIndex = Math.floor((startIndex + endIndex) / 2);
+   *
+   * aid.array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual([1, 22, 33]);
+   */
+  array.merge = function (arr, startIndex, middleIndex, endIndex) {
+    if (!aid.isArray(arr) || arr.length <= 0) return null;
+    if (startIndex > middleIndex || middleIndex > endIndex) return null;
+
+    var i = startIndex,
+      j = middleIndex + 1,
+      k = startIndex,
+      tmpArr = [];
+
+    // compare startIndex ~ middleIndex datas, and middleIndex + 1 ~ endIndex datas.
+    while (i <= middleIndex && j <= endIndex) {
+      if (arr[i] <= arr[j]) {
+        tmpArr[k++] = arr[i++];
+      } else {
+        tmpArr[k++] = arr[j++];
+      }
+    }
+
+    if (i > middleIndex) {
+      // set rest right array
+      for (var r = j; r <= endIndex; r++) {
+        tmpArr[k] = arr[r];
+        k++;
+      }
+
+    } else {
+      // set rest left array
+      for (var l = i; l <= middleIndex; l++) {
+        tmpArr[k] = arr[l];
+        k++;
+      }
+    }
+
+    // set sorted values to arr.
+    for (var n = startIndex; n <= endIndex; n++) {
+      arr[n] = tmpArr[n];
+    }
+
+    return arr;
+  };
+
+  /**
+   * apply merge sort in Array.
+   *
+   * @static
+   * @method mergeSort
+   * @returns {Array} return Array or null
+   * @example
+   * var arr = [18, 6, 66, 44, 9, 22, 14];
+   * aid.array.mergeSort(arr, 0, arr.length - 1); // [6, 9, 14, 18, 22, 44, 66]
+   */
+  array.mergeSort = function (arr, startIndex, endIndex) {
+    if (!aid.isArray(arr) || arr.length <= 0) return null;
+
+    if (arr.length <= 1 || startIndex === endIndex) return null;
+
+    if (startIndex + 1 === endIndex) {
+      if (arr[startIndex] > arr[endIndex]) {
+        aid.array.swap(arr, startIndex, endIndex);
+      }
+
+      return arr;
+    }
+
+    var middleIndex = Math.floor((startIndex + endIndex) / 2);
+
+    aid.array.mergeSort(arr, startIndex, middleIndex);
+    aid.array.mergeSort(arr, middleIndex + 1, endIndex);
+
+    aid.array.merge(arr, startIndex, middleIndex, endIndex);
+
+    return arr;
+  };
+
   /**
    * remove element in Array, and return cloned Array.
    *
