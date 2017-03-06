@@ -331,6 +331,115 @@ describe('aid.js', function () {
       });
     });
 
+    describe('.getPivotIndexAfterPartition()', function () {
+      var arr = [18, 6, 66, 44, 9, 22, 14];
+
+      beforeEach(function () {
+        arr = [18, 6, 66, 44, 9, 22, 14];
+      });
+
+      it('return null when parameter is not array.', function () {
+        expect(array.getPivotIndexAfterPartition(null)).toEqual(-1);
+        expect(array.getPivotIndexAfterPartition(undefined)).toEqual(-1);
+        expect(array.getPivotIndexAfterPartition(99)).toEqual(-1);
+        expect(array.getPivotIndexAfterPartition('string')).toEqual(-1);
+        expect(array.getPivotIndexAfterPartition(false)).toEqual(-1);
+      });
+
+      it('return null when startIndex > endIndex.', function () {
+        expect(array.getPivotIndexAfterPartition(arr, 99, 1)).toEqual(-1);
+      });
+
+      it('return 0 when array length is 1.', function () {
+        arr = [1];
+        expect(array.getPivotIndexAfterPartition(arr, 0, 0)).toEqual(0);
+      });
+
+      it('return startIndex when startIndex is equal to endIndex.', function () {
+        expect(array.getPivotIndexAfterPartition(arr, 3, 3)).toEqual(3);
+      });
+
+      it('return 2 when apply arr.', function () {
+        expect(array.getPivotIndexAfterPartition(arr, 0, arr.length - 1)).toEqual(2);
+      });
+
+      it('return 0 when arr has 2 elements.', function () {
+        arr = [2, 1];
+        expect(array.getPivotIndexAfterPartition(arr, 0, arr.length - 1)).toEqual(0);
+      });
+
+      it('return 0 when arr has 2 elements.', function () {
+        arr = [1, 2];
+        expect(array.getPivotIndexAfterPartition(arr, 0, arr.length - 1)).toEqual(1);
+      });
+
+      it('return partitioned array.', function () {
+        array.getPivotIndexAfterPartition(arr, 0, arr.length - 1)
+        expect(arr).toEqual([6, 9, 14, 44, 18, 22, 66]);
+      });
+    });
+
+    describe('.quickSort()', function () {
+      var arr = [18, 6, 66, 44, 9, 22, 14];
+
+      beforeEach(function () {
+        arr = [18, 6, 66, 44, 9, 22, 14];
+      });
+
+      it('return null when parameter is not array.', function () {
+        expect(array.quickSort(null)).toEqual(null);
+        expect(array.quickSort(undefined)).toEqual(null);
+        expect(array.quickSort(99)).toEqual(null);
+        expect(array.quickSort('string')).toEqual(null);
+        expect(array.quickSort(false)).toEqual(null);
+      });
+
+      it('return null when array has 1 element.', function () {
+        arr = [1];
+        expect(array.quickSort([1], 99, 99)).toEqual(null);
+        expect(arr).toEqual([1]);
+      });
+
+
+      it('return null when startIndex is equal to endIndex', function () {
+        arr = [1];
+        expect(array.quickSort([1], 99, 99)).toEqual(null);
+        expect(arr).toEqual([1]);
+      });
+
+      it('return sorted array when array has 2 elements.', function () {
+        arr = [2, 1];
+        expect(array.quickSort(arr, 0, 1)).toEqual([1, 2]);
+
+        arr = [1, 2];
+        expect(array.quickSort(arr, 0, 1)).toEqual([1, 2]);
+      });
+
+      it('return sorted array when array has 3 elements.', function () {
+        arr = [1, 22, 33];
+        expect(array.quickSort(arr, 0, arr.length - 1)).toEqual([1, 22, 33]);
+
+        arr = [1, 33, 22];
+        expect(array.quickSort(arr, 0, arr.length - 1)).toEqual([1, 22, 33]);
+
+        arr = [22, 1, 33];
+        expect(array.quickSort(arr, 0, arr.length - 1)).toEqual([1, 22, 33]);
+
+        arr = [22, 33, 1];
+        expect(array.quickSort(arr, 0, arr.length - 1)).toEqual([1, 22, 33]);
+
+        arr = [33, 1, 22];
+        expect(array.quickSort(arr, 0, arr.length - 1)).toEqual([1, 22, 33]);
+
+        arr = [33, 22, 1];
+        expect(array.quickSort(arr, 0, arr.length - 1)).toEqual([1, 22, 33]);
+      });
+
+      it('return sorted array.', function () {
+        expect(array.quickSort(arr, 0, arr.length - 1)).toEqual([6, 9, 14, 18, 22, 44, 66]);
+      });
+    });
+
     describe('.remove()', function () {
       var arr = [1, 2, 3, 4, 5, 99];
 

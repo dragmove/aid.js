@@ -1489,7 +1489,6 @@
     return arr;
   };
 
-
   /**
    * merge sort to startIndex ~ middleIndex elements, and middleIndex ~ endIndex elements.
    * this function is only used by aid.array.mergeSort function.
@@ -1549,6 +1548,7 @@
 
   /**
    * apply merge sort in Array.
+   * https://ko.khanacademy.org/computing/computer-science/algorithms/merge-sort/a/analysis-of-merge-sort
    *
    * @static
    * @method mergeSort
@@ -1576,6 +1576,64 @@
     aid.array.mergeSort(arr, middleIndex + 1, endIndex);
 
     aid.array.merge(arr, startIndex, middleIndex, endIndex);
+
+    return arr;
+  };
+
+  /**
+   * quick sort with use pivot value.
+   * this function is only used by aid.array.quickSort function.
+   *
+   * @static
+   * @method getPivotIndexAfterPartition
+   * @returns {Number} return index of pivot (between group that less or equal to the pivot, and group that greater than the pivot). Int Number.
+   * @example
+   * var arr = [18, 6, 66, 44, 9, 22, 14];
+   * aid.array.getPivotIndexAfterPartition(arr, 0, arr.length - 1); // [6, 9, 14, 44, 18, 22, 66]
+   */
+  array.getPivotIndexAfterPartition = function (arr, startIndex, endIndex) {
+    if (!aid.isArray(arr) || arr.length <= 0) return -1;
+    if (startIndex > endIndex) return -1;
+
+    if (arr.length <= 1) return 0;
+
+    var pivot = arr[endIndex],
+      swapIndex = startIndex;
+
+    for (var i = startIndex; i < endIndex; i++) {
+      if (arr[i] <= pivot) {
+        aid.array.swap(arr, i, swapIndex);
+        swapIndex++;
+      }
+    }
+
+    if (endIndex !== swapIndex) aid.array.swap(arr, endIndex, swapIndex);
+
+    return swapIndex;
+  };
+
+  /**
+   * apply quick sort in Array.
+   * https://ko.khanacademy.org/computing/computer-science/algorithms/quick-sort/a/overview-of-quicksort
+   *
+   * @static
+   * @method quickSort
+   * @returns {Array} return Array or null
+   * @example
+   * var arr = [18, 6, 66, 44, 9, 22, 14];
+   * aid.array.quickSort(arr, 0, arr.length - 1); // [6, 9, 14, 18, 22, 44, 66]
+   */
+  array.quickSort = function (arr, startIndex, endIndex) {
+    if (!aid.isArray(arr) || arr.length <= 0) return null;
+
+    if (arr.length <= 1 || startIndex === endIndex) return null;
+
+    if (startIndex < endIndex) {
+      var pivotIndex = aid.array.getPivotIndexAfterPartition(arr, startIndex, endIndex);
+
+      aid.array.quickSort(arr, startIndex, pivotIndex - 1);
+      aid.array.quickSort(arr, pivotIndex + 1, endIndex);
+    }
 
     return arr;
   };
