@@ -1,6 +1,6 @@
 {
   "name": "aid.js",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "A bundle of Javascript util Library for help developers. No dependency to other Libraries.",
   "keywords": [
     "aid.js",
@@ -19,7 +19,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "dragmove",
+  "author": "Hyun-Seok.Kim",
   "license": {
     "type": "MIT",
     "url": "https://opensource.org/licenses/mit-license.php"
