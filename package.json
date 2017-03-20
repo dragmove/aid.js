@@ -12,7 +12,7 @@
   ],
   "homepage": "http://www.dragmove.com",
   "bugs": {
-    "url": "",
+    "url": "https://github.com/dragmove/aid.js/issues",
     "email": "dragmove@gmail.com"
   },
   "main": "aid.js",
@@ -20,7 +20,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "dragmove",
-  "license": "MIT",
+  "license": {
+    "type": "MIT",
+    "url": "https://opensource.org/licenses/mit-license.php"
+  },
+
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-jshint": "^2.0.4",
