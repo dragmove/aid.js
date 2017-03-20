@@ -1,7 +1,6 @@
 "use strict";
-describe('aid.js', function () {
-  // sample - http://jasmine.github.io/2.0/introduction.html
 
+describe('aid.js', function () {
   describe('aid.math', function () {
     var math = aid.math;
 

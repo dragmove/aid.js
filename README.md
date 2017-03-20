@@ -1,15 +1,17 @@
 # aid.js
 
-Sorry! I'm tuning this Library! This Lib is not ready!
-
-Please, wait launching of aid.js. :)
-
 ## About
 
 * A bundle of Javascript util Library for help developers.
 * No dependency to other Libraries.
 
-Thanks to whoever use aid.js.  
+Thanks to whoever use aid.js.
+
+
+## Install
+```javascript
+npm install aid.js
+```
 
 
 ## Contact
@@ -17,7 +19,8 @@ Thanks to whoever use aid.js.
 * @Website : http://www.dragmove.com
 * @Blog : http://blog.naver.com/dragmove
 * @Blog (Wordpress) : http://dragmove.synology.me/wordpress/
-* @E-mail : dragmove@naver.com
+* @LinkedIn : https://www.linkedin.com/in/hyun-seok-kim-99748295/
+* @E-mail : dragmove@gmail.com
 
 
 ## License

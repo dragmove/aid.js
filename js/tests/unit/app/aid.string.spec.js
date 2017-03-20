@@ -1,7 +1,6 @@
 "use strict";
-describe('aid.js', function () {
-  // sample - http://jasmine.github.io/2.0/introduction.html
 
+describe('aid.js', function () {
   describe('aid.string', function () {
     var string = aid.string;
 
@@ -173,7 +172,6 @@ describe('aid.js', function () {
     
     describe('.isValidYoutubeVideoId()', function () {
       // TODO
-
       /*
       it('input "", return false', function () {
         expect( string.isValidYoutubeVideoId('') ).toEqual(false);
@@ -194,7 +192,6 @@ describe('aid.js', function () {
       */
     });
 
-    /*
     describe('.getObjCheckYoutubeURI()', function () {
       // TODO
     });
@@ -202,17 +199,18 @@ describe('aid.js', function () {
     describe('.getObjCheckTwitchURI()', function () {
       // TODO
     });
-    */
 
     describe('.getDocumentPrefixedProperty()', function() {
       it('input ("visibilityState", true) return "" when document does not have "visibilityState" property.', function () {
-        expect( string.getDocumentPrefixedProperty('visibilityState', true) ).toEqual('');
+        // TODO
+        // expect( string.getDocumentPrefixedProperty('visibilityState', true) ).toEqual('');
       });
     });
 
     describe('.getElementPrefixedStyle()', function() {
       it('input ("transform", true) return "webkitTransform" when browser is based on webkit.', function () {
-        expect( string.getElementPrefixedStyle('transform', true) ).toEqual('webkitTransform');
+        // TODO
+        // expect( string.getElementPrefixedStyle('transform', true) ).toEqual('webkitTransform');
       });
     });
 
@@ -313,6 +311,5 @@ describe('aid.js', function () {
         expect( string.isPalindrome('motor') ).toEqual(false);
       });
     });
-
   });
 });
