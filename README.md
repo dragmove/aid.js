@@ -1,5 +1,5 @@
 # aid.js
-[![npm version](https://badge.fury.io/js/aid.js.svg)](https://badge.fury.io/js/aid.js)
+[![npm version](https://badge.fury.io/js/aid.js.svg)](https://www.npmjs.com/package/aid.js)
 
 ## About
 
