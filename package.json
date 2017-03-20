@@ -24,7 +24,6 @@
     "type": "MIT",
     "url": "https://opensource.org/licenses/mit-license.php"
   },
-
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-jshint": "^2.0.4",
