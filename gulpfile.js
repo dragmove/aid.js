@@ -3,18 +3,12 @@ var pkg = require('./package.json'),
   header = require('gulp-header'),
   jshint = require('gulp-jshint'),
   minify = require('gulp-minify'),
-  runSequence = require('run-sequence'),
   sourcemaps = require('gulp-sourcemaps'),
+  clean = require('gulp-clean'),
+  runSequence = require('run-sequence'),
   Server = require('karma').Server;
 
-gulp.task('lint', function () {
-  return gulp.src('./*.js')
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'));
-});
-
-gulp.task('minify', function () {
-  var banner = `/*
+var banner = `/*
  * ${pkg.name} ${pkg.version}
  * ${pkg.homepage}
  *
@@ -23,7 +17,15 @@ gulp.task('minify', function () {
  */
 `;
 
+gulp.task('lint', function () {
+  return gulp.src('./*.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'));
+});
+
+gulp.task('minify', function () {
   return gulp.src('js/src/aid.js')
+    .pipe(sourcemaps.init())
     .pipe(minify({
       ext: {
         src: '.js',
@@ -31,18 +33,17 @@ gulp.task('minify', function () {
       }
     }))
     .pipe(header(banner, {pkg: pkg}))
-    .pipe(gulp.dest('./'));
-});
-
-gulp.task('sourcemaps', function () {
-  return gulp.src('aid.min.js')
-    .pipe(sourcemaps.init())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./'));
 });
 
+gulp.task('clean', function () {
+  return gulp.src('./aid.js.map')
+    .pipe(clean());
+});
+
 gulp.task('build', function () {
-  runSequence('minify', 'sourcemaps');
+  runSequence('minify', 'clean');
 });
 
 gulp.task('karma', function (done) {
@@ -51,4 +52,3 @@ gulp.task('karma', function (done) {
     // singleRun: true
   }, done).start();
 });
-

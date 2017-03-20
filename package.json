@@ -1,6 +1,6 @@
 {
   "name": "aid.js",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "description": "A bundle of Javascript util Library for help developers. No dependency to other Libraries.",
   "keywords": [
     "aid.js",
@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
     "gulp-header": "^1.8.8",
     "gulp-jshint": "^2.0.4",
     "gulp-minify": "0.0.15",

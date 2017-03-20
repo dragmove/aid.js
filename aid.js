@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.18
+ * aid.js 0.1.19
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -2076,3 +2076,4 @@
     global.aid = aid;
   }
 }());
+//# sourceMappingURL=aid.js.map
