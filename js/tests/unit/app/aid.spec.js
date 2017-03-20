@@ -80,7 +80,7 @@ describe('aid.js', function () {
       it('input "undefined", return false', function () {
         expect( aid.isBoolean("undefined") ).toEqual(false);
       });
-      
+
       it('input null, return false', function () {
         expect( aid.isBoolean(null) ).toEqual(false);
       });
@@ -114,7 +114,7 @@ describe('aid.js', function () {
       it('input "undefined", return false', function () {
         expect( aid.isNumber("undefined") ).toEqual(false);
       });
-      
+
       it('input null, return false', function () {
         expect( aid.isNumber(null) ).toEqual(false);
       });
@@ -226,7 +226,7 @@ describe('aid.js', function () {
       it('input "undefined", return true', function () {
         expect( aid.isString("undefined") ).toEqual(true);
       });
-      
+
       it('input null, return false', function () {
         expect( aid.isString(null) ).toEqual(false);
       });
@@ -260,7 +260,7 @@ describe('aid.js', function () {
       it('input "undefined", return false', function () {
         expect( aid.isArray("undefined") ).toEqual(false);
       });
-      
+
       it('input null, return false', function () {
         expect( aid.isArray(null) ).toEqual(false);
       });
@@ -298,7 +298,7 @@ describe('aid.js', function () {
       it('input "undefined", return false', function () {
         expect( aid.isObject("undefined") ).toEqual(false);
       });
-      
+
       it('input null, return false', function () {
         expect( aid.isObject(null) ).toEqual(false);
       });
@@ -336,7 +336,7 @@ describe('aid.js', function () {
       it('input "undefined", return false', function () {
         expect( aid.isFunction("undefined") ).toEqual(false);
       });
-      
+
       it('input null, return false', function () {
         expect( aid.isFunction(null) ).toEqual(false);
       });
@@ -376,7 +376,53 @@ describe('aid.js', function () {
     });
 
     describe('.isRegExp()', function() {
-      // TODO
+      it('input undefined, return false', function () {
+        expect( aid.isRegExp(undefined) ).toEqual(false);
+      });
+
+      it('input "undefined", return false', function () {
+        expect( aid.isRegExp("undefined") ).toEqual(false);
+      });
+
+      it('input null, return false', function () {
+        expect( aid.isRegExp(null) ).toEqual(false);
+      });
+
+      it('input false, return false', function () {
+        expect( aid.isRegExp(false) ).toEqual(false);
+      });
+
+      it('input true, return false', function () {
+        expect( aid.isRegExp(true) ).toEqual(false);
+      });
+
+      it('input 0, return false', function () {
+        expect( aid.isRegExp(0) ).toEqual(false);
+      });
+
+      it('input "", return false', function () {
+        expect( aid.isRegExp("") ).toEqual(false);
+      });
+
+      it('input {}, return false', function () {
+        expect( aid.isRegExp({}) ).toEqual(false);
+      });
+
+      it('input [], return false', function () {
+        expect( aid.isRegExp([]) ).toEqual(false);
+      });
+
+      it('input function(){}, return false', function () {
+        expect( aid.isRegExp(function(){}) ).toEqual(false);
+      });
+
+      it('input RegExp object, return true', function () {
+        expect( aid.isRegExp(new RegExp('^aid')) ).toEqual(true);
+      });
+
+      it('input RegExp literal, return true', function () {
+        expect( aid.isRegExp(/^aid/) ).toEqual(true);
+      });
     });
 
     describe('.extend()', function() {
@@ -483,9 +529,7 @@ describe('aid.js', function () {
         expect( node[0] ).toEqual( linkedList.head );
       });
 
-      /*
-       * TODO - working
-       */
+      // TODO
     });
   });
 });

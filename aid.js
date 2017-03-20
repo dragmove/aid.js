@@ -1,6 +1,6 @@
 /*
  The MIT License (MIT)
- Copyright (c) 2016-2017 Hyun-Seok.Kim
+ Copyright (c) 2016 dragmove
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
@@ -309,6 +309,20 @@
   };
 
   /**
+   * is Edge browser
+   *
+   * @static
+   * @method isEdge
+   * @param {string} userAgent
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.browser.isEdge(window.navigator.userAgent) );
+   */
+  browser.isEdge = function (userAgent) {
+    return ( /Gecko/i.test(userAgent) && /Edge/i.test(userAgent) );
+  };
+
+  /**
    * is Firefox browser
    *
    * @static
@@ -347,7 +361,7 @@
    * console.log( aid.browser.isChrome(window.navigator.userAgent) );
    */
   browser.isChrome = function (userAgent) {
-    return ( !browser.isOpera(userAgent) && /Chrome/i.test(userAgent) );
+    return ( !browser.isEdge(userAgent) && !browser.isOpera(userAgent) && /Chrome/i.test(userAgent) );
   };
 
   /**

@@ -309,6 +309,20 @@
   };
 
   /**
+   * is Edge browser
+   *
+   * @static
+   * @method isEdge
+   * @param {string} userAgent
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.browser.isEdge(window.navigator.userAgent) );
+   */
+  browser.isEdge = function (userAgent) {
+    return ( /Gecko/i.test(userAgent) && /Edge/i.test(userAgent) );
+  };
+
+  /**
    * is Firefox browser
    *
    * @static
@@ -347,7 +361,7 @@
    * console.log( aid.browser.isChrome(window.navigator.userAgent) );
    */
   browser.isChrome = function (userAgent) {
-    return ( !browser.isOpera(userAgent) && /Chrome/i.test(userAgent) );
+    return ( !browser.isEdge(userAgent) && !browser.isOpera(userAgent) && /Chrome/i.test(userAgent) );
   };
 
   /**
