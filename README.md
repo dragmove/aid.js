@@ -11,7 +11,7 @@ Thanks to whoever use aid.js.
 
 ## Install
 ```javascript
-npm install aid.js
+npm install aid.js --save-dev
 ```
 
 

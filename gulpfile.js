@@ -1,7 +1,10 @@
 var pkg = require('./package.json'),
   gulp = require('gulp'),
+  header = require('gulp-header'),
   jshint = require('gulp-jshint'),
   minify = require('gulp-minify'),
+  runSequence = require('run-sequence'),
+  sourcemaps = require('gulp-sourcemaps'),
   Server = require('karma').Server;
 
 gulp.task('lint', function () {
@@ -11,14 +14,35 @@ gulp.task('lint', function () {
 });
 
 gulp.task('minify', function () {
-  gulp.src('js/src/aid.js')
+  var banner = `/*
+ * ${pkg.name} ${pkg.version}
+ * ${pkg.homepage}
+ *
+ * The MIT License (MIT)
+ * Copyright (c) 2016-2017 Hyun-Seok.Kim, dragmove@gmail.com
+ */
+`;
+
+  return gulp.src('js/src/aid.js')
     .pipe(minify({
       ext: {
         src: '.js',
         min: '.min.js'
       }
     }))
-    .pipe(gulp.dest('./'))
+    .pipe(header(banner, {pkg: pkg}))
+    .pipe(gulp.dest('./'));
+});
+
+gulp.task('sourcemaps', function () {
+  return gulp.src('aid.min.js')
+    .pipe(sourcemaps.init())
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('./'));
+});
+
+gulp.task('build', function () {
+  runSequence('minify', 'sourcemaps');
 });
 
 gulp.task('karma', function (done) {
