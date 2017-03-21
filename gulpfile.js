@@ -2,10 +2,9 @@ var pkg = require('./package.json'),
   gulp = require('gulp'),
   header = require('gulp-header'),
   jshint = require('gulp-jshint'),
-  minify = require('gulp-minify'),
+  rename = require('gulp-rename'),
   sourcemaps = require('gulp-sourcemaps'),
-  clean = require('gulp-clean'),
-  runSequence = require('run-sequence'),
+  uglify = require('gulp-uglify'),
   Server = require('karma').Server;
 
 var banner = `/*
@@ -25,25 +24,15 @@ gulp.task('lint', function () {
 
 gulp.task('minify', function () {
   return gulp.src('js/src/aid.js')
+    .pipe(header(banner, {pkg: pkg}))
+    .pipe(gulp.dest('./'))
+
     .pipe(sourcemaps.init())
-    .pipe(minify({
-      ext: {
-        src: '.js',
-        min: '.min.js'
-      }
-    }))
+    .pipe(uglify())
+    .pipe(rename('aid.min.js'))
     .pipe(header(banner, {pkg: pkg}))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./'));
-});
-
-gulp.task('clean', function () {
-  return gulp.src('./aid.js.map')
-    .pipe(clean());
-});
-
-gulp.task('build', function () {
-  runSequence('minify', 'clean');
 });
 
 gulp.task('karma', function (done) {
