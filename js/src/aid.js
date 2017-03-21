@@ -240,20 +240,6 @@
   };
 
   /**
-   * is Ubuntu platform
-   *
-   * @static
-   * @method isUbuntu
-   * @param {string} userAgent
-   * @returns {Boolean} return boolean
-   * @example
-   * console.log( aid.platform.isUbuntu(window.navigator.userAgent) );
-   */
-  platform.isUbuntu = function (userAgent) {
-    return /Ubuntu/i.test(userAgent);
-  };
-
-  /**
    * is iOS platform
    * http://stackoverflow.com/questions/9038625/detect-if-device-is-ios/9039885#9039885
    *
