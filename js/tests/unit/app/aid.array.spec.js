@@ -446,16 +446,27 @@ describe('aid.js', function () {
         arr = [1, 2, 3, 4, 5, 99];
       });
 
-      /*
-       // TODO
-       it('1st parameter is not Array, throw error.', function () {
-       expect(array.remove(undefined, 99)).toThrowError(TypeError);
-       expect(array.remove(null, 99)).toThrowError(TypeError);
-       expect(array.remove(99, 99)).toThrowError(TypeError);
-       expect(array.remove('aid', 99)).toThrowError(TypeError);
-       expect(array.remove(true, 99)).toThrowError(TypeError);
-       });
-       */
+      it('1st parameter is not Array, throw TypeError.', function () {
+        expect(function () {
+          array.remove(undefined, 99);
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          array.remove(null, 99);
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          array.remove(99, 99);
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          array.remove('aid', 99);
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          array.remove(true, 99);
+        }).toThrowError(TypeError);
+      });
 
       it('array has no element, return []', function () {
         arr = [];
@@ -479,7 +490,39 @@ describe('aid.js', function () {
     });
 
     describe('.getMatrixArr()', function () {
-      // TODO
+      it('if parameter rowNum is not Integer, return null', function () {
+        expect(function () {
+          array.getMatrixArr(3.5)
+        }).toThrowError(Error);
+      });
+
+      it('if parameter columnNum is not Integer, return null', function () {
+        expect(function () {
+          array.getMatrixArr(3, 1.5)
+        }).toThrowError(Error);
+      });
+
+      it('if parameter length is not 3, throw Error', function () {
+        expect(function () {
+          array.getMatrixArr(3, 3, 0, 0)
+        }).toThrowError(Error);
+      });
+
+      it('if parameter 1, 1, 0', function () {
+        expect(array.getMatrixArr(1, 1, 0)).toEqual([[0]]);
+      });
+
+      it('if parameter 1, 2, 0', function () {
+        expect(array.getMatrixArr(1, 2, 0)).toEqual([[0, 0]]);
+      });
+
+      it('if parameter 2, 1, 0', function () {
+        expect(array.getMatrixArr(2, 1, 0)).toEqual([[0], [0]]);
+      });
+
+      it('if parameter 2, 2, 0', function () {
+        expect(array.getMatrixArr(2, 2, 0)).toEqual([[0, 0], [0, 0]]);
+      });
     });
 
     describe('.binaryIndexOf()', function () {
