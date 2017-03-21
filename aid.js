@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.21
+ * aid.js 0.1.22
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -244,20 +244,6 @@
    */
   platform.isMac = function (userAgent) {
     return /Macintosh/i.test(userAgent);
-  };
-
-  /**
-   * is Ubuntu platform
-   *
-   * @static
-   * @method isUbuntu
-   * @param {string} userAgent
-   * @returns {Boolean} return boolean
-   * @example
-   * console.log( aid.platform.isUbuntu(window.navigator.userAgent) );
-   */
-  platform.isUbuntu = function (userAgent) {
-    return /Ubuntu/i.test(userAgent);
   };
 
   /**
