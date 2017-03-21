@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.20
+ * aid.js 0.1.21
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -1788,8 +1788,16 @@
    * @param {Object} initialVal
    * @returns {Array} return array
    * @example
+   * console.log( aid.array.getMatrixArr(2, 2, 0) ); // [ [0, 0], [0, 0] ]
    */
   array.getMatrixArr = function (rowNum, columnNum, initialVal) {
+    if (!aid.isInteger(rowNum) || !aid.isInteger(columnNum)) {
+      throw Error('rowNum, columnNum parameter must be Integer Number.');
+    }
+    if (arguments.length !== 3) {
+      throw Error('getMatrixArr function requires 3 arguments.');
+    }
+
     var arr = [];
     for (var i = 0; i < rowNum; ++i) {
       var columns = [];
@@ -1812,6 +1820,8 @@
    * @param {Object} target
    * @returns {Number} return Int number
    * @example
+   * var arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+   * console.log( aid.array.binaryIndexOf(arr, 7) ); // 7
    */
   array.binaryIndexOf = function (sortedArray, target) {
     if (!aid.isArray(sortedArray) || sortedArray.length <= 0) return -1;

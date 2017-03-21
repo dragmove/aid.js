@@ -1,8 +1,6 @@
 "use strict";
 
 describe('aid.js', function () {
-  // sample - http://jasmine.github.io/2.0/introduction.html
-
   describe('aid.browser', function () {
     var browser = aid.browser;
 
