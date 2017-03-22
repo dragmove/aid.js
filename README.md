@@ -72,9 +72,6 @@ npm install aid.js --save-dev
     aid.string.getUriParam
     aid.string.getUriParams
     aid.string.getUriCombinedParams
-    aid.string.getOperaVersion
-    aid.string.getChromeVersion
-    aid.string.getSafariVersion
     aid.string.isValidYoutubeVideoId
     aid.string.getObjCheckYoutubeURI
     aid.string.getObjCheckTwitchURI
@@ -132,6 +129,7 @@ npm install aid.js --save-dev
 
 * data structure utils
 ```javascript
+    aid.createStack
     aid.createQueue
     aid.createLinkedList
 ```
