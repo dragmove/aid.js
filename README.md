@@ -1,8 +1,8 @@
 # aid.js
 [![npm version](https://badge.fury.io/js/aid.js.svg)](https://www.npmjs.com/package/aid.js)
 
-## About
 
+## About
 * A bundle of Javascript util Library for help developers.
 * No dependency to other Libraries.
 
@@ -15,8 +15,129 @@ npm install aid.js --save-dev
 ```
 
 
-## Contact
+## Usage
+* base utils
+```javascript
+    aid.existy
+    aid.isDefined
+    aid.isBoolean
+    aid.isNumber
+    aid.isInteger
+    aid.isString
+    aid.isArray
+    aid.isObject
+    aid.isFunction
+    aid.isRegExp
+    aid.extend
+    aid.inherit
+```
 
+* platform utils
+```javascript
+    aid.platform.isWindow
+    aid.platform.isMac
+    aid.platform.isIOS
+    aid.platform.isAndroid
+```
+
+* browser utils 
+```javascript
+    aid.platform.isIE
+    aid.platform.isEdge
+    aid.platform.isFF
+    aid.platform.isOpera
+    aid.platform.isChrome
+    aid.platform.isSafari
+    aid.platform.getIEVersion
+    aid.platform.getFFVersion
+    aid.platform.getOperaVersion
+    aid.platform.getChromeVersion
+    aid.platform.getSafariVersion
+    aid.platform.getIECompatibility
+    aid.platform.isSupportDraggable
+    aid.platform.isSupportDragAndDrop
+    aid.platform.isSupportFileApi
+    aid.platform.isChromeExtension
+    aid.platform.getCookie
+    aid.platform.setCookie
+```
+
+* string utils 
+```javascript
+    aid.string.trim
+    aid.string.hasUniqueChars
+    aid.string.getFileExtension
+    aid.string.isEmail
+    aid.string.isIFrame
+    aid.string.getUriParam
+    aid.string.getUriParams
+    aid.string.getUriCombinedParams
+    aid.string.getOperaVersion
+    aid.string.getChromeVersion
+    aid.string.getSafariVersion
+    aid.string.isValidYoutubeVideoId
+    aid.string.getObjCheckYoutubeURI
+    aid.string.getObjCheckTwitchURI
+    aid.string.getDocumentPrefixedProperty
+    aid.string.getElementPrefixedStyle
+    aid.string.absentToEmpty
+    aid.string.numberWithCommas
+    aid.string.getPositionFromTranslateStr
+    aid.string.isPalindrome
+```
+
+* math utils 
+```javascript
+    aid.math.getSizeAspectFill
+    aid.math.getSizeAspectFit
+    aid.math.getSizeWidthFit
+    aid.math.isEpsilonEqual
+    aid.math.isIndexInLoop
+    aid.math.getLoopedLastIndex
+    aid.math.getReverseLoopedFirstIndex
+    aid.math.factorial
+```
+
+* math utils 
+```javascript
+    aid.date.DAYS
+    aid.date.MONTHS
+    aid.date.MIN_TO_SEC
+    aid.date.HOUR_TO_SEC
+    aid.date.DAY_TO_SEC
+```
+
+* array utils 
+```javascript
+    aid.array.indexOf
+    aid.array.indexOfMin
+    aid.array.swap
+    aid.array.selectionSort
+    aid.array.insertionSort
+    aid.array.merge
+    aid.array.mergeSort
+    aid.array.getPivotIndexAfterPartition
+    aid.array.quickSort
+    aid.array.remove
+    aid.array.getMatrixArr
+    aid.array.binaryIndexOf
+    aid.array.getFirstObjectHasProperty
+```
+
+* element utils
+```javascript
+    aid.element.isEntirelyInViewport
+    aid.element.isPartiallyInViewport
+```
+
+* data structure utils
+```javascript
+    aid.createQueue
+    aid.createLinkedList
+```
+
+
+## Contact
 * @Website : http://www.dragmove.com
 * @Blog : http://blog.naver.com/dragmove
 * @Blog (Wordpress) : http://dragmove.synology.me/wordpress/
@@ -25,5 +146,4 @@ npm install aid.js --save-dev
 
 
 ## License
-
 [MIT license](http://danro.mit-license.org/).
