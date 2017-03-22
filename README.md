@@ -42,24 +42,24 @@ npm install aid.js --save-dev
 
 * browser utils 
 ```javascript
-    aid.platform.isIE
-    aid.platform.isEdge
-    aid.platform.isFF
-    aid.platform.isOpera
-    aid.platform.isChrome
-    aid.platform.isSafari
-    aid.platform.getIEVersion
-    aid.platform.getFFVersion
-    aid.platform.getOperaVersion
-    aid.platform.getChromeVersion
-    aid.platform.getSafariVersion
-    aid.platform.getIECompatibility
-    aid.platform.isSupportDraggable
-    aid.platform.isSupportDragAndDrop
-    aid.platform.isSupportFileApi
-    aid.platform.isChromeExtension
-    aid.platform.getCookie
-    aid.platform.setCookie
+    aid.browser.isIE
+    aid.browser.isEdge
+    aid.browser.isFF
+    aid.browser.isOpera
+    aid.browser.isChrome
+    aid.browser.isSafari
+    aid.browser.getIEVersion
+    aid.browser.getFFVersion
+    aid.browser.getOperaVersion
+    aid.browser.getChromeVersion
+    aid.browser.getSafariVersion
+    aid.browser.getIECompatibility
+    aid.browser.isSupportDraggable
+    aid.browser.isSupportDragAndDrop
+    aid.browser.isSupportFileApi
+    aid.browser.isChromeExtension
+    aid.browser.getCookie
+    aid.browser.setCookie
 ```
 
 * string utils 
@@ -98,7 +98,7 @@ npm install aid.js --save-dev
     aid.math.factorial
 ```
 
-* math utils 
+* date utils 
 ```javascript
     aid.date.DAYS
     aid.date.MONTHS
