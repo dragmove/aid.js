@@ -886,7 +886,9 @@
    * console.log( aid.string.getUriParam('http://www.google.com?name=foo&age=99&address=seoul', 'name') ); // 'foo'
    */
   string.getUriParam = function (uri, parameterName) {
-    if(!aid.isString(uri) || !aid.isString(parameterName)) throw new TypeError('string.getUriParam() requires String parameters.');
+    if(!aid.isString(uri) || !aid.isString(parameterName)) {
+      throw new TypeError('string.getUriParam() requires String parameters.');
+    }
 
     var str = uri;
     if (str.length < 1) return '';
@@ -1341,6 +1343,10 @@
    * console.log( aid.math.getSizeAspectFill(960, 640, window.innerWidth, window.innerHeight) );
    */
   math.getSizeAspectFill = function (srcWidth, srcHeight, fillWidth, fillHeight) {
+    if (!aid.isNumber(srcWidth) || !aid.isNumber(srcHeight) || !aid.isNumber(fillWidth) || !aid.isNumber(fillHeight)) {
+      throw new TypeError('math.getSizeAspectFill() requires Number parameters.');
+    }
+
     var modifiedSizeW = fillWidth,
       modifiedSizeH = Math.ceil((fillWidth / srcWidth) * srcHeight);
 
@@ -1369,6 +1375,10 @@
    * console.log( aid.math.getSizeAspectFit(960, 640, window.innerWidth, window.innerHeight) );
    */
   math.getSizeAspectFit = function (srcWidth, srcHeight, fitWidth, fitHeight) {
+    if (!aid.isNumber(srcWidth) || !aid.isNumber(srcHeight) || !aid.isNumber(fitWidth) || !aid.isNumber(fitHeight)) {
+      throw new TypeError('math.getSizeAspectFit() requires Number parameters.');
+    }
+
     var ratio = Math.min(fitWidth / srcWidth, fitHeight / srcHeight),
       modifiedSizeW = Math.ceil(srcWidth * ratio),
       modifiedSizeH = Math.ceil(srcHeight * ratio);
@@ -1392,6 +1402,10 @@
    * console.log( aid.math.getSizeWidthFit(960, 640, window.innerWidth) );
    */
   math.getSizeWidthFit = function (srcWidth, srcHeight, fitWidth) {
+    if (!aid.isNumber(srcWidth) || !aid.isNumber(srcHeight) || !aid.isNumber(fitWidth)) {
+      throw new TypeError('math.getSizeWidthFit() requires Number parameters.');
+    }
+
     var modifiedSizeW = fitWidth,
       modifiedSizeH = Math.ceil((fitWidth / srcWidth) * srcHeight);
 
@@ -1413,6 +1427,10 @@
    * console.log( aid.math.isEpsilonEqual(0.1 + 0.2, 0.3) );
    */
   math.isEpsilonEqual = function (number_a, number_b) {
+    if (!aid.isNumber(number_a) || !aid.isNumber(number_b)) {
+      throw new TypeError('math.isEpsilonEqual() requires Number parameters.');
+    }
+
     if (!Number.EPSILON) throw new Error('Number.EPSILON is not exist. math.isEpsilonEqual() can not use.');
 
     return (Math.abs(number_a - number_b) < Number.EPSILON);
@@ -1437,17 +1455,16 @@
    * console.log( aid.math.isIndexInLoop(8, 5, 6, 6) ); // true
    */
   math.isIndexInLoop = function (totalLength, loopGap, firstIndex, searchIndex) {
-    if (arguments.length < 4) {
-      throw Error('math.isIndexInLoop() requires 4 parameters.');
-    }
+    if (arguments.length < 4) throw new Error('math.isIndexInLoop() requires 4 parameters.');
+    
     if (!aid.isInteger(totalLength) || !aid.isInteger(loopGap) || !aid.isInteger(firstIndex) || !aid.isInteger(searchIndex)) {
-      throw Error('math.isIndexInLoop() requires Integer Number parameters.');
+      throw new TypeError('math.isIndexInLoop() requires Integer Number parameters.');
     }
     if (totalLength < 1 || firstIndex < 1) {
-      throw Error('totalLength, firstIndex parameter of math.isIndexInLoop() can not smaller than 1.');
+      throw new Error('totalLength, firstIndex parameter of math.isIndexInLoop() can not smaller than 1.');
     }
     if (loopGap > totalLength) {
-      throw Error('loopGap parameter of math.isIndexInLoop() can not bigger than totalLength parameter.');
+      throw new Error('loopGap parameter of math.isIndexInLoop() can not bigger than totalLength parameter.');
     }
 
     var index = firstIndex;
@@ -1475,17 +1492,16 @@
    * console.log( aid.math.getLoopedLastIndex(8, 4, 7) ); // 2
    */
   math.getLoopedLastIndex = function (totalLength, loopGap, firstIndex) {
-    if (arguments.length < 3) {
-      throw Error('math.getLoopedLastIndex() requires 3 parameters.');
-    }
+    if (arguments.length < 3) throw new Error('math.getLoopedLastIndex() requires 3 parameters.');
+    
     if (!aid.isInteger(totalLength) || !aid.isInteger(loopGap) || !aid.isInteger(firstIndex)) {
-      throw Error('math.getLoopedLastIndex() requires Integer Number parameters.');
+      throw new TypeError('math.getLoopedLastIndex() requires Integer Number parameters.');
     }
     if (totalLength < 1 || firstIndex < 1) {
-      throw Error('totalLength, firstIndex parameter of math.getLoopedLastIndex() can not smaller than 1.');
+      throw new Error('totalLength, firstIndex parameter of math.getLoopedLastIndex() can not smaller than 1.');
     }
     if (loopGap > totalLength || firstIndex > totalLength) {
-      throw Error('loopGap, firstIndex parameter of math.getLoopedLastIndex() can not bigger than totalLength parameter.');
+      throw new Error('loopGap, firstIndex parameter of math.getLoopedLastIndex() can not bigger than totalLength parameter.');
     }
 
     var index = firstIndex;
@@ -1512,17 +1528,16 @@
    * console.log( aid.math.getReverseLoopedFirstIndex(8, 8, 2) ); // 3
    */
   math.getReverseLoopedFirstIndex = function (totalLength, loopGap, lastIndex) {
-    if (arguments.length < 3) {
-      throw Error('math.getReverseLoopedFirstIndex() requires 3 parameters.');
-    }
+    if (arguments.length < 3) throw new Error('math.getReverseLoopedFirstIndex() requires 3 parameters.');
+    
     if (!aid.isInteger(totalLength) || !aid.isInteger(loopGap) || !aid.isInteger(lastIndex)) {
-      throw Error('math.getReverseLoopedFirstIndex() requires Integer Number parameters.');
+      throw new TypeError('math.getReverseLoopedFirstIndex() requires Integer Number parameters.');
     }
     if (totalLength < 1 || lastIndex < 1) {
-      throw Error('totalLength, lastIndex parameter of math.getReverseLoopedFirstIndex can not smaller than 1.');
+      throw new Error('totalLength, lastIndex parameter of math.getReverseLoopedFirstIndex can not smaller than 1.');
     }
     if (loopGap > totalLength || lastIndex > totalLength) {
-      throw Error('loopGap, lastIndex parameter of math.getReverseLoopedFirstIndex can not bigger than totalLength parameter.');
+      throw new Error('loopGap, lastIndex parameter of math.getReverseLoopedFirstIndex can not bigger than totalLength parameter.');
     }
 
     var index = lastIndex;
@@ -1545,9 +1560,7 @@
    * console.log( aid.math.factorial(5) ); // 5 * 4 * 3 * 2 * 1 = 120
    */
   math.factorial = function (number) {
-    if (!aid.isInteger(number)) {
-      throw Error('math.factorial() requires Integer Number parameter.');
-    }
+    if (!aid.isInteger(number)) throw new TypeError('math.factorial() requires Integer Number parameter.');
 
     if (number < 1) return 1;
     return number * aid.math.factorial(number - 1);
