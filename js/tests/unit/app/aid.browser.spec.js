@@ -324,6 +324,26 @@ describe('aid.js', function () {
       });
     });
 
+    describe('.getIEVersion()', function () {
+      // TODO
+    });
+
+    describe('.getFFVersion()', function () {
+      // TODO
+    });
+
+    describe('.getOperaVersion()', function () {
+      // TODO
+    });
+
+    describe('.getChromeVersion()', function () {
+      // TODO
+    });
+
+    describe('.getSafariVersion()', function () {
+      // TODO
+    });
+
     describe('.getIECompatibility().isIE', function () {
       it('at ie7 browser, return true.', function () {
         expect(browser.getIECompatibility(IE7_UA).isIE).toEqual(true);
@@ -390,6 +410,30 @@ describe('aid.js', function () {
       it('at ie11 browser compat view 8 mode, return true.', function () {
         expect(browser.getIECompatibility(IE11_COMPAT_UA).isCompatibilityMode).toEqual(true);
       });
+    });
+
+    describe('.isSupportDraggable()', function () {
+      // TODO
+    });
+
+    describe('.isSupportDragAndDrop()', function () {
+      // TODO
+    });
+
+    describe('.isSupportFileApi()', function () {
+      // TODO
+    });
+
+    describe('.isChromeExtension()', function () {
+      // TODO
+    });
+
+    describe('.getCookie()', function () {
+      // TODO
+    });
+
+    describe('.setCookie()', function () {
+      // TODO
     });
   });
 });

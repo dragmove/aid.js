@@ -490,16 +490,16 @@ describe('aid.js', function () {
     });
 
     describe('.getMatrixArr()', function () {
-      it('if parameter rowNum is not Integer, return null', function () {
+      it('if parameter rowNum is not Integer, throw TypeError', function () {
         expect(function () {
           array.getMatrixArr(3.5)
-        }).toThrowError(Error);
+        }).toThrowError(TypeError);
       });
 
-      it('if parameter columnNum is not Integer, return null', function () {
+      it('if parameter columnNum is not Integer, throw TypeError', function () {
         expect(function () {
           array.getMatrixArr(3, 1.5)
-        }).toThrowError(Error);
+        }).toThrowError(TypeError);
       });
 
       it('if parameter length is not 3, throw Error', function () {

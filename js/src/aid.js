@@ -26,14 +26,16 @@
    * @param {Object} obj
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.existy(undefined) ); // false
    * console.log( aid.existy(null) ); // false
+   * console.log( aid.existy('') ); // true
    */
   aid.existy = function (obj) {
     return obj != null;
   };
 
   /**
-   * check object is defined function
+   * check object is defined
    *
    * @static
    * @method isDefined
@@ -78,7 +80,7 @@
   };
 
   /**
-   * check object type is Number, and Integer.
+   * check object type is Integer Number
    *
    * @static
    * @method isInteger
@@ -88,7 +90,7 @@
    * console.log( aid.isInteger(-1) ); // true
    */
   aid.isInteger = function (obj) {
-    if (!aid.isDefined(obj) || obj.constructor !== Number) return false;
+    if(!aid.isNumber(obj)) return false;
 
     // https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger
     return (isFinite(obj) && Math.floor(obj) === obj);
@@ -199,8 +201,7 @@
    */
   aid.inherit = (function () {
     // use closure, protect gabarge collection.
-    var F = function () {
-    };
+    var F = function () {};
 
     return function (ChildClass, ParentClass) {
       F.prototype = ParentClass.prototype;
@@ -210,6 +211,134 @@
       ChildClass.super = ParentClass.prototype;
     };
   }());
+
+  /*
+   * Data Structure
+   */
+  // Stack
+  var Stack = function () {
+    this._dataStore = [];
+    this._top = 0;
+  };
+
+  Stack.prototype.push = function (element) {
+    if (this._top < 0) this._top = 0;
+    this._dataStore[this._top++] = element;
+  };
+
+  Stack.prototype.pop = function () {
+    return this._dataStore[--this._top];
+  };
+
+  Stack.prototype.peek = function () {
+    return this._dataStore[this._top - 1];
+  };
+
+  Stack.prototype.length = function () {
+    return (this._top > 0) ? this._top : 0;
+  };
+
+  Stack.prototype.clear = function () {
+    this._dataStore = [];
+    this._top = 0;
+  };
+
+  aid.createStack = function () {
+    return new Stack();
+  };
+
+  // Queue
+  var Queue = function () {
+    this._dataStore = [];
+  };
+
+  Queue.prototype.enqueue = function (element) {
+    this._dataStore.push(element);
+  };
+
+  Queue.prototype.dequeue = function () {
+    return this._dataStore.shift();
+  };
+
+  Queue.prototype.front = function () {
+    return this._dataStore[0];
+  };
+
+  Queue.prototype.rear = function () {
+    return this._dataStore[this._dataStore.length - 1];
+  };
+
+  Queue.prototype.length = function () {
+    return this._dataStore.length;
+  };
+
+  Queue.prototype.isEmpty = function () {
+    if (this._dataStore.length <= 0) return true;
+    return false;
+  };
+
+  aid.createQueue = function () {
+    return new Queue();
+  };
+
+  // LinkedList node
+  var LinkedListNode = function (data) {
+    this.data = data;
+    this.next = null;
+  };
+
+  // LinkedList
+  var LinkedList = function () {
+    this.head = new LinkedListNode('head');
+  };
+
+  LinkedList.prototype.find = function (data) {
+    var node = this.head;
+    while (node.data !== data) {
+      node = node.next;
+      if (node === null) return node;
+    }
+    return node;
+  };
+
+  LinkedList.prototype.findPrevious = function (data) {
+    if (this.head.data === data) return null;
+
+    var node = this.head;
+    while ((node.next !== null) && (node.next.data !== data)) {
+      node = node.next;
+    }
+    return node;
+  };
+
+  LinkedList.prototype.insert = function (data, prevNodeData) {
+    var insertNode = new LinkedListNode(data),
+      prevNode = this.find(prevNodeData);
+    insertNode.next = prevNode.next;
+    prevNode.next = insertNode;
+  };
+
+  LinkedList.prototype.remove = function (data) {
+    var prevNode = this.findPrevious(data);
+    if (prevNode.next !== null) {
+      prevNode.next = prevNode.next.next;
+    }
+  };
+
+  LinkedList.prototype.getAllNodes = function () {
+    var nodes = [this.head],
+      node = this.head;
+
+    while (node.next !== null) {
+      nodes.push(node.next);
+      node = node.next;
+    }
+    return nodes;
+  };
+
+  aid.createLinkedList = function () {
+    return new LinkedList();
+  };
 
   /**
    * is window platform
@@ -659,6 +788,8 @@
    * console.log( aid.string.trim('   foo   ') ); // 'foo'
    */
   string.trim = function (str) {
+    if(!aid.isString(str)) throw new TypeError('string.trim() requires String parameter.');
+
     return str.replace(/^\s+/, '').replace(/\s+$/, '');
   };
 
@@ -670,9 +801,11 @@
    * @param {String} str
    * @returns {Boolean} return boolean
    * @example
-   * console.log( aid.string.hasUniqueChars('abcdea') );
+   * console.log( aid.string.hasUniqueChars('abcdea') ); // false
    */
   string.hasUniqueChars = function (str) {
+    if(!aid.isString(str)) throw new TypeError('string.hasUniqueChars() requires String parameter.');
+
     if (!str.length) return true;
 
     var obj = {}, char = '';
@@ -694,10 +827,12 @@
    * @param {String} fileName
    * @returns {String} return string
    * @example
-   * console.log( aid.string.getFileExtension('aid.png') );
+   * console.log( aid.string.getFileExtension('aid.png') ); // png
    */
   string.getFileExtension = function (fileName) {
-    if (!aid.isString(fileName) || fileName.length <= 0) return '';
+    if(!aid.isString(fileName)) throw new TypeError('string.getFileExtension() requires String parameter.');
+    
+    if (fileName.length <= 0) return '';
 
     var lastDotIndex = fileName.lastIndexOf('.'),
       extension = fileName.substr(lastDotIndex + 1);
@@ -716,6 +851,8 @@
    * console.log( aid.string.isEmail('dragmove@gmail.com') ); // true
    */
   string.isEmail = function (emailStr) {
+    if(!aid.isString(emailStr)) throw new TypeError('string.isEmail() requires String parameter.');
+
     // html5 form email check regex - https://www.w3.org/TR/html5/forms.html#e-mail-state-(type=email)
     var emailRegex = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
     return ( emailRegex.exec(emailStr) ? true : false );
@@ -732,6 +869,8 @@
    * console.log( aid.string.isIFrame('<iframe src=""></iframe>') ); // true
    */
   string.isIFrame = function (iframeStr) {
+    if(!aid.isString(iframeStr)) throw new TypeError('string.isIFrame() requires String parameter.');
+
     return /^(<iframe).*(<\/iframe>|\/>)$/.test(iframeStr);
   };
 
@@ -741,12 +880,14 @@
    * @static
    * @method getUriParam
    * @param {String} uri
-   * @param {String} paramName
+   * @param {String} parameterName
    * @returns {String} return string
    * @example
    * console.log( aid.string.getUriParam('http://www.google.com?name=foo&age=99&address=seoul', 'name') ); // 'foo'
    */
-  string.getUriParam = function (uri, paramName) {
+  string.getUriParam = function (uri, parameterName) {
+    if(!aid.isString(uri) || !aid.isString(parameterName)) throw new TypeError('string.getUriParam() requires String parameters.');
+
     var str = uri;
     if (str.length < 1) return '';
 
@@ -759,7 +900,7 @@
     for (var i = 0, max = params.length; i < max; ++i) {
       var keyValueArr = params[i].split('=');
       if (keyValueArr.length <= 1) keyValueArr.push('');
-      if (keyValueArr[0] === paramName) return global.decodeURIComponent(keyValueArr[1]);
+      if (keyValueArr[0] === parameterName) return global.decodeURIComponent(keyValueArr[1]);
     }
 
     return '';
@@ -776,10 +917,11 @@
    * console.log( aid.string.getUriParams('http://www.google.com?name=foo&age=99&address=seoul') ); // {name: 'foo', age: '99', address: 'seoul'}
    */
   string.getUriParams = function (uri) {
-    var str = uri;
-    if (str.length < 1) return null;
+    if(!aid.isString(uri)) throw new TypeError('string.getUriParams() requires String parameter.');
 
-    var tmpArr = str.split('?');
+    if (uri.length < 1) return null;
+
+    var tmpArr = uri.split('?');
     if (tmpArr.length < 2) return null;
 
     var paramStr = tmpArr[1],
@@ -796,23 +938,26 @@
   };
 
   /**
-   * get uri combined params
+   * get uri combined parameters
    *
    * @static
    * @method getUriCombinedParams
    * @param {String} uri
-   * @param {Object} params
+   * @param {Object} parameters
    * @returns {String} return string
    * @example
    * console.log( aid.string.getUriCombinedParams('http://www.google.com', {name: "foo", age: "99", address: "seoul"}) ) // http://www.google.com?name=foo&age=99&address=seoul
    */
-  string.getUriCombinedParams = function (uri, params) {
+  string.getUriCombinedParams = function (uri, parameters) {
+    if(!aid.isString(uri)) throw new TypeError('uri parameter type of string.getUriCombinedParams() must be String.');
+    if(!aid.isObject(parameters)) throw new TypeError('parameters parameter type of string.getUriCombinedParams() must be Object.');
+
     if (!uri) return '';
-    if (!params) return uri;
+    if (!parameters) return uri;
 
     var str = '';
-    for (var key in params) {
-      str += '&' + key + '=' + String(params[key]);
+    for (var key in parameters) {
+      str += '&' + key + '=' + String(parameters[key]);
     }
     if (str === '') return uri;
 
@@ -831,6 +976,8 @@
    * console.log( aid.string.isValidYoutubeVideoId('mYIfiQlfaas') ); // true
    */
   string.isValidYoutubeVideoId = function (youtubeId) {
+    if(!aid.isString(youtubeId)) throw new TypeError('youtubeId parameter type of string.isValidYoutubeVideoId() must be String.');
+
     var regex = /^(\w|-|_){11}$/;
     return regex.exec(youtubeId) ? true : false;
   };
@@ -848,6 +995,8 @@
    * console.log( aid.string.getObjCheckYoutubeURI('https://www.youtube.com/embed/mYIfiQlfaas') ); // {type: "youtube", uri: "https://www.youtube.com/embed/mYIfiQlfaas", youtubeId: "mYIfiQlfaas", isValidURI: true}
    */
   string.getObjCheckYoutubeURI = function (uri) {
+    if(!aid.isString(uri)) throw new TypeError('uri parameter type of string.getObjCheckYoutubeURI() must be String.');
+
     var YOUTUBE_REGEXES = {
       'watch': /^(?:(?:https?:)?\/\/)?(?:www\.)?youtube\.com\/watch/,
       'embed': /^(?:(?:https?:)?\/\/)?(?:www\.)?youtube\.com\/(?:embed\/((?:\w|-|_){11}))/,
@@ -946,6 +1095,8 @@
      player.twitch.tv/?video=v56097351
      */
 
+    if(!aid.isString(uri)) throw new TypeError('uri parameter type of string.getObjCheckTwitchURI() must be String.');
+
     var TWITCH_REGEXES = {
       'liveChannel': /^(?:(?:https?:)?\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9][\w]{2,24})$/,
       'liveVideo': /^(?:(?:https?:)?\/\/)?player\.twitch\.tv\/\?channel\=([a-zA-Z0-9][\w]{2,24})$/,
@@ -1033,6 +1184,9 @@
    * console.log( aid.string.getDocumentPrefixedProperty('12345', false) ); // if browser doesn't have property, return ''.
    */
   string.getDocumentPrefixedProperty = function (propertyName, isPropertyFirstCharToUpperCase) {
+    if(!aid.isString(propertyName)) throw new TypeError('propertyName parameter type of string.getDocumentPrefixedProperty() must be String.');
+    if(!aid.isBoolean(isPropertyFirstCharToUpperCase)) throw new TypeError('isPropertyFirstCharToUpperCase parameter type of string.getDocumentPrefixedProperty() must be Boolean.');
+
     if (propertyName in global.document) return propertyName;
 
     var PREFIXES = ['webkit', 'moz', 'ms', 'o'],
@@ -1060,6 +1214,9 @@
    * console.log( aid.string.getElementPrefixedStyle('12345', false) ); // if browser doesn't have style property, return ''.
    */
   string.getElementPrefixedStyle = function (propertyName, isPropertyFirstCharToUpperCase) {
+    if(!aid.isString(propertyName)) throw new TypeError('propertyName parameter type of string.getElementPrefixedStyle() must be String.');
+    if(!aid.isBoolean(isPropertyFirstCharToUpperCase)) throw new TypeError('isPropertyFirstCharToUpperCase parameter type of string.getElementPrefixedStyle() must be Boolean.');
+
     var style = global.document.createElement('div').style;
     if (propertyName in style) return propertyName;
 
@@ -1090,7 +1247,8 @@
    * console.log( aid.string.absentToEmpty('javascript') ); // if parameter is exist, return parameter.
    */
   string.absentToEmpty = function (absentableStr) {
-    if (!aid.existy(absentableStr)) return '';
+    if (!aid.existy(absentableStr) || !aid.isString(absentableStr)) return '';
+
     return absentableStr;
   };
 
@@ -1106,6 +1264,8 @@
    * console.log( aid.string.numberWithCommas(1000000) ); // 1000000 to '1,000,000'.
    */
   string.numberWithCommas = function (number) {
+    if(!aid.isInteger(number)) throw new TypeError('string.numberWithCommas() requires Integer Number parameter.');
+
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
 
@@ -1123,6 +1283,8 @@
    * string.getPositionFromTranslateStr('translateY(99px)'); // {x: 0, y: 99}
    */
   string.getPositionFromTranslateStr = function (str) {
+    if (!aid.isString(str)) throw new TypeError('string.getPositionFromTranslateStr() requires String parameter.');
+
     var obj = {x: 0, y: 0};
     if (!aid.isDefined(str)) return obj;
 
@@ -1157,7 +1319,7 @@
    * console.log( aid.string.isPalindrome('motor') ); // false
    */
   string.isPalindrome = function (str) {
-    if (!aid.isString(str)) return false;
+    if (!aid.isString(str)) throw new TypeError('string.isPalindrome() requires String parameter.');
 
     if (str.length <= 1) return true;
     if (str.slice(0, 1) !== str.slice(-1)) return false;
@@ -1251,9 +1413,8 @@
    * console.log( aid.math.isEpsilonEqual(0.1 + 0.2, 0.3) );
    */
   math.isEpsilonEqual = function (number_a, number_b) {
-    if (!Number.EPSILON) {
-      throw new Error('Number.EPSILON is not exist.');
-    }
+    if (!Number.EPSILON) throw new Error('Number.EPSILON is not exist. math.isEpsilonEqual() can not use.');
+
     return (Math.abs(number_a - number_b) < Number.EPSILON);
   };
 
@@ -1277,16 +1438,16 @@
    */
   math.isIndexInLoop = function (totalLength, loopGap, firstIndex, searchIndex) {
     if (arguments.length < 4) {
-      throw Error('isIndexInLoop function requires 4 arguments.');
+      throw Error('math.isIndexInLoop() requires 4 parameters.');
     }
     if (!aid.isInteger(totalLength) || !aid.isInteger(loopGap) || !aid.isInteger(firstIndex) || !aid.isInteger(searchIndex)) {
-      throw Error('arguments must be Integer Number.');
+      throw Error('math.isIndexInLoop() requires Integer Number parameters.');
     }
     if (totalLength < 1 || firstIndex < 1) {
-      throw Error('totalLength and firstIndex can not smaller than 1.');
+      throw Error('totalLength, firstIndex parameter of math.isIndexInLoop() can not smaller than 1.');
     }
     if (loopGap > totalLength) {
-      throw Error('loopGap can not bigger than totalLength.');
+      throw Error('loopGap parameter of math.isIndexInLoop() can not bigger than totalLength parameter.');
     }
 
     var index = firstIndex;
@@ -1315,16 +1476,16 @@
    */
   math.getLoopedLastIndex = function (totalLength, loopGap, firstIndex) {
     if (arguments.length < 3) {
-      throw Error('getLoopedLastIndex function requires 3 arguments.');
+      throw Error('math.getLoopedLastIndex() requires 3 parameters.');
     }
     if (!aid.isInteger(totalLength) || !aid.isInteger(loopGap) || !aid.isInteger(firstIndex)) {
-      throw Error('arguments must be Integer Number.');
+      throw Error('math.getLoopedLastIndex() requires Integer Number parameters.');
     }
     if (totalLength < 1 || firstIndex < 1) {
-      throw Error('totalLength and firstIndex can not smaller than 1.');
+      throw Error('totalLength, firstIndex parameter of math.getLoopedLastIndex() can not smaller than 1.');
     }
     if (loopGap > totalLength || firstIndex > totalLength) {
-      throw Error('loopGap and firstIndex can not bigger than totalLength.');
+      throw Error('loopGap, firstIndex parameter of math.getLoopedLastIndex() can not bigger than totalLength parameter.');
     }
 
     var index = firstIndex;
@@ -1352,16 +1513,16 @@
    */
   math.getReverseLoopedFirstIndex = function (totalLength, loopGap, lastIndex) {
     if (arguments.length < 3) {
-      throw Error('getReverseLoopedFirstIndex function requires 3 arguments.');
+      throw Error('math.getReverseLoopedFirstIndex() requires 3 parameters.');
     }
     if (!aid.isInteger(totalLength) || !aid.isInteger(loopGap) || !aid.isInteger(lastIndex)) {
-      throw Error('arguments must be Integer Number.');
+      throw Error('math.getReverseLoopedFirstIndex() requires Integer Number parameters.');
     }
     if (totalLength < 1 || lastIndex < 1) {
-      throw Error('totalLength and lastIndex can not smaller than 1.');
+      throw Error('totalLength, lastIndex parameter of math.getReverseLoopedFirstIndex can not smaller than 1.');
     }
     if (loopGap > totalLength || lastIndex > totalLength) {
-      throw Error('loopGap and lastIndex can not bigger than totalLength.');
+      throw Error('loopGap, lastIndex parameter of math.getReverseLoopedFirstIndex can not bigger than totalLength parameter.');
     }
 
     var index = lastIndex;
@@ -1385,7 +1546,7 @@
    */
   math.factorial = function (number) {
     if (!aid.isInteger(number)) {
-      throw Error('argument must be Integer Number.');
+      throw Error('math.factorial() requires Integer Number parameter.');
     }
 
     if (number < 1) return 1;
@@ -1747,7 +1908,7 @@
    */
   array.remove = function (arr, target) {
     if (!aid.isArray(arr)) {
-      throw new TypeError('1st parameter type of array.remove() must be Array');
+      throw new TypeError('1st parameter type of array.remove() must be Array.');
     }
 
     var clonedArr = arr.slice(0),
@@ -1771,10 +1932,10 @@
    */
   array.getMatrixArr = function (rowNum, columnNum, initialVal) {
     if (!aid.isInteger(rowNum) || !aid.isInteger(columnNum)) {
-      throw Error('rowNum, columnNum parameter must be Integer Number.');
+      throw new TypeError('rowNum, columnNum parameter of array.getMatrixArr() must be Integer Number.');
     }
     if (arguments.length !== 3) {
-      throw Error('getMatrixArr function requires 3 arguments.');
+      throw Error('array.getMatrixArr() requires 3 parameters.');
     }
 
     var arr = [];
@@ -1866,134 +2027,6 @@
     }
 
     return result;
-  };
-
-  /*
-   * Data Structure
-   */
-  // Stack
-  var Stack = function () {
-    this._dataStore = [];
-    this._top = 0;
-  };
-
-  Stack.prototype.push = function (element) {
-    if (this._top < 0) this._top = 0;
-    this._dataStore[this._top++] = element;
-  };
-
-  Stack.prototype.pop = function () {
-    return this._dataStore[--this._top];
-  };
-
-  Stack.prototype.peek = function () {
-    return this._dataStore[this._top - 1];
-  };
-
-  Stack.prototype.length = function () {
-    return (this._top > 0) ? this._top : 0;
-  };
-
-  Stack.prototype.clear = function () {
-    this._dataStore = [];
-    this._top = 0;
-  };
-
-  aid.createStack = function () {
-    return new Stack();
-  };
-
-  // Queue
-  var Queue = function () {
-    this._dataStore = [];
-  };
-
-  Queue.prototype.enqueue = function (element) {
-    this._dataStore.push(element);
-  };
-
-  Queue.prototype.dequeue = function () {
-    return this._dataStore.shift();
-  };
-
-  Queue.prototype.front = function () {
-    return this._dataStore[0];
-  };
-
-  Queue.prototype.rear = function () {
-    return this._dataStore[this._dataStore.length - 1];
-  };
-
-  Queue.prototype.length = function () {
-    return this._dataStore.length;
-  };
-
-  Queue.prototype.isEmpty = function () {
-    if (this._dataStore.length <= 0) return true;
-    return false;
-  };
-
-  aid.createQueue = function () {
-    return new Queue();
-  };
-
-  // LinkedList node
-  var LinkedListNode = function (data) {
-    this.data = data;
-    this.next = null;
-  };
-
-  // LinkedList
-  var LinkedList = function () {
-    this.head = new LinkedListNode('head');
-  };
-
-  LinkedList.prototype.find = function (data) {
-    var node = this.head;
-    while (node.data !== data) {
-      node = node.next;
-      if (node === null) return node;
-    }
-    return node;
-  };
-
-  LinkedList.prototype.findPrevious = function (data) {
-    if (this.head.data === data) return null;
-
-    var node = this.head;
-    while ((node.next !== null) && (node.next.data !== data)) {
-      node = node.next;
-    }
-    return node;
-  };
-
-  LinkedList.prototype.insert = function (data, prevNodeData) {
-    var insertNode = new LinkedListNode(data),
-      prevNode = this.find(prevNodeData);
-    insertNode.next = prevNode.next;
-    prevNode.next = insertNode;
-  };
-
-  LinkedList.prototype.remove = function (data) {
-    var prevNode = this.findPrevious(data);
-    if (prevNode.next !== null) {
-      prevNode.next = prevNode.next.next;
-    }
-  };
-
-  LinkedList.prototype.getAllNodes = function () {
-    var nodes = [this.head],
-      node = this.head;
-
-    while (node.next !== null) {
-      nodes.push(node.next);
-      node = node.next;
-    }
-    return nodes;
-  };
-
-  aid.createLinkedList = function () {
-    return new LinkedList();
   };
 
   /**
