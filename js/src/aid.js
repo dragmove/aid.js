@@ -90,7 +90,7 @@
    * console.log( aid.isInteger(-1) ); // true
    */
   aid.isInteger = function (obj) {
-    if(!aid.isNumber(obj)) return false;
+    if (!aid.isNumber(obj)) return false;
 
     // https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger
     return (isFinite(obj) && Math.floor(obj) === obj);
@@ -177,7 +177,7 @@
    *
    * @static
    * @method extend
-   * @param {Object} prototype of class function
+   * @param {Object} prototype of class function, or object has variables or methods.
    * @param {Object} object has variables or methods
    * @example
    */
@@ -201,7 +201,8 @@
    */
   aid.inherit = (function () {
     // use closure, protect gabarge collection.
-    var F = function () {};
+    var F = function () {
+    };
 
     return function (ChildClass, ParentClass) {
       F.prototype = ParentClass.prototype;
@@ -788,7 +789,7 @@
    * console.log( aid.string.trim('   foo   ') ); // 'foo'
    */
   string.trim = function (str) {
-    if(!aid.isString(str)) throw new TypeError('string.trim() requires String parameter.');
+    if (!aid.isString(str)) throw new TypeError('string.trim() requires String parameter.');
 
     return str.replace(/^\s+/, '').replace(/\s+$/, '');
   };
@@ -804,7 +805,7 @@
    * console.log( aid.string.hasUniqueChars('abcdea') ); // false
    */
   string.hasUniqueChars = function (str) {
-    if(!aid.isString(str)) throw new TypeError('string.hasUniqueChars() requires String parameter.');
+    if (!aid.isString(str)) throw new TypeError('string.hasUniqueChars() requires String parameter.');
 
     if (!str.length) return true;
 
@@ -830,8 +831,8 @@
    * console.log( aid.string.getFileExtension('aid.png') ); // png
    */
   string.getFileExtension = function (fileName) {
-    if(!aid.isString(fileName)) throw new TypeError('string.getFileExtension() requires String parameter.');
-    
+    if (!aid.isString(fileName)) throw new TypeError('string.getFileExtension() requires String parameter.');
+
     if (fileName.length <= 0) return '';
 
     var lastDotIndex = fileName.lastIndexOf('.'),
@@ -851,7 +852,7 @@
    * console.log( aid.string.isEmail('dragmove@gmail.com') ); // true
    */
   string.isEmail = function (emailStr) {
-    if(!aid.isString(emailStr)) throw new TypeError('string.isEmail() requires String parameter.');
+    if (!aid.isString(emailStr)) throw new TypeError('string.isEmail() requires String parameter.');
 
     // html5 form email check regex - https://www.w3.org/TR/html5/forms.html#e-mail-state-(type=email)
     var emailRegex = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
@@ -869,7 +870,7 @@
    * console.log( aid.string.isIFrame('<iframe src=""></iframe>') ); // true
    */
   string.isIFrame = function (iframeStr) {
-    if(!aid.isString(iframeStr)) throw new TypeError('string.isIFrame() requires String parameter.');
+    if (!aid.isString(iframeStr)) throw new TypeError('string.isIFrame() requires String parameter.');
 
     return /^(<iframe).*(<\/iframe>|\/>)$/.test(iframeStr);
   };
@@ -886,7 +887,7 @@
    * console.log( aid.string.getUriParam('http://www.google.com?name=foo&age=99&address=seoul', 'name') ); // 'foo'
    */
   string.getUriParam = function (uri, parameterName) {
-    if(!aid.isString(uri) || !aid.isString(parameterName)) {
+    if (!aid.isString(uri) || !aid.isString(parameterName)) {
       throw new TypeError('string.getUriParam() requires String parameters.');
     }
 
@@ -919,7 +920,7 @@
    * console.log( aid.string.getUriParams('http://www.google.com?name=foo&age=99&address=seoul') ); // {name: 'foo', age: '99', address: 'seoul'}
    */
   string.getUriParams = function (uri) {
-    if(!aid.isString(uri)) throw new TypeError('string.getUriParams() requires String parameter.');
+    if (!aid.isString(uri)) throw new TypeError('string.getUriParams() requires String parameter.');
 
     if (uri.length < 1) return null;
 
@@ -951,8 +952,8 @@
    * console.log( aid.string.getUriCombinedParams('http://www.google.com', {name: "foo", age: "99", address: "seoul"}) ) // http://www.google.com?name=foo&age=99&address=seoul
    */
   string.getUriCombinedParams = function (uri, parameters) {
-    if(!aid.isString(uri)) throw new TypeError('uri parameter type of string.getUriCombinedParams() must be String.');
-    if(!aid.isObject(parameters)) throw new TypeError('parameters parameter type of string.getUriCombinedParams() must be Object.');
+    if (!aid.isString(uri)) throw new TypeError('uri parameter type of string.getUriCombinedParams() must be String.');
+    if (!aid.isObject(parameters)) throw new TypeError('parameters parameter type of string.getUriCombinedParams() must be Object.');
 
     if (!uri) return '';
     if (!parameters) return uri;
@@ -978,7 +979,7 @@
    * console.log( aid.string.isValidYoutubeVideoId('mYIfiQlfaas') ); // true
    */
   string.isValidYoutubeVideoId = function (youtubeId) {
-    if(!aid.isString(youtubeId)) throw new TypeError('youtubeId parameter type of string.isValidYoutubeVideoId() must be String.');
+    if (!aid.isString(youtubeId)) throw new TypeError('youtubeId parameter type of string.isValidYoutubeVideoId() must be String.');
 
     var regex = /^(\w|-|_){11}$/;
     return regex.exec(youtubeId) ? true : false;
@@ -997,7 +998,7 @@
    * console.log( aid.string.getObjCheckYoutubeURI('https://www.youtube.com/embed/mYIfiQlfaas') ); // {type: "youtube", uri: "https://www.youtube.com/embed/mYIfiQlfaas", youtubeId: "mYIfiQlfaas", isValidURI: true}
    */
   string.getObjCheckYoutubeURI = function (uri) {
-    if(!aid.isString(uri)) throw new TypeError('uri parameter type of string.getObjCheckYoutubeURI() must be String.');
+    if (!aid.isString(uri)) throw new TypeError('uri parameter type of string.getObjCheckYoutubeURI() must be String.');
 
     var YOUTUBE_REGEXES = {
       'watch': /^(?:(?:https?:)?\/\/)?(?:www\.)?youtube\.com\/watch/,
@@ -1097,7 +1098,7 @@
      player.twitch.tv/?video=v56097351
      */
 
-    if(!aid.isString(uri)) throw new TypeError('uri parameter type of string.getObjCheckTwitchURI() must be String.');
+    if (!aid.isString(uri)) throw new TypeError('uri parameter type of string.getObjCheckTwitchURI() must be String.');
 
     var TWITCH_REGEXES = {
       'liveChannel': /^(?:(?:https?:)?\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9][\w]{2,24})$/,
@@ -1186,8 +1187,8 @@
    * console.log( aid.string.getDocumentPrefixedProperty('12345', false) ); // if browser doesn't have property, return ''.
    */
   string.getDocumentPrefixedProperty = function (propertyName, isPropertyFirstCharToUpperCase) {
-    if(!aid.isString(propertyName)) throw new TypeError('propertyName parameter type of string.getDocumentPrefixedProperty() must be String.');
-    if(!aid.isBoolean(isPropertyFirstCharToUpperCase)) throw new TypeError('isPropertyFirstCharToUpperCase parameter type of string.getDocumentPrefixedProperty() must be Boolean.');
+    if (!aid.isString(propertyName)) throw new TypeError('propertyName parameter type of string.getDocumentPrefixedProperty() must be String.');
+    if (!aid.isBoolean(isPropertyFirstCharToUpperCase)) throw new TypeError('isPropertyFirstCharToUpperCase parameter type of string.getDocumentPrefixedProperty() must be Boolean.');
 
     if (propertyName in global.document) return propertyName;
 
@@ -1216,8 +1217,8 @@
    * console.log( aid.string.getElementPrefixedStyle('12345', false) ); // if browser doesn't have style property, return ''.
    */
   string.getElementPrefixedStyle = function (propertyName, isPropertyFirstCharToUpperCase) {
-    if(!aid.isString(propertyName)) throw new TypeError('propertyName parameter type of string.getElementPrefixedStyle() must be String.');
-    if(!aid.isBoolean(isPropertyFirstCharToUpperCase)) throw new TypeError('isPropertyFirstCharToUpperCase parameter type of string.getElementPrefixedStyle() must be Boolean.');
+    if (!aid.isString(propertyName)) throw new TypeError('propertyName parameter type of string.getElementPrefixedStyle() must be String.');
+    if (!aid.isBoolean(isPropertyFirstCharToUpperCase)) throw new TypeError('isPropertyFirstCharToUpperCase parameter type of string.getElementPrefixedStyle() must be Boolean.');
 
     var style = global.document.createElement('div').style;
     if (propertyName in style) return propertyName;
@@ -1266,7 +1267,7 @@
    * console.log( aid.string.numberWithCommas(1000000) ); // 1000000 to '1,000,000'.
    */
   string.numberWithCommas = function (number) {
-    if(!aid.isInteger(number)) throw new TypeError('string.numberWithCommas() requires Integer Number parameter.');
+    if (!aid.isInteger(number)) throw new TypeError('string.numberWithCommas() requires Integer Number parameter.');
 
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
@@ -1456,7 +1457,7 @@
    */
   math.isIndexInLoop = function (totalLength, loopGap, firstIndex, searchIndex) {
     if (arguments.length < 4) throw new Error('math.isIndexInLoop() requires 4 parameters.');
-    
+
     if (!aid.isInteger(totalLength) || !aid.isInteger(loopGap) || !aid.isInteger(firstIndex) || !aid.isInteger(searchIndex)) {
       throw new TypeError('math.isIndexInLoop() requires Integer Number parameters.');
     }
@@ -1493,7 +1494,7 @@
    */
   math.getLoopedLastIndex = function (totalLength, loopGap, firstIndex) {
     if (arguments.length < 3) throw new Error('math.getLoopedLastIndex() requires 3 parameters.');
-    
+
     if (!aid.isInteger(totalLength) || !aid.isInteger(loopGap) || !aid.isInteger(firstIndex)) {
       throw new TypeError('math.getLoopedLastIndex() requires Integer Number parameters.');
     }
@@ -1529,7 +1530,7 @@
    */
   math.getReverseLoopedFirstIndex = function (totalLength, loopGap, lastIndex) {
     if (arguments.length < 3) throw new Error('math.getReverseLoopedFirstIndex() requires 3 parameters.');
-    
+
     if (!aid.isInteger(totalLength) || !aid.isInteger(loopGap) || !aid.isInteger(lastIndex)) {
       throw new TypeError('math.getReverseLoopedFirstIndex() requires Integer Number parameters.');
     }
@@ -1630,7 +1631,7 @@
    * console.log( aid.array.indexOf(arr, 99) ); // 5
    */
   array.indexOf = function (arr, target) {
-    if (!aid.isArray(arr)) return -1;
+    if (!aid.isArray(arr)) throw new TypeError('math.indexOf() requires Number parameter.');
 
     for (var i = 0, max = arr.length; i < max; ++i) {
       if (arr[i] === target) return i;
@@ -1921,7 +1922,7 @@
    */
   array.remove = function (arr, target) {
     if (!aid.isArray(arr)) {
-      throw new TypeError('1st parameter type of array.remove() must be Array.');
+      throw new TypeError('arr parameter type of array.remove() must be Array.');
     }
 
     var clonedArr = arr.slice(0),

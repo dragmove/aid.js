@@ -6,16 +6,46 @@ describe('aid.js', function () {
 
     describe('.getSizeAspectFill()', function () {
       it('input arguments are not Number type, throw TypeError.', function () {
-        expect(function() { math.getSizeAspectFill(undefined) }).toThrowError(TypeError);
-        expect(function() { math.getSizeAspectFill(null) }).toThrowError(TypeError);
-        expect(function() { math.getSizeAspectFill(false) }).toThrowError(TypeError);
-        expect(function() { math.getSizeAspectFill(true) }).toThrowError(TypeError);
-        expect(function() { math.getSizeAspectFill('') }).toThrowError(TypeError);
-        expect(function() { math.getSizeAspectFill({}) }).toThrowError(TypeError);
-        expect(function() { math.getSizeAspectFill([]) }).toThrowError(TypeError);
-        expect(function() { math.getSizeAspectFill(function(){}) }).toThrowError(TypeError);
-        expect(function() { math.getSizeAspectFill(new RegExp('^aid')) }).toThrowError(TypeError);
-        expect(function() { math.getSizeAspectFill(/^aid/) }).toThrowError(TypeError);
+        expect(function () {
+          math.getSizeAspectFill(undefined)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeAspectFill(null)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeAspectFill(false)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeAspectFill(true)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeAspectFill('')
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeAspectFill({})
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeAspectFill([])
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeAspectFill(function () {
+          })
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeAspectFill(new RegExp('^aid'))
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeAspectFill(/^aid/)
+        }).toThrowError(TypeError);
       });
 
       // TODO
@@ -23,16 +53,46 @@ describe('aid.js', function () {
 
     describe('.getSizeAspectFit()', function () {
       it('input arguments are not Number type, throw TypeError.', function () {
-        expect(function() { math.getSizeAspectFit(undefined) }).toThrowError(TypeError);
-        expect(function() { math.getSizeAspectFit(null) }).toThrowError(TypeError);
-        expect(function() { math.getSizeAspectFit(false) }).toThrowError(TypeError);
-        expect(function() { math.getSizeAspectFit(true) }).toThrowError(TypeError);
-        expect(function() { math.getSizeAspectFit('') }).toThrowError(TypeError);
-        expect(function() { math.getSizeAspectFit({}) }).toThrowError(TypeError);
-        expect(function() { math.getSizeAspectFit([]) }).toThrowError(TypeError);
-        expect(function() { math.getSizeAspectFit(function(){}) }).toThrowError(TypeError);
-        expect(function() { math.getSizeAspectFit(new RegExp('^aid')) }).toThrowError(TypeError);
-        expect(function() { math.getSizeAspectFit(/^aid/) }).toThrowError(TypeError);
+        expect(function () {
+          math.getSizeAspectFit(undefined)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeAspectFit(null)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeAspectFit(false)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeAspectFit(true)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeAspectFit('')
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeAspectFit({})
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeAspectFit([])
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeAspectFit(function () {
+          })
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeAspectFit(new RegExp('^aid'))
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeAspectFit(/^aid/)
+        }).toThrowError(TypeError);
       });
 
       // TODO
@@ -40,16 +100,46 @@ describe('aid.js', function () {
 
     describe('.getSizeWidthFit()', function () {
       it('input arguments are not Number type, throw TypeError.', function () {
-        expect(function() { math.getSizeWidthFit(undefined) }).toThrowError(TypeError);
-        expect(function() { math.getSizeWidthFit(null) }).toThrowError(TypeError);
-        expect(function() { math.getSizeWidthFit(false) }).toThrowError(TypeError);
-        expect(function() { math.getSizeWidthFit(true) }).toThrowError(TypeError);
-        expect(function() { math.getSizeWidthFit('') }).toThrowError(TypeError);
-        expect(function() { math.getSizeWidthFit({}) }).toThrowError(TypeError);
-        expect(function() { math.getSizeWidthFit([]) }).toThrowError(TypeError);
-        expect(function() { math.getSizeWidthFit(function(){}) }).toThrowError(TypeError);
-        expect(function() { math.getSizeWidthFit(new RegExp('^aid')) }).toThrowError(TypeError);
-        expect(function() { math.getSizeWidthFit(/^aid/) }).toThrowError(TypeError);
+        expect(function () {
+          math.getSizeWidthFit(undefined)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeWidthFit(null)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeWidthFit(false)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeWidthFit(true)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeWidthFit('')
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeWidthFit({})
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeWidthFit([])
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeWidthFit(function () {
+          })
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeWidthFit(new RegExp('^aid'))
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeWidthFit(/^aid/)
+        }).toThrowError(TypeError);
       });
 
       // TODO
@@ -57,16 +147,46 @@ describe('aid.js', function () {
 
     describe('.isEpsilonEqual()', function () {
       it('input arguments are not Number type, throw TypeError.', function () {
-        expect(function() { math.getSizeWidthFit(undefined) }).toThrowError(TypeError);
-        expect(function() { math.getSizeWidthFit(null) }).toThrowError(TypeError);
-        expect(function() { math.getSizeWidthFit(false) }).toThrowError(TypeError);
-        expect(function() { math.getSizeWidthFit(true) }).toThrowError(TypeError);
-        expect(function() { math.getSizeWidthFit('') }).toThrowError(TypeError);
-        expect(function() { math.getSizeWidthFit({}) }).toThrowError(TypeError);
-        expect(function() { math.getSizeWidthFit([]) }).toThrowError(TypeError);
-        expect(function() { math.getSizeWidthFit(function(){}) }).toThrowError(TypeError);
-        expect(function() { math.getSizeWidthFit(new RegExp('^aid')) }).toThrowError(TypeError);
-        expect(function() { math.getSizeWidthFit(/^aid/) }).toThrowError(TypeError);
+        expect(function () {
+          math.getSizeWidthFit(undefined)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeWidthFit(null)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeWidthFit(false)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeWidthFit(true)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeWidthFit('')
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeWidthFit({})
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeWidthFit([])
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeWidthFit(function () {
+          })
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeWidthFit(new RegExp('^aid'))
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getSizeWidthFit(/^aid/)
+        }).toThrowError(TypeError);
       });
 
       // TODO
@@ -74,22 +194,60 @@ describe('aid.js', function () {
 
     describe('.isIndexInLoop()', function () {
       it('throw Error, input 1 or 2 or 3 parameters.', function () {
-        expect(function() { math.isIndexInLoop(8) }).toThrowError(Error);
-        expect(function() { math.isIndexInLoop(8, 5) }).toThrowError(Error);
-        expect(function() { math.isIndexInLoop(8, 5, 6) }).toThrowError(Error);
+        expect(function () {
+          math.isIndexInLoop(8)
+        }).toThrowError(Error);
+
+        expect(function () {
+          math.isIndexInLoop(8, 5)
+        }).toThrowError(Error);
+
+        expect(function () {
+          math.isIndexInLoop(8, 5, 6)
+        }).toThrowError(Error);
       });
 
       it('throw TypeError, input arguments are not Number type.', function () {
-        expect(function() { math.isIndexInLoop(8, 5, 6, undefined) }).toThrowError(TypeError);
-        expect(function() { math.isIndexInLoop(8, 5, 6, null) }).toThrowError(TypeError);
-        expect(function() { math.isIndexInLoop(8, 5, 6, false) }).toThrowError(TypeError);
-        expect(function() { math.isIndexInLoop(8, 5, 6, true) }).toThrowError(TypeError);
-        expect(function() { math.isIndexInLoop(8, 5, 6, '') }).toThrowError(TypeError);
-        expect(function() { math.isIndexInLoop(8, 5, 6, {}) }).toThrowError(TypeError);
-        expect(function() { math.isIndexInLoop(8, 5, 6, []) }).toThrowError(TypeError);
-        expect(function() { math.isIndexInLoop(8, 5, 6, function(){}) }).toThrowError(TypeError);
-        expect(function() { math.isIndexInLoop(8, 5, 6, new RegExp('^aid')) }).toThrowError(TypeError);
-        expect(function() { math.isIndexInLoop(8, 5, 6, /^aid/) }).toThrowError(TypeError);
+        expect(function () {
+          math.isIndexInLoop(8, 5, 6, undefined)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.isIndexInLoop(8, 5, 6, null)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.isIndexInLoop(8, 5, 6, false)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.isIndexInLoop(8, 5, 6, true)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.isIndexInLoop(8, 5, 6, '')
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.isIndexInLoop(8, 5, 6, {})
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.isIndexInLoop(8, 5, 6, [])
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.isIndexInLoop(8, 5, 6, function () {
+          })
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.isIndexInLoop(8, 5, 6, new RegExp('^aid'))
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.isIndexInLoop(8, 5, 6, /^aid/)
+        }).toThrowError(TypeError);
       });
 
       it('return false, when searchIndex is not in (6, 7, 8, 1, 2) in 1 ~ 8.', function () {
@@ -125,21 +283,56 @@ describe('aid.js', function () {
 
     describe('.getLoopedLastIndex()', function () {
       it('throw Error, input 1 or 2 parameters.', function () {
-        expect(function() { math.getLoopedLastIndex(8) }).toThrowError(Error);
-        expect(function() { math.getLoopedLastIndex(8, 1) }).toThrowError(Error);
+        expect(function () {
+          math.getLoopedLastIndex(8)
+        }).toThrowError(Error);
+
+        expect(function () {
+          math.getLoopedLastIndex(8, 1)
+        }).toThrowError(Error);
       });
 
       it('throw TypeError, input arguments are not Number type.', function () {
-        expect(function() { math.getLoopedLastIndex(8, 1, undefined) }).toThrowError(TypeError);
-        expect(function() { math.getLoopedLastIndex(8, 1, null) }).toThrowError(TypeError);
-        expect(function() { math.getLoopedLastIndex(8, 1, false) }).toThrowError(TypeError);
-        expect(function() { math.getLoopedLastIndex(8, 1, true) }).toThrowError(TypeError);
-        expect(function() { math.getLoopedLastIndex(8, 1, '') }).toThrowError(TypeError);
-        expect(function() { math.getLoopedLastIndex(8, 1, {}) }).toThrowError(TypeError);
-        expect(function() { math.getLoopedLastIndex(8, 1, []) }).toThrowError(TypeError);
-        expect(function() { math.getLoopedLastIndex(8, 1, function(){}) }).toThrowError(TypeError);
-        expect(function() { math.getLoopedLastIndex(8, 1, new RegExp('^aid')) }).toThrowError(TypeError);
-        expect(function() { math.getLoopedLastIndex(8, 1, /^aid/) }).toThrowError(TypeError);
+        expect(function () {
+          math.getLoopedLastIndex(8, 1, undefined)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getLoopedLastIndex(8, 1, null)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getLoopedLastIndex(8, 1, false)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getLoopedLastIndex(8, 1, true)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getLoopedLastIndex(8, 1, '')
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getLoopedLastIndex(8, 1, {})
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getLoopedLastIndex(8, 1, [])
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getLoopedLastIndex(8, 1, function () {
+          })
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getLoopedLastIndex(8, 1, new RegExp('^aid'))
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getLoopedLastIndex(8, 1, /^aid/)
+        }).toThrowError(TypeError);
       });
 
       it('return 7, when firstIndex is 7, loopGap is 1 in 1 ~ 8.', function () {
@@ -170,21 +363,56 @@ describe('aid.js', function () {
 
     describe('.getReverseLoopedFirstIndex()', function () {
       it('throw Error, input 1 or 2 parameters.', function () {
-        expect(function() { math.getReverseLoopedFirstIndex(8) }).toThrowError(Error);
-        expect(function() { math.getReverseLoopedFirstIndex(8, 1) }).toThrowError(Error);
+        expect(function () {
+          math.getReverseLoopedFirstIndex(8)
+        }).toThrowError(Error);
+
+        expect(function () {
+          math.getReverseLoopedFirstIndex(8, 1)
+        }).toThrowError(Error);
       });
 
       it('throw TypeError, input arguments are not Number type.', function () {
-        expect(function() { math.getReverseLoopedFirstIndex(8, 1, undefined) }).toThrowError(TypeError);
-        expect(function() { math.getReverseLoopedFirstIndex(8, 1, null) }).toThrowError(TypeError);
-        expect(function() { math.getReverseLoopedFirstIndex(8, 1, false) }).toThrowError(TypeError);
-        expect(function() { math.getReverseLoopedFirstIndex(8, 1, true) }).toThrowError(TypeError);
-        expect(function() { math.getReverseLoopedFirstIndex(8, 1, '') }).toThrowError(TypeError);
-        expect(function() { math.getReverseLoopedFirstIndex(8, 1, {}) }).toThrowError(TypeError);
-        expect(function() { math.getReverseLoopedFirstIndex(8, 1, []) }).toThrowError(TypeError);
-        expect(function() { math.getReverseLoopedFirstIndex(8, 1, function(){}) }).toThrowError(TypeError);
-        expect(function() { math.getReverseLoopedFirstIndex(8, 1, new RegExp('^aid')) }).toThrowError(TypeError);
-        expect(function() { math.getReverseLoopedFirstIndex(8, 1, /^aid/) }).toThrowError(TypeError);
+        expect(function () {
+          math.getReverseLoopedFirstIndex(8, 1, undefined)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getReverseLoopedFirstIndex(8, 1, null)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getReverseLoopedFirstIndex(8, 1, false)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getReverseLoopedFirstIndex(8, 1, true)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getReverseLoopedFirstIndex(8, 1, '')
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getReverseLoopedFirstIndex(8, 1, {})
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getReverseLoopedFirstIndex(8, 1, [])
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getReverseLoopedFirstIndex(8, 1, function () {
+          })
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getReverseLoopedFirstIndex(8, 1, new RegExp('^aid'))
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getReverseLoopedFirstIndex(8, 1, /^aid/)
+        }).toThrowError(TypeError);
       });
 
       it('return 2, when lastIndex is 2, loopGap is 1 in 1 ~ 8.', function () {
@@ -215,17 +443,50 @@ describe('aid.js', function () {
 
     describe('.factorial()', function () {
       it('throw TypeError, input argument is not Integer Number type.', function () {
-        expect(function() { math.factorial(undefined) }).toThrowError(TypeError);
-        expect(function() { math.factorial(null) }).toThrowError(TypeError);
-        expect(function() { math.factorial(false) }).toThrowError(TypeError);
-        expect(function() { math.factorial(true) }).toThrowError(TypeError);
-        expect(function() { math.factorial('') }).toThrowError(TypeError);
-        expect(function() { math.factorial(0.5) }).toThrowError(TypeError);
-        expect(function() { math.factorial({}) }).toThrowError(TypeError);
-        expect(function() { math.factorial([]) }).toThrowError(TypeError);
-        expect(function() { math.factorial(function(){}) }).toThrowError(TypeError);
-        expect(function() { math.factorial(new RegExp('^aid')) }).toThrowError(TypeError);
-        expect(function() { math.factorial(/^aid/) }).toThrowError(TypeError);
+        expect(function () {
+          math.factorial(undefined)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.factorial(null)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.factorial(false)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.factorial(true)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.factorial('')
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.factorial(0.5)
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.factorial({})
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.factorial([])
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.factorial(function () {
+          })
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.factorial(new RegExp('^aid'))
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.factorial(/^aid/)
+        }).toThrowError(TypeError);
       });
 
       it('return 1, when factorial param is minus value', function () {

@@ -26,7 +26,6 @@ gulp.task('minify', function () {
   return gulp.src('js/src/aid.js')
     .pipe(header(banner, {pkg: pkg}))
     .pipe(gulp.dest('./'))
-
     .pipe(sourcemaps.init())
     .pipe(uglify())
     .pipe(rename('aid.min.js'))

@@ -5,7 +5,13 @@ describe('aid.js', function () {
     var array = aid.array;
 
     describe('.indexOf()', function () {
-      var tmpArr = ['foo', 1, 'bar', 2, null, 99]
+      var tmpArr = ['foo', 1, 'bar', 2, null, 99];
+
+      it('if 1st argument is not Array type, throw TypeError', function () {
+        expect(function () {
+          array.indexOf(null, 1)
+        }).toThrowError(Error);
+      });
 
       it('return index of element.', function () {
         expect(array.indexOf(tmpArr, 'foo')).toEqual(0);
@@ -24,10 +30,6 @@ describe('aid.js', function () {
 
       it('if first argument is empty array, return -1', function () {
         expect(array.indexOf([], 1)).toEqual(-1);
-      });
-
-      it('if first argument is not Array type, return -1', function () {
-        expect(array.indexOf(null, 1)).toEqual(-1);
       });
     });
 
