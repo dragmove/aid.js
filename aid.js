@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.26
+ * aid.js 0.1.27
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -907,8 +907,9 @@
     var paramStr = tmpArr[1],
       params = paramStr.split('&');
 
+    var keyValueArr;
     for (var i = 0, max = params.length; i < max; ++i) {
-      var keyValueArr = params[i].split('=');
+      keyValueArr = params[i].split('=');
       if (keyValueArr.length <= 1) keyValueArr.push('');
       if (keyValueArr[0] === parameterName) return global.decodeURIComponent(keyValueArr[1]);
     }
@@ -937,9 +938,9 @@
     var paramStr = tmpArr[1],
       params = paramStr.split('&');
 
-    var obj = {};
+    var keyValueArr, obj = {};
     for (var i = 0, max = params.length; i < max; ++i) {
-      var keyValueArr = params[i].split('=');
+      keyValueArr = params[i].split('=');
       if (keyValueArr.length <= 1) return null;
 
       obj[keyValueArr[0]] = keyValueArr[1];
