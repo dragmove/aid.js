@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.27
+ * aid.js 0.1.28
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -23,7 +23,8 @@
     math = {},
     date = {},
     array = {},
-    element = {};
+    element = {},
+    file = {};
 
   /**
    * get object is null/undefined or other
@@ -2021,10 +2022,10 @@
    * @returns {Object} return object
    * @example
    * var arrayHasObjects = [{ no: 11 }, { no: 22 }];
-   * console.log( array.getFirstObjectHasProperty(arrayHasObjects, 'index', 11) ); // null
-   * console.log( array.getFirstObjectHasProperty(arrayHasObjects, 'no', 11) ); // {no: 11}
-   * console.log( array.getFirstObjectHasProperty(arrayHasObjects, 'no', new RegExp('^1')) ); // {no: 11}
-   * console.log( array.getFirstObjectHasProperty(arrayHasObjects, 'no', /^(1)\d/) ); // {no: 11}
+   * console.log( aid.array.getFirstObjectHasProperty(arrayHasObjects, 'index', 11) ); // null
+   * console.log( aid.array.getFirstObjectHasProperty(arrayHasObjects, 'no', 11) ); // {no: 11}
+   * console.log( aid.array.getFirstObjectHasProperty(arrayHasObjects, 'no', new RegExp('^1')) ); // {no: 11}
+   * console.log( aid.array.getFirstObjectHasProperty(arrayHasObjects, 'no', /^(1)\d/) ); // {no: 11}
    */
   array.getFirstObjectHasProperty = function (arrayHasObjects, propertyKey, findPropertyValueOrRegex) {
     if (!aid.isArray(arrayHasObjects) || arrayHasObjects.length <= 0) return null;
@@ -2097,6 +2098,36 @@
     return (vertInView && horInView);
   };
 
+  /**
+   * create script file, and append to target element.
+   *
+   * @static
+   * @method appendScriptFile
+   * @param {String} fileUrl
+   * @param {Element} targetElementToAppendFile
+   * @param {Function} loadCompleteCallback
+   * @example
+   * aid.file.appendScriptFile('https://apis.google.com/js/client.js', document.head, function() { console.log('load script file completely'); });
+   */
+  file.appendScriptFile = function (fileUrl, targetElementToAppend, loadCompleteCallback) { // document.head, document.body
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = fileUrl;
+
+    var ele = targetElementToAppend;
+    if (typeof jQuery === 'function' && ele instanceof jQuery) ele = ele.get(0);
+
+    if (ele) {
+      ele.appendChild(script);
+
+    } else {
+      var firstScript = document.getElementsByTagName('script')[0];
+      firstScript.parentNode.insertBefore(script, firstScript);
+    }
+
+    if (typeof loadCompleteCallback === 'function') script.onload = loadCompleteCallback;
+  };
+
   /*
    * export
    */
@@ -2107,6 +2138,7 @@
   aid.date = date;
   aid.array = array;
   aid.element = element;
+  aid.file = file;
 
   if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {

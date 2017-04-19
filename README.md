@@ -127,6 +127,11 @@ npm install aid.js --save-dev
     aid.element.isPartiallyInViewport
 ```
 
+* file utils
+```javascript
+    aid.file.appendScriptFile
+```
+
 * data structure utils
 ```javascript
     aid.createStack
