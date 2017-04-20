@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.28
+ * aid.js 0.1.29
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -2112,6 +2112,21 @@
   file.appendScriptFile = function (fileUrl, targetElementToAppend, loadCompleteCallback) { // document.head, document.body
     var script = document.createElement('script');
     script.type = 'text/javascript';
+
+    if (typeof loadCompleteCallback === 'function') {
+      if (typeof script.onreadystatechange === 'undefined') {
+        script.onload = loadCompleteCallback;
+
+      } else {
+        script.onreadystatechange = function () {
+          if (script.readyState === 'loaded' || script.readyState === 'complete') {
+            script.onreadystatechange = null;
+            loadCompleteCallback();
+          }
+        };
+      }
+    }
+
     script.src = fileUrl;
 
     var ele = targetElementToAppend;
@@ -2124,8 +2139,6 @@
       var firstScript = document.getElementsByTagName('script')[0];
       firstScript.parentNode.insertBefore(script, firstScript);
     }
-
-    if (typeof loadCompleteCallback === 'function') script.onload = loadCompleteCallback;
   };
 
   /*
