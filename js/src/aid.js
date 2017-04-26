@@ -1297,17 +1297,17 @@
     if (values.length <= 0) return obj;
 
     if (/translateX/g.test(str)) {
-      obj.x = parseFloat(values[0]);
+      obj.x = parseFloat(values[0], 10);
       return obj;
     }
 
     if (/translateY/g.test(str)) {
-      obj.y = parseFloat(values[0]);
+      obj.y = parseFloat(values[0], 10);
       return obj;
     }
 
-    obj.x = parseFloat(values[0]);
-    if (values.length > 1) obj.y = parseFloat(values[1]);
+    obj.x = parseFloat(values[0], 10);
+    if (values.length > 1) obj.y = parseFloat(values[1], 10);
 
     return obj;
   };
