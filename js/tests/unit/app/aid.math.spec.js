@@ -508,5 +508,95 @@ describe('aid.js', function () {
         expect(math.factorial(5)).toEqual(120);
       });
     });
+
+    describe('.getObjForPagination()', function () {
+      it('throw Error, input 1 or 2 or 3 parameters.', function () {
+        expect(function () {
+          math.getObjForPagination(10);
+        }).toThrowError(Error);
+
+        expect(function () {
+          math.getObjForPagination(10, 10);
+        }).toThrowError(Error);
+
+        expect(function () {
+          math.getObjForPagination(10, 10, 10);
+        }).toThrowError(Error);
+      });
+
+      it('throw TypeError, input arguments are not Int Number type.', function () {
+        expect(function () {
+          math.getObjForPagination(undefined, 10, 10, 1);
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getObjForPagination(10, null, 10, 1);
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getObjForPagination(10, 10, true, 1);
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getObjForPagination(10, 10, '10', 1);
+        }).toThrowError(TypeError);
+      });
+
+      it('throw TypeError, input arguments are not positive Int Number type.', function () {
+        expect(function () {
+          math.getObjForPagination(-1, 10, 10, 1);
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getObjForPagination(10, 0, 10, 1);
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getObjForPagination(10, 10, 0, 1);
+        }).toThrowError(TypeError);
+
+        expect(function () {
+          math.getObjForPagination(10, 10, 10, -1);
+        }).toThrowError(TypeError);
+      });
+
+      it('return obj has pagination infos, when input arguments.', function () {
+        expect(math.getObjForPagination(1, 10, 5, 1)).toEqual({
+          totalPostNum: 1,
+          displayPostNumPerPage: 10,
+          displayPaginationBtnNum: 5,
+          pageIndex: 1,
+          totalPageNum: 1,
+          prevPageIndex: 0,
+          firstPageIndex: 1,
+          lastPageIndex: 1,
+          nextPageIndex: 0
+        });
+
+        expect(math.getObjForPagination(15, 10, 5, 1)).toEqual({
+          totalPostNum: 15,
+          displayPostNumPerPage: 10,
+          displayPaginationBtnNum: 5,
+          pageIndex: 1,
+          totalPageNum: 2,
+          prevPageIndex: 0,
+          firstPageIndex: 1,
+          lastPageIndex: 2,
+          nextPageIndex: 0
+        });
+
+        expect(math.getObjForPagination(39, 10, 5, 1)).toEqual({
+          totalPostNum: 39,
+          displayPostNumPerPage: 10,
+          displayPaginationBtnNum: 5,
+          pageIndex: 1,
+          totalPageNum: 4,
+          prevPageIndex: 0,
+          firstPageIndex: 1,
+          lastPageIndex: 4,
+          nextPageIndex: 0
+        });
+      });
+    });
   });
 });

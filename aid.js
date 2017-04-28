@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.30
+ * aid.js 0.1.31
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -1353,7 +1353,8 @@
    * console.log( aid.math.getSizeAspectFill(960, 640, window.innerWidth, window.innerHeight) );
    */
   math.getSizeAspectFill = function (srcWidth, srcHeight, fillWidth, fillHeight) {
-    if (!aid.isNumber(srcWidth) || !aid.isNumber(srcHeight) || !aid.isNumber(fillWidth) || !aid.isNumber(fillHeight)) {
+    var isNumber = aid.isNumber;
+    if (!isNumber(srcWidth) || !isNumber(srcHeight) || !isNumber(fillWidth) || !isNumber(fillHeight)) {
       throw new TypeError('math.getSizeAspectFill() requires Number parameters.');
     }
 
@@ -1385,7 +1386,8 @@
    * console.log( aid.math.getSizeAspectFit(960, 640, window.innerWidth, window.innerHeight) );
    */
   math.getSizeAspectFit = function (srcWidth, srcHeight, fitWidth, fitHeight) {
-    if (!aid.isNumber(srcWidth) || !aid.isNumber(srcHeight) || !aid.isNumber(fitWidth) || !aid.isNumber(fitHeight)) {
+    var isNumber = aid.isNumber;
+    if (!isNumber(srcWidth) || !isNumber(srcHeight) || !isNumber(fitWidth) || !isNumber(fitHeight)) {
       throw new TypeError('math.getSizeAspectFit() requires Number parameters.');
     }
 
@@ -1412,7 +1414,8 @@
    * console.log( aid.math.getSizeWidthFit(960, 640, window.innerWidth) );
    */
   math.getSizeWidthFit = function (srcWidth, srcHeight, fitWidth) {
-    if (!aid.isNumber(srcWidth) || !aid.isNumber(srcHeight) || !aid.isNumber(fitWidth)) {
+    var isNumber = aid.isNumber;
+    if (!isNumber(srcWidth) || !isNumber(srcHeight) || !isNumber(fitWidth)) {
       throw new TypeError('math.getSizeWidthFit() requires Number parameters.');
     }
 
@@ -1467,7 +1470,8 @@
   math.isIndexInLoop = function (totalLength, loopGap, firstIndex, searchIndex) {
     if (arguments.length < 4) throw new Error('math.isIndexInLoop() requires 4 parameters.');
 
-    if (!aid.isInteger(totalLength) || !aid.isInteger(loopGap) || !aid.isInteger(firstIndex) || !aid.isInteger(searchIndex)) {
+    var isInteger = aid.isInteger;
+    if (!isInteger(totalLength) || !isInteger(loopGap) || !isInteger(firstIndex) || !isInteger(searchIndex)) {
       throw new TypeError('math.isIndexInLoop() requires Integer Number parameters.');
     }
     if (totalLength < 1 || firstIndex < 1) {
@@ -1504,7 +1508,8 @@
   math.getLoopedLastIndex = function (totalLength, loopGap, firstIndex) {
     if (arguments.length < 3) throw new Error('math.getLoopedLastIndex() requires 3 parameters.');
 
-    if (!aid.isInteger(totalLength) || !aid.isInteger(loopGap) || !aid.isInteger(firstIndex)) {
+    var isInteger = aid.isInteger;
+    if (!isInteger(totalLength) || !isInteger(loopGap) || !isInteger(firstIndex)) {
       throw new TypeError('math.getLoopedLastIndex() requires Integer Number parameters.');
     }
     if (totalLength < 1 || firstIndex < 1) {
@@ -1540,7 +1545,8 @@
   math.getReverseLoopedFirstIndex = function (totalLength, loopGap, lastIndex) {
     if (arguments.length < 3) throw new Error('math.getReverseLoopedFirstIndex() requires 3 parameters.');
 
-    if (!aid.isInteger(totalLength) || !aid.isInteger(loopGap) || !aid.isInteger(lastIndex)) {
+    var isInteger = aid.isInteger;
+    if (!isInteger(totalLength) || !isInteger(loopGap) || !isInteger(lastIndex)) {
       throw new TypeError('math.getReverseLoopedFirstIndex() requires Integer Number parameters.');
     }
     if (totalLength < 1 || lastIndex < 1) {
@@ -1563,7 +1569,7 @@
    *
    * @static
    * @method factorial
-   * @param {Number} number
+   * @param {Number} Int number
    * @returns {Number} return Int Number
    * @example
    * console.log( aid.math.factorial(-99) ); // 1
@@ -1574,6 +1580,57 @@
 
     if (number < 1) return 1;
     return number * aid.math.factorial(number - 1);
+  };
+
+  /**
+   * get board pagination info object.
+   *
+   * @static
+   * @method getObjForPagination
+   * @param {Number} totalPostNum
+   * @param {Number} displayPostNumPerPage
+   * @param {Number} displayPaginationBtnNum
+   * @param {Number} pageIndex
+   * @returns {Object} return object
+   * @example
+   * console.log( aid.math.getObjForPagination(39, 10, 5, 1) ); // {totalPostNum: 39, displayPostNumPerPage: 10, displayPaginationBtnNum: 5, pageIndex: 1, totalPageNum: 4, prevPageIndex: 0, firstPageIndex: 1, lastPageIndex: 4, nextPageIndex: 0}
+   */
+  math.getObjForPagination = function (totalPostNum, displayPostNumPerPage, displayPaginationBtnNum, pageIndex) {
+    if (arguments.length < 4) throw new Error('math.getObjForPagination() requires 4 parameters.');
+
+    var isInteger = aid.isInteger;
+    if (!isInteger(totalPostNum) || !isInteger(displayPostNumPerPage) || !isInteger(displayPaginationBtnNum) || !isInteger(pageIndex)) {
+      throw new TypeError('math.getObjForPagination() requires Integer Number parameters.');
+    }
+    if (totalPostNum <= 0 || displayPostNumPerPage <= 0 || displayPaginationBtnNum <= 0 || pageIndex <= 0) {
+      throw new TypeError('math.getObjForPagination() requires positive Integer Number parameters.');
+    }
+
+    var totalPageNum = Math.ceil(totalPostNum / displayPostNumPerPage);
+    if (pageIndex < 1) pageIndex = 1;
+    if (pageIndex > totalPageNum) pageIndex = totalPageNum;
+
+    var paginationBtnGroupIndex = Math.floor((pageIndex - 1) / displayPaginationBtnNum),
+      prevPageIndex = paginationBtnGroupIndex * displayPaginationBtnNum,
+      firstPageIndex = (paginationBtnGroupIndex * displayPaginationBtnNum) + 1,
+      lastPageIndex = firstPageIndex + displayPaginationBtnNum - 1,
+      nextPageIndex = lastPageIndex + 1;
+
+    if (lastPageIndex > totalPageNum) lastPageIndex = totalPageNum;
+    if (nextPageIndex > totalPageNum) nextPageIndex = 0;
+
+    return {
+      totalPostNum: totalPostNum,
+      displayPostNumPerPage: displayPostNumPerPage,
+      displayPaginationBtnNum: displayPaginationBtnNum,
+      pageIndex: pageIndex,
+
+      totalPageNum: totalPageNum,
+      prevPageIndex: prevPageIndex,
+      firstPageIndex: firstPageIndex,
+      lastPageIndex: lastPageIndex,
+      nextPageIndex: nextPageIndex
+    };
   };
 
   /**
