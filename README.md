@@ -93,6 +93,7 @@ npm install aid.js --save-dev
     aid.math.getLoopedLastIndex
     aid.math.getReverseLoopedFirstIndex
     aid.math.factorial
+    aid.math.getObjForPagination
 ```
 
 * date utils 
