@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.34
+ * aid.js 0.1.35
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -188,13 +188,28 @@
    * @param {Object} prototype of class function, or object has variables or methods.
    * @param {Object} object has variables or methods
    * @example
+   * function Destination() {
+   *   this.name = 'destination';
+   *   this.type = 'json';
+   * };
+   *
+   * var source = {
+   *   getName: function() { return this.name; },
+   *   getType: function() { return this.type; }
+   * };
+   *
+   * aid.extend(Destination.prototype, source);
+   *
+   * var destination = new Destination();
+   * console.log( destination.getName() ); // 'destination'
+   * console.log( destination.getType() ); // 'json'
    */
   aid.extend = function extend(destination, source) {
     if (!(destination instanceof Object) || !(typeof destination === 'object')) {
       throw TypeError('destination parameter type of aid.extend() must be instance of Object, and object type.');
     }
-    if (!aid.isObject(source)) {
-      throw TypeError('source parameter type of aid.extend() must be Object.');
+    if (!(typeof source === 'object')) {
+      throw TypeError('source parameter type of aid.extend() must be object type.');
     }
 
     for (var key in source) {

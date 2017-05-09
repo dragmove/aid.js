@@ -459,14 +459,14 @@ describe('aid.js', function () {
         }).toThrowError();
       });
 
-      it('if source parameter type is not object, throw Error.', function () {
+      it('if source parameter type is not object type, throw Error.', function () {
         expect(function() {
           aid.extend({}, undefined);
         }).toThrowError();
 
         expect(function() {
           aid.extend({}, null);
-        }).toThrowError();
+        }).not.toThrowError();
 
         expect(function() {
           aid.extend({}, false);
