@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.33
+ * aid.js 0.1.34
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -190,6 +190,13 @@
    * @example
    */
   aid.extend = function extend(destination, source) {
+    if (!(destination instanceof Object) || !(typeof destination === 'object')) {
+      throw TypeError('destination parameter type of aid.extend() must be instance of Object, and object type.');
+    }
+    if (!aid.isObject(source)) {
+      throw TypeError('source parameter type of aid.extend() must be Object.');
+    }
+
     for (var key in source) {
       if (source.hasOwnProperty(key)) {
         destination[key] = source[key];

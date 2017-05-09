@@ -429,7 +429,118 @@ describe('aid.js', function () {
     });
 
     describe('.extend()', function () {
-      // TODO
+      it('whether destination parameter type is not object or instance of object, throw Error.', function () {
+        expect(function() {
+          aid.extend(undefined, {say: 'hello, world'});
+        }).toThrowError();
+
+        expect(function() {
+          aid.extend(null, {say: 'hello, world'});
+        }).toThrowError();
+
+        expect(function() {
+          aid.extend(false, {say: 'hello, world'});
+        }).toThrowError();
+
+        expect(function() {
+          aid.extend(true, {say: 'hello, world'});
+        }).toThrowError();
+
+        expect(function() {
+          aid.extend(0, {say: 'hello, world'});
+        }).toThrowError();
+
+        expect(function() {
+          aid.extend("", {say: 'hello, world'});
+        }).toThrowError();
+
+        expect(function() {
+          aid.extend(NaN, {say: 'hello, world'});
+        }).toThrowError();
+      });
+
+      it('if source parameter type is not object, throw Error.', function () {
+        expect(function() {
+          aid.extend({}, undefined);
+        }).toThrowError();
+
+        expect(function() {
+          aid.extend({}, null);
+        }).toThrowError();
+
+        expect(function() {
+          aid.extend({}, false);
+        }).toThrowError();
+
+        expect(function() {
+          aid.extend({}, true);
+        }).toThrowError();
+
+        expect(function() {
+          aid.extend({}, 0);
+        }).toThrowError();
+
+        expect(function() {
+          aid.extend({}, '');
+        }).toThrowError();
+
+        expect(function() {
+          aid.extend({}, NaN);
+        }).toThrowError();
+      });
+
+      it('input two objects, return extended object', function () {
+        var destination = {
+            name: 'destination',
+            type: 'json'
+          },
+          source = {
+            name: 'source',
+            say: 'hello, world',
+            sayHello: function() {
+              return 'hello';
+            }
+          };
+
+        aid.extend(destination, source);
+
+        expect( destination.name ).toEqual('source');
+        expect( destination.type ).toEqual('json');
+        expect( destination.say ).toEqual('hello, world');
+        expect( destination.sayHello ).toBeDefined();
+      });
+
+      it('input prototype of class function, object has methods. return extended class function', function () {
+        function Destination() {
+          this.name = 'destination';
+          this.type = 'json';
+        };
+
+        var source = {
+          getName: function() {
+            return this.name;
+          },
+          getType: function() {
+            return this.type;
+          }
+        };
+
+        aid.extend(Destination.prototype, source);
+
+        var destination = new Destination();
+
+        expect( destination.name ).toEqual('destination');
+        expect( destination.hasOwnProperty('name') ).toBeTruthy();
+
+        expect( destination.type ).toEqual('json');
+        expect( destination.hasOwnProperty('type') ).toBeTruthy();
+
+        expect( destination.getName ).toBeDefined();
+        expect( destination.hasOwnProperty('getName') ).toBeFalsy();
+
+        expect( destination.getType ).toBeDefined();
+        expect( destination.hasOwnProperty('getType') ).toBeFalsy();
+      });
     });
 
     describe('.inherit()', function () {
