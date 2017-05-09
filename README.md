@@ -30,6 +30,8 @@ npm install aid.js --save-dev
     aid.isRegExp
     aid.extend
     aid.inherit
+    aid.namespace
+    aid.borrow
 ```
 
 * platform utils
@@ -93,6 +95,7 @@ npm install aid.js --save-dev
     aid.math.getLoopedLastIndex
     aid.math.getReverseLoopedFirstIndex
     aid.math.factorial
+    aid.math.getObjForPagination
 ```
 
 * date utils 
@@ -125,6 +128,11 @@ npm install aid.js --save-dev
 ```javascript
     aid.element.isEntirelyInViewport
     aid.element.isPartiallyInViewport
+```
+
+* file utils
+```javascript
+    aid.file.appendScriptFile
 ```
 
 * data structure utils

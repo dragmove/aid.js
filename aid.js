@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.26
+ * aid.js 0.1.33
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -23,7 +23,8 @@
     math = {},
     date = {},
     array = {},
-    element = {};
+    element = {},
+    file = {};
 
   /**
    * get object is null/undefined or other
@@ -37,7 +38,7 @@
    * console.log( aid.existy(null) ); // false
    * console.log( aid.existy('') ); // true
    */
-  aid.existy = function (obj) {
+  aid.existy = function existy(obj) {
     return obj != null;
   };
 
@@ -51,7 +52,7 @@
    * @example
    * console.log( aid.isDefined(null) ); // false
    */
-  aid.isDefined = function (obj) {
+  aid.isDefined = function isDefined(obj) {
     if (obj === null || typeof obj === 'undefined') return false;
     return true;
   };
@@ -81,7 +82,7 @@
    * @example
    * console.log( aid.isNumber(-1) ); // true
    */
-  aid.isNumber = function (obj) {
+  aid.isNumber = function isNumber(obj) {
     if (!aid.isDefined(obj)) return false;
     return (obj.constructor === Number);
   };
@@ -113,7 +114,7 @@
    * @example
    * console.log( aid.isString('') ); // true
    */
-  aid.isString = function (obj) {
+  aid.isString = function isString(obj) {
     if (!aid.isDefined(obj)) return false;
     return (obj.constructor === String);
   };
@@ -128,7 +129,7 @@
    * @example
    * console.log( aid.isArray([]) ); // true
    */
-  aid.isArray = function (obj) {
+  aid.isArray = function isArray(obj) {
     if (!aid.isDefined(obj)) return false;
     return (obj.constructor === Array);
   };
@@ -143,7 +144,7 @@
    * @example
    * console.log( aid.isObject({}) ); // true
    */
-  aid.isObject = function (obj) {
+  aid.isObject = function isObject(obj) {
     if (!aid.isDefined(obj)) return false;
     return (obj.constructor === Object);
   };
@@ -158,7 +159,7 @@
    * @example
    * console.log( aid.isFunction(function(){}) ); // true
    */
-  aid.isFunction = function (obj) {
+  aid.isFunction = function isFunction(obj) {
     if (!aid.isDefined(obj)) return false;
     return (obj.constructor === Function);
   };
@@ -174,7 +175,7 @@
    * console.log( aid.isRegExp(new RegExp('^aid')) ); // true
    * console.log( aid.isRegExp(/^aid/) ); // true
    */
-  aid.isRegExp = function (obj) {
+  aid.isRegExp = function isRegExp(obj) {
     if (!aid.isDefined(obj)) return false;
     return (obj.constructor === RegExp);
   };
@@ -188,7 +189,7 @@
    * @param {Object} object has variables or methods
    * @example
    */
-  aid.extend = function (destination, source) {
+  aid.extend = function extend(destination, source) {
     for (var key in source) {
       if (source.hasOwnProperty(key)) {
         destination[key] = source[key];
@@ -211,7 +212,7 @@
     var F = function () {
     };
 
-    return function (ChildClass, ParentClass) {
+    return function inherit(ChildClass, ParentClass) {
       F.prototype = ParentClass.prototype;
 
       ChildClass.prototype = new F();
@@ -221,15 +222,56 @@
   }());
 
   /**
-   * inherit Class function
+   * create namespace
    *
    * @static
-   * @method inherit
-   * @param {String} namespace string
+   * @method namespace
+   * @param {String} namespace
+   * @param {Object} parent
+   * @returns {Object} return object
    * @example
    */
-  aid.setNamespace = function(ns) {
+  aid.namespace = function (namespace, parent) {
+    if (!aid.isString(namespace)) throw new TypeError('namespace parameter type of aid.namespace() must be String.');
+    if (!aid.isObject(parent)) throw new TypeError('parent parameter type of aid.namespace() must be Object.');
+
+    var ns = parent || global;
+
+    if (namespace) {
+      var parts = namespace.split('.');
+
+      for (var i = 0, max = parts.length; i < max; i++) {
+        if (!ns[parts[i]]) ns[parts[i]] = {};
+        ns = ns[parts[i]];
+      }
+    }
+
     return ns;
+  };
+
+  /**
+   * borrow method from donor object.
+   *
+   * @static
+   * @method borrow
+   * @param {Object} borrower
+   * @param {Object} donor
+   * @param {String} functionName
+   * @example
+   * var borrower = {}, donor = { say: function() { return 'hello, world'; } };
+   * aid.borrow(borrower, donor, 'say');
+   * console.log( borrower.say() ); // 'hello, world'
+   */
+  aid.borrow = function borrow(borrower, donor, functionName) {
+    if (!aid.isObject(borrower) || !aid.isObject(donor)) throw new TypeError('borrower, donor parameter type of aid.borrow() must be Object.');
+    if (!aid.isString(functionName)) throw new TypeError('functionName parameter type of aid.borrow() must be String.');
+    if (!aid.isDefined(donor[functionName])) throw new Error('donor object parameter of aid.borrow() has not function with functionName.');
+    if (aid.isDefined(borrower[functionName])) throw new Error('borrower object parameter of aid.borrow() already has function with functionName.');
+
+    borrower[functionName] = function () {
+      var args = Array.prototype.slice.call(arguments);
+      return donor[functionName].apply(this, args);
+    };
   };
 
   /*
@@ -241,24 +283,24 @@
     this._top = 0;
   };
 
-  Stack.prototype.push = function (element) {
+  Stack.prototype.push = function push(element) {
     if (this._top < 0) this._top = 0;
     this._dataStore[this._top++] = element;
   };
 
-  Stack.prototype.pop = function () {
+  Stack.prototype.pop = function pop() {
     return this._dataStore[--this._top];
   };
 
-  Stack.prototype.peek = function () {
+  Stack.prototype.peek = function peek() {
     return this._dataStore[this._top - 1];
   };
 
-  Stack.prototype.length = function () {
+  Stack.prototype.length = function length() {
     return (this._top > 0) ? this._top : 0;
   };
 
-  Stack.prototype.clear = function () {
+  Stack.prototype.clear = function clear() {
     this._dataStore = [];
     this._top = 0;
   };
@@ -272,32 +314,32 @@
     this._dataStore = [];
   };
 
-  Queue.prototype.enqueue = function (element) {
+  Queue.prototype.enqueue = function enqueue(element) {
     this._dataStore.push(element);
   };
 
-  Queue.prototype.dequeue = function () {
+  Queue.prototype.dequeue = function dequeue() {
     return this._dataStore.shift();
   };
 
-  Queue.prototype.front = function () {
+  Queue.prototype.front = function front() {
     return this._dataStore[0];
   };
 
-  Queue.prototype.rear = function () {
+  Queue.prototype.rear = function rear() {
     return this._dataStore[this._dataStore.length - 1];
   };
 
-  Queue.prototype.length = function () {
+  Queue.prototype.length = function length() {
     return this._dataStore.length;
   };
 
-  Queue.prototype.isEmpty = function () {
+  Queue.prototype.isEmpty = function isEmpty() {
     if (this._dataStore.length <= 0) return true;
     return false;
   };
 
-  aid.createQueue = function () {
+  aid.createQueue = function createQueue() {
     return new Queue();
   };
 
@@ -312,7 +354,7 @@
     this.head = new LinkedListNode('head');
   };
 
-  LinkedList.prototype.find = function (data) {
+  LinkedList.prototype.find = function find(data) {
     var node = this.head;
     while (node.data !== data) {
       node = node.next;
@@ -321,7 +363,7 @@
     return node;
   };
 
-  LinkedList.prototype.findPrevious = function (data) {
+  LinkedList.prototype.findPrevious = function findPrevious(data) {
     if (this.head.data === data) return null;
 
     var node = this.head;
@@ -331,21 +373,21 @@
     return node;
   };
 
-  LinkedList.prototype.insert = function (data, prevNodeData) {
+  LinkedList.prototype.insert = function insert(data, prevNodeData) {
     var insertNode = new LinkedListNode(data),
       prevNode = this.find(prevNodeData);
     insertNode.next = prevNode.next;
     prevNode.next = insertNode;
   };
 
-  LinkedList.prototype.remove = function (data) {
+  LinkedList.prototype.remove = function remove(data) {
     var prevNode = this.findPrevious(data);
     if (prevNode.next !== null) {
       prevNode.next = prevNode.next.next;
     }
   };
 
-  LinkedList.prototype.getAllNodes = function () {
+  LinkedList.prototype.getAllNodes = function getAllNodes() {
     var nodes = [this.head],
       node = this.head;
 
@@ -356,7 +398,7 @@
     return nodes;
   };
 
-  aid.createLinkedList = function () {
+  aid.createLinkedList = function createLinkedList() {
     return new LinkedList();
   };
 
@@ -370,7 +412,7 @@
    * @example
    * console.log( aid.platform.isWindow(window.navigator.userAgent) );
    */
-  platform.isWindow = function (userAgent) {
+  platform.isWindow = function isWindow(userAgent) {
     return /Windows/i.test(userAgent);
   };
 
@@ -384,7 +426,7 @@
    * @example
    * console.log( aid.platform.isMac(window.navigator.userAgent) );
    */
-  platform.isMac = function (userAgent) {
+  platform.isMac = function isMac(userAgent) {
     return /Macintosh/i.test(userAgent);
   };
 
@@ -399,7 +441,7 @@
    * @example
    * console.log( aid.platform.isIOS(window.navigator.userAgent) );
    */
-  platform.isIOS = function (userAgent) {
+  platform.isIOS = function isIOS(userAgent) {
     return /iPad|iPhone|iPod/.test(userAgent) && !global.MSStream;
   };
 
@@ -441,7 +483,7 @@
    * @example
    * console.log( aid.browser.isEdge(window.navigator.userAgent) );
    */
-  browser.isEdge = function (userAgent) {
+  browser.isEdge = function isEdge(userAgent) {
     return ( /Gecko/i.test(userAgent) && /Edge/i.test(userAgent) );
   };
 
@@ -455,7 +497,7 @@
    * @example
    * console.log( aid.browser.isFF(window.navigator.userAgent) );
    */
-  browser.isFF = function (userAgent) {
+  browser.isFF = function isFF(userAgent) {
     return /Firefox/i.test(userAgent);
   };
 
@@ -469,7 +511,7 @@
    * @example
    * console.log( aid.browser.isOpera(window.navigator.userAgent) );
    */
-  browser.isOpera = function (userAgent) {
+  browser.isOpera = function isOpera(userAgent) {
     return ( /Opera/i.test(userAgent) || /OPR\//i.test(userAgent) );
   };
 
@@ -483,7 +525,7 @@
    * @example
    * console.log( aid.browser.isChrome(window.navigator.userAgent) );
    */
-  browser.isChrome = function (userAgent) {
+  browser.isChrome = function isChrome(userAgent) {
     return ( !browser.isEdge(userAgent) && !browser.isOpera(userAgent) && /Chrome/i.test(userAgent) );
   };
 
@@ -497,7 +539,7 @@
    * @example
    * console.log( aid.browser.isSafari(window.navigator.userAgent) );
    */
-  browser.isSafari = function (userAgent) {
+  browser.isSafari = function isSafari(userAgent) {
     return ( !/Chrome/i.test(userAgent) && /Safari/i.test(userAgent) );
   };
 
@@ -511,7 +553,7 @@
    * @example
    * console.log( aid.browser.getIEVersion(window.navigator.userAgent) );
    */
-  browser.getIEVersion = function (userAgent) {
+  browser.getIEVersion = function getIEVersion(userAgent) {
     if (browser.isIE(userAgent)) {
       if (/msie (\d+\.\d+);/i.test(userAgent)) return parseFloat(RegExp.$1, 10);
       if (/trident.*rv:(\d+)\.(\d+)/i.test(userAgent)) return parseFloat(RegExp.$1, 10);
@@ -529,7 +571,7 @@
    * @example
    * console.log( aid.browser.getFFVersion(window.navigator.userAgent) );
    */
-  browser.getFFVersion = function (userAgent) {
+  browser.getFFVersion = function getFFVersion(userAgent) {
     if (browser.isFF(userAgent)) {
       if (/Firefox[\/\s](\d+\.\d+)/i.test(userAgent)) return parseFloat(RegExp.$1, 10);
     }
@@ -567,7 +609,7 @@
    * @example
    * console.log( aid.browser.getChromeVersion(window.navigator.userAgent) );
    */
-  browser.getChromeVersion = function (userAgent) {
+  browser.getChromeVersion = function getChromeVersion(userAgent) {
     if (browser.isChrome(userAgent)) {
       if (/Chrome[\/\s](\d+\.\d+)/i.test(userAgent)) return parseFloat(RegExp.$1, 10);
     }
@@ -584,7 +626,7 @@
    * @example
    * console.log( aid.browser.getSafariVersion(window.navigator.userAgent) );
    */
-  browser.getSafariVersion = function (userAgent) {
+  browser.getSafariVersion = function getSafariVersion(userAgent) {
     if (browser.isSafari(userAgent)) {
       if (/Version[\/\s](\d+\.\d+)/i.test(userAgent)) return parseFloat(RegExp.$1, 10);
     }
@@ -602,7 +644,7 @@
    * console.log( aid.browser.getIECompatibility() );
    * console.log( aid.browser.getIECompatibility('mozilla/5.0 (windows nt 6.1; wow64) applewebkit/537.36 (khtml, like gecko) hrome/39.0.2171.65 safari/537.36') );
    */
-  browser.getIECompatibility = function (optionUserAgent) {
+  browser.getIECompatibility = function getIECompatibility(optionUserAgent) {
     var ua = (optionUserAgent) ? optionUserAgent : global.navigator.userAgent.toLowerCase(),
       regex_msie = /msie/i,
       regex_msie7 = /msie 7/i,
@@ -689,7 +731,7 @@
    * @example
    * console.log( aid.browser.isSupportDraggable() );
    */
-  browser.isSupportDraggable = function () {
+  browser.isSupportDraggable = function isSupportDraggable() {
     var div = document.createElement('div');
     return ('draggable' in div);
   };
@@ -703,7 +745,7 @@
    * @example
    * console.log( aid.browser.isSupportDragAndDrop() );
    */
-  browser.isSupportDragAndDrop = function () {
+  browser.isSupportDragAndDrop = function isSupportDragAndDrop() {
     var div = document.createElement('div');
     return ('ondragstart' in div && 'ondrop' in div);
   };
@@ -717,7 +759,7 @@
    * @example
    * console.log( aid.browser.isSupportFileApi() );
    */
-  browser.isSupportFileApi = function () {
+  browser.isSupportFileApi = function isSupportFileApi() {
     return !!(global.File && global.FileReader && global.FileList && global.Blob);
   };
 
@@ -731,7 +773,7 @@
    * @example
    * console.log( aid.browser.isChromeExtension(window.navigator.userAgent) );
    */
-  browser.isChromeExtension = function (userAgent) {
+  browser.isChromeExtension = function isChromeExtension(userAgent) {
     if (browser.isChrome(userAgent) && global.chrome) {
       if (!global.chrome.cookies) {
         if (global.chrome.experimental) global.chrome.cookies = global.chrome.experimental.cookies;
@@ -754,7 +796,7 @@
    * @example
    * console.log( aid.browser.getCookie('sampleCookieKey') );
    */
-  browser.getCookie = function (key) {
+  browser.getCookie = function getCookie(key) {
     var cookieArr = document.cookie.split('; '),
       splitArr = [],
       keyStr = '',
@@ -783,7 +825,7 @@
    * @example
    * aid.browser.setCookie('sampleCookieKey', 'sampleValue', 3600, '/samplePath', 'sample.com');
    */
-  browser.setCookie = function (key, value, expireSecond, path, domain) {
+  browser.setCookie = function setCookie(key, value, expireSecond, path, domain) {
     var expires = '',
       pathStr = '; path=' + ( (path) ? path : '/' ),
       domainStr = (domain) ? '; domain=' + domain : '';
@@ -807,7 +849,7 @@
    * @example
    * console.log( aid.string.trim('   foo   ') ); // 'foo'
    */
-  string.trim = function (str) {
+  string.trim = function trim(str) {
     if (!aid.isString(str)) throw new TypeError('string.trim() requires String parameter.');
 
     return str.replace(/^\s+/, '').replace(/\s+$/, '');
@@ -823,7 +865,7 @@
    * @example
    * console.log( aid.string.hasUniqueChars('abcdea') ); // false
    */
-  string.hasUniqueChars = function (str) {
+  string.hasUniqueChars = function hasUniqueChars(str) {
     if (!aid.isString(str)) throw new TypeError('string.hasUniqueChars() requires String parameter.');
 
     if (!str.length) return true;
@@ -849,7 +891,7 @@
    * @example
    * console.log( aid.string.getFileExtension('aid.png') ); // png
    */
-  string.getFileExtension = function (fileName) {
+  string.getFileExtension = function getFileExtension(fileName) {
     if (!aid.isString(fileName)) throw new TypeError('string.getFileExtension() requires String parameter.');
 
     if (fileName.length <= 0) return '';
@@ -870,7 +912,7 @@
    * @example
    * console.log( aid.string.isEmail('dragmove@gmail.com') ); // true
    */
-  string.isEmail = function (emailStr) {
+  string.isEmail = function isEmail(emailStr) {
     if (!aid.isString(emailStr)) throw new TypeError('string.isEmail() requires String parameter.');
 
     // html5 form email check regex - https://www.w3.org/TR/html5/forms.html#e-mail-state-(type=email)
@@ -905,7 +947,7 @@
    * @example
    * console.log( aid.string.getUriParam('http://www.google.com?name=foo&age=99&address=seoul', 'name') ); // 'foo'
    */
-  string.getUriParam = function (uri, parameterName) {
+  string.getUriParam = function getUriParam(uri, parameterName) {
     if (!aid.isString(uri) || !aid.isString(parameterName)) {
       throw new TypeError('string.getUriParam() requires String parameters.');
     }
@@ -919,8 +961,9 @@
     var paramStr = tmpArr[1],
       params = paramStr.split('&');
 
+    var keyValueArr;
     for (var i = 0, max = params.length; i < max; ++i) {
-      var keyValueArr = params[i].split('=');
+      keyValueArr = params[i].split('=');
       if (keyValueArr.length <= 1) keyValueArr.push('');
       if (keyValueArr[0] === parameterName) return global.decodeURIComponent(keyValueArr[1]);
     }
@@ -938,7 +981,7 @@
    * @example
    * console.log( aid.string.getUriParams('http://www.google.com?name=foo&age=99&address=seoul') ); // {name: 'foo', age: '99', address: 'seoul'}
    */
-  string.getUriParams = function (uri) {
+  string.getUriParams = function getUriParams(uri) {
     if (!aid.isString(uri)) throw new TypeError('string.getUriParams() requires String parameter.');
 
     if (uri.length < 1) return null;
@@ -949,9 +992,9 @@
     var paramStr = tmpArr[1],
       params = paramStr.split('&');
 
-    var obj = {};
+    var keyValueArr, obj = {};
     for (var i = 0, max = params.length; i < max; ++i) {
-      var keyValueArr = params[i].split('=');
+      keyValueArr = params[i].split('=');
       if (keyValueArr.length <= 1) return null;
 
       obj[keyValueArr[0]] = keyValueArr[1];
@@ -970,7 +1013,7 @@
    * @example
    * console.log( aid.string.getUriCombinedParams('http://www.google.com', {name: "foo", age: "99", address: "seoul"}) ) // http://www.google.com?name=foo&age=99&address=seoul
    */
-  string.getUriCombinedParams = function (uri, parameters) {
+  string.getUriCombinedParams = function getUriCombinedParams(uri, parameters) {
     if (!aid.isString(uri)) throw new TypeError('uri parameter type of string.getUriCombinedParams() must be String.');
     if (!aid.isObject(parameters)) throw new TypeError('parameters parameter type of string.getUriCombinedParams() must be Object.');
 
@@ -997,7 +1040,7 @@
    * @example
    * console.log( aid.string.isValidYoutubeVideoId('mYIfiQlfaas') ); // true
    */
-  string.isValidYoutubeVideoId = function (youtubeId) {
+  string.isValidYoutubeVideoId = function isValidYoutubeVideoId(youtubeId) {
     if (!aid.isString(youtubeId)) throw new TypeError('youtubeId parameter type of string.isValidYoutubeVideoId() must be String.');
 
     var regex = /^(\w|-|_){11}$/;
@@ -1016,7 +1059,7 @@
    * console.log( aid.string.getObjCheckYoutubeURI('https://youtu.be/mYIfiQlfaas') ); // {type: "youtube", uri: "https://youtu.be/mYIfiQlfaas", youtubeId: "mYIfiQlfaas", isValidURI: true}
    * console.log( aid.string.getObjCheckYoutubeURI('https://www.youtube.com/embed/mYIfiQlfaas') ); // {type: "youtube", uri: "https://www.youtube.com/embed/mYIfiQlfaas", youtubeId: "mYIfiQlfaas", isValidURI: true}
    */
-  string.getObjCheckYoutubeURI = function (uri) {
+  string.getObjCheckYoutubeURI = function getObjCheckYoutubeURI(uri) {
     if (!aid.isString(uri)) throw new TypeError('uri parameter type of string.getObjCheckYoutubeURI() must be String.');
 
     var YOUTUBE_REGEXES = {
@@ -1091,7 +1134,7 @@
    * console.log(aid.string.getObjCheckTwitchURI('https://player.twitch.tv/?video=v56097351')); // {channelName: "surrenderhs", isChatting: false, isValidURI: true, type: "twitch", uri: "https://player.twitch.tv/?video=v56097351", videoId: "56097351"}
    * console.log(aid.string.getObjCheckTwitchURI('player.twitch.tv/?video=v56097351')); // {channelName: "surrenderhs", isChatting: false, isValidURI: true, type: "twitch", uri: "player.twitch.tv/?video=v56097351", videoId: "56097351"}
    */
-  string.getObjCheckTwitchURI = function (uri) {
+  string.getObjCheckTwitchURI = function getObjCheckTwitchURI(uri) {
     /*
      + Live Video
      https://www.twitch.tv/surrenderhs // channel link
@@ -1205,7 +1248,7 @@
    * console.log( aid.string.getDocumentPrefixedProperty('visibilityState', true) ); // return 'visibilityState' or 'webkitVisibilityState' or 'mozVisibilityState' or 'msVisibilityState' or 'oVisibilityState'.
    * console.log( aid.string.getDocumentPrefixedProperty('12345', false) ); // if browser doesn't have property, return ''.
    */
-  string.getDocumentPrefixedProperty = function (propertyName, isPropertyFirstCharToUpperCase) {
+  string.getDocumentPrefixedProperty = function getDocumentPrefixedProperty(propertyName, isPropertyFirstCharToUpperCase) {
     if (!aid.isString(propertyName)) throw new TypeError('propertyName parameter type of string.getDocumentPrefixedProperty() must be String.');
     if (!aid.isBoolean(isPropertyFirstCharToUpperCase)) throw new TypeError('isPropertyFirstCharToUpperCase parameter type of string.getDocumentPrefixedProperty() must be Boolean.');
 
@@ -1235,7 +1278,7 @@
    * console.log( aid.string.getElementPrefixedStyle('transform', true) ); // return 'transform' or 'wekitTransform' or 'mozTransform' or 'msTransform' or 'oTransform'.
    * console.log( aid.string.getElementPrefixedStyle('12345', false) ); // if browser doesn't have style property, return ''.
    */
-  string.getElementPrefixedStyle = function (propertyName, isPropertyFirstCharToUpperCase) {
+  string.getElementPrefixedStyle = function getElementPrefixedStyle(propertyName, isPropertyFirstCharToUpperCase) {
     if (!aid.isString(propertyName)) throw new TypeError('propertyName parameter type of string.getElementPrefixedStyle() must be String.');
     if (!aid.isBoolean(isPropertyFirstCharToUpperCase)) throw new TypeError('isPropertyFirstCharToUpperCase parameter type of string.getElementPrefixedStyle() must be Boolean.');
 
@@ -1268,7 +1311,7 @@
    * console.log( aid.string.absentToEmpty(undefined) ); // undefined to ''.
    * console.log( aid.string.absentToEmpty('javascript') ); // if parameter is exist, return parameter.
    */
-  string.absentToEmpty = function (absentableStr) {
+  string.absentToEmpty = function absentToEmpty(absentableStr) {
     if (!aid.existy(absentableStr) || !aid.isString(absentableStr)) return '';
 
     return absentableStr;
@@ -1285,7 +1328,7 @@
    * @example
    * console.log( aid.string.numberWithCommas(1000000) ); // 1000000 to '1,000,000'.
    */
-  string.numberWithCommas = function (number) {
+  string.numberWithCommas = function numberWithCommas(number) {
     if (!aid.isInteger(number)) throw new TypeError('string.numberWithCommas() requires Integer Number parameter.');
 
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -1304,7 +1347,7 @@
    * string.getPositionFromTranslateStr('translateX(99px)'); // {x: 99, y: 0}
    * string.getPositionFromTranslateStr('translateY(99px)'); // {x: 0, y: 99}
    */
-  string.getPositionFromTranslateStr = function (str) {
+  string.getPositionFromTranslateStr = function getPositionFromTranslateStr(str) {
     if (!aid.isString(str)) throw new TypeError('string.getPositionFromTranslateStr() requires String parameter.');
 
     var obj = {x: 0, y: 0};
@@ -1314,17 +1357,17 @@
     if (values.length <= 0) return obj;
 
     if (/translateX/g.test(str)) {
-      obj.x = parseFloat(values[0]);
+      obj.x = parseFloat(values[0], 10);
       return obj;
     }
 
     if (/translateY/g.test(str)) {
-      obj.y = parseFloat(values[0]);
+      obj.y = parseFloat(values[0], 10);
       return obj;
     }
 
-    obj.x = parseFloat(values[0]);
-    if (values.length > 1) obj.y = parseFloat(values[1]);
+    obj.x = parseFloat(values[0], 10);
+    if (values.length > 1) obj.y = parseFloat(values[1], 10);
 
     return obj;
   };
@@ -1340,7 +1383,7 @@
    * console.log( aid.string.isPalindrome('abcdeedcba') ); // true
    * console.log( aid.string.isPalindrome('motor') ); // false
    */
-  string.isPalindrome = function (str) {
+  string.isPalindrome = function isPalindrome(str) {
     if (!aid.isString(str)) throw new TypeError('string.isPalindrome() requires String parameter.');
 
     if (str.length <= 1) return true;
@@ -1362,8 +1405,9 @@
    * @example
    * console.log( aid.math.getSizeAspectFill(960, 640, window.innerWidth, window.innerHeight) );
    */
-  math.getSizeAspectFill = function (srcWidth, srcHeight, fillWidth, fillHeight) {
-    if (!aid.isNumber(srcWidth) || !aid.isNumber(srcHeight) || !aid.isNumber(fillWidth) || !aid.isNumber(fillHeight)) {
+  math.getSizeAspectFill = function getSizeAspectFill(srcWidth, srcHeight, fillWidth, fillHeight) {
+    var isNumber = aid.isNumber;
+    if (!isNumber(srcWidth) || !isNumber(srcHeight) || !isNumber(fillWidth) || !isNumber(fillHeight)) {
       throw new TypeError('math.getSizeAspectFill() requires Number parameters.');
     }
 
@@ -1394,8 +1438,9 @@
    * @example
    * console.log( aid.math.getSizeAspectFit(960, 640, window.innerWidth, window.innerHeight) );
    */
-  math.getSizeAspectFit = function (srcWidth, srcHeight, fitWidth, fitHeight) {
-    if (!aid.isNumber(srcWidth) || !aid.isNumber(srcHeight) || !aid.isNumber(fitWidth) || !aid.isNumber(fitHeight)) {
+  math.getSizeAspectFit = function getSizeAspectFit(srcWidth, srcHeight, fitWidth, fitHeight) {
+    var isNumber = aid.isNumber;
+    if (!isNumber(srcWidth) || !isNumber(srcHeight) || !isNumber(fitWidth) || !isNumber(fitHeight)) {
       throw new TypeError('math.getSizeAspectFit() requires Number parameters.');
     }
 
@@ -1421,8 +1466,9 @@
    * @example
    * console.log( aid.math.getSizeWidthFit(960, 640, window.innerWidth) );
    */
-  math.getSizeWidthFit = function (srcWidth, srcHeight, fitWidth) {
-    if (!aid.isNumber(srcWidth) || !aid.isNumber(srcHeight) || !aid.isNumber(fitWidth)) {
+  math.getSizeWidthFit = function getSizeWidthFit(srcWidth, srcHeight, fitWidth) {
+    var isNumber = aid.isNumber;
+    if (!isNumber(srcWidth) || !isNumber(srcHeight) || !isNumber(fitWidth)) {
       throw new TypeError('math.getSizeWidthFit() requires Number parameters.');
     }
 
@@ -1446,7 +1492,7 @@
    * @example
    * console.log( aid.math.isEpsilonEqual(0.1 + 0.2, 0.3) );
    */
-  math.isEpsilonEqual = function (number_a, number_b) {
+  math.isEpsilonEqual = function isEpsilonEqual(number_a, number_b) {
     if (!aid.isNumber(number_a) || !aid.isNumber(number_b)) {
       throw new TypeError('math.isEpsilonEqual() requires Number parameters.');
     }
@@ -1474,10 +1520,11 @@
    * console.log( aid.math.isIndexInLoop(8, 5, 6, 3) ); // false
    * console.log( aid.math.isIndexInLoop(8, 5, 6, 6) ); // true
    */
-  math.isIndexInLoop = function (totalLength, loopGap, firstIndex, searchIndex) {
+  math.isIndexInLoop = function isIndexInLoop(totalLength, loopGap, firstIndex, searchIndex) {
     if (arguments.length < 4) throw new Error('math.isIndexInLoop() requires 4 parameters.');
 
-    if (!aid.isInteger(totalLength) || !aid.isInteger(loopGap) || !aid.isInteger(firstIndex) || !aid.isInteger(searchIndex)) {
+    var isInteger = aid.isInteger;
+    if (!isInteger(totalLength) || !isInteger(loopGap) || !isInteger(firstIndex) || !isInteger(searchIndex)) {
       throw new TypeError('math.isIndexInLoop() requires Integer Number parameters.');
     }
     if (totalLength < 1 || firstIndex < 1) {
@@ -1506,15 +1553,16 @@
    * @param {Number} totalLength
    * @param {Number} loopGap
    * @param {Number} firstIndex
-   * @returns {Number} return Integer Number
+   * @returns {Number} return Int Number
    * @example
    * console.log( aid.math.getLoopedLastIndex(8, 1, 7) ); // 7
    * console.log( aid.math.getLoopedLastIndex(8, 4, 7) ); // 2
    */
-  math.getLoopedLastIndex = function (totalLength, loopGap, firstIndex) {
+  math.getLoopedLastIndex = function getLoopedLastIndex(totalLength, loopGap, firstIndex) {
     if (arguments.length < 3) throw new Error('math.getLoopedLastIndex() requires 3 parameters.');
 
-    if (!aid.isInteger(totalLength) || !aid.isInteger(loopGap) || !aid.isInteger(firstIndex)) {
+    var isInteger = aid.isInteger;
+    if (!isInteger(totalLength) || !isInteger(loopGap) || !isInteger(firstIndex)) {
       throw new TypeError('math.getLoopedLastIndex() requires Integer Number parameters.');
     }
     if (totalLength < 1 || firstIndex < 1) {
@@ -1542,15 +1590,16 @@
    * @param {Number} totalLength
    * @param {Number} loopGap
    * @param {Number} firstIndex
-   * @returns {Number} return Integer Number
+   * @returns {Number} return Int Number
    * @example
    * console.log( aid.math.getReverseLoopedFirstIndex(8, 4, 2) ); // 7
    * console.log( aid.math.getReverseLoopedFirstIndex(8, 8, 2) ); // 3
    */
-  math.getReverseLoopedFirstIndex = function (totalLength, loopGap, lastIndex) {
+  math.getReverseLoopedFirstIndex = function getReverseLoopedFirstIndex(totalLength, loopGap, lastIndex) {
     if (arguments.length < 3) throw new Error('math.getReverseLoopedFirstIndex() requires 3 parameters.');
 
-    if (!aid.isInteger(totalLength) || !aid.isInteger(loopGap) || !aid.isInteger(lastIndex)) {
+    var isInteger = aid.isInteger;
+    if (!isInteger(totalLength) || !isInteger(loopGap) || !isInteger(lastIndex)) {
       throw new TypeError('math.getReverseLoopedFirstIndex() requires Integer Number parameters.');
     }
     if (totalLength < 1 || lastIndex < 1) {
@@ -1573,17 +1622,68 @@
    *
    * @static
    * @method factorial
-   * @param {Number} number
-   * @returns {Number} return Integer Number
+   * @param {Number} Int number
+   * @returns {Number} return Int Number
    * @example
    * console.log( aid.math.factorial(-99) ); // 1
    * console.log( aid.math.factorial(5) ); // 5 * 4 * 3 * 2 * 1 = 120
    */
-  math.factorial = function (number) {
+  math.factorial = function factorial(number) {
     if (!aid.isInteger(number)) throw new TypeError('math.factorial() requires Integer Number parameter.');
 
     if (number < 1) return 1;
     return number * aid.math.factorial(number - 1);
+  };
+
+  /**
+   * get board pagination info object.
+   *
+   * @static
+   * @method getObjForPagination
+   * @param {Number} totalPostNum
+   * @param {Number} displayPostNumPerPage
+   * @param {Number} displayPaginationBtnNum
+   * @param {Number} pageIndex
+   * @returns {Object} return object
+   * @example
+   * console.log( aid.math.getObjForPagination(39, 10, 5, 1) ); // {totalPostNum: 39, displayPostNumPerPage: 10, displayPaginationBtnNum: 5, pageIndex: 1, totalPageNum: 4, prevPageIndex: 0, firstPageIndex: 1, lastPageIndex: 4, nextPageIndex: 0}
+   */
+  math.getObjForPagination = function getObjForPagination(totalPostNum, displayPostNumPerPage, displayPaginationBtnNum, pageIndex) {
+    if (arguments.length < 4) throw new Error('math.getObjForPagination() requires 4 parameters.');
+
+    var isInteger = aid.isInteger;
+    if (!isInteger(totalPostNum) || !isInteger(displayPostNumPerPage) || !isInteger(displayPaginationBtnNum) || !isInteger(pageIndex)) {
+      throw new TypeError('math.getObjForPagination() requires Integer Number parameters.');
+    }
+    if (totalPostNum <= 0 || displayPostNumPerPage <= 0 || displayPaginationBtnNum <= 0 || pageIndex <= 0) {
+      throw new TypeError('math.getObjForPagination() requires positive Integer Number parameters.');
+    }
+
+    var totalPageNum = Math.ceil(totalPostNum / displayPostNumPerPage);
+    if (pageIndex < 1) pageIndex = 1;
+    if (pageIndex > totalPageNum) pageIndex = totalPageNum;
+
+    var paginationBtnGroupIndex = Math.floor((pageIndex - 1) / displayPaginationBtnNum),
+      prevPageIndex = paginationBtnGroupIndex * displayPaginationBtnNum,
+      firstPageIndex = (paginationBtnGroupIndex * displayPaginationBtnNum) + 1,
+      lastPageIndex = firstPageIndex + displayPaginationBtnNum - 1,
+      nextPageIndex = lastPageIndex + 1;
+
+    if (lastPageIndex > totalPageNum) lastPageIndex = totalPageNum;
+    if (nextPageIndex > totalPageNum) nextPageIndex = 0;
+
+    return {
+      totalPostNum: totalPostNum,
+      displayPostNumPerPage: displayPostNumPerPage,
+      displayPaginationBtnNum: displayPaginationBtnNum,
+      pageIndex: pageIndex,
+
+      totalPageNum: totalPageNum,
+      prevPageIndex: prevPageIndex,
+      firstPageIndex: firstPageIndex,
+      lastPageIndex: lastPageIndex,
+      nextPageIndex: nextPageIndex
+    };
   };
 
   /**
@@ -1611,7 +1711,7 @@
    *
    * @static
    * @property date.MIN_TO_SEC
-   * @returns {Number} return Integer number
+   * @returns {Number} return Int number
    * @example
    */
   date.MIN_TO_SEC = 60;
@@ -1621,7 +1721,7 @@
    *
    * @static
    * @property date.HOUR_TO_SEC
-   * @returns {Number} return Integer number
+   * @returns {Number} return Int number
    * @example
    */
   date.HOUR_TO_SEC = 3600;
@@ -1631,7 +1731,7 @@
    *
    * @static
    * @property date.DAY_TO_SEC
-   * @returns {Number} return Integer number
+   * @returns {Number} return Int number
    * @example
    */
   date.DAY_TO_SEC = 86400;
@@ -1643,13 +1743,13 @@
    * @method indexOf
    * @param {Array} arr
    * @param {Object} target
-   * @returns {Number} return Integer number
+   * @returns {Number} return Int number
    * @example
    * var arr = ['foo', 1, 'bar', 2, null, 99];
    * console.log( aid.array.indexOf(arr, undefined) ); // -1
    * console.log( aid.array.indexOf(arr, 99) ); // 5
    */
-  array.indexOf = function (arr, target) {
+  array.indexOf = function indexOf(arr, target) {
     if (!aid.isArray(arr)) throw new TypeError('math.indexOf() requires Number parameter.');
 
     for (var i = 0, max = arr.length; i < max; ++i) {
@@ -1666,7 +1766,7 @@
    * @method indexOfMin
    * @param {Array} arr
    * @param {Number} startSearchIndex
-   * @returns {Number} return Integer number
+   * @returns {Number} return Int number
    * @example
    * var arr = [18, 6, 66, 44, 9, 22, 14];
    * console.log( aid.array.indexOfMin(arr, 0) ); // 1
@@ -1677,7 +1777,7 @@
    * console.log( aid.array.indexOfMin(arr, 5) ); // 6
    * console.log( aid.array.indexOfMin(arr, 6) ); // 6
    */
-  array.indexOfMin = function (arr, startSearchIndex) {
+  array.indexOfMin = function indexOfMin(arr, startSearchIndex) {
     if (!aid.isArray(arr) || !aid.isInteger(startSearchIndex)) return -1;
 
     var startIndex = (startSearchIndex > 0) ? startSearchIndex : 0;
@@ -1709,7 +1809,7 @@
    * var arr = [18, 6, 66, 44, 9, 22, 14];
    * console.log( aid.array.swap(arr, 0, 1) ); // [6, 18, 66, 44, 9, 22, 14]
    */
-  array.swap = function (arr, firstIndex, secondIndex) {
+  array.swap = function swap(arr, firstIndex, secondIndex) {
     if (arguments.length !== 3) return null;
     if (!aid.isArray(arr) || !aid.isInteger(firstIndex) || !aid.isInteger(secondIndex)) return null;
     if (firstIndex < 0 || firstIndex >= arr.length || secondIndex < 0 || secondIndex >= arr.length) return null;
@@ -1732,7 +1832,7 @@
    * var arr = [18, 6, 66, 44, 9, 22, 14];
    * console.log( aid.array.selectionSort(arr) ); // [6, 9, 14, 18, 22, 44, 66]
    */
-  array.selectionSort = function (arr) {
+  array.selectionSort = function selectionSort(arr) {
     if (!aid.isArray(arr) || arr.length <= 0) return null;
 
     var minIndex = 0;
@@ -1756,7 +1856,7 @@
    * var arr = [18, 6, 66, 44, 9, 22, 14];
    * console.log( aid.array.insertionSort(arr) ); // [6, 9, 14, 18, 22, 44, 66]
    */
-  array.insertionSort = function (arr) {
+  array.insertionSort = function insertionSort(arr) {
     if (!aid.isArray(arr) || arr.length <= 0) return null;
 
     var value;
@@ -1785,7 +1885,7 @@
    * @returns {Array} return Array or null
    * @example
    */
-  array.merge = function (arr, startIndex, middleIndex, endIndex) {
+  array.merge = function merge(arr, startIndex, middleIndex, endIndex) {
     if (!aid.isArray(arr) || arr.length <= 0) return null;
     if (startIndex > middleIndex || middleIndex > endIndex) return null;
 
@@ -1840,7 +1940,7 @@
    * var arr = [18, 6, 66, 44, 9, 22, 14];
    * console.log( aid.array.mergeSort(arr, 0, arr.length - 1) ); // [6, 9, 14, 18, 22, 44, 66]
    */
-  array.mergeSort = function (arr, startIndex, endIndex) {
+  array.mergeSort = function mergeSort(arr, startIndex, endIndex) {
     if (!aid.isArray(arr) || arr.length <= 0) return null;
 
     if (arr.length <= 1 || startIndex === endIndex) return null;
@@ -1872,12 +1972,12 @@
    * @param {Array} arr
    * @param {Number} startIndex
    * @param {Number} endIndex
-   * @returns {Number} return index of pivot (between group that less or equal to the pivot, and group that greater than the pivot). Integer Number.
+   * @returns {Number} return index of pivot (between group that less or equal to the pivot, and group that greater than the pivot). Int Number.
    * @example
    * var arr = [18, 6, 66, 44, 9, 22, 14];
    * console.log( aid.array.getPivotIndexAfterPartition(arr, 0, arr.length - 1) ); // [6, 9, 14, 44, 18, 22, 66]
    */
-  array.getPivotIndexAfterPartition = function (arr, startIndex, endIndex) {
+  array.getPivotIndexAfterPartition = function getPivotIndexAfterPartition(arr, startIndex, endIndex) {
     if (!aid.isArray(arr) || arr.length <= 0) return -1;
     if (startIndex > endIndex) return -1;
 
@@ -1912,7 +2012,7 @@
    * var arr = [18, 6, 66, 44, 9, 22, 14];
    * console.log( aid.array.quickSort(arr, 0, arr.length - 1) ); // [6, 9, 14, 18, 22, 44, 66]
    */
-  array.quickSort = function (arr, startIndex, endIndex) {
+  array.quickSort = function quickSort(arr, startIndex, endIndex) {
     if (!aid.isArray(arr) || arr.length <= 0) return null;
 
     if (arr.length <= 1 || startIndex === endIndex) return null;
@@ -1939,7 +2039,7 @@
    * var arr = [1, 2, 3, 4, 5, 99];
    * console.log( aid.array.remove(arr, 99) ); // [1, 2, 3, 4, 5]
    */
-  array.remove = function (arr, target) {
+  array.remove = function remove(arr, target) {
     if (!aid.isArray(arr)) {
       throw new TypeError('arr parameter type of array.remove() must be Array.');
     }
@@ -1963,7 +2063,7 @@
    * @example
    * console.log( aid.array.getMatrixArr(2, 2, 0) ); // [ [0, 0], [0, 0] ]
    */
-  array.getMatrixArr = function (rowNum, columnNum, initialVal) {
+  array.getMatrixArr = function getMatrixArr(rowNum, columnNum, initialVal) {
     if (!aid.isInteger(rowNum) || !aid.isInteger(columnNum)) {
       throw new TypeError('rowNum, columnNum parameter of array.getMatrixArr() must be Integer Number.');
     }
@@ -1991,12 +2091,12 @@
    * @method binaryIndexOf
    * @param {Array} sortedArray
    * @param {Object} target
-   * @returns {Number} return Integer number
+   * @returns {Number} return Int number
    * @example
    * var arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
    * console.log( aid.array.binaryIndexOf(arr, 7) ); // 7
    */
-  array.binaryIndexOf = function (sortedArray, target) {
+  array.binaryIndexOf = function binaryIndexOf(sortedArray, target) {
     if (!aid.isArray(sortedArray) || sortedArray.length <= 0) return -1;
 
     var first = 0,
@@ -2032,12 +2132,12 @@
    * @returns {Object} return object
    * @example
    * var arrayHasObjects = [{ no: 11 }, { no: 22 }];
-   * console.log( array.getFirstObjectHasProperty(arrayHasObjects, 'index', 11) ); // null
-   * console.log( array.getFirstObjectHasProperty(arrayHasObjects, 'no', 11) ); // {no: 11}
-   * console.log( array.getFirstObjectHasProperty(arrayHasObjects, 'no', new RegExp('^1')) ); // {no: 11}
-   * console.log( array.getFirstObjectHasProperty(arrayHasObjects, 'no', /^(1)\d/) ); // {no: 11}
+   * console.log( aid.array.getFirstObjectHasProperty(arrayHasObjects, 'index', 11) ); // null
+   * console.log( aid.array.getFirstObjectHasProperty(arrayHasObjects, 'no', 11) ); // {no: 11}
+   * console.log( aid.array.getFirstObjectHasProperty(arrayHasObjects, 'no', new RegExp('^1')) ); // {no: 11}
+   * console.log( aid.array.getFirstObjectHasProperty(arrayHasObjects, 'no', /^(1)\d/) ); // {no: 11}
    */
-  array.getFirstObjectHasProperty = function (arrayHasObjects, propertyKey, findPropertyValueOrRegex) {
+  array.getFirstObjectHasProperty = function getFirstObjectHasProperty(arrayHasObjects, propertyKey, findPropertyValueOrRegex) {
     if (!aid.isArray(arrayHasObjects) || arrayHasObjects.length <= 0) return null;
     if (!aid.isString(propertyKey)) return null;
 
@@ -2071,7 +2171,7 @@
    * @returns {Boolean} return boolean
    * @example
    */
-  element.isEntirelyInViewport = function (ele) {
+  element.isEntirelyInViewport = function isEntirelyInViewport(ele) {
     if (typeof jQuery === 'function' && ele instanceof jQuery) ele = ele.get(0);
     if (!ele) return false;
 
@@ -2079,8 +2179,8 @@
     return (
       rect.top >= 0 &&
       rect.left >= 0 &&
-      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+      rect.bottom <= (global.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (global.innerWidth || document.documentElement.clientWidth)
     );
   };
 
@@ -2093,19 +2193,62 @@
    * @returns {Boolean} return boolean
    * @example
    */
-  element.isPartiallyInViewport = function (ele) {
+  element.isPartiallyInViewport = function isPartiallyInViewport(ele) {
     if (typeof jQuery === 'function' && ele instanceof jQuery) ele = ele.get(0);
     if (!ele) return false;
 
     var rect = ele.getBoundingClientRect(),
-      windowHeight = (window.innerHeight || document.documentElement.clientHeight),
-      windowWidth = (window.innerWidth || document.documentElement.clientWidth);
+      windowHeight = (global.innerHeight || document.documentElement.clientHeight),
+      windowWidth = (global.innerWidth || document.documentElement.clientWidth);
 
     // http://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap
-    var vertInView = (rect.top <= windowHeight) && ((rect.top + rect.height) >= 0);
-    var horInView = (rect.left <= windowWidth) && ((rect.left + rect.width) >= 0);
+    var verticallyInView = (rect.top <= windowHeight) && ((rect.top + rect.height) >= 0),
+      horizontallyInView = (rect.left <= windowWidth) && ((rect.left + rect.width) >= 0);
 
-    return (vertInView && horInView);
+    return (verticallyInView && horizontallyInView);
+  };
+
+  /**
+   * create script file, and append to target element.
+   *
+   * @static
+   * @method appendScriptFile
+   * @param {String} fileUrl
+   * @param {Element} targetElementToAppendFile
+   * @param {Function} loadCompleteCallback
+   * @example
+   * aid.file.appendScriptFile('https://apis.google.com/js/client.js', document.head, function() { console.log('load script file completely'); });
+   */
+  file.appendScriptFile = function appendScriptFile(fileUrl, targetElementToAppend, loadCompleteCallback) { // document.head, document.body
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+
+    if (typeof loadCompleteCallback === 'function') {
+      if (typeof script.onreadystatechange === 'undefined') {
+        script.onload = loadCompleteCallback;
+
+      } else {
+        script.onreadystatechange = function () {
+          if (script.readyState === 'loaded' || script.readyState === 'complete') {
+            script.onreadystatechange = null;
+            loadCompleteCallback();
+          }
+        };
+      }
+    }
+
+    script.src = fileUrl;
+
+    var ele = targetElementToAppend;
+    if (typeof jQuery === 'function' && ele instanceof jQuery) ele = ele.get(0);
+
+    if (ele) {
+      ele.appendChild(script);
+
+    } else {
+      var firstScript = document.getElementsByTagName('script')[0];
+      firstScript.parentNode.insertBefore(script, firstScript);
+    }
   };
 
   /*
@@ -2118,6 +2261,7 @@
   aid.date = date;
   aid.array = array;
   aid.element = element;
+  aid.file = file;
 
   if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
