@@ -428,7 +428,7 @@ describe('aid.js', function () {
       });
     });
 
-    describe('.extend()', function() {
+    describe('.extend()', function () {
       // TODO
     });
 
@@ -461,6 +461,161 @@ describe('aid.js', function () {
       });
     });
 
+    describe('.namespace()', function () {
+      it('input aid.spec.js string, set aid.spec.js object', function () {
+        // TODO
+      });
+    });
+
+    describe('.borrow()', function () {
+      var borrower = {},
+        donor = {
+          say: function () {
+            return 'hello, world';
+          }
+        };
+
+      beforeEach(function () {
+        borrower = {};
+      });
+
+      it('if borrower parameter is not Object type, throw TypeError', function () {
+        expect(function () {
+          aid.borrow(undefined, donor, 'say');
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.borrow(null, donor, 'say');
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.borrow(false, donor, 'say');
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.borrow(true, donor, 'say');
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.borrow('', donor, 'say');
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.borrow(0, donor, 'say');
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.borrow(NaN, donor, 'say');
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.borrow([], donor, 'say');
+        }).toThrowError(Error);
+      });
+
+      it('if donor parameter is not Object type, throw TypeError', function () {
+        expect(function () {
+          aid.borrow(borrower, undefined, 'say');
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.borrow(borrower, null, 'say');
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.borrow(borrower, false, 'say');
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.borrow(borrower, true, 'say');
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.borrow(borrower, '', 'say');
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.borrow(borrower, 0, 'say');
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.borrow(borrower, NaN, 'say');
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.borrow(borrower, [], 'say');
+        }).toThrowError(Error);
+      });
+
+      it('if functionName parameter is not String type, throw TypeError', function () {
+        expect(function () {
+          aid.borrow(borrower, donor, undefined);
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.borrow(borrower, donor, null);
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.borrow(borrower, donor, false);
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.borrow(borrower, donor, true);
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.borrow(borrower, donor, 0);
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.borrow(borrower, donor, NaN);
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.borrow(borrower, donor, {});
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.borrow(borrower, donor, []);
+        }).toThrowError(Error);
+      });
+
+      it('if donor has not function with functionName, throw Error', function () {
+        expect(function () {
+          aid.borrow(borrower, donor, 'hello');
+        }).toThrowError(Error);
+      });
+
+      it('if borrower already has function with functionName, throw Error', function () {
+        borrower = {
+          say: function () {
+            return "this method is borrower's";
+          }
+        };
+
+        expect(function () {
+          aid.borrow(borrower, donor, 'say');
+        }).toThrowError(Error);
+
+        borrower = {};
+
+        expect(function () {
+          aid.borrow(borrower, donor, 'say');
+        }).not.toThrowError(Error);
+      });
+
+      it('after input borrower, donor, "say" parameters, borrower has say method', function () {
+        expect(borrower.say).not.toBeDefined();
+
+        aid.borrow(borrower, donor, 'say');
+
+        expect(borrower.say).toBeDefined();
+
+        expect(borrower.say()).toEqual('hello, world');
+      });
+    });
+
     describe('.createStack()', function () {
       var stack = aid.createStack();
 
@@ -468,7 +623,7 @@ describe('aid.js', function () {
         expect(stack).not.toEqual(null);
       });
 
-      it('new statck.length() is 0', function () {
+      it('new stack.length() is 0', function () {
         expect(stack.length()).toEqual(0);
       });
 

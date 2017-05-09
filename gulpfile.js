@@ -13,8 +13,7 @@ var banner = `/*
  *
  * The MIT License (MIT)
  * Copyright (c) 2016-2017 Hyun-Seok.Kim, dragmove@gmail.com
- */
-`;
+ */`;
 
 gulp.task('lint', function () {
   return gulp.src('./*.js')

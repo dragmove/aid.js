@@ -213,6 +213,59 @@
     };
   }());
 
+  /**
+   * create namespace
+   *
+   * @static
+   * @method namespace
+   * @param {String} namespace
+   * @param {Object} parent
+   * @returns {Object} return object
+   * @example
+   */
+  aid.namespace = function (namespace, parent) {
+    if (!aid.isString(namespace)) throw new TypeError('namespace parameter type of aid.namespace() must be String.');
+    if (!aid.isObject(parent)) throw new TypeError('parent parameter type of aid.namespace() must be Object.');
+
+    var ns = parent || global;
+
+    if (namespace) {
+      var parts = namespace.split('.');
+
+      for (var i = 0, max = parts.length; i < max; i++) {
+        if (!ns[parts[i]]) ns[parts[i]] = {};
+        ns = ns[parts[i]];
+      }
+    }
+
+    return ns;
+  };
+
+  /**
+   * borrow method from donor object.
+   *
+   * @static
+   * @method borrow
+   * @param {Object} borrower
+   * @param {Object} donor
+   * @param {String} functionName
+   * @example
+   * var borrower = {}, donor = { say: function() { return 'hello, world'; } };
+   * aid.borrow(borrower, donor, 'say');
+   * console.log( borrower.say() ); // 'hello, world'
+   */
+  aid.borrow = function borrow(borrower, donor, functionName) {
+    if (!aid.isObject(borrower) || !aid.isObject(donor)) throw new TypeError('borrower, donor parameter type of aid.borrow() must be Object.');
+    if (!aid.isString(functionName)) throw new TypeError('functionName parameter type of aid.borrow() must be String.');
+    if (!aid.isDefined(donor[functionName])) throw new Error('donor object parameter of aid.borrow() has not function with functionName.');
+    if (aid.isDefined(borrower[functionName])) throw new Error('borrower object parameter of aid.borrow() already has function with functionName.');
+
+    borrower[functionName] = function () {
+      var args = Array.prototype.slice.call(arguments);
+      return donor[functionName].apply(this, args);
+    };
+  };
+
   /*
    * Data Structure
    */
@@ -2060,8 +2113,8 @@
     return (
       rect.top >= 0 &&
       rect.left >= 0 &&
-      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+      rect.bottom <= (global.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (global.innerWidth || document.documentElement.clientWidth)
     );
   };
 
@@ -2079,14 +2132,14 @@
     if (!ele) return false;
 
     var rect = ele.getBoundingClientRect(),
-      windowHeight = (window.innerHeight || document.documentElement.clientHeight),
-      windowWidth = (window.innerWidth || document.documentElement.clientWidth);
+      windowHeight = (global.innerHeight || document.documentElement.clientHeight),
+      windowWidth = (global.innerWidth || document.documentElement.clientWidth);
 
     // http://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap
-    var vertInView = (rect.top <= windowHeight) && ((rect.top + rect.height) >= 0);
-    var horInView = (rect.left <= windowWidth) && ((rect.left + rect.width) >= 0);
+    var verticallyInView = (rect.top <= windowHeight) && ((rect.top + rect.height) >= 0),
+      horizontallyInView = (rect.left <= windowWidth) && ((rect.left + rect.width) >= 0);
 
-    return (vertInView && horInView);
+    return (verticallyInView && horizontallyInView);
   };
 
   /*

@@ -220,6 +220,18 @@
     };
   }());
 
+  /**
+   * inherit Class function
+   *
+   * @static
+   * @method inherit
+   * @param {String} namespace string
+   * @example
+   */
+  aid.setNamespace = function(ns) {
+    return ns;
+  };
+
   /*
    * Data Structure
    */
@@ -1494,7 +1506,7 @@
    * @param {Number} totalLength
    * @param {Number} loopGap
    * @param {Number} firstIndex
-   * @returns {Number} return Int Number
+   * @returns {Number} return Integer Number
    * @example
    * console.log( aid.math.getLoopedLastIndex(8, 1, 7) ); // 7
    * console.log( aid.math.getLoopedLastIndex(8, 4, 7) ); // 2
@@ -1530,7 +1542,7 @@
    * @param {Number} totalLength
    * @param {Number} loopGap
    * @param {Number} firstIndex
-   * @returns {Number} return Int Number
+   * @returns {Number} return Integer Number
    * @example
    * console.log( aid.math.getReverseLoopedFirstIndex(8, 4, 2) ); // 7
    * console.log( aid.math.getReverseLoopedFirstIndex(8, 8, 2) ); // 3
@@ -1562,7 +1574,7 @@
    * @static
    * @method factorial
    * @param {Number} number
-   * @returns {Number} return Int Number
+   * @returns {Number} return Integer Number
    * @example
    * console.log( aid.math.factorial(-99) ); // 1
    * console.log( aid.math.factorial(5) ); // 5 * 4 * 3 * 2 * 1 = 120
@@ -1599,7 +1611,7 @@
    *
    * @static
    * @property date.MIN_TO_SEC
-   * @returns {Number} return Int number
+   * @returns {Number} return Integer number
    * @example
    */
   date.MIN_TO_SEC = 60;
@@ -1609,7 +1621,7 @@
    *
    * @static
    * @property date.HOUR_TO_SEC
-   * @returns {Number} return Int number
+   * @returns {Number} return Integer number
    * @example
    */
   date.HOUR_TO_SEC = 3600;
@@ -1619,7 +1631,7 @@
    *
    * @static
    * @property date.DAY_TO_SEC
-   * @returns {Number} return Int number
+   * @returns {Number} return Integer number
    * @example
    */
   date.DAY_TO_SEC = 86400;
@@ -1631,7 +1643,7 @@
    * @method indexOf
    * @param {Array} arr
    * @param {Object} target
-   * @returns {Number} return Int number
+   * @returns {Number} return Integer number
    * @example
    * var arr = ['foo', 1, 'bar', 2, null, 99];
    * console.log( aid.array.indexOf(arr, undefined) ); // -1
@@ -1654,7 +1666,7 @@
    * @method indexOfMin
    * @param {Array} arr
    * @param {Number} startSearchIndex
-   * @returns {Number} return Int number
+   * @returns {Number} return Integer number
    * @example
    * var arr = [18, 6, 66, 44, 9, 22, 14];
    * console.log( aid.array.indexOfMin(arr, 0) ); // 1
@@ -1860,7 +1872,7 @@
    * @param {Array} arr
    * @param {Number} startIndex
    * @param {Number} endIndex
-   * @returns {Number} return index of pivot (between group that less or equal to the pivot, and group that greater than the pivot). Int Number.
+   * @returns {Number} return index of pivot (between group that less or equal to the pivot, and group that greater than the pivot). Integer Number.
    * @example
    * var arr = [18, 6, 66, 44, 9, 22, 14];
    * console.log( aid.array.getPivotIndexAfterPartition(arr, 0, arr.length - 1) ); // [6, 9, 14, 44, 18, 22, 66]
@@ -1979,7 +1991,7 @@
    * @method binaryIndexOf
    * @param {Array} sortedArray
    * @param {Object} target
-   * @returns {Number} return Int number
+   * @returns {Number} return Integer number
    * @example
    * var arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
    * console.log( aid.array.binaryIndexOf(arr, 7) ); // 7
