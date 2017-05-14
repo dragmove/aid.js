@@ -336,6 +336,21 @@
     return !!!obj;
   };
 
+  /**
+   * return function // TODO
+   *
+   * @static
+   * @method not
+   * @param {Function} func
+   * @returns {Function} return function
+   * @example
+   */
+  aid.not = function not(func) {
+    return function(obj) {
+      return !func(obj);
+    }
+  }
+
   /*
    * Data Structure
    */
