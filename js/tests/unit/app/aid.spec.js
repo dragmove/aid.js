@@ -727,6 +727,18 @@ describe('aid.js', function () {
       });
     });
 
+    describe('.each()', function () {
+      // TODO
+    });
+
+    describe('.truthy()', function () {
+      // TODO
+    });
+
+    describe('.falsy()', function () {
+      // TODO
+    });
+
     describe('.createStack()', function () {
       var stack = aid.createStack();
 

@@ -210,6 +210,7 @@
         destination[key] = source[key];
       }
     }
+
     return destination;
   };
 
@@ -246,7 +247,7 @@
    * @returns {Object} return object
    * @example
    */
-  aid.namespace = function (namespace, parent) {
+  aid.namespace = function namespace(namespace, parent) {
     if (!aid.isString(namespace)) throw new TypeError('namespace parameter type of aid.namespace() must be String.');
     if (!aid.isObject(parent)) throw new TypeError('parent parameter type of aid.namespace() must be Object.');
 
@@ -287,6 +288,52 @@
       var args = Array.prototype.slice.call(arguments);
       return donor[functionName].apply(this, args);
     };
+  };
+
+  /**
+   * each method for data can loop
+   *
+   * @static
+   * @method each
+   * @param {Array || String} data can loop
+   * @param {Function} func
+   * @param {Object} context
+   * @example
+   */
+  aid.each = function each(dataCanLoop, func, context) {
+    var _context = (aid.existy(context)) ? context : null;
+
+    if (!aid.isArray(dataCanLoop) || !aid.isString(dataCanLoop)) throw new TypeError('dataCanLoop parameter type of aid.each() must be Array or String.');
+
+    for (var i = 0, max = dataCanLoop.length; i < max; i++) {
+      func.call(_context, dataCanLoop[i]);
+    }
+  };
+
+  /**
+   * check object is truthy
+   *
+   * @static
+   * @method truthy
+   * @param {Object} object
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  aid.truthy = function truthy(obj) {
+    return !!obj;
+  };
+
+  /**
+   * check object is falsy
+   *
+   * @static
+   * @method falsy
+   * @param {Object} object
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  aid.falsy = function falsy(obj) {
+    return !!!obj;
   };
 
   /*
