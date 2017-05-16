@@ -7,44 +7,44 @@ describe('aid.js', function () {
     describe('.trim()', function () {
       it('input argument is not String type, throw TypeError.', function () {
         expect(function () {
-          string.trim(undefined)
+          string.trim(undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.trim(null)
+          string.trim(null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.trim(false)
+          string.trim(false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.trim(true)
+          string.trim(true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.trim(0)
+          string.trim(0);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.trim({})
+          string.trim({});
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.trim([])
+          string.trim([]);
         }).toThrowError(TypeError);
 
         expect(function () {
           string.trim(function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.trim(new RegExp('^aid'))
+          string.trim(new RegExp('^aid'));
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.trim(/^aid/)
+          string.trim(/^aid/);
         }).toThrowError(TypeError);
       });
 
@@ -125,44 +125,44 @@ describe('aid.js', function () {
     describe('.getFileExtension()', function () {
       it('input argument is not String type, throw TypeError.', function () {
         expect(function () {
-          string.getFileExtension(undefined)
+          string.getFileExtension(undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension(null)
+          string.getFileExtension(null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension(false)
+          string.getFileExtension(false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension(true)
+          string.getFileExtension(true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension(0)
+          string.getFileExtension(0);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension({})
+          string.getFileExtension({});
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension([])
+          string.getFileExtension([]);
         }).toThrowError(TypeError);
 
         expect(function () {
           string.getFileExtension(function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension(new RegExp('^aid'))
+          string.getFileExtension(new RegExp('^aid'));
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension(/^aid/)
+          string.getFileExtension(/^aid/);
         }).toThrowError(TypeError);
       });
 
@@ -186,44 +186,44 @@ describe('aid.js', function () {
     describe('.isEmail()', function () {
       it('input argument is not String type, throw TypeError.', function () {
         expect(function () {
-          string.getFileExtension(undefined)
+          string.getFileExtension(undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension(null)
+          string.getFileExtension(null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension(false)
+          string.getFileExtension(false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension(true)
+          string.getFileExtension(true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension(0)
+          string.getFileExtension(0);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension({})
+          string.getFileExtension({});
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension([])
+          string.getFileExtension([]);
         }).toThrowError(TypeError);
 
         expect(function () {
           string.getFileExtension(function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension(new RegExp('^aid'))
+          string.getFileExtension(new RegExp('^aid'));
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension(/^aid/)
+          string.getFileExtension(/^aid/);
         }).toThrowError(TypeError);
       });
 
@@ -255,44 +255,44 @@ describe('aid.js', function () {
     describe('.isIFrame()', function () {
       it('input argument is not String type, throw TypeError.', function () {
         expect(function () {
-          string.getFileExtension(undefined)
+          string.getFileExtension(undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension(null)
+          string.getFileExtension(null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension(false)
+          string.getFileExtension(false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension(true)
+          string.getFileExtension(true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension(0)
+          string.getFileExtension(0);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension({})
+          string.getFileExtension({});
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension([])
+          string.getFileExtension([]);
         }).toThrowError(TypeError);
 
         expect(function () {
           string.getFileExtension(function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension(new RegExp('^aid'))
+          string.getFileExtension(new RegExp('^aid'));
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getFileExtension(/^aid/)
+          string.getFileExtension(/^aid/);
         }).toThrowError(TypeError);
       });
 
@@ -306,45 +306,45 @@ describe('aid.js', function () {
 
       it('input arguments are not String type, throw TypeError.', function () {
         expect(function () {
-          string.getUriParam(undefined, undefined)
+          string.getUriParam(undefined, undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriParam(null, null)
+          string.getUriParam(null, null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriParam(false, false)
+          string.getUriParam(false, false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriParam(true, true)
+          string.getUriParam(true, true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriParam(0, 0)
+          string.getUriParam(0, 0);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriParam({}, {})
+          string.getUriParam({}, {});
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriParam([], [])
+          string.getUriParam([], []);
         }).toThrowError(TypeError);
 
         expect(function () {
           string.getUriParam(function () {
           }, function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriParam(new RegExp('^aid'), new RegExp('^aid'))
+          string.getUriParam(new RegExp('^aid'), new RegExp('^aid'));
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriParam(/^aid/, /^aid/)
+          string.getUriParam(/^aid/, /^aid/);
         }).toThrowError(TypeError);
       });
 
@@ -376,44 +376,44 @@ describe('aid.js', function () {
     describe('.getUriParams()', function () {
       it('input argument is not String type, throw TypeError.', function () {
         expect(function () {
-          string.getUriParams(undefined)
+          string.getUriParams(undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriParams(null)
+          string.getUriParams(null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriParams(false)
+          string.getUriParams(false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriParams(true)
+          string.getUriParams(true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriParams(0)
+          string.getUriParams(0);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriParams({})
+          string.getUriParams({});
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriParams([])
+          string.getUriParams([]);
         }).toThrowError(TypeError);
 
         expect(function () {
           string.getUriParams(function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriParams(new RegExp('^aid'))
+          string.getUriParams(new RegExp('^aid'));
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriParams(/^aid/)
+          string.getUriParams(/^aid/);
         }).toThrowError(TypeError);
       });
 
@@ -446,36 +446,36 @@ describe('aid.js', function () {
 
       it('1st argument is not String type, throw TypeError.', function () {
         expect(function () {
-          string.getUriCombinedParams(undefined)
+          string.getUriCombinedParams(undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriCombinedParams(null)
+          string.getUriCombinedParams(null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriCombinedParams(false)
+          string.getUriCombinedParams(false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriCombinedParams(true)
+          string.getUriCombinedParams(true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriCombinedParams(0)
+          string.getUriCombinedParams(0);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriCombinedParams({})
+          string.getUriCombinedParams({});
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriCombinedParams([])
+          string.getUriCombinedParams([]);
         }).toThrowError(TypeError);
 
         expect(function () {
           string.getUriCombinedParams(function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
@@ -483,50 +483,50 @@ describe('aid.js', function () {
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriCombinedParams(/^aid/)
+          string.getUriCombinedParams(/^aid/);
         }).toThrowError(TypeError);
       });
 
       it('2nd argument is not Object type, throw TypeError.', function () {
         expect(function () {
-          string.getUriCombinedParams(uri, undefined)
+          string.getUriCombinedParams(uri, undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriCombinedParams(uri, null)
+          string.getUriCombinedParams(uri, null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriCombinedParams(uri, false)
+          string.getUriCombinedParams(uri, false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriCombinedParams(uri, true)
+          string.getUriCombinedParams(uri, true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriCombinedParams(uri, 0)
+          string.getUriCombinedParams(uri, 0);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriCombinedParams(uri, "")
+          string.getUriCombinedParams(uri, "");
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriCombinedParams(uri, [])
+          string.getUriCombinedParams(uri, []);
         }).toThrowError(TypeError);
 
         expect(function () {
           string.getUriCombinedParams(uri, function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriCombinedParams(uri, new RegExp('^aid'))
+          string.getUriCombinedParams(uri, new RegExp('^aid'));
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getUriCombinedParams(uri, /^aid/)
+          string.getUriCombinedParams(uri, /^aid/);
         }).toThrowError(TypeError);
       });
 
@@ -555,44 +555,44 @@ describe('aid.js', function () {
     describe('.isValidYoutubeVideoId()', function () {
       it('1st argument is not String type, throw TypeError.', function () {
         expect(function () {
-          string.isValidYoutubeVideoId(undefined)
+          string.isValidYoutubeVideoId(undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.isValidYoutubeVideoId(null)
+          string.isValidYoutubeVideoId(null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.isValidYoutubeVideoId(false)
+          string.isValidYoutubeVideoId(false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.isValidYoutubeVideoId(true)
+          string.isValidYoutubeVideoId(true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.isValidYoutubeVideoId(0)
+          string.isValidYoutubeVideoId(0);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.isValidYoutubeVideoId({})
+          string.isValidYoutubeVideoId({});
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.isValidYoutubeVideoId([])
+          string.isValidYoutubeVideoId([]);
         }).toThrowError(TypeError);
 
         expect(function () {
           string.isValidYoutubeVideoId(function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.isValidYoutubeVideoId(new RegExp('^aid'))
+          string.isValidYoutubeVideoId(new RegExp('^aid'));
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.isValidYoutubeVideoId(/^aid/)
+          string.isValidYoutubeVideoId(/^aid/);
         }).toThrowError(TypeError);
       });
 
@@ -620,44 +620,44 @@ describe('aid.js', function () {
     describe('.getObjCheckYoutubeURI()', function () {
       it('1st argument is not String type, throw TypeError.', function () {
         expect(function () {
-          string.getObjCheckYoutubeURI(undefined)
+          string.getObjCheckYoutubeURI(undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getObjCheckYoutubeURI(null)
+          string.getObjCheckYoutubeURI(null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getObjCheckYoutubeURI(false)
+          string.getObjCheckYoutubeURI(false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getObjCheckYoutubeURI(true)
+          string.getObjCheckYoutubeURI(true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getObjCheckYoutubeURI(0)
+          string.getObjCheckYoutubeURI(0);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getObjCheckYoutubeURI({})
+          string.getObjCheckYoutubeURI({});
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getObjCheckYoutubeURI([])
+          string.getObjCheckYoutubeURI([]);
         }).toThrowError(TypeError);
 
         expect(function () {
           string.getObjCheckYoutubeURI(function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getObjCheckYoutubeURI(new RegExp('^aid'))
+          string.getObjCheckYoutubeURI(new RegExp('^aid'));
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getObjCheckYoutubeURI(/^aid/)
+          string.getObjCheckYoutubeURI(/^aid/);
         }).toThrowError(TypeError);
       });
 
@@ -667,44 +667,44 @@ describe('aid.js', function () {
     describe('.getObjCheckTwitchURI()', function () {
       it('1st argument is not String type, throw TypeError.', function () {
         expect(function () {
-          string.getObjCheckTwitchURI(undefined)
+          string.getObjCheckTwitchURI(undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getObjCheckTwitchURI(null)
+          string.getObjCheckTwitchURI(null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getObjCheckTwitchURI(false)
+          string.getObjCheckTwitchURI(false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getObjCheckTwitchURI(true)
+          string.getObjCheckTwitchURI(true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getObjCheckTwitchURI(0)
+          string.getObjCheckTwitchURI(0);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getObjCheckTwitchURI({})
+          string.getObjCheckTwitchURI({});
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getObjCheckTwitchURI([])
+          string.getObjCheckTwitchURI([]);
         }).toThrowError(TypeError);
 
         expect(function () {
           string.getObjCheckTwitchURI(function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getObjCheckTwitchURI(new RegExp('^aid'))
+          string.getObjCheckTwitchURI(new RegExp('^aid'));
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getObjCheckTwitchURI(/^aid/)
+          string.getObjCheckTwitchURI(/^aid/);
         }).toThrowError(TypeError);
       });
 
@@ -756,44 +756,44 @@ describe('aid.js', function () {
     describe('.numberWithCommas()', function () {
       it('argument is not Integer Number type, throw TypeError.', function () {
         expect(function () {
-          string.numberWithCommas(undefined)
+          string.numberWithCommas(undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.numberWithCommas(null)
+          string.numberWithCommas(null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.numberWithCommas(false)
+          string.numberWithCommas(false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.numberWithCommas(true)
+          string.numberWithCommas(true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.numberWithCommas(0.5)
+          string.numberWithCommas(0.5);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.numberWithCommas({})
+          string.numberWithCommas({});
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.numberWithCommas([])
+          string.numberWithCommas([]);
         }).toThrowError(TypeError);
 
         expect(function () {
           string.numberWithCommas(function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.numberWithCommas(new RegExp('^aid'))
+          string.numberWithCommas(new RegExp('^aid'));
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.numberWithCommas(/^aid/)
+          string.numberWithCommas(/^aid/);
         }).toThrowError(TypeError);
       });
 
@@ -803,44 +803,44 @@ describe('aid.js', function () {
     describe('.getPositionFromTranslateStr()', function () {
       it('throw TypeError, when argument is not Integer Number type.', function () {
         expect(function () {
-          string.getPositionFromTranslateStr(undefined)
+          string.getPositionFromTranslateStr(undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getPositionFromTranslateStr(null)
+          string.getPositionFromTranslateStr(null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getPositionFromTranslateStr(false)
+          string.getPositionFromTranslateStr(false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getPositionFromTranslateStr(true)
+          string.getPositionFromTranslateStr(true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getPositionFromTranslateStr(0)
+          string.getPositionFromTranslateStr(0);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getPositionFromTranslateStr({})
+          string.getPositionFromTranslateStr({});
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getPositionFromTranslateStr([])
+          string.getPositionFromTranslateStr([]);
         }).toThrowError(TypeError);
 
         expect(function () {
           string.getPositionFromTranslateStr(function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getPositionFromTranslateStr(new RegExp('^aid'))
+          string.getPositionFromTranslateStr(new RegExp('^aid'));
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.getPositionFromTranslateStr(/^aid/)
+          string.getPositionFromTranslateStr(/^aid/);
         }).toThrowError(TypeError);
       });
 
@@ -900,44 +900,44 @@ describe('aid.js', function () {
     describe('.isPalindrome()', function () {
       it('throw TypeError, when argument is not Integer Number type.', function () {
         expect(function () {
-          string.isPalindrome(undefined)
+          string.isPalindrome(undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.isPalindrome(null)
+          string.isPalindrome(null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.isPalindrome(false)
+          string.isPalindrome(false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.isPalindrome(true)
+          string.isPalindrome(true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.isPalindrome(0)
+          string.isPalindrome(0);
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.isPalindrome({})
+          string.isPalindrome({});
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.isPalindrome([])
+          string.isPalindrome([]);
         }).toThrowError(TypeError);
 
         expect(function () {
           string.isPalindrome(function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.isPalindrome(new RegExp('^aid'))
+          string.isPalindrome(new RegExp('^aid'));
         }).toThrowError(TypeError);
 
         expect(function () {
-          string.isPalindrome(/^aid/)
+          string.isPalindrome(/^aid/);
         }).toThrowError(TypeError);
       });
 

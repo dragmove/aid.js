@@ -10,6 +10,7 @@
     {};
 
   var aid = {},
+    operator = {},
     platform = {},
     browser = {},
     string = {},
@@ -246,10 +247,11 @@
    * @param {Object} parent
    * @returns {Object} return object
    * @example
+   * aid.namespace('first.second.third'); // create first.second.third object
    */
-  aid.namespace = function namespace(namespace, parent) {
+  aid.namespace = function (namespace, parent) {
     if (!aid.isString(namespace)) throw new TypeError('namespace parameter type of aid.namespace() must be String.');
-    if (!aid.isObject(parent)) throw new TypeError('parent parameter type of aid.namespace() must be Object.');
+    if (!(aid.isObject(parent) || !aid.isDefined(parent))) throw new TypeError('parent parameter type of aid.namespace() must be Object or null or undefined.');
 
     var ns = parent || global;
 
@@ -291,11 +293,58 @@
   };
 
   /**
+   * return function bind context and parameters
+   *
+   * @static
+   * @method bind
+   * @param {Function} func
+   * @param {Object} context
+   * @returns {Function} return function
+   * @example
+   */
+  aid.bind = function bind(func, context) {
+    return function () {
+      return func.apply(context, arguments);
+    };
+  };
+
+  /**
+   * return function composed function_a and function_b
+   *
+   * @static
+   * @method compose
+   * @param {Function} function_a
+   * @param {Function} function_b
+   * @returns {Function} return function
+   * @example
+   */
+  aid.compose = function compose(function_a, function_b) {
+    return function () {
+      return function_a(function_b.apply(null, arguments));
+    };
+  };
+
+  /**
+   * return function negate object parameter
+   *
+   * @static
+   * @method not
+   * @param {Function} func
+   * @returns {Function} return function
+   * @example
+   */
+  aid.not = function not(func) {
+    return function (object) {
+      return !func(object);
+    };
+  };
+
+  /**
    * each method for data can loop
    *
    * @static
    * @method each
-   * @param {Array || String} data can loop
+   * @param {Array or String} data can loop
    * @param {Function} func
    * @param {Object} context
    * @example
@@ -319,8 +368,8 @@
    * @returns {Boolean} return boolean
    * @example
    */
-  aid.truthy = function truthy(obj) {
-    return !!obj;
+  aid.truthy = function truthy(object) {
+    return !!object;
   };
 
   /**
@@ -332,24 +381,9 @@
    * @returns {Boolean} return boolean
    * @example
    */
-  aid.falsy = function falsy(obj) {
-    return !!!obj;
+  aid.falsy = function falsy(object) {
+    return !!!object;
   };
-
-  /**
-   * return function // TODO
-   *
-   * @static
-   * @method not
-   * @param {Function} func
-   * @returns {Function} return function
-   * @example
-   */
-  aid.not = function not(func) {
-    return function(obj) {
-      return !func(obj);
-    }
-  }
 
   /*
    * Data Structure
@@ -480,11 +514,56 @@
   };
 
   /**
+   * plus(+) operator
+   *
+   * @static
+   * @method +
+   * @param {Number} number_a
+   * @param {Number} number_b
+   * @returns {Number} return number
+   * @example
+   */
+  operator['+'] = function plus(number_a, number_b) {
+    if (!aid.isNumber(number_a) || !aid.isNumber(number_b)) {
+      throw new TypeError('operator["+"] requires Number parameters.');
+    }
+
+    return number_a + number_b;
+  };
+
+  /**
+   * identity(===) operator
+   *
+   * @static
+   * @method ===
+   * @param {Object} object_a
+   * @param {Object} object_b
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  operator['==='] = function identity(object_a, object_b) {
+    return object_a === object_b;
+  };
+
+  /**
+   * logical not(!) operator
+   *
+   * @static
+   * @method !
+   * @param {Object} object
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  operator['!'] = function not(object) {
+    return !object
+  };
+
+  /**
    * is window platform
    *
    * @static
    * @method isWindow
-   * @param {string} userAgent
+   * @param {String} userAgent
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.platform.isWindow(window.navigator.userAgent) );
@@ -498,7 +577,7 @@
    *
    * @static
    * @method isMac
-   * @param {string} userAgent
+   * @param {String} userAgent
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.platform.isMac(window.navigator.userAgent) );
@@ -527,7 +606,7 @@
    *
    * @static
    * @method isAndroid
-   * @param {string} userAgent
+   * @param {String} userAgent
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.platform.isAndroid(window.navigator.userAgent) );
@@ -541,7 +620,7 @@
    *
    * @static
    * @method isIE
-   * @param {string} userAgent
+   * @param {String} userAgent
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.browser.isIE(window.navigator.userAgent) );
@@ -555,7 +634,7 @@
    *
    * @static
    * @method isEdge
-   * @param {string} userAgent
+   * @param {String} userAgent
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.browser.isEdge(window.navigator.userAgent) );
@@ -569,7 +648,7 @@
    *
    * @static
    * @method isFF
-   * @param {string} userAgent
+   * @param {String} userAgent
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.browser.isFF(window.navigator.userAgent) );
@@ -597,7 +676,7 @@
    *
    * @static
    * @method isChrome
-   * @param {string} userAgent
+   * @param {String} userAgent
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.browser.isChrome(window.navigator.userAgent) );
@@ -611,7 +690,7 @@
    *
    * @static
    * @method isSafari
-   * @param {string} userAgent
+   * @param {String} userAgent
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.browser.isSafari(window.navigator.userAgent) );
@@ -660,7 +739,7 @@
    *
    * @static
    * @method getOperaVersion
-   * @param {string} userAgent
+   * @param {String} userAgent
    * @returns {Number} return version float number
    * @example
    * console.log( aid.browser.getOperaVersion(window.navigator.userAgent) );
@@ -681,7 +760,7 @@
    *
    * @static
    * @method getChromeVersion
-   * @param {string} userAgent
+   * @param {String} userAgent
    * @returns {Number} return version float number
    * @example
    * console.log( aid.browser.getChromeVersion(window.navigator.userAgent) );
@@ -698,7 +777,7 @@
    *
    * @static
    * @method getSafariVersion
-   * @param {string} userAgent
+   * @param {String} userAgent
    * @returns {Number} return version float number
    * @example
    * console.log( aid.browser.getSafariVersion(window.navigator.userAgent) );
@@ -2332,6 +2411,7 @@
    * export
    */
   aid.platform = platform;
+  aid.operator = operator;
   aid.browser = browser;
   aid.string = string;
   aid.math = math;

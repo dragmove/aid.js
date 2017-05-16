@@ -32,6 +32,19 @@ npm install aid.js --save-dev
     aid.inherit
     aid.namespace
     aid.borrow
+    aid.bind
+    aid.compose
+    aid.not
+    aid.each
+    aid.truthy
+    aid.falsy
+```
+
+* operator utils
+```javascript
+    aid.operator['+']
+    aid.operator['===']
+    aid.operator['!']
 ```
 
 * platform utils

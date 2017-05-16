@@ -7,44 +7,44 @@ describe('aid.js', function () {
     describe('.getSizeAspectFill()', function () {
       it('input arguments are not Number type, throw TypeError.', function () {
         expect(function () {
-          math.getSizeAspectFill(undefined)
+          math.getSizeAspectFill(undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeAspectFill(null)
+          math.getSizeAspectFill(null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeAspectFill(false)
+          math.getSizeAspectFill(false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeAspectFill(true)
+          math.getSizeAspectFill(true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeAspectFill('')
+          math.getSizeAspectFill('');
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeAspectFill({})
+          math.getSizeAspectFill({});
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeAspectFill([])
+          math.getSizeAspectFill([]);
         }).toThrowError(TypeError);
 
         expect(function () {
           math.getSizeAspectFill(function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeAspectFill(new RegExp('^aid'))
+          math.getSizeAspectFill(new RegExp('^aid'));
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeAspectFill(/^aid/)
+          math.getSizeAspectFill(/^aid/);
         }).toThrowError(TypeError);
       });
 
@@ -54,44 +54,44 @@ describe('aid.js', function () {
     describe('.getSizeAspectFit()', function () {
       it('input arguments are not Number type, throw TypeError.', function () {
         expect(function () {
-          math.getSizeAspectFit(undefined)
+          math.getSizeAspectFit(undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeAspectFit(null)
+          math.getSizeAspectFit(null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeAspectFit(false)
+          math.getSizeAspectFit(false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeAspectFit(true)
+          math.getSizeAspectFit(true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeAspectFit('')
+          math.getSizeAspectFit('');
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeAspectFit({})
+          math.getSizeAspectFit({});
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeAspectFit([])
+          math.getSizeAspectFit([]);
         }).toThrowError(TypeError);
 
         expect(function () {
           math.getSizeAspectFit(function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeAspectFit(new RegExp('^aid'))
+          math.getSizeAspectFit(new RegExp('^aid'));
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeAspectFit(/^aid/)
+          math.getSizeAspectFit(/^aid/);
         }).toThrowError(TypeError);
       });
 
@@ -101,44 +101,44 @@ describe('aid.js', function () {
     describe('.getSizeWidthFit()', function () {
       it('input arguments are not Number type, throw TypeError.', function () {
         expect(function () {
-          math.getSizeWidthFit(undefined)
+          math.getSizeWidthFit(undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit(null)
+          math.getSizeWidthFit(null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit(false)
+          math.getSizeWidthFit(false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit(true)
+          math.getSizeWidthFit(true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit('')
+          math.getSizeWidthFit('');
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit({})
+          math.getSizeWidthFit({});
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit([])
+          math.getSizeWidthFit([]);
         }).toThrowError(TypeError);
 
         expect(function () {
           math.getSizeWidthFit(function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit(new RegExp('^aid'))
+          math.getSizeWidthFit(new RegExp('^aid'));
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit(/^aid/)
+          math.getSizeWidthFit(/^aid/);
         }).toThrowError(TypeError);
       });
 
@@ -148,44 +148,44 @@ describe('aid.js', function () {
     describe('.isEpsilonEqual()', function () {
       it('input arguments are not Number type, throw TypeError.', function () {
         expect(function () {
-          math.getSizeWidthFit(undefined)
+          math.getSizeWidthFit(undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit(null)
+          math.getSizeWidthFit(null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit(false)
+          math.getSizeWidthFit(false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit(true)
+          math.getSizeWidthFit(true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit('')
+          math.getSizeWidthFit('');
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit({})
+          math.getSizeWidthFit({});
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit([])
+          math.getSizeWidthFit([]);
         }).toThrowError(TypeError);
 
         expect(function () {
           math.getSizeWidthFit(function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit(new RegExp('^aid'))
+          math.getSizeWidthFit(new RegExp('^aid'));
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit(/^aid/)
+          math.getSizeWidthFit(/^aid/);
         }).toThrowError(TypeError);
       });
 
@@ -195,50 +195,50 @@ describe('aid.js', function () {
     describe('.isIndexInLoop()', function () {
       it('throw Error, input 1 or 2 or 3 parameters.', function () {
         expect(function () {
-          math.isIndexInLoop(8)
+          math.isIndexInLoop(8);
         }).toThrowError(Error);
 
         expect(function () {
-          math.isIndexInLoop(8, 5)
+          math.isIndexInLoop(8, 5);
         }).toThrowError(Error);
 
         expect(function () {
-          math.isIndexInLoop(8, 5, 6)
+          math.isIndexInLoop(8, 5, 6);
         }).toThrowError(Error);
       });
 
       it('throw TypeError, input arguments are not Number type.', function () {
         expect(function () {
-          math.isIndexInLoop(8, 5, 6, undefined)
+          math.isIndexInLoop(8, 5, 6, undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.isIndexInLoop(8, 5, 6, null)
+          math.isIndexInLoop(8, 5, 6, null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.isIndexInLoop(8, 5, 6, false)
+          math.isIndexInLoop(8, 5, 6, false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.isIndexInLoop(8, 5, 6, true)
+          math.isIndexInLoop(8, 5, 6, true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.isIndexInLoop(8, 5, 6, '')
+          math.isIndexInLoop(8, 5, 6, '');
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.isIndexInLoop(8, 5, 6, {})
+          math.isIndexInLoop(8, 5, 6, {});
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.isIndexInLoop(8, 5, 6, [])
+          math.isIndexInLoop(8, 5, 6, []);
         }).toThrowError(TypeError);
 
         expect(function () {
           math.isIndexInLoop(8, 5, 6, function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
@@ -246,7 +246,7 @@ describe('aid.js', function () {
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.isIndexInLoop(8, 5, 6, /^aid/)
+          math.isIndexInLoop(8, 5, 6, /^aid/);
         }).toThrowError(TypeError);
       });
 
@@ -284,54 +284,54 @@ describe('aid.js', function () {
     describe('.getLoopedLastIndex()', function () {
       it('throw Error, input 1 or 2 parameters.', function () {
         expect(function () {
-          math.getLoopedLastIndex(8)
+          math.getLoopedLastIndex(8);
         }).toThrowError(Error);
 
         expect(function () {
-          math.getLoopedLastIndex(8, 1)
+          math.getLoopedLastIndex(8, 1);
         }).toThrowError(Error);
       });
 
       it('throw TypeError, input arguments are not Number type.', function () {
         expect(function () {
-          math.getLoopedLastIndex(8, 1, undefined)
+          math.getLoopedLastIndex(8, 1, undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getLoopedLastIndex(8, 1, null)
+          math.getLoopedLastIndex(8, 1, null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getLoopedLastIndex(8, 1, false)
+          math.getLoopedLastIndex(8, 1, false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getLoopedLastIndex(8, 1, true)
+          math.getLoopedLastIndex(8, 1, true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getLoopedLastIndex(8, 1, '')
+          math.getLoopedLastIndex(8, 1, '');
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getLoopedLastIndex(8, 1, {})
+          math.getLoopedLastIndex(8, 1, {});
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getLoopedLastIndex(8, 1, [])
+          math.getLoopedLastIndex(8, 1, []);
         }).toThrowError(TypeError);
 
         expect(function () {
           math.getLoopedLastIndex(8, 1, function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getLoopedLastIndex(8, 1, new RegExp('^aid'))
+          math.getLoopedLastIndex(8, 1, new RegExp('^aid'));
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getLoopedLastIndex(8, 1, /^aid/)
+          math.getLoopedLastIndex(8, 1, /^aid/);
         }).toThrowError(TypeError);
       });
 
@@ -364,54 +364,54 @@ describe('aid.js', function () {
     describe('.getReverseLoopedFirstIndex()', function () {
       it('throw Error, input 1 or 2 parameters.', function () {
         expect(function () {
-          math.getReverseLoopedFirstIndex(8)
+          math.getReverseLoopedFirstIndex(8);
         }).toThrowError(Error);
 
         expect(function () {
-          math.getReverseLoopedFirstIndex(8, 1)
+          math.getReverseLoopedFirstIndex(8, 1);
         }).toThrowError(Error);
       });
 
       it('throw TypeError, input arguments are not Number type.', function () {
         expect(function () {
-          math.getReverseLoopedFirstIndex(8, 1, undefined)
+          math.getReverseLoopedFirstIndex(8, 1, undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getReverseLoopedFirstIndex(8, 1, null)
+          math.getReverseLoopedFirstIndex(8, 1, null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getReverseLoopedFirstIndex(8, 1, false)
+          math.getReverseLoopedFirstIndex(8, 1, false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getReverseLoopedFirstIndex(8, 1, true)
+          math.getReverseLoopedFirstIndex(8, 1, true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getReverseLoopedFirstIndex(8, 1, '')
+          math.getReverseLoopedFirstIndex(8, 1, '');
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getReverseLoopedFirstIndex(8, 1, {})
+          math.getReverseLoopedFirstIndex(8, 1, {});
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getReverseLoopedFirstIndex(8, 1, [])
+          math.getReverseLoopedFirstIndex(8, 1, []);
         }).toThrowError(TypeError);
 
         expect(function () {
           math.getReverseLoopedFirstIndex(8, 1, function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getReverseLoopedFirstIndex(8, 1, new RegExp('^aid'))
+          math.getReverseLoopedFirstIndex(8, 1, new RegExp('^aid'));
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getReverseLoopedFirstIndex(8, 1, /^aid/)
+          math.getReverseLoopedFirstIndex(8, 1, /^aid/);
         }).toThrowError(TypeError);
       });
 
@@ -444,48 +444,48 @@ describe('aid.js', function () {
     describe('.factorial()', function () {
       it('throw TypeError, input argument is not Integer Number type.', function () {
         expect(function () {
-          math.factorial(undefined)
+          math.factorial(undefined);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.factorial(null)
+          math.factorial(null);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.factorial(false)
+          math.factorial(false);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.factorial(true)
+          math.factorial(true);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.factorial('')
+          math.factorial('');
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.factorial(0.5)
+          math.factorial(0.5);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.factorial({})
+          math.factorial({});
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.factorial([])
+          math.factorial([]);
         }).toThrowError(TypeError);
 
         expect(function () {
           math.factorial(function () {
-          })
+          });
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.factorial(new RegExp('^aid'))
+          math.factorial(new RegExp('^aid'));
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.factorial(/^aid/)
+          math.factorial(/^aid/);
         }).toThrowError(TypeError);
       });
 
