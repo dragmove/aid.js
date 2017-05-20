@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.36
+ * aid.js 0.1.37
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -390,6 +390,38 @@
    */
   aid.falsy = function falsy(object) {
     return !!!object;
+  };
+
+  /**
+   * get indexed value of array or string
+   *
+   * @static
+   * @method nth
+   * @param {Array or String} data can loop
+   * @param {Number} index
+   * @example
+   */
+  aid.nth = function nth(dataCanLoop, index) {
+    if (!aid.isArray(dataCanLoop) || !aid.isString(dataCanLoop)) throw new TypeError('dataCanLoop parameter type of aid.nth() must be Array or String.');
+    if (!aid.isInteger(index)) throw new TypeError('index parameter type of aid.nth() must be Integer Number.');
+    if (index < 0 || index > dataCanLoop.length - 1) throw new Error('index parameter of aid.nth() is out of bounds of dataCanLoop.');
+
+    return dataCanLoop[index];
+  };
+
+  /**
+   * return function always return constant value
+   * http://underscorejs.org/#constant
+   *
+   * @static
+   * @method constant
+   * @param {Object} object
+   * @example
+   */
+  aid.constant = function constant(object) {
+    return function () {
+      return object;
+    };
   };
 
   /*

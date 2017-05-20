@@ -834,6 +834,14 @@ describe('aid.js', function () {
       // TODO
     });
 
+    describe('.nth()', function () {
+      // TODO
+    });
+
+    describe('.constant()', function () {
+      // TODO
+    });
+
     describe('.createStack()', function () {
       var stack = aid.createStack();
 
