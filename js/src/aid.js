@@ -602,7 +602,7 @@
    * console.log( isNotNaN(0) ); // true
    */
   operator['!'] = function not(object) {
-    return !object
+    return !object;
   };
 
   /**

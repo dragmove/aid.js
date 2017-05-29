@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.37
+ * aid.js 0.1.38
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -324,8 +324,12 @@
    * @param {Function} function_b
    * @returns {Function} return function
    * @example
+   * var isNotNaN = aid.compose(aid.operator['!'], isNaN);
+   * console.log( isNotNaN(0) ); // true
    */
   aid.compose = function compose(function_a, function_b) {
+    if (!aid.isFunction(function_a) || !aid.isFunction(function_b)) throw new TypeError('function_a, function_b parameter type of aid.compose() must be Function.');
+
     return function () {
       return function_a(function_b.apply(null, arguments));
     };
@@ -339,8 +343,12 @@
    * @param {Function} func
    * @returns {Function} return function
    * @example
+   * var isNotNaN = aid.not(isNaN);
+   * console.log( isNotNaN(0) ); // true
    */
   aid.not = function not(func) {
+    if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.not() must be Function.');
+
     return function (object) {
       return !func(object);
     };
@@ -400,13 +408,16 @@
    * @param {Array or String} data can loop
    * @param {Number} index
    * @example
+   * console.log( aid.nth('string', 1) ); // 't'
+   * console.log( aid.nth('string', -1) ); // null
+   * console.log( aid.nth([0, 'str', true], 2) ); // true
+   * console.log( aid.nth([0, 'str', true], 99) ); // null
    */
   aid.nth = function nth(dataCanLoop, index) {
-    if (!aid.isArray(dataCanLoop) || !aid.isString(dataCanLoop)) throw new TypeError('dataCanLoop parameter type of aid.nth() must be Array or String.');
+    if (!(aid.isArray(dataCanLoop) || aid.isString(dataCanLoop))) throw new TypeError('dataCanLoop parameter type of aid.nth() must be Array or String.');
     if (!aid.isInteger(index)) throw new TypeError('index parameter type of aid.nth() must be Integer Number.');
-    if (index < 0 || index > dataCanLoop.length - 1) throw new Error('index parameter of aid.nth() is out of bounds of dataCanLoop.');
 
-    return dataCanLoop[index];
+    return (index < 0 || index > dataCanLoop.length - 1) ? null : dataCanLoop[index];
   };
 
   /**
@@ -417,6 +428,8 @@
    * @method constant
    * @param {Object} object
    * @example
+   * var obj = {name: 'aid.js'};
+   * console.log( aid.constant(obj)() === obj ); // true
    */
   aid.constant = function constant(object) {
     return function () {
@@ -592,9 +605,11 @@
    * @param {Object} object
    * @returns {Boolean} return boolean
    * @example
+   * var isNotNaN = aid.compose(aid.operator['!'], isNaN);
+   * console.log( isNotNaN(0) ); // true
    */
   operator['!'] = function not(object) {
-    return !object
+    return !object;
   };
 
   /**
