@@ -325,23 +325,23 @@ describe('aid.js', function () {
     });
 
     describe('.getIEVersion()', function () {
-      // TODO
+      // TODO - getIEVersion
     });
 
     describe('.getFFVersion()', function () {
-      // TODO
+      // TODO - getFFVersion
     });
 
     describe('.getOperaVersion()', function () {
-      // TODO
+      // TODO - getOperaVersion
     });
 
     describe('.getChromeVersion()', function () {
-      // TODO
+      // TODO - getChromeVersion
     });
 
     describe('.getSafariVersion()', function () {
-      // TODO
+      // TODO - getSafariVersion
     });
 
     describe('.getIECompatibility().isIE', function () {
@@ -413,27 +413,27 @@ describe('aid.js', function () {
     });
 
     describe('.isSupportDraggable()', function () {
-      // TODO
+      // TODO - isSupportDraggable
     });
 
     describe('.isSupportDragAndDrop()', function () {
-      // TODO
+      // TODO - isSupportDragAndDrop
     });
 
     describe('.isSupportFileApi()', function () {
-      // TODO
+      // TODO - isSupportFileApi
     });
 
     describe('.isChromeExtension()', function () {
-      // TODO
+      // TODO - isChromeExtension
     });
 
     describe('.getCookie()', function () {
-      // TODO
+      // TODO - getCookie
     });
 
     describe('.setCookie()', function () {
-      // TODO
+      // TODO - setCookie
     });
   });
 });

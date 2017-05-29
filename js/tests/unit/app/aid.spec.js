@@ -811,11 +811,11 @@ describe('aid.js', function () {
     });
 
     describe('.bind()', function () {
-      // TODO
+      // TODO - bind
     });
 
     describe('.compose()', function () {
-      // TODO
+      // TODO - compose
     });
 
     describe('.not()', function () {
@@ -911,15 +911,15 @@ describe('aid.js', function () {
     });
 
     describe('.each()', function () {
-      // TODO
+      // TODO - each
     });
 
     describe('.truthy()', function () {
-      // TODO
+      // TODO - truthy
     });
 
     describe('.falsy()', function () {
-      // TODO
+      // TODO - falsy
     });
 
     describe('.nth()', function () {
@@ -1044,7 +1044,7 @@ describe('aid.js', function () {
     });
 
     describe('.createQueue()', function () {
-      // TODO
+      // TODO - createQueue
     });
 
     describe('.createLinkedList()', function () {
@@ -1059,7 +1059,7 @@ describe('aid.js', function () {
         expect(node[0]).toEqual(linkedList.head);
       });
 
-      // TODO
+      /// TODO - createLinkedList
     });
   });
 });

@@ -596,7 +596,7 @@ describe('aid.js', function () {
         }).toThrowError(TypeError);
       });
 
-      // TODO
+      // TODO - isValidYoutubeVideoId
       /*
        it('input "", return false', function () {
        expect( string.isValidYoutubeVideoId('') ).toEqual(false);
@@ -661,7 +661,7 @@ describe('aid.js', function () {
         }).toThrowError(TypeError);
       });
 
-      // TODO
+      // TODO - getObjCheckYoutubeURI
     });
 
     describe('.getObjCheckTwitchURI()', function () {
@@ -708,19 +708,19 @@ describe('aid.js', function () {
         }).toThrowError(TypeError);
       });
 
-      // TODO
+      // TODO - getObjCheckTwitchURI
     });
 
     describe('.getDocumentPrefixedProperty()', function () {
       it('input ("visibilityState", true) return "" when document does not have "visibilityState" property.', function () {
-        // TODO
+        // TODO - getDocumentPrefixedProperty
         // expect( string.getDocumentPrefixedProperty('visibilityState', true) ).toEqual('');
       });
     });
 
     describe('.getElementPrefixedStyle()', function () {
       it('input ("transform", true) return "webkitTransform" when browser is based on webkit.', function () {
-        // TODO
+        // TODO - getElementPrefixedStyle
         // expect( string.getElementPrefixedStyle('transform', true) ).toEqual('webkitTransform');
       });
     });
@@ -797,7 +797,7 @@ describe('aid.js', function () {
         }).toThrowError(TypeError);
       });
 
-      // TODO
+      // TODO - numberWithCommas
     });
 
     describe('.getPositionFromTranslateStr()', function () {

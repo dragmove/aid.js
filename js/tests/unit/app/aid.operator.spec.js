@@ -3,11 +3,11 @@
 describe('aid.js', function () {
   describe('aid.operator', function () {
     describe('["+"]', function () {
-      // TODO
+      // TODO - ["+"]
     });
 
     describe('["==="]', function () {
-      // TODO
+      // TODO - ["==="]
     });
 
     describe('["!"]', function () {

@@ -48,7 +48,7 @@ describe('aid.js', function () {
         }).toThrowError(TypeError);
       });
 
-      // TODO
+      // TODO - getSizeAspectFill
     });
 
     describe('.getSizeAspectFit()', function () {
@@ -95,7 +95,7 @@ describe('aid.js', function () {
         }).toThrowError(TypeError);
       });
 
-      // TODO
+      // TODO - getSizeAspectFit
     });
 
     describe('.getSizeWidthFit()', function () {
@@ -142,7 +142,7 @@ describe('aid.js', function () {
         }).toThrowError(TypeError);
       });
 
-      // TODO
+      // TODO - getSizeWidthFit
     });
 
     describe('.isEpsilonEqual()', function () {
@@ -189,7 +189,7 @@ describe('aid.js', function () {
         }).toThrowError(TypeError);
       });
 
-      // TODO
+      // TODO - isEpsilonEqual
     });
 
     describe('.isIndexInLoop()', function () {
