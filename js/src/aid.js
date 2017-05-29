@@ -401,13 +401,16 @@
    * @param {Array or String} data can loop
    * @param {Number} index
    * @example
+   * console.log( aid.nth('string', 1) ); // 't'
+   * console.log( aid.nth('string', -1) ); // null
+   * console.log( aid.nth([0, 'str', true], 2) ); // true
+   * console.log( aid.nth([0, 'str', true], 99) ); // null
    */
   aid.nth = function nth(dataCanLoop, index) {
-    if (!aid.isArray(dataCanLoop) || !aid.isString(dataCanLoop)) throw new TypeError('dataCanLoop parameter type of aid.nth() must be Array or String.');
+    if (!(aid.isArray(dataCanLoop) || aid.isString(dataCanLoop))) throw new TypeError('dataCanLoop parameter type of aid.nth() must be Array or String.');
     if (!aid.isInteger(index)) throw new TypeError('index parameter type of aid.nth() must be Integer Number.');
-    if (index < 0 || index > dataCanLoop.length - 1) throw new Error('index parameter of aid.nth() is out of bounds of dataCanLoop.');
 
-    return dataCanLoop[index];
+    return (index < 0 || index > dataCanLoop.length - 1) ? null : dataCanLoop[index];
   };
 
   /**

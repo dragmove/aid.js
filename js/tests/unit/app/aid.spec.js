@@ -923,7 +923,51 @@ describe('aid.js', function () {
     });
 
     describe('.nth()', function () {
-      // TODO
+      it('whether dataCanLoop parameter type is not string or array, throw Error.', function () {
+        expect(function () {
+          aid.nth(undefined, 0);
+        }).toThrowError();
+
+        expect(function () {
+          aid.nth(null, 0);
+        }).toThrowError();
+
+        expect(function () {
+          aid.nth(false, 0);
+        }).toThrowError();
+
+        expect(function () {
+          aid.nth(true, 0);
+        }).toThrowError();
+
+        expect(function () {
+          aid.nth(0, 0);
+        }).toThrowError();
+
+        expect(function () {
+          aid.nth({}, 0);
+        }).toThrowError();
+      });
+
+      it('input string, return nth character', function () {
+        expect(aid.nth('string', 0)).toEqual('s');
+        expect(aid.nth('string', 1)).toEqual('t');
+        expect(aid.nth('string', 2)).toEqual('r');
+      });
+
+      it('input array, return nth element', function () {
+        expect(aid.nth([0, 'str', true], 0)).toEqual(0);
+        expect(aid.nth([0, 'str', true], 1)).toEqual('str');
+        expect(aid.nth([0, 'str', true], 2)).toEqual(true);
+      });
+
+      it('index value is out of bounds of dataCanLoop parameter, return null', function () {
+        expect(aid.nth('string', -1)).toEqual(null);
+        expect(aid.nth('string', 99)).toEqual(null);
+
+        expect(aid.nth([0, 'str', true], -1)).toEqual(null);
+        expect(aid.nth([0, 'str', true], 99)).toEqual(null);
+      });
     });
 
     describe('.constant()', function () {
