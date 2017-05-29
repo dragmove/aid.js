@@ -851,13 +851,13 @@ describe('aid.js', function () {
 
       it('func parameter type is function, does not throw Error.', function () {
         expect(function () {
-          aid.not(function() {
+          aid.not(function () {
             return true;
           });
         }).not.toThrowError();
       });
 
-      it('negate aid.existy', function() {
+      it('negate aid.existy', function () {
         var notExisty = aid.not(aid.existy);
 
         it('return function', function () {
@@ -897,7 +897,7 @@ describe('aid.js', function () {
         });
       });
 
-      it('negate isNaN', function() {
+      it('negate isNaN', function () {
         var isNotNaN = aid.not(isNaN);
 
         it('input undefined to aid.not(isNaN), return false', function () {
