@@ -38,6 +38,8 @@ npm install aid.js --save-dev
     aid.each
     aid.truthy
     aid.falsy
+    aid.nth
+    aid.constant
 ```
 
 * operator utils
