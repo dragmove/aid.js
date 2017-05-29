@@ -819,7 +819,95 @@ describe('aid.js', function () {
     });
 
     describe('.not()', function () {
-      // TODO
+      it('func parameter type is not function, throw Error.', function () {
+        expect(function () {
+          aid.not(undefined)
+        }).toThrowError();
+
+        expect(function () {
+          aid.not(null);
+        }).toThrowError();
+
+        expect(function () {
+          aid.not(false);
+        }).toThrowError();
+
+        expect(function () {
+          aid.not(true);
+        }).toThrowError();
+
+        expect(function () {
+          aid.not(0);
+        }).toThrowError();
+
+        expect(function () {
+          aid.not("");
+        }).toThrowError();
+
+        expect(function () {
+          aid.not(NaN);
+        }).toThrowError();
+      });
+
+      it('func parameter type is function, does not throw Error.', function () {
+        expect(function () {
+          aid.not(function() {
+            return true;
+          });
+        }).not.toThrowError();
+      });
+
+      it('negate aid.existy', function() {
+        var notExisty = aid.not(aid.existy);
+
+        it('return function', function () {
+          expect(aid.isFunction(notExisty)).toEqual(true);
+        });
+
+        it('input undefined to aid.not(aid.existy), return true', function () {
+          expect(notExisty(undefined)).toEqual(true);
+        });
+
+        it('input "undefined" to aid.not(aid.existy), return false', function () {
+          expect(notExisty("undefined")).toEqual(false);
+        });
+
+        it('input null to aid.not(aid.existy), return true', function () {
+          expect(notExisty(null)).toEqual(true);
+        });
+
+        it('input false to aid.not(aid.existy), return false', function () {
+          expect(notExisty(false)).toEqual(false);
+        });
+
+        it('input true to aid.not(aid.existy), return false', function () {
+          expect(notExisty(true)).toEqual(false);
+        });
+
+        it('input 0 to aid.not(aid.existy), return false', function () {
+          expect(notExisty(0)).toEqual(false);
+        });
+
+        it('input "" to aid.not(aid.existy), return false', function () {
+          expect(notExisty("")).toEqual(false);
+        });
+
+        it('input {} to aid.not(aid.existy), return false', function () {
+          expect(notExisty({})).toEqual(false);
+        });
+      });
+
+      it('negate isNaN', function() {
+        var isNotNaN = aid.not(isNaN);
+
+        it('input undefined to aid.not(isNaN), return false', function () {
+          expect(isNotNaN(undefined)).toEqual(false);
+        });
+
+        it('input 0 to aid.not(isNaN), return true', function () {
+          expect(isNotNaN(0)).toEqual(true);
+        });
+      });
     });
 
     describe('.each()', function () {

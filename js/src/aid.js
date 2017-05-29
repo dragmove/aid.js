@@ -332,8 +332,12 @@
    * @param {Function} func
    * @returns {Function} return function
    * @example
+   * var isNotNaN = aid.not(isNaN);
+   * console.log( isNotNaN(0) ); // true
    */
   aid.not = function not(func) {
+    if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.not() must be Function.');
+
     return function (object) {
       return !func(object);
     };
