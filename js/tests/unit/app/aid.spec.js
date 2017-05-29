@@ -971,7 +971,21 @@ describe('aid.js', function () {
     });
 
     describe('.constant()', function () {
-      // TODO
+      it('input value, return value intactly', function () {
+        var obj = {name: 'obj'},
+          func = function () {
+            return null;
+          };
+
+        expect(aid.constant(obj)()).toEqual(obj);
+        expect(aid.constant(func)()).toEqual(func);
+
+        expect(aid.constant(undefined)()).toEqual(undefined);
+        expect(aid.constant(null)()).toEqual(null);
+        expect(aid.constant(false)()).toEqual(false);
+        expect(aid.constant(0)()).toEqual(0);
+        expect(aid.constant('str')()).toEqual('str');
+      });
     });
 
     describe('.createStack()', function () {

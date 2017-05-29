@@ -421,6 +421,8 @@
    * @method constant
    * @param {Object} object
    * @example
+   * var obj = {name: 'aid.js'};
+   * console.log( aid.constant(obj)() === obj ); // true
    */
   aid.constant = function constant(object) {
     return function () {
