@@ -317,8 +317,12 @@
    * @param {Function} function_b
    * @returns {Function} return function
    * @example
+   * var isNotNaN = aid.compose(aid.operator['!'], isNaN);
+   * console.log( isNotNaN(0) ); // true
    */
   aid.compose = function compose(function_a, function_b) {
+    if (!aid.isFunction(function_a) || !aid.isFunction(function_b)) throw new TypeError('function_a, function_b parameter type of aid.compose() must be Function.');
+
     return function () {
       return function_a(function_b.apply(null, arguments));
     };
@@ -589,6 +593,8 @@
    * @param {Object} object
    * @returns {Boolean} return boolean
    * @example
+   * var isNotNaN = aid.compose(aid.operator['!'], isNaN);
+   * console.log( isNotNaN(0) ); // true
    */
   operator['!'] = function not(object) {
     return !object
