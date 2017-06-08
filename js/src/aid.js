@@ -2536,7 +2536,7 @@
       exports = module.exports = aid;
     }
   } else if (typeof define === 'function' && define.amd) {
-    define('aid', function () {
+    define('aid', [], function () {
       return aid;
     });
   } else {

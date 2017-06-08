@@ -16,10 +16,18 @@ npm install aid.js --save-dev
 
 
 ## Getting Started
-// TODO
-
+In Node.js environment :
 ```javascript
-// TODO
+var aid = require('aid.js');
+var isNotNaN = aid.not(isNaN);
+console.log( isNotNaN(0) ); // true
+```
+
+In Browser environment :
+```javascript
+import aid from 'aid.js';
+const isNotNaN = aid.not(isNaN);
+console.log( isNotNaN(0) ); // true
 ```
 
 ## Usage
