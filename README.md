@@ -15,6 +15,13 @@ npm install aid.js --save-dev
 ```
 
 
+## Getting Started
+// TODO
+
+```javascript
+// TODO
+```
+
 ## Usage
 * base utils
 ```javascript
@@ -40,6 +47,7 @@ npm install aid.js --save-dev
     aid.falsy
     aid.nth
     aid.constant
+    aid.plucker
 ```
 
 * operator utils

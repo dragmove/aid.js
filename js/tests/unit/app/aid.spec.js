@@ -988,6 +988,143 @@ describe('aid.js', function () {
       });
     });
 
+    describe('.plucker()', function () {
+      it('whether field parameter type is not string or number, throw Error.', function () {
+        expect(function () {
+          aid.plucker(undefined, 0);
+        }).toThrowError();
+
+        expect(function () {
+          aid.plucker(null);
+        }).toThrowError();
+
+        expect(function () {
+          aid.plucker(false);
+        }).toThrowError();
+
+        expect(function () {
+          aid.plucker(true);
+        }).toThrowError();
+
+        expect(function () {
+          aid.plucker([]);
+        }).toThrowError();
+
+        expect(function () {
+          aid.plucker({});
+        }).toThrowError();
+
+        expect(function () {
+          aid.plucker({});
+        }).toThrowError();
+
+        expect(function () {
+          aid.plucker(function() {});
+        }).toThrowError();
+      });
+
+      it('if field parameter type is string or number, does not throw Error.', function () {
+        expect(function () {
+          aid.plucker('title');
+        }).not.toThrowError();
+
+        expect(function () {
+          aid.plucker(0);
+        }).not.toThrowError();
+      });
+
+      it('return function', function () {
+        var getTitle = aid.plucker('title');
+
+        it('obj parameter type is not object or array or string, throw Error.', function () {
+          expect(function () {
+            getTitle(undefined);
+          }).toThrowError();
+
+          expect(function () {
+            getTitle(null);
+          }).toThrowError();
+
+          expect(function () {
+            getTitle(false);
+          }).toThrowError();
+
+          expect(function () {
+            getTitle(true);
+          }).toThrowError();
+
+          expect(function () {
+            getTitle(function() {});
+          }).toThrowError();
+        });
+      });
+
+      it('return function', function () {
+        var getTitle = aid.plucker('title');
+
+        it('pluck field of object (if object has field)', function () {
+          var obj = {
+            title: 'aid.js',
+            description: 'A bundle of Javascript util Library for help developers. No dependency to other Libraries.'
+          };
+
+          expect(getTitle(obj)).toEqual('aid.js');
+        });
+
+        it('pluck field of object (if object has not field)', function () {
+          var obj = {
+            description: 'A bundle of Javascript util Library for help developers. No dependency to other Libraries.'
+          };
+
+          expect(getTitle(obj)).toEqual(undefined);
+        });
+      });
+
+      it('return function', function () {
+        var getFirst = aid.plucker(0),
+          getUnknown = aid.plucker(9999),
+          getLength = aid.plucker('length');
+
+        it('pluck character of string (if string is not empty)', function () {
+          var str = 'aid.js';
+          expect(getFirst(str)).toEqual('a');
+        });
+
+        it('pluck character of string (if string is empty)', function () {
+          var str = '';
+          expect(getFirst(str)).toEqual(undefined);
+          expect(getUnknown(str)).toEqual(undefined);
+        });
+
+        it('pluck property of string', function () {
+          var str = 'aid.js';
+          expect(getLength(str)).toEqual(6);
+        });
+      });
+
+      it('return function', function () {
+        var getFirst = aid.plucker(0),
+          getUnknown = aid.plucker(9999),
+          getLength = aid.plucker('length');
+
+        it('pluck element of array (if array has element)', function () {
+          var arr = [1, 2, 3, 4, 5];
+          expect(getFirst(arr)).toEqual(1);
+        });
+
+        it('pluck element of array (if array has not element)', function () {
+          var arr = [];
+          expect(getFirst(arr)).toEqual(undefined);
+          expect(getUnknown(arr)).toEqual(undefined);
+        });
+
+        it('pluck property of array', function () {
+          var arr = [1, 2, 3, 4, 5];
+          expect(getLength(arr)).toEqual(5);
+        });
+      });
+    });
+
     describe('.createStack()', function () {
       var stack = aid.createStack();
 

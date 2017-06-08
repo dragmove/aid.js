@@ -1,7 +1,7 @@
 var pkg = require('./package.json'),
   gulp = require('gulp'),
   header = require('gulp-header'),
-  jshint = require('gulp-jshint'),
+  eslint = require('gulp-eslint'),
   rename = require('gulp-rename'),
   sourcemaps = require('gulp-sourcemaps'),
   uglify = require('gulp-uglify'),
@@ -16,10 +16,11 @@ var banner = `/*
  */
 `;
 
-gulp.task('lint', function () {
-  return gulp.src('./*.js')
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'));
+gulp.task('lint', () => {
+  return gulp.src('./js/src/aid.js')
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
 });
 
 gulp.task('minify', function () {
