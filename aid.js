@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.38
+ * aid.js 0.1.40
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -1894,6 +1894,42 @@
       lastPageIndex: lastPageIndex,
       nextPageIndex: nextPageIndex
     };
+  };
+
+  /**
+   * convert degree to radian.
+   *
+   * @static
+   * @method degreeToRadian
+   * @param {Number} number
+   * @returns {Number} return number
+   * @example
+   * console.log( aid.math.degreeToRadian(90) ); // 1.5707963267948966
+   */
+  math.degreeToRadian = function (degree) {
+    if (!aid.isNumber(degree)) {
+      throw new TypeError('math.degreeToRadian() requires Number parameter.');
+    }
+
+    return degree * Math.PI / 180;
+  };
+
+  /**
+   * convert radian to radian.
+   *
+   * @static
+   * @method radianToDegree
+   * @param {Number} number
+   * @returns {Number} return number
+   * @example
+   * console.log( aid.math.radianToDegree(1.5707963267948966) ); // 90
+   */
+  math.radianToDegree = function (radian) {
+    if (!aid.isNumber(radian)) {
+      throw new TypeError('math.radianToDegree() requires Number parameter.');
+    }
+
+    return radian * 180 / Math.PI;
   };
 
   /**

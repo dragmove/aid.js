@@ -119,6 +119,8 @@ npm install aid.js --save-dev
     aid.math.getReverseLoopedFirstIndex
     aid.math.factorial
     aid.math.getObjForPagination
+    aid.math.degreeToRadian
+    aid.math.radianToDegree
 ```
 
 * date utils 

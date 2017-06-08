@@ -598,5 +598,13 @@ describe('aid.js', function () {
         });
       });
     });
+
+    describe('.degreeToRadian()', function () {
+      // TODO
+    });
+
+    describe('.radianToDegree()', function () {
+      // TODO
+    });
   });
 });
