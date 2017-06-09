@@ -1,12 +1,12 @@
 /*
- * aid.js 0.1.40
+ * aid.js 0.1.41
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
  * Copyright (c) 2016-2017 Hyun-Seok.Kim, dragmove@gmail.com
  */
-;(function () {
-  "use strict";
+(function () {
+  'use strict';
 
   // Establish the global object, `window` (`self`) in the browser, `global`
   // on the server, or `this` in some virtual machines. We use `self`
@@ -434,6 +434,34 @@
   aid.constant = function constant(object) {
     return function () {
       return object;
+    };
+  };
+
+  /**
+   * return function pluck field of object, array, string
+   *
+   * @static
+   * @method constant
+   * @param {String or Number} field of object, array, string
+   * @example
+   * var getTitle = aid.plucker('title');
+   * var obj = {title: 'aid.js', description: 'A bundle of Javascript util Library for help developers. No dependency to other Libraries.'};
+   * console.log( getTitle(obj) ); // 'aid.js'
+   *
+   * var getFirst = aid.plucker(0);
+   * var str = 'aid.js';
+   * console.log( getFirst(str) ); // 'a'
+   *
+   * var getLength = aid.plucker('length');
+   * var arr = [1, 2, 3, 4, 5];
+   * console.log( getLength(arr) ); // 5
+   */
+  aid.plucker = function plucker(field) {
+    if (!(aid.isString(field) || aid.isNumber(field))) throw new TypeError('field parameter type of aid.plucker() must be String or Number.');
+
+    return function (obj) {
+      if (!(aid.isObject(obj) || aid.isArray(obj) || aid.isString(obj))) throw new TypeError('obj parameter type of function (get from aid.plucker()) must be Object or Array or String.');
+      return obj[field];
     };
   };
 
@@ -2515,7 +2543,7 @@
       exports = module.exports = aid;
     }
   } else if (typeof define === 'function' && define.amd) {
-    define('aid', function () {
+    define('aid', [], function () {
       return aid;
     });
   } else {
