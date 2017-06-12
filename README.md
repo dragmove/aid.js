@@ -30,6 +30,7 @@ const isNotNaN = aid.not(isNaN);
 console.log( isNotNaN(0) ); // true
 ```
 
+
 ## Usage
 * base utils
 ```javascript

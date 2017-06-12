@@ -439,6 +439,15 @@ describe('aid.js', function () {
           address: 'seoul'
         });
       });
+
+      it('get parameters from "http://www.google.com?name=foo&age=99&address=seoul#foo=1&bar=3", return {name: "foo", age: "99", address: "seoul"}', function () {
+        var uri = 'http://www.google.com?name=foo&age=99&address=seoul#foo=1&bar=3';
+        expect(string.getUriParams(uri)).toEqual({
+          name: 'foo',
+          age: '99',
+          address: 'seoul'
+        });
+      });
     });
 
     describe('.getUriCombinedParams()', function () {

@@ -1216,6 +1216,7 @@
     if (!aid.isString(uri)) throw new TypeError('string.getUriParams() requires String parameter.');
 
     if (uri.length < 1) return null;
+    uri = uri.split('#')[0];
 
     var tmpArr = uri.split('?');
     if (tmpArr.length < 2) return null;
