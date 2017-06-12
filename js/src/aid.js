@@ -1183,10 +1183,10 @@
       throw new TypeError('string.getUriParam() requires String parameters.');
     }
 
-    var str = uri;
-    if (str.length < 1) return '';
+    if (uri.length < 1) return '';
+    uri = uri.split('#')[0];
 
-    var tmpArr = str.split('?');
+    var tmpArr = uri.split('?');
     if (tmpArr.length < 2) return '';
 
     var paramStr = tmpArr[1],
@@ -1231,6 +1231,7 @@
 
       obj[keyValueArr[0]] = keyValueArr[1];
     }
+
     return obj;
   };
 
@@ -1258,7 +1259,11 @@
     }
     if (str === '') return uri;
 
-    uri = (uri.indexOf('?') >= 0) ? (uri + str) : (uri + '?' + str.substr(1));
+    var tmpArr = uri.split('#'),
+      uri = tmpArr[0],
+      hashStr = (aid.isDefined(tmpArr[1])) ? '#' + tmpArr[1] : '';
+
+    uri = ((uri.indexOf('?') >= 0) ? (uri + str) : (uri + '?' + str.substr(1))) + hashStr;
     return uri;
   };
 
