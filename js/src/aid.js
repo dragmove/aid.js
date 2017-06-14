@@ -458,6 +458,22 @@
     };
   };
 
+  /**
+   * return best(optimized by condition function) value.
+   *
+   * @static
+   * @method constant
+   * @param {Function} condition function to find best value.
+   * @param {Array} array
+   * @example
+   * console.log( aid.best(function(x, y) { return x > y; }, [1, 2, 3, 4, 5]) ); // 5
+   */
+  aid.best = function best(func, array) {
+    return array.reduce(function (previousValue, currentValue) {
+      return func(previousValue, currentValue) ? previousValue : currentValue;
+    });
+  };
+
   /*
    * Data Structure
    */
