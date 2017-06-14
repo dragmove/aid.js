@@ -434,7 +434,7 @@
    * return function pluck field of object, array, string
    *
    * @static
-   * @method constant
+   * @method plucker
    * @param {String or Number} field of object, array, string
    * @example
    * var getTitle = aid.plucker('title');
@@ -462,7 +462,7 @@
    * return best(optimized by condition function) value.
    *
    * @static
-   * @method constant
+   * @method best
    * @param {Function} condition function to find best value.
    * @param {Array} array
    * @example
