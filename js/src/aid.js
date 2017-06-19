@@ -486,6 +486,7 @@
    * @param {Object} object
    * @returns {Array} return array has values filtered
    * @example
+   * console.log( aid.iterateUntil(function(n) { return n + n; }, function(n) { return n <= 1042 }, 1) ); // [2, 4, 8, 16, 32, 64, 128, 256, ...]
    */
   aid.iterateUntil = function iterateUntil(func, checkFunc, initValue) {
     var ret = [],
