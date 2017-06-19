@@ -420,6 +420,7 @@
    * @static
    * @method constant
    * @param {Object} object
+   * @returns {Function} return function
    * @example
    * var obj = {name: 'aid.js'};
    * console.log( aid.constant(obj)() === obj ); // true
@@ -434,8 +435,9 @@
    * return function pluck field of object, array, string
    *
    * @static
-   * @method constant
+   * @method plucker
    * @param {String or Number} field of object, array, string
+   * @returns {Function} return function
    * @example
    * var getTitle = aid.plucker('title');
    * var obj = {title: 'aid.js', description: 'A bundle of Javascript util Library for help developers. No dependency to other Libraries.'};
@@ -456,6 +458,29 @@
       if (!(aid.isObject(obj) || aid.isArray(obj) || aid.isString(obj))) throw new TypeError('obj parameter type of function (get from aid.plucker()) must be Object or Array or String.');
       return obj[field];
     };
+  };
+
+  /**
+   * return array has values filtered
+   *
+   * @static
+   * @method iterateUntil
+   * @param {Function} function return value
+   * @param {Function} function has condition
+   * @param {Object} object
+   * @returns {Array} return array has values filtered
+   * @example
+   */
+  aid.iterateUntil = function iterateUntil(func, checkFunc, initValue) {
+    var ret = [],
+      result = func(initValue);
+
+    while (checkFunc(result)) {
+      ret.push(result);
+      result = func(result);
+    }
+
+    return ret;
   };
 
   /*

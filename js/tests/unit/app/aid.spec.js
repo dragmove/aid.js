@@ -1125,6 +1125,10 @@ describe('aid.js', function () {
       });
     });
 
+    describe('.iterateUntil()', function () {
+      // TODO
+    });
+
     describe('.createStack()', function () {
       var stack = aid.createStack();
 
