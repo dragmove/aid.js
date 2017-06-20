@@ -57,6 +57,8 @@ console.log( isNotNaN(0) ); // true
     aid.nth
     aid.constant
     aid.plucker
+    aid.best
+    aid.iterateUntil
 ```
 
 * operator utils
