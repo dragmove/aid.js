@@ -1125,6 +1125,10 @@ describe('aid.js', function () {
       });
     });
 
+    describe('.best()', function () {
+      // TODO
+    });
+
     describe('.iterateUntil()', function () {
       // TODO
     });

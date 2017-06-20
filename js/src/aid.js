@@ -268,7 +268,7 @@
   };
 
   /**
-   * borrow method from donor object.
+   * borrow method from donor object
    *
    * @static
    * @method borrow
@@ -470,9 +470,12 @@
    * @example
    * console.log( aid.best(function(x, y) { return x > y; }, [1, 2, 3, 4, 5]) ); // 5
    */
-  aid.best = function best(func, array) {
+  aid.best = function best(conditionFunc, array) {
+    if (!aid.isFunction(conditionFunc)) throw new TypeError('conditionFunc parameter type of aid.best() must be Function.');
+    if (!aid.isArray(array)) throw new TypeError('array parameter type of aid.best() must be Array.');
+
     return array.reduce(function (previousValue, currentValue) {
-      return func(previousValue, currentValue) ? previousValue : currentValue;
+      return conditionFunc(previousValue, currentValue) ? previousValue : currentValue;
     });
   };
 
@@ -483,21 +486,24 @@
    * @method iterateUntil
    * @param {Function} function return value
    * @param {Function} function has condition
-   * @param {Object} object
-   * @returns {Array} return array has values filtered
+   * @param {Object} initial value
+   * @returns {Array} return array has values filtered.
    * @example
    * console.log( aid.iterateUntil(function(n) { return n + n; }, function(n) { return n <= 1042 }, 1) ); // [2, 4, 8, 16, 32, 64, 128, 256, ...]
    */
-  aid.iterateUntil = function iterateUntil(func, checkFunc, initValue) {
-    var ret = [],
-      result = func(initValue);
+  aid.iterateUntil = function iterateUntil(calculateFunc, conditionFunc, initialValue) {
+    if (!aid.isFunction(calculateFunc)) throw new TypeError('calculateFunc parameter type of aid.iterateUntil() must be Function.');
+    if (!aid.isFunction(conditionFunc)) throw new TypeError('conditionFunc parameter type of aid.iterateUntil() must be Function.');
 
-    while (checkFunc(result)) {
-      ret.push(result);
-      result = func(result);
+    var array = [],
+      result = calculateFunc(initialValue);
+
+    while (conditionFunc(result)) {
+      array.push(result);
+      result = calculateFunc(result);
     }
 
-    return ret;
+    return array;
   };
 
   /*
