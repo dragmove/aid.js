@@ -1133,6 +1133,14 @@ describe('aid.js', function () {
       // TODO
     });
 
+    describe('.curry()', function () {
+      // TODO
+    });
+
+    describe('.curry2()', function () {
+      // TODO
+    });
+
     describe('.createStack()', function () {
       var stack = aid.createStack();
 

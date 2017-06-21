@@ -59,6 +59,8 @@ console.log( isNotNaN(0) ); // true
     aid.plucker
     aid.best
     aid.iterateUntil
+    aid.curry
+    aid.curry2
 ```
 
 * operator utils

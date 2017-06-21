@@ -313,18 +313,18 @@
    *
    * @static
    * @method compose
-   * @param {Function} function_a
-   * @param {Function} function_b
+   * @param {Function} function
+   * @param {Function} function
    * @returns {Function} return function
    * @example
    * var isNotNaN = aid.compose(aid.operator['!'], isNaN);
    * console.log( isNotNaN(0) ); // true
    */
-  aid.compose = function compose(function_a, function_b) {
-    if (!aid.isFunction(function_a) || !aid.isFunction(function_b)) throw new TypeError('function_a, function_b parameter type of aid.compose() must be Function.');
+  aid.compose = function compose(func_a, func_b) {
+    if (!aid.isFunction(func_a) || !aid.isFunction(func_b)) throw new TypeError('func_a, func_b parameter type of aid.compose() must be Function.');
 
     return function () {
-      return function_a(function_b.apply(null, arguments));
+      return func_a(func_b.apply(null, arguments));
     };
   };
 
@@ -489,7 +489,7 @@
    * @param {Object} initial value
    * @returns {Array} return array has values filtered.
    * @example
-   * console.log( aid.iterateUntil(function(n) { return n + n; }, function(n) { return n <= 1042 }, 1) ); // [2, 4, 8, 16, 32, 64, 128, 256, ...]
+   * console.log( aid.iterateUntil(function(n) { return n + n; }, function(n) { return n <= 1042 }, 1) ); // [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]
    */
   aid.iterateUntil = function iterateUntil(calculateFunc, conditionFunc, initialValue) {
     if (!aid.isFunction(calculateFunc)) throw new TypeError('calculateFunc parameter type of aid.iterateUntil() must be Function.');
@@ -504,6 +504,44 @@
     }
 
     return array;
+  };
+
+  /**
+   * curry function can use one parameter
+   *
+   * @static
+   * @method curry
+   * @param {Function} function
+   * @returns {Function} return function
+   * @example
+   */
+  aid.curry = function curry(func) {
+    if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.curry() must be Function.');
+
+    return function (arg) {
+      return func(arg);
+    };
+  };
+
+  /**
+   * curry function can use two parameter
+   *
+   * @static
+   * @method curry2
+   * @param {Function} function
+   * @returns {Function} return function
+   * @example
+   * var parseBinaryStr = aid.curry2(parseInt)(2);
+   * console.log( parseBinaryStr('111') ); // 7
+   */
+  aid.curry2 = function curry2(func) {
+    if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.curry2() must be Function.');
+
+    return function (secondArg) {
+      return function (firstArg) {
+        return func(firstArg, secondArg);
+      };
+    };
   };
 
   /*
@@ -1308,10 +1346,11 @@
     if (str === '') return uri;
 
     var tmpArr = uri.split('#'),
-      uri = tmpArr[0],
       hashStr = (aid.isDefined(tmpArr[1])) ? '#' + tmpArr[1] : '';
 
+    uri = tmpArr[0];
     uri = ((uri.indexOf('?') >= 0) ? (uri + str) : (uri + '?' + str.substr(1))) + hashStr;
+
     return uri;
   };
 

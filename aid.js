@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.41
+ * aid.js 0.1.42
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -275,7 +275,7 @@
   };
 
   /**
-   * borrow method from donor object.
+   * borrow method from donor object
    *
    * @static
    * @method borrow
@@ -320,18 +320,18 @@
    *
    * @static
    * @method compose
-   * @param {Function} function_a
-   * @param {Function} function_b
+   * @param {Function} function
+   * @param {Function} function
    * @returns {Function} return function
    * @example
    * var isNotNaN = aid.compose(aid.operator['!'], isNaN);
    * console.log( isNotNaN(0) ); // true
    */
-  aid.compose = function compose(function_a, function_b) {
-    if (!aid.isFunction(function_a) || !aid.isFunction(function_b)) throw new TypeError('function_a, function_b parameter type of aid.compose() must be Function.');
+  aid.compose = function compose(func_a, func_b) {
+    if (!aid.isFunction(func_a) || !aid.isFunction(func_b)) throw new TypeError('func_a, func_b parameter type of aid.compose() must be Function.');
 
     return function () {
-      return function_a(function_b.apply(null, arguments));
+      return func_a(func_b.apply(null, arguments));
     };
   };
 
@@ -427,6 +427,7 @@
    * @static
    * @method constant
    * @param {Object} object
+   * @returns {Function} return function
    * @example
    * var obj = {name: 'aid.js'};
    * console.log( aid.constant(obj)() === obj ); // true
@@ -441,8 +442,9 @@
    * return function pluck field of object, array, string
    *
    * @static
-   * @method constant
+   * @method plucker
    * @param {String or Number} field of object, array, string
+   * @returns {Function} return function
    * @example
    * var getTitle = aid.plucker('title');
    * var obj = {title: 'aid.js', description: 'A bundle of Javascript util Library for help developers. No dependency to other Libraries.'};
@@ -462,6 +464,90 @@
     return function (obj) {
       if (!(aid.isObject(obj) || aid.isArray(obj) || aid.isString(obj))) throw new TypeError('obj parameter type of function (get from aid.plucker()) must be Object or Array or String.');
       return obj[field];
+    };
+  };
+
+  /**
+   * return best(optimized by condition function) value.
+   *
+   * @static
+   * @method best
+   * @param {Function} condition function to find best value.
+   * @param {Array} array
+   * @example
+   * console.log( aid.best(function(x, y) { return x > y; }, [1, 2, 3, 4, 5]) ); // 5
+   */
+  aid.best = function best(conditionFunc, array) {
+    if (!aid.isFunction(conditionFunc)) throw new TypeError('conditionFunc parameter type of aid.best() must be Function.');
+    if (!aid.isArray(array)) throw new TypeError('array parameter type of aid.best() must be Array.');
+
+    return array.reduce(function (previousValue, currentValue) {
+      return conditionFunc(previousValue, currentValue) ? previousValue : currentValue;
+    });
+  };
+
+  /**
+   * return array has values filtered
+   *
+   * @static
+   * @method iterateUntil
+   * @param {Function} function return value
+   * @param {Function} function has condition
+   * @param {Object} initial value
+   * @returns {Array} return array has values filtered.
+   * @example
+   * console.log( aid.iterateUntil(function(n) { return n + n; }, function(n) { return n <= 1042 }, 1) ); // [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]
+   */
+  aid.iterateUntil = function iterateUntil(calculateFunc, conditionFunc, initialValue) {
+    if (!aid.isFunction(calculateFunc)) throw new TypeError('calculateFunc parameter type of aid.iterateUntil() must be Function.');
+    if (!aid.isFunction(conditionFunc)) throw new TypeError('conditionFunc parameter type of aid.iterateUntil() must be Function.');
+
+    var array = [],
+      result = calculateFunc(initialValue);
+
+    while (conditionFunc(result)) {
+      array.push(result);
+      result = calculateFunc(result);
+    }
+
+    return array;
+  };
+
+  /**
+   * curry function can use one parameter
+   *
+   * @static
+   * @method curry
+   * @param {Function} function
+   * @returns {Function} return function
+   * @example
+   */
+  aid.curry = function curry(func) {
+    if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.curry() must be Function.');
+
+    return function (arg) {
+      return func(arg);
+    };
+  };
+
+  /**
+   * curry function can use two parameter
+   *
+   * @static
+   * @method curry2
+   * @param {Function} function
+   * @returns {Function} return function
+   * @example
+   * var parseBinaryStr = aid.curry2(parseInt)(2);
+   * console.log( parseBinaryStr('111') ); // 7
+   */
+  aid.curry2 = function curry2(func) {
+    if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.curry2() must be Function.');
+
+    return function (secondArg) {
+      return function (firstArg) {
+        return func(firstArg, secondArg);
+      };
     };
   };
 
@@ -1190,10 +1276,10 @@
       throw new TypeError('string.getUriParam() requires String parameters.');
     }
 
-    var str = uri;
-    if (str.length < 1) return '';
+    if (uri.length < 1) return '';
+    uri = uri.split('#')[0];
 
-    var tmpArr = str.split('?');
+    var tmpArr = uri.split('?');
     if (tmpArr.length < 2) return '';
 
     var paramStr = tmpArr[1],
@@ -1223,6 +1309,7 @@
     if (!aid.isString(uri)) throw new TypeError('string.getUriParams() requires String parameter.');
 
     if (uri.length < 1) return null;
+    uri = uri.split('#')[0];
 
     var tmpArr = uri.split('?');
     if (tmpArr.length < 2) return null;
@@ -1237,6 +1324,7 @@
 
       obj[keyValueArr[0]] = keyValueArr[1];
     }
+
     return obj;
   };
 
@@ -1264,7 +1352,12 @@
     }
     if (str === '') return uri;
 
-    uri = (uri.indexOf('?') >= 0) ? (uri + str) : (uri + '?' + str.substr(1));
+    var tmpArr = uri.split('#'),
+      hashStr = (aid.isDefined(tmpArr[1])) ? '#' + tmpArr[1] : '';
+
+    uri = tmpArr[0];
+    uri = ((uri.indexOf('?') >= 0) ? (uri + str) : (uri + '?' + str.substr(1))) + hashStr;
+
     return uri;
   };
 
