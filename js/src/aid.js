@@ -544,6 +544,33 @@
     };
   };
 
+  /**
+   * curry function for variadic functions.
+   *
+   * @static
+   * @method curryAll
+   * @param {Function} function
+   * @param {Number} minimum number of arguments to curry
+   * @returns {Function} return function
+   * @example
+   * console.log( curryAll(Math.max, 2)(1, 99) ); // 99
+   */
+  aid.curryAll = function curryAll(func, n) {
+    var arity = n || func.length;
+
+    return function curried() {
+      var args = Array.prototype.slice.call(arguments),
+        context = this;
+
+      return args.length >= arity ?
+        func.apply(context, args) :
+        function () {
+          var rest = Array.prototype.slice.call(arguments);
+          return curried.apply(context, args.concat(rest));
+        };
+    };
+  };
+
   /*
    * Data Structure
    */
