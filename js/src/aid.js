@@ -592,6 +592,27 @@
     return Array.prototype.slice.call(array, begin);
   };
 
+  /**
+   * pipeline
+   *
+   * @static
+   * @method pipeline
+   * @param {Array} array
+   * @param {Number} begin index to slice arguments.
+   * @returns {Array} return array
+   * @example
+   */
+  aid.pipeline = function pipeline(seed /* args */) {
+
+    // TODO
+    /*
+    _.reduce(aid.rest(arguments), function(l, r) {
+      return r(l);
+    }, seed);
+    */
+
+  };
+
   /*
    * Data Structure
    */

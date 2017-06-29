@@ -63,6 +63,7 @@ console.log( isNotNaN(0) ); // true
     aid.curry2
     aid.curryAll
     aid.rest
+    aid.pipeline
 ```
 
 * operator utils
