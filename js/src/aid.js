@@ -555,8 +555,8 @@
    * @example
    * console.log( curryAll(Math.max, 2)(1, 99) ); // 99
    */
-  aid.curryAll = function curryAll(func, n) {
-    var arity = n || func.length;
+  aid.curryAll = function curryAll(func, curryArgsNum) {
+    var arity = curryArgsNum || func.length;
 
     return function curried() {
       var args = Array.prototype.slice.call(arguments),
@@ -569,6 +569,27 @@
           return curried.apply(context, args.concat(rest));
         };
     };
+  };
+
+  /**
+   * rest
+   * // refer to _.rest function of underscore.js - https://github.com/jashkenas/underscore/blob/master/underscore.js
+   *
+   * @static
+   * @method rest
+   * @param {Array} array
+   * @param {Number} begin index to slice arguments.
+   * @returns {Array} return array
+   * @example
+   * var array = [1, 2, 3, 4, 5];
+   * console.log( aid.rest(array) ); // [2, 3, 4, 5]
+   * console.log( aid.rest(array, 2) ); // [3, 4, 5]
+   */
+  aid.rest = function rest(array, beginIndex) {
+    if (!aid.isArray(array)) throw new TypeError('array parameter type of aid.rest() must be Array.');
+
+    var begin = (!aid.existy(beginIndex)) ? 1 : beginIndex;
+    return Array.prototype.slice.call(array, begin);
   };
 
   /*

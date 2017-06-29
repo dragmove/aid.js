@@ -61,6 +61,8 @@ console.log( isNotNaN(0) ); // true
     aid.iterateUntil
     aid.curry
     aid.curry2
+    aid.curryAll
+    aid.rest
 ```
 
 * operator utils

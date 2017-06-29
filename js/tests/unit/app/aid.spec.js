@@ -1141,6 +1141,14 @@ describe('aid.js', function () {
       // TODO
     });
 
+    describe('.curryAll()', function () {
+      // TODO
+    });
+
+    describe('.rest()', function () {
+      // TODO
+    });
+
     describe('.createStack()', function () {
       var stack = aid.createStack();
 
