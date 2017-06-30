@@ -597,20 +597,21 @@
    *
    * @static
    * @method pipeline
-   * @param {Array} array
-   * @param {Number} begin index to slice arguments.
-   * @returns {Array} return array
+   * @param {Object} seed
+   * @returns {Object} return value
    * @example
+   * function negative(n) { return n * -1; }
+   * function half(n) { return n / 2; }
+   * function negativeHalf(n) { return aid.pipeline(n, negative, half); }
+   * console.log( aid.pipeline(80, negative) ); // -80
+   * console.log( negativeHalf(80) ); // 80 * -1 / 2
    */
   aid.pipeline = function pipeline(seed /* args */) {
+    var restArgs = aid.rest(arguments);
 
-    // TODO
-    /*
-    _.reduce(aid.rest(arguments), function(l, r) {
-      return r(l);
+    return restArgs.reduce(function (prev, current) {
+      return current(prev);
     }, seed);
-    */
-
   };
 
   /*

@@ -1149,6 +1149,10 @@ describe('aid.js', function () {
       // TODO
     });
 
+    describe('.pipeline()', function () {
+      // TODO
+    });
+
     describe('.createStack()', function () {
       var stack = aid.createStack();
 

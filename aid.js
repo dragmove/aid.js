@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.42
+ * aid.js 0.1.43
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -367,7 +367,7 @@
   aid.each = function each(dataCanLoop, func, context) {
     var _context = (aid.existy(context)) ? context : null;
 
-    if (!aid.isArray(dataCanLoop) || !aid.isString(dataCanLoop)) throw new TypeError('dataCanLoop parameter type of aid.each() must be Array or String.');
+    if (!(aid.isArray(dataCanLoop) || aid.isString(dataCanLoop))) throw new TypeError('dataCanLoop parameter type of aid.each() must be Array or String.');
 
     for (var i = 0, max = dataCanLoop.length; i < max; i++) {
       func.call(_context, dataCanLoop[i]);
@@ -549,6 +549,76 @@
         return func(firstArg, secondArg);
       };
     };
+  };
+
+  /**
+   * curry function for variadic functions.
+   *
+   * @static
+   * @method curryAll
+   * @param {Function} function
+   * @param {Number} minimum number of arguments to curry
+   * @returns {Function} return function
+   * @example
+   * console.log( curryAll(Math.max, 2)(1, 99) ); // 99
+   */
+  aid.curryAll = function curryAll(func, curryArgsNum) {
+    var arity = curryArgsNum || func.length;
+
+    return function curried() {
+      var args = Array.prototype.slice.call(arguments),
+        context = this;
+
+      return args.length >= arity ?
+        func.apply(context, args) :
+        function () {
+          var rest = Array.prototype.slice.call(arguments);
+          return curried.apply(context, args.concat(rest));
+        };
+    };
+  };
+
+  /**
+   * rest
+   * // refer to _.rest function of underscore.js - https://github.com/jashkenas/underscore/blob/master/underscore.js
+   *
+   * @static
+   * @method rest
+   * @param {Array} array
+   * @param {Number} begin index to slice arguments.
+   * @returns {Array} return array
+   * @example
+   * var array = [1, 2, 3, 4, 5];
+   * console.log( aid.rest(array) ); // [2, 3, 4, 5]
+   * console.log( aid.rest(array, 2) ); // [3, 4, 5]
+   */
+  aid.rest = function rest(array, beginIndex) {
+    if (!aid.isArray(array)) throw new TypeError('array parameter type of aid.rest() must be Array.');
+
+    var begin = (!aid.existy(beginIndex)) ? 1 : beginIndex;
+    return Array.prototype.slice.call(array, begin);
+  };
+
+  /**
+   * pipeline
+   *
+   * @static
+   * @method pipeline
+   * @param {Object} seed
+   * @returns {Object} return value
+   * @example
+   * function negative(n) { return n * -1; }
+   * function half(n) { return n / 2; }
+   * function negativeHalf(n) { return aid.pipeline(n, negative, half); }
+   * console.log( aid.pipeline(80, negative) ); // -80
+   * console.log( negativeHalf(80) ); // 80 * -1 / 2
+   */
+  aid.pipeline = function pipeline(seed /* args */) {
+    var restArgs = aid.rest(arguments);
+
+    return restArgs.reduce(function (prev, current) {
+      return current(prev);
+    }, seed);
   };
 
   /*
