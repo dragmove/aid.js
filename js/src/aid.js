@@ -358,9 +358,9 @@
    * @example
    */
   aid.each = function each(dataCanLoop, func, context) {
-    var _context = (aid.existy(context)) ? context : null;
-
     if (!(aid.isArray(dataCanLoop) || aid.isString(dataCanLoop))) throw new TypeError('dataCanLoop parameter type of aid.each() must be Array or String.');
+
+    var _context = (aid.existy(context)) ? context : null;
 
     for (var i = 0, max = dataCanLoop.length; i < max; i++) {
       func.call(_context, dataCanLoop[i]);
