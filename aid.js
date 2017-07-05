@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.44
+ * aid.js 0.1.45
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -614,7 +614,7 @@
    * console.log( negativeHalf(80) ); // 80 * -1 / 2
    */
   aid.pipeline = function pipeline(seed /* args */) {
-    var restArgs = aid.rest(arguments);
+    var restArgs = aid.rest(Array.prototype.slice.call(arguments));
 
     return restArgs.reduce(function (prev, current) {
       return current(prev);
