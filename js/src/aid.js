@@ -614,6 +614,39 @@
     }, seed);
   };
 
+  /**
+   * // TODO - ing. require test.
+   * lazyChain
+   *
+   * @static
+   * @method lazyChain
+   * @example
+   * var lazy = aid.lazyChange([2, 1, 3]).invoke('concat', [7, 7, 8, 9, 0]).invoke('sort');
+   * console.log( lazy.force() ); // [0, 1, 2, 3, 7, 7, 8, 9]
+   */
+  aid.lazyChain = function lazyChain(obj) {
+    var calls = [];
+
+    return {
+      invoke: function (methodName /*, args */) {
+        var args = aid.rest(Array.prototype.slice.call(arguments));
+
+        calls.push(function (target) {
+          var method = target[methodName];
+          return method.apply(target, args);
+        });
+
+        return this;
+      },
+
+      force: function () {
+        return calls.reduce(function (ret, thunk) {
+          return thunk(ret);
+        }, obj);
+      }
+    };
+  };
+
   /*
    * Data Structure
    */
