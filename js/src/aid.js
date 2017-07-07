@@ -615,14 +615,20 @@
   };
 
   /**
-   * // TODO - ing. require test.
    * lazyChain
    *
    * @static
    * @method lazyChain
+   * @param {Object} object
+   * @returns {Object} return {invoke, force}
    * @example
    * var lazy = aid.lazyChange([2, 1, 3]).invoke('concat', [7, 7, 8, 9, 0]).invoke('sort');
    * console.log( lazy.force() ); // [0, 1, 2, 3, 7, 7, 8, 9]
+   *
+   * // with aid.pipeline
+   * function double(array) { return array.map(function(v) { return v * 2; }); }
+   * function lazyReverseAndNegative(array) { return aid.lazyChain(array).invoke('reverse').invoke('map', function(v) { return v * -1; }); }
+   * console.log( aid.pipeline([1, 2, 3], double, lazyReverseAndNegative).force() ); // [-6, -4, -2]
    */
   aid.lazyChain = function lazyChain(obj) {
     var calls = [];
@@ -633,6 +639,11 @@
 
         calls.push(function (target) {
           var method = target[methodName];
+
+          if (!aid.isDefined(method)) {
+            throw Error(target.constructor.name + ' has not ' + methodName + ' method');
+          }
+
           return method.apply(target, args);
         });
 

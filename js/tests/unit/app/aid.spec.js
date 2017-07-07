@@ -1019,7 +1019,8 @@ describe('aid.js', function () {
         }).toThrowError();
 
         expect(function () {
-          aid.plucker(function() {});
+          aid.plucker(function () {
+          });
         }).toThrowError();
       });
 
@@ -1054,7 +1055,8 @@ describe('aid.js', function () {
           }).toThrowError();
 
           expect(function () {
-            getTitle(function() {});
+            getTitle(function () {
+            });
           }).toThrowError();
         });
       });
@@ -1151,6 +1153,45 @@ describe('aid.js', function () {
 
     describe('.pipeline()', function () {
       // TODO
+    });
+
+    describe('.lazyChain()', function () {
+      // TODO
+
+      it('return object', function () {
+        it('has invoke function', function () {
+          var lazy = aid.lazyChain([3, 2, 1]);
+
+          expect(lazy.invoke).toBeDefined();
+          expect(aid.isFunction(lazy.invoke)).toBe(true);
+        });
+
+        it('has force function', function () {
+          var lazy = aid.lazyChain([3, 2, 1]);
+
+          expect(lazy.force).toBeDefined();
+          expect(aid.isFunction(lazy.force)).toBe(true);
+        });
+      });
+
+      it('return object throw error when target argument has not methodName', function () {
+        var lazy = aid.lazyChain([3, 2, 1]).invoke('hasNotMethodName');
+
+        expect(function () {
+          lazy.force();
+        }).toThrowError();
+      });
+
+      it('return value, when call force', function () {
+        var lazyAdd99 = aid.lazyChain([3, 2, 1]).invoke('concat', [99]);
+        expect(lazyAdd99.force()).toEqual([3, 2, 1, 99]);
+      });
+
+      // TODO - add test case
+      // with aid.pipeline
+      // function double(array) { return array.map(function(v) { return v * 2; }); }
+      // function lazyReverseAndNegative(array) { return aid.lazyChain(array).invoke('reverse').invoke('map', function(v) { return v * -1; }); }
+      // console.log( aid.pipeline([1, 2, 3], double, lazyReverseAndNegative).force() ); // [-6, -4, -2]
     });
 
     describe('.createStack()', function () {
