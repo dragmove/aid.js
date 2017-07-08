@@ -64,6 +64,7 @@ console.log( isNotNaN(0) ); // true
     aid.curryAll
     aid.rest
     aid.pipeline
+    aid.lazyChain
 ```
 
 * operator utils

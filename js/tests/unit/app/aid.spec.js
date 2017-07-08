@@ -1156,8 +1156,6 @@ describe('aid.js', function () {
     });
 
     describe('.lazyChain()', function () {
-      // TODO
-
       it('return object', function () {
         it('has invoke function', function () {
           var lazy = aid.lazyChain([3, 2, 1]);
@@ -1170,12 +1168,12 @@ describe('aid.js', function () {
           var lazy = aid.lazyChain([3, 2, 1]);
 
           expect(lazy.force).toBeDefined();
-          expect(aid.isFunction(lazy.force)).toBe(true);
+          expect(aid.isFunction(lazy.force)).toEqual(true);
         });
       });
 
-      it('return object throw error when target argument has not methodName', function () {
-        var lazy = aid.lazyChain([3, 2, 1]).invoke('hasNotMethodName');
+      it('return object throw error when call force if target argument has not method', function () {
+        var lazy = aid.lazyChain([3, 2, 1]).invoke('nonexistentMethod');
 
         expect(function () {
           lazy.force();
@@ -1187,11 +1185,21 @@ describe('aid.js', function () {
         expect(lazyAdd99.force()).toEqual([3, 2, 1, 99]);
       });
 
-      // TODO - add test case
-      // with aid.pipeline
-      // function double(array) { return array.map(function(v) { return v * 2; }); }
-      // function lazyReverseAndNegative(array) { return aid.lazyChain(array).invoke('reverse').invoke('map', function(v) { return v * -1; }); }
-      // console.log( aid.pipeline([1, 2, 3], double, lazyReverseAndNegative).force() ); // [-6, -4, -2]
+      it('return object can use with aid.pipeline'), function () {
+        function double(array) {
+          return array.map(function (v) {
+            return v * 2;
+          });
+        }
+
+        function lazyReverseAndNegative(array) {
+          return aid.lazyChain(array).invoke('reverse').invoke('map', function (v) {
+            return v * -1;
+          });
+        }
+
+        expect(aid.pipeline([1, 2, 3], double, lazyReverseAndNegative).force()).toEqual([-6, -4, -2]);
+      }
     });
 
     describe('.createStack()', function () {

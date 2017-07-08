@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.45
+ * aid.js 0.1.46
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -644,11 +644,12 @@
       invoke: function (methodName /*, args */) {
         var args = aid.rest(Array.prototype.slice.call(arguments));
 
-        console.log('methodName :', methodName);
-
         calls.push(function (target) {
           var method = target[methodName];
-          console.log('method :', method);
+
+          if (!aid.isDefined(method)) {
+            throw Error(target.constructor.name + ' has not ' + methodName + ' method');
+          }
 
           return method.apply(target, args);
         });
