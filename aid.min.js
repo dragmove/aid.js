@@ -1,6 +1,6 @@
 /*
- * aid.js 0.1.46
- * https://www.npmjs.com/package/aid.js
+ * aid.js 0.1.47
+ * https://github.com/dragmove/aid.js
  *
  * The MIT License (MIT)
  * Copyright (c) 2016-2017 Hyun-Seok.Kim, dragmove@gmail.com

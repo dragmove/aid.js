@@ -1,6 +1,6 @@
 {
   "name": "aid.js",
-  "version": "0.1.46",
+  "version": "0.1.47",
   "description": "A bundle of Javascript util Library for help developers. No dependency to other Libraries.",
   "keywords": [
     "aid.js",
@@ -11,7 +11,7 @@
     "js",
     "dragmove"
   ],
-  "homepage": "https://www.npmjs.com/package/aid.js",
+  "homepage": "https://github.com/dragmove/aid.js",
   "bugs": {
     "url": "https://github.com/dragmove/aid.js/issues",
     "email": "dragmove@gmail.com"
