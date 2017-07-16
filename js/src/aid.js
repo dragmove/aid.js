@@ -356,6 +356,9 @@
    * @param {Function} func
    * @param {Object} context
    * @example
+   * var result = [];
+   * aid.each('aid.js', function(v) { result.push(v); }, null);
+   * console.log( result.join('') ); // 'aid.js'
    */
   aid.each = function each(dataCanLoop, func, context) {
     if (!(aid.isArray(dataCanLoop) || aid.isString(dataCanLoop))) throw new TypeError('dataCanLoop parameter type of aid.each() must be Array or String.');
