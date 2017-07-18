@@ -911,7 +911,59 @@ describe('aid.js', function () {
     });
 
     describe('.each()', function () {
-      // TODO - each
+      it('whether dataCanLoop parameter is not string or array, throw TypeError', function () {
+        expect(function () {
+          aid.each(undefined, function() {}, null);
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.each(null, function() {}, null);
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.each(false, function() {}, null);
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.each(true, function() {}, null);
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.each('', function() {}, null);
+        }).not.toThrowError(Error);
+
+        expect(function () {
+          aid.each(0, function() {}, null);
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.each(NaN, function() {}, null);
+        }).toThrowError(Error);
+
+        expect(function () {
+          aid.each([], function() {}, null);
+        }).not.toThrowError(Error);
+      });
+
+      it('input string, apply functions based on characters', function () {
+        var result = [];
+
+        aid.each('aid.js', function(v) {
+          result.push(v);
+        }, null);
+
+        expect(result.join('')).toEqual('aid.js');
+      });
+
+      it('input array, apply functions based on elements', function () {
+        var result = [];
+
+        aid.each([1, 2, 3, 4, 5], function(v) {
+          result.push(v);
+        }, null);
+
+        expect(result.join('')).toEqual('12345');
+      });
     });
 
     describe('.truthy()', function () {
@@ -923,7 +975,7 @@ describe('aid.js', function () {
     });
 
     describe('.nth()', function () {
-      it('whether dataCanLoop parameter type is not string or array, throw Error.', function () {
+      it('whether dataCanLoop parameter type is not string or array, throw TypeError.', function () {
         expect(function () {
           aid.nth(undefined, 0);
         }).toThrowError();
