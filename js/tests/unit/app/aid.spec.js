@@ -1015,10 +1015,6 @@ describe('aid.js', function () {
         }).toThrowError();
 
         expect(function () {
-          aid.plucker({});
-        }).toThrowError();
-
-        expect(function () {
           aid.plucker(function () {
           });
         }).toThrowError();
@@ -1128,7 +1124,93 @@ describe('aid.js', function () {
     });
 
     describe('.best()', function () {
-      // TODO
+      it('if conditionFunc parameter type is not function, throw Error.', function () {
+        expect(function () {
+          aid.best(undefined, []);
+        }).toThrowError(TypeError, 'conditionFunc parameter type of aid.best() must be Function.');
+
+        expect(function () {
+          aid.best(null, []);
+        }).toThrowError(TypeError, 'conditionFunc parameter type of aid.best() must be Function.');
+
+        expect(function () {
+          aid.best(false, []);
+        }).toThrowError(TypeError, 'conditionFunc parameter type of aid.best() must be Function.');
+
+        expect(function () {
+          aid.best(true, []);
+        }).toThrowError(TypeError, 'conditionFunc parameter type of aid.best() must be Function.');
+
+        expect(function () {
+          aid.best(99, []);
+        }).toThrowError(TypeError, 'conditionFunc parameter type of aid.best() must be Function.');
+
+        expect(function () {
+          aid.best('', []);
+        }).toThrowError(TypeError, 'conditionFunc parameter type of aid.best() must be Function.');
+
+        expect(function () {
+          aid.best([], []);
+        }).toThrowError(TypeError, 'conditionFunc parameter type of aid.best() must be Function.');
+
+        expect(function () {
+          aid.best({}, []);
+        }).toThrowError(TypeError, 'conditionFunc parameter type of aid.best() must be Function.');
+
+        expect(function () {
+          aid.best(function () {}, []);
+        }).not.toThrowError(TypeError, 'conditionFunc parameter type of aid.best() must be Function.');
+      });
+
+      it('if array parameter type is not array, throw Error.', function () {
+        expect(function () {
+          aid.best(function() {}, undefined);
+        }).toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
+
+        expect(function () {
+          aid.best(function() {}, null);
+        }).toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
+
+        expect(function () {
+          aid.best(function() {}, false);
+        }).toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
+
+        expect(function () {
+          aid.best(function() {}, true);
+        }).toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
+
+        expect(function () {
+          aid.best(function() {}, 99);
+        }).toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
+
+        expect(function () {
+          aid.best(function() {}, '');
+        }).toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
+
+        expect(function () {
+          aid.best(function() {}, {});
+        }).toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
+
+        expect(function () {
+          aid.best(function() {}, []);
+        }).not.toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
+      });
+
+      it('find best value from array with condition', function () {
+        var val = aid.best(function(x, y) {
+          return x > y;
+        }, [2, 4, 1, 5, 3]);
+
+        expect(val).toEqual(5);
+      });
+
+      it('find best value from array with condition', function () {
+        var val = aid.best(function(x, y) {
+          return x < y;
+        }, [2, 4, 1, 5, 3]);
+
+        expect(val).toEqual(1);
+      });
     });
 
     describe('.iterateUntil()', function () {

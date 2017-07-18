@@ -1,6 +1,6 @@
 /*
- * aid.js 0.1.47
- * https://github.com/dragmove/aid.js
+ * aid.js 0.1.48
+ * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
  * Copyright (c) 2016-2017 Hyun-Seok.Kim, dragmove@gmail.com
@@ -475,7 +475,7 @@
    * @param {Function} condition function to find best value.
    * @param {Array} array
    * @example
-   * console.log( aid.best(function(x, y) { return x > y; }, [1, 2, 3, 4, 5]) ); // 5
+   * console.log( aid.best(function(x, y) { return x > y; }, [2, 4, 1, 5, 3]) ); // 5
    */
   aid.best = function best(conditionFunc, array) {
     if (!aid.isFunction(conditionFunc)) throw new TypeError('conditionFunc parameter type of aid.best() must be Function.');

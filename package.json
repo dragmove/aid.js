@@ -1,6 +1,6 @@
 {
   "name": "aid.js",
-  "version": "0.1.47",
+  "version": "0.1.48",
   "description": "A bundle of Javascript util Library for help developers. No dependency to other Libraries.",
   "keywords": [
     "aid.js",
@@ -11,7 +11,7 @@
     "js",
     "dragmove"
   ],
-  "homepage": "https://github.com/dragmove/aid.js",
+  "homepage": "https://www.npmjs.com/package/aid.js",
   "bugs": {
     "url": "https://github.com/dragmove/aid.js/issues",
     "email": "dragmove@gmail.com"
@@ -20,10 +20,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Hyun-Seok.Kim",
+  "author": {
+    "name": "Hyun-Seok.Kim",
+    "email": "dragmove@gmail.com",
+    "url": "http://dragmove.com"
+  },
   "license": {
     "type": "MIT",
     "url": "https://opensource.org/licenses/mit-license.php"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dragmove/aid.js"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
