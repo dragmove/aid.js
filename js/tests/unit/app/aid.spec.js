@@ -1274,7 +1274,49 @@ describe('aid.js', function () {
     });
 
     describe('.curry2()', function () {
-      // TODO
+      it('func parameter type is not function, throw Error.', function () {
+        expect(function () {
+          aid.curry2(undefined)
+        }).toThrowError();
+
+        expect(function () {
+          aid.curry2(null);
+        }).toThrowError();
+
+        expect(function () {
+          aid.curry2(false);
+        }).toThrowError();
+
+        expect(function () {
+          aid.curry2(true);
+        }).toThrowError();
+
+        expect(function () {
+          aid.curry2(0);
+        }).toThrowError();
+
+        expect(function () {
+          aid.curry2("");
+        }).toThrowError();
+
+        expect(function () {
+          aid.curry2(NaN);
+        }).toThrowError();
+
+        expect(function () {
+          aid.curry2(parseInt);
+        }).not.toThrowError();
+      });
+
+      it('return function', function () {
+        var parseBinaryStr = aid.curry2(parseInt)(2);
+        expect(aid.isFunction(parseBinaryStr)).toBe(true);
+      });
+
+      it('return function can use curried function', function () {
+        var parseBinaryStr = aid.curry2(parseInt)(2);
+        expect(parseBinaryStr('111')).toEqual(7);
+      });
     });
 
     describe('.curryAll()', function () {
