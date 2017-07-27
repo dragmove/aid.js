@@ -1471,7 +1471,70 @@ describe('aid.js', function () {
     });
 
     describe('.pipeline()', function () {
-      // TODO
+      var seed = null;
+
+      function negative(n) {
+        return n * -1;
+      }
+
+      function half(n) {
+        return n / 2;
+      }
+
+      beforeEach(function () {
+        seed = null;
+      });
+
+      it('return seed value if input only seed value', function () {
+        seed = aid.pipeline(99);
+        expect(seed).toEqual(99);
+      });
+
+      it('rest parameters type is not function, throw Error.', function () {
+        expect(function () {
+          aid.pipeline(99, undefined);
+        }).toThrowError();
+
+        expect(function () {
+          aid.pipeline(99, null);
+        }).toThrowError();
+
+        expect(function () {
+          aid.pipeline(99, false);
+        }).toThrowError();
+
+        expect(function () {
+          aid.pipeline(99, true);
+        }).toThrowError();
+
+        expect(function () {
+          aid.pipeline(99, 0);
+        }).toThrowError();
+
+        expect(function () {
+          aid.pipeline(99, '');
+        }).toThrowError();
+
+        expect(function () {
+          aid.pipeline(99, []);
+        }).toThrowError();
+
+        expect(function () {
+          aid.pipeline(99, NaN);
+        }).toThrowError();
+
+        expect(function () {
+          aid.pipeline(99, negative);
+        }).not.toThrowError();
+      });
+
+      it('return value from pipe functions', function () {
+        seed = aid.pipeline(99, negative);
+        expect(seed).toEqual(-99);
+
+        seed = aid.pipeline(80, negative, half);
+        expect(seed).toEqual(-40);
+      });
     });
 
     describe('.lazyChain()', function () {

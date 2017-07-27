@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.49
+ * aid.js 0.1.50
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -623,6 +623,10 @@
    */
   aid.pipeline = function pipeline(seed /* args */) {
     var restArgs = aid.rest(Array.prototype.slice.call(arguments));
+
+    aid.each(restArgs, function (value) {
+      if (!aid.isFunction(value)) throw new TypeError('rest parameters type of aid.pipeline() must be Function.');
+    }, null);
 
     return restArgs.reduce(function (prev, current) {
       return current(prev);
