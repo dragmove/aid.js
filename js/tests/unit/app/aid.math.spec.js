@@ -600,11 +600,95 @@ describe('aid.js', function () {
     });
 
     describe('.degreeToRadian()', function () {
-      // TODO
+      it('func parameter type is not number, throw Error.', function () {
+        expect(function () {
+          math.degreeToRadian(undefined);
+        }).toThrowError();
+
+        expect(function () {
+          math.degreeToRadian(null);
+        }).toThrowError();
+
+        expect(function () {
+          math.degreeToRadian(false);
+        }).toThrowError();
+
+        expect(function () {
+          math.degreeToRadian(true);
+        }).toThrowError();
+
+        expect(function () {
+          math.degreeToRadian(0);
+        }).not.toThrowError();
+
+        expect(function () {
+          math.degreeToRadian('');
+        }).toThrowError();
+
+        expect(function () {
+          math.degreeToRadian([]);
+        }).toThrowError();
+
+        expect(function () {
+          math.degreeToRadian(NaN);
+        }).not.toThrowError();
+
+        expect(function () {
+          math.degreeToRadian(function () {
+          });
+        }).toThrowError();
+      });
+
+      it('return number when input number', function () {
+        var radian = math.degreeToRadian(90);
+        expect(aid.isNumber(radian)).toBe(true);
+      });
     });
 
     describe('.radianToDegree()', function () {
-      // TODO
+      it('func parameter type is not number, throw Error.', function () {
+        expect(function () {
+          math.radianToDegree(undefined);
+        }).toThrowError();
+
+        expect(function () {
+          math.radianToDegree(null);
+        }).toThrowError();
+
+        expect(function () {
+          math.radianToDegree(false);
+        }).toThrowError();
+
+        expect(function () {
+          math.radianToDegree(true);
+        }).toThrowError();
+
+        expect(function () {
+          math.radianToDegree(0);
+        }).not.toThrowError();
+
+        expect(function () {
+          math.radianToDegree('');
+        }).toThrowError();
+
+        expect(function () {
+          math.radianToDegree([]);
+        }).toThrowError();
+
+        expect(function () {
+          math.radianToDegree(NaN);
+        }).not.toThrowError();
+
+        expect(function () {
+          math.radianToDegree(function () {
+          });
+        }).toThrowError();
+      });
+
+      it('return number when input number', function () {
+        var degree = math.radianToDegree(90);
+        expect(aid.isNumber(degree)).toBe(true);
+      });
     });
   });
 });

@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.50
+ * aid.js 0.1.51
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -57,6 +57,7 @@
    */
   aid.isDefined = function isDefined(obj) {
     if (obj === null || typeof obj === 'undefined') return false;
+
     return true;
   };
 
@@ -72,6 +73,7 @@
    */
   aid.isBoolean = function (obj) {
     if (!aid.isDefined(obj)) return false;
+
     return (obj.constructor === Boolean);
   };
 
@@ -87,6 +89,7 @@
    */
   aid.isNumber = function isNumber(obj) {
     if (!aid.isDefined(obj)) return false;
+
     return (obj.constructor === Number);
   };
 
@@ -119,6 +122,7 @@
    */
   aid.isString = function isString(obj) {
     if (!aid.isDefined(obj)) return false;
+
     return (obj.constructor === String);
   };
 
@@ -134,6 +138,7 @@
    */
   aid.isArray = function isArray(obj) {
     if (!aid.isDefined(obj)) return false;
+
     return (obj.constructor === Array);
   };
 
@@ -149,6 +154,7 @@
    */
   aid.isObject = function isObject(obj) {
     if (!aid.isDefined(obj)) return false;
+
     return (obj.constructor === Object);
   };
 
@@ -164,6 +170,7 @@
    */
   aid.isFunction = function isFunction(obj) {
     if (!aid.isDefined(obj)) return false;
+
     return (obj.constructor === Function);
   };
 
@@ -180,6 +187,7 @@
    */
   aid.isRegExp = function isRegExp(obj) {
     if (!aid.isDefined(obj)) return false;
+
     return (obj.constructor === RegExp);
   };
 
@@ -211,9 +219,8 @@
     if (!(destination instanceof Object) || !(typeof destination === 'object')) {
       throw TypeError('destination parameter type of aid.extend() must be instance of Object, and object type.');
     }
-    if (!(typeof source === 'object')) {
-      throw TypeError('source parameter type of aid.extend() must be object type.');
-    }
+
+    if (!(typeof source === 'object')) throw TypeError('source parameter type of aid.extend() must be object type.');
 
     for (var key in source) {
       if (source.hasOwnProperty(key)) {
@@ -260,7 +267,10 @@
    */
   aid.namespace = function (namespace, parent) {
     if (!aid.isString(namespace)) throw new TypeError('namespace parameter type of aid.namespace() must be String.');
-    if (!(aid.isObject(parent) || !aid.isDefined(parent))) throw new TypeError('parent parameter type of aid.namespace() must be Object or null or undefined.');
+
+    if (!(aid.isObject(parent) || !aid.isDefined(parent))) {
+      throw new TypeError('parent parameter type of aid.namespace() must be Object or null or undefined.');
+    }
 
     var ns = parent || global;
 
@@ -291,8 +301,11 @@
    */
   aid.borrow = function borrow(borrower, donor, functionName) {
     if (!aid.isObject(borrower) || !aid.isObject(donor)) throw new TypeError('borrower, donor parameter type of aid.borrow() must be Object.');
+
     if (!aid.isString(functionName)) throw new TypeError('functionName parameter type of aid.borrow() must be String.');
+
     if (!aid.isDefined(donor[functionName])) throw new Error('donor object parameter of aid.borrow() has not function with functionName.');
+
     if (aid.isDefined(borrower[functionName])) throw new Error('borrower object parameter of aid.borrow() already has function with functionName.');
 
     borrower[functionName] = function () {
@@ -330,7 +343,9 @@
    * console.log( isNotNaN(0) ); // true
    */
   aid.compose = function compose(func_a, func_b) {
-    if (!aid.isFunction(func_a) || !aid.isFunction(func_b)) throw new TypeError('func_a, func_b parameter type of aid.compose() must be Function.');
+    if (!aid.isFunction(func_a) || !aid.isFunction(func_b)) {
+      throw new TypeError('func_a, func_b parameter type of aid.compose() must be Function.');
+    }
 
     return function () {
       return func_a(func_b.apply(null, arguments));
@@ -370,7 +385,9 @@
    * console.log( result.join('') ); // 'aid.js'
    */
   aid.each = function each(dataCanLoop, func, context) {
-    if (!(aid.isArray(dataCanLoop) || aid.isString(dataCanLoop))) throw new TypeError('dataCanLoop parameter type of aid.each() must be Array or String.');
+    if (!(aid.isArray(dataCanLoop) || aid.isString(dataCanLoop))) {
+      throw new TypeError('dataCanLoop parameter type of aid.each() must be Array or String.');
+    }
 
     var _context = (aid.existy(context)) ? context : null;
 
@@ -419,7 +436,10 @@
    * console.log( aid.nth([0, 'str', true], 99) ); // null
    */
   aid.nth = function nth(dataCanLoop, index) {
-    if (!(aid.isArray(dataCanLoop) || aid.isString(dataCanLoop))) throw new TypeError('dataCanLoop parameter type of aid.nth() must be Array or String.');
+    if (!(aid.isArray(dataCanLoop) || aid.isString(dataCanLoop))) {
+      throw new TypeError('dataCanLoop parameter type of aid.nth() must be Array or String.');
+    }
+
     if (!aid.isInteger(index)) throw new TypeError('index parameter type of aid.nth() must be Integer Number.');
 
     return (index < 0 || index > dataCanLoop.length - 1) ? null : dataCanLoop[index];
@@ -464,10 +484,15 @@
    * console.log( getLength(arr) ); // 5
    */
   aid.plucker = function plucker(field) {
-    if (!(aid.isString(field) || aid.isNumber(field))) throw new TypeError('field parameter type of aid.plucker() must be String or Number.');
+    if (!(aid.isString(field) || aid.isNumber(field))) {
+      throw new TypeError('field parameter type of aid.plucker() must be String or Number.');
+    }
 
     return function (obj) {
-      if (!(aid.isObject(obj) || aid.isArray(obj) || aid.isString(obj))) throw new TypeError('obj parameter type of function (get from aid.plucker()) must be Object or Array or String.');
+      if (!(aid.isObject(obj) || aid.isArray(obj) || aid.isString(obj))) {
+        throw new TypeError('obj parameter type of function (get from aid.plucker()) must be Object or Array or String.');
+      }
+
       return obj[field];
     };
   };
@@ -484,6 +509,7 @@
    */
   aid.best = function best(conditionFunc, array) {
     if (!aid.isFunction(conditionFunc)) throw new TypeError('conditionFunc parameter type of aid.best() must be Function.');
+
     if (!aid.isArray(array)) throw new TypeError('array parameter type of aid.best() must be Array.');
 
     return array.reduce(function (previousValue, currentValue) {
@@ -505,6 +531,7 @@
    */
   aid.iterateUntil = function iterateUntil(calculateFunc, conditionFunc, initialValue) {
     if (!aid.isFunction(calculateFunc)) throw new TypeError('calculateFunc parameter type of aid.iterateUntil() must be Function.');
+
     if (!aid.isFunction(conditionFunc)) throw new TypeError('conditionFunc parameter type of aid.iterateUntil() must be Function.');
 
     var array = [],
@@ -604,6 +631,7 @@
     if (!aid.isArray(array)) throw new TypeError('array parameter type of aid.rest() must be Array.');
 
     var begin = (!aid.existy(beginIndex)) ? 1 : beginIndex;
+
     return Array.prototype.slice.call(array, begin);
   };
 
@@ -779,12 +807,14 @@
   LinkedList.prototype.insert = function insert(data, prevNodeData) {
     var insertNode = new LinkedListNode(data),
       prevNode = this.find(prevNodeData);
+
     insertNode.next = prevNode.next;
     prevNode.next = insertNode;
   };
 
   LinkedList.prototype.remove = function remove(data) {
     var prevNode = this.findPrevious(data);
+
     if (prevNode.next !== null) {
       prevNode.next = prevNode.next.next;
     }
@@ -1008,6 +1038,7 @@
       if (/msie (\d+\.\d+);/i.test(userAgent)) return parseFloat(RegExp.$1, 10);
       if (/trident.*rv:(\d+)\.(\d+)/i.test(userAgent)) return parseFloat(RegExp.$1, 10);
     }
+
     return -1;
   };
 
@@ -1025,6 +1056,7 @@
     if (browser.isFF(userAgent)) {
       if (/Firefox[\/\s](\d+\.\d+)/i.test(userAgent)) return parseFloat(RegExp.$1, 10);
     }
+
     return -1;
   };
 
@@ -1044,8 +1076,10 @@
         if (/Version[\/\s](\d+\.\d+)/i.test(userAgent)) return parseFloat(RegExp.$1, 10);
         if (/Opera[\/\s](\d+\.\d+)/i.test(userAgent)) return parseFloat(RegExp.$1, 10);
       }
+
       if (/OPR[\/\s](\d+\.\d+)/i.test(userAgent)) return parseFloat(RegExp.$1, 10);
     }
+
     return -1;
   };
 
@@ -1063,6 +1097,7 @@
     if (browser.isChrome(userAgent)) {
       if (/Chrome[\/\s](\d+\.\d+)/i.test(userAgent)) return parseFloat(RegExp.$1, 10);
     }
+
     return -1;
   };
 
@@ -1080,6 +1115,7 @@
     if (browser.isSafari(userAgent)) {
       if (/Version[\/\s](\d+\.\d+)/i.test(userAgent)) return parseFloat(RegExp.$1, 10);
     }
+
     return -1;
   };
 
@@ -1183,6 +1219,7 @@
    */
   browser.isSupportDraggable = function isSupportDraggable() {
     var div = document.createElement('div');
+
     return ('draggable' in div);
   };
 
@@ -1197,6 +1234,7 @@
    */
   browser.isSupportDragAndDrop = function isSupportDragAndDrop() {
     var div = document.createElement('div');
+
     return ('ondragstart' in div && 'ondrop' in div);
   };
 
@@ -1230,6 +1268,7 @@
       }
 
       if (global.chrome.cookies) return true;
+
       return false;
     }
 
@@ -1256,6 +1295,7 @@
       splitArr = cookieArr[i].split('=');
       keyStr = splitArr[0];
       valueStr = global.decodeURIComponent(splitArr[1]);
+
       if (keyStr === key) return valueStr;
     }
 
@@ -1283,6 +1323,7 @@
     if (expireSecond) {
       var date = new Date();
       date.setTime(date.getTime() + (expireSecond * 1000));
+
       expires = '; expires=' + date.toGMTString();
     }
 
@@ -1414,6 +1455,7 @@
     var keyValueArr;
     for (var i = 0, max = params.length; i < max; ++i) {
       keyValueArr = params[i].split('=');
+
       if (keyValueArr.length <= 1) keyValueArr.push('');
       if (keyValueArr[0] === parameterName) return global.decodeURIComponent(keyValueArr[1]);
     }
@@ -1467,6 +1509,7 @@
    */
   string.getUriCombinedParams = function getUriCombinedParams(uri, parameters) {
     if (!aid.isString(uri)) throw new TypeError('uri parameter type of string.getUriCombinedParams() must be String.');
+
     if (!aid.isObject(parameters)) throw new TypeError('parameters parameter type of string.getUriCombinedParams() must be Object.');
 
     if (!uri) return '';
@@ -1476,6 +1519,7 @@
     for (var key in parameters) {
       str += '&' + key + '=' + String(parameters[key]);
     }
+
     if (str === '') return uri;
 
     var tmpArr = uri.split('#'),
@@ -1564,6 +1608,7 @@
     }
 
     var isValidURI = ( youtubeId && string.isValidYoutubeVideoId(youtubeId) );
+
     return {
       type: 'youtube',
       uri: uri,
@@ -1683,6 +1728,7 @@
     }
 
     isValidURI = (channelName || videoId) ? true : false;
+
     return {
       type: 'twitch',
       uri: uri,
@@ -1707,6 +1753,7 @@
    */
   string.getDocumentPrefixedProperty = function getDocumentPrefixedProperty(propertyName, isPropertyFirstCharToUpperCase) {
     if (!aid.isString(propertyName)) throw new TypeError('propertyName parameter type of string.getDocumentPrefixedProperty() must be String.');
+
     if (!aid.isBoolean(isPropertyFirstCharToUpperCase)) throw new TypeError('isPropertyFirstCharToUpperCase parameter type of string.getDocumentPrefixedProperty() must be Boolean.');
 
     if (propertyName in global.document) return propertyName;
@@ -1737,6 +1784,7 @@
    */
   string.getElementPrefixedStyle = function getElementPrefixedStyle(propertyName, isPropertyFirstCharToUpperCase) {
     if (!aid.isString(propertyName)) throw new TypeError('propertyName parameter type of string.getElementPrefixedStyle() must be String.');
+
     if (!aid.isBoolean(isPropertyFirstCharToUpperCase)) throw new TypeError('isPropertyFirstCharToUpperCase parameter type of string.getElementPrefixedStyle() must be Boolean.');
 
     var style = global.document.createElement('div').style;
@@ -1844,6 +1892,7 @@
     if (!aid.isString(str)) throw new TypeError('string.isPalindrome() requires String parameter.');
 
     if (str.length <= 1) return true;
+
     if (str.slice(0, 1) !== str.slice(-1)) return false;
 
     return aid.string.isPalindrome(str.slice(-1, 1));
@@ -1984,9 +2033,11 @@
     if (!isInteger(totalLength) || !isInteger(loopGap) || !isInteger(firstIndex) || !isInteger(searchIndex)) {
       throw new TypeError('math.isIndexInLoop() requires Integer Number parameters.');
     }
+
     if (totalLength < 1 || firstIndex < 1) {
       throw new Error('totalLength, firstIndex parameter of math.isIndexInLoop() can not smaller than 1.');
     }
+
     if (loopGap > totalLength) {
       throw new Error('loopGap parameter of math.isIndexInLoop() can not bigger than totalLength parameter.');
     }
@@ -2022,9 +2073,11 @@
     if (!isInteger(totalLength) || !isInteger(loopGap) || !isInteger(firstIndex)) {
       throw new TypeError('math.getLoopedLastIndex() requires Integer Number parameters.');
     }
+
     if (totalLength < 1 || firstIndex < 1) {
       throw new Error('totalLength, firstIndex parameter of math.getLoopedLastIndex() can not smaller than 1.');
     }
+
     if (loopGap > totalLength || firstIndex > totalLength) {
       throw new Error('loopGap, firstIndex parameter of math.getLoopedLastIndex() can not bigger than totalLength parameter.');
     }
@@ -2059,9 +2112,11 @@
     if (!isInteger(totalLength) || !isInteger(loopGap) || !isInteger(lastIndex)) {
       throw new TypeError('math.getReverseLoopedFirstIndex() requires Integer Number parameters.');
     }
+
     if (totalLength < 1 || lastIndex < 1) {
       throw new Error('totalLength, lastIndex parameter of math.getReverseLoopedFirstIndex can not smaller than 1.');
     }
+
     if (loopGap > totalLength || lastIndex > totalLength) {
       throw new Error('loopGap, lastIndex parameter of math.getReverseLoopedFirstIndex can not bigger than totalLength parameter.');
     }
@@ -2112,6 +2167,7 @@
     if (!isInteger(totalPostNum) || !isInteger(displayPostNumPerPage) || !isInteger(displayPaginationBtnNum) || !isInteger(pageIndex)) {
       throw new TypeError('math.getObjForPagination() requires Integer Number parameters.');
     }
+
     if (totalPostNum <= 0 || displayPostNumPerPage <= 0 || displayPaginationBtnNum <= 0 || pageIndex <= 0) {
       throw new TypeError('math.getObjForPagination() requires positive Integer Number parameters.');
     }
@@ -2153,10 +2209,8 @@
    * @example
    * console.log( aid.math.degreeToRadian(90) ); // 1.5707963267948966
    */
-  math.degreeToRadian = function (degree) {
-    if (!aid.isNumber(degree)) {
-      throw new TypeError('math.degreeToRadian() requires Number parameter.');
-    }
+  math.degreeToRadian = function degreeToRadian(degree) {
+    if (!aid.isNumber(degree)) throw new TypeError('math.degreeToRadian() requires Number parameter.');
 
     return degree * Math.PI / 180;
   };
@@ -2171,10 +2225,8 @@
    * @example
    * console.log( aid.math.radianToDegree(1.5707963267948966) ); // 90
    */
-  math.radianToDegree = function (radian) {
-    if (!aid.isNumber(radian)) {
-      throw new TypeError('math.radianToDegree() requires Number parameter.');
-    }
+  math.radianToDegree = function radianToDegree(radian) {
+    if (!aid.isNumber(radian)) throw new TypeError('math.radianToDegree() requires Number parameter.');
 
     return radian * 180 / Math.PI;
   };
@@ -2304,7 +2356,9 @@
    */
   array.swap = function swap(arr, firstIndex, secondIndex) {
     if (arguments.length !== 3) return null;
+
     if (!aid.isArray(arr) || !aid.isInteger(firstIndex) || !aid.isInteger(secondIndex)) return null;
+
     if (firstIndex < 0 || firstIndex >= arr.length || secondIndex < 0 || secondIndex >= arr.length) return null;
 
     var tmp = arr[firstIndex];
@@ -2380,6 +2434,7 @@
    */
   array.merge = function merge(arr, startIndex, middleIndex, endIndex) {
     if (!aid.isArray(arr) || arr.length <= 0) return null;
+
     if (startIndex > middleIndex || middleIndex > endIndex) return null;
 
     var i = startIndex,
@@ -2391,6 +2446,7 @@
     while (i <= middleIndex && j <= endIndex) {
       if (arr[i] <= arr[j]) {
         tmpArr[k++] = arr[i++];
+
       } else {
         tmpArr[k++] = arr[j++];
       }
@@ -2472,6 +2528,7 @@
    */
   array.getPivotIndexAfterPartition = function getPivotIndexAfterPartition(arr, startIndex, endIndex) {
     if (!aid.isArray(arr) || arr.length <= 0) return -1;
+
     if (startIndex > endIndex) return -1;
 
     if (arr.length <= 1) return 0;
@@ -2533,9 +2590,7 @@
    * console.log( aid.array.remove(arr, 99) ); // [1, 2, 3, 4, 5]
    */
   array.remove = function remove(arr, target) {
-    if (!aid.isArray(arr)) {
-      throw new TypeError('arr parameter type of array.remove() must be Array.');
-    }
+    if (!aid.isArray(arr)) throw new TypeError('arr parameter type of array.remove() must be Array.');
 
     var clonedArr = arr.slice(0),
       index = array.indexOf(clonedArr, target);
@@ -2560,17 +2615,17 @@
     if (!aid.isInteger(rowNum) || !aid.isInteger(columnNum)) {
       throw new TypeError('rowNum, columnNum parameter of array.getMatrixArr() must be Integer Number.');
     }
-    if (arguments.length !== 3) {
-      throw Error('array.getMatrixArr() requires 3 parameters.');
-    }
 
-    var arr = [];
+    if (arguments.length !== 3) throw Error('array.getMatrixArr() requires 3 parameters.');
+
+    var arr = [], columns = [];
     for (var i = 0; i < rowNum; ++i) {
-      var columns = [];
+      columns = [];
 
       for (var j = 0; j < columnNum; ++j) {
         columns[j] = initialVal;
       }
+
       arr[i] = columns;
     }
 
@@ -2601,9 +2656,11 @@
 
       if (target === sortedArray[middle]) {
         return middle;
+
       } else {
         if (target < sortedArray[middle]) {
           last = middle - 1;
+
         } else {
           first = middle + 1;
         }
@@ -2632,6 +2689,7 @@
    */
   array.getFirstObjectHasProperty = function getFirstObjectHasProperty(arrayHasObjects, propertyKey, findPropertyValueOrRegex) {
     if (!aid.isArray(arrayHasObjects) || arrayHasObjects.length <= 0) return null;
+
     if (!aid.isString(propertyKey)) return null;
 
     var obj, result = null;
@@ -2644,6 +2702,7 @@
           result = obj;
           break;
         }
+
       } else {
         if (obj[propertyKey] === findPropertyValueOrRegex) {
           result = obj;
@@ -2666,6 +2725,7 @@
    */
   element.isEntirelyInViewport = function isEntirelyInViewport(ele) {
     if (typeof jQuery === 'function' && ele instanceof jQuery) ele = ele.get(0);
+
     if (!ele) return false;
 
     var rect = ele.getBoundingClientRect();
@@ -2688,6 +2748,7 @@
    */
   element.isPartiallyInViewport = function isPartiallyInViewport(ele) {
     if (typeof jQuery === 'function' && ele instanceof jQuery) ele = ele.get(0);
+
     if (!ele) return false;
 
     var rect = ele.getBoundingClientRect(),

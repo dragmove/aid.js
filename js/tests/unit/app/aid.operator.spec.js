@@ -13,7 +13,7 @@ describe('aid.js', function () {
     describe('["!"]', function () {
       var not = aid.operator['!'];
 
-      it('negate object parameter', function() {
+      it('negate object parameter', function () {
         it('input undefined, return true', function () {
           expect(not(undefined)).toEqual(true);
         });
@@ -47,7 +47,7 @@ describe('aid.js', function () {
         });
       });
 
-      it('negate isNaN with aid.compose', function() {
+      it('negate isNaN with aid.compose', function () {
         var isNotNaN = aid.compose(aid.operator['!'], isNaN);
 
         it('input undefined to aid.compose(aid.operator["!"], isNaN), return false', function () {

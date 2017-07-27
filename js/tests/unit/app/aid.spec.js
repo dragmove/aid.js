@@ -1442,7 +1442,8 @@ describe('aid.js', function () {
         }).toThrowError();
 
         expect(function () {
-          aid.rest(function() {});
+          aid.rest(function () {
+          });
         }).toThrowError();
       });
 
