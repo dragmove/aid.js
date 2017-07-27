@@ -44,7 +44,9 @@
    * @param {Object} obj
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.isDefined(undefined) ); // false
    * console.log( aid.isDefined(null) ); // false
+   * console.log( aid.isDefined(0) ); // true
    */
   aid.isDefined = function isDefined(obj) {
     if (obj === null || typeof obj === 'undefined') return false;
