@@ -1317,6 +1317,10 @@ describe('aid.js', function () {
         }).toThrowError();
 
         expect(function () {
+          aid.curry2([]);
+        }).toThrowError();
+
+        expect(function () {
           aid.curry2(NaN);
         }).toThrowError();
 
@@ -1363,6 +1367,10 @@ describe('aid.js', function () {
         }).toThrowError();
 
         expect(function () {
+          aid.curryAll([]);
+        }).toThrowError();
+
+        expect(function () {
           aid.curryAll(NaN);
         }).toThrowError();
 
@@ -1373,7 +1381,6 @@ describe('aid.js', function () {
 
       it('return function', function () {
         var curriedMax = aid.curryAll(Math.max, 2);
-
         expect(aid.isFunction(curriedMax)).toBe(true);
       });
 
@@ -1395,7 +1402,72 @@ describe('aid.js', function () {
     });
 
     describe('.rest()', function () {
-      // TODO
+      var rest = [];
+
+      beforeEach(function () {
+        rest = [];
+      });
+
+      it('func parameter type is not function, throw Error.', function () {
+        expect(function () {
+          aid.rest(undefined)
+        }).toThrowError();
+
+        expect(function () {
+          aid.rest(null);
+        }).toThrowError();
+
+        expect(function () {
+          aid.rest(false);
+        }).toThrowError();
+
+        expect(function () {
+          aid.rest(true);
+        }).toThrowError();
+
+        expect(function () {
+          aid.rest(0);
+        }).toThrowError();
+
+        expect(function () {
+          aid.rest('');
+        }).toThrowError();
+
+        expect(function () {
+          aid.rest([]);
+        }).not.toThrowError();
+
+        expect(function () {
+          aid.rest(NaN);
+        }).toThrowError();
+
+        expect(function () {
+          aid.rest(function() {});
+        }).toThrowError();
+      });
+
+      it('return empty array if array has no arguments', function () {
+        rest = aid.rest([], 3);
+        expect(rest).toEqual([]);
+      });
+
+      it('return array has rest arguments', function () {
+        rest = aid.rest([1, 2, 3, 4, 5]);
+        expect(rest).toEqual([2, 3, 4, 5]);
+      });
+
+      it('return array has rest arguments from beginIndex', function () {
+        rest = aid.rest([1, 2, 3, 4, 5], 2);
+        expect(rest).toEqual([3, 4, 5]);
+      });
+
+      it('return empty array if beginIndex >= length of array', function () {
+        rest = aid.rest([1, 2, 3, 4, 5], 5);
+        expect(rest).toEqual([]);
+
+        rest = aid.rest([1, 2, 3, 4, 5], 99);
+        expect(rest).toEqual([]);
+      });
     });
 
     describe('.pipeline()', function () {
