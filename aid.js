@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.48
+ * aid.js 0.1.49
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -51,7 +51,9 @@
    * @param {Object} obj
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.isDefined(undefined) ); // false
    * console.log( aid.isDefined(null) ); // false
+   * console.log( aid.isDefined(0) ); // true
    */
   aid.isDefined = function isDefined(obj) {
     if (obj === null || typeof obj === 'undefined') return false;
@@ -363,6 +365,9 @@
    * @param {Function} func
    * @param {Object} context
    * @example
+   * var result = [];
+   * aid.each('aid.js', function(v) { result.push(v); }, null);
+   * console.log( result.join('') ); // 'aid.js'
    */
   aid.each = function each(dataCanLoop, func, context) {
     if (!(aid.isArray(dataCanLoop) || aid.isString(dataCanLoop))) throw new TypeError('dataCanLoop parameter type of aid.each() must be Array or String.');
@@ -561,8 +566,11 @@
    * @returns {Function} return function
    * @example
    * console.log( curryAll(Math.max, 2)(1, 99) ); // 99
+   * console.log( curryAll(Math.max, 2)(1)(99) ); // 99
    */
   aid.curryAll = function curryAll(func, curryArgsNum) {
+    if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.curryAll() must be Function.');
+
     var arity = curryArgsNum || func.length;
 
     return function curried() {
