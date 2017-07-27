@@ -559,8 +559,11 @@
    * @returns {Function} return function
    * @example
    * console.log( curryAll(Math.max, 2)(1, 99) ); // 99
+   * console.log( curryAll(Math.max, 2)(1)(99) ); // 99
    */
   aid.curryAll = function curryAll(func, curryArgsNum) {
+    if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.curryAll() must be Function.');
+
     var arity = curryArgsNum || func.length;
 
     return function curried() {

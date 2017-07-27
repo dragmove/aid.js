@@ -913,42 +913,50 @@ describe('aid.js', function () {
     describe('.each()', function () {
       it('whether dataCanLoop parameter is not string or array, throw TypeError', function () {
         expect(function () {
-          aid.each(undefined, function() {}, null);
+          aid.each(undefined, function () {
+          }, null);
         }).toThrowError(Error);
 
         expect(function () {
-          aid.each(null, function() {}, null);
+          aid.each(null, function () {
+          }, null);
         }).toThrowError(Error);
 
         expect(function () {
-          aid.each(false, function() {}, null);
+          aid.each(false, function () {
+          }, null);
         }).toThrowError(Error);
 
         expect(function () {
-          aid.each(true, function() {}, null);
+          aid.each(true, function () {
+          }, null);
         }).toThrowError(Error);
 
         expect(function () {
-          aid.each('', function() {}, null);
+          aid.each('', function () {
+          }, null);
         }).not.toThrowError(Error);
 
         expect(function () {
-          aid.each(0, function() {}, null);
+          aid.each(0, function () {
+          }, null);
         }).toThrowError(Error);
 
         expect(function () {
-          aid.each(NaN, function() {}, null);
+          aid.each(NaN, function () {
+          }, null);
         }).toThrowError(Error);
 
         expect(function () {
-          aid.each([], function() {}, null);
+          aid.each([], function () {
+          }, null);
         }).not.toThrowError(Error);
       });
 
       it('input string, apply functions based on characters', function () {
         var result = [];
 
-        aid.each('aid.js', function(v) {
+        aid.each('aid.js', function (v) {
           result.push(v);
         }, null);
 
@@ -958,7 +966,7 @@ describe('aid.js', function () {
       it('input array, apply functions based on elements', function () {
         var result = [];
 
-        aid.each([1, 2, 3, 4, 5], function(v) {
+        aid.each([1, 2, 3, 4, 5], function (v) {
           result.push(v);
         }, null);
 
@@ -1210,46 +1218,55 @@ describe('aid.js', function () {
         }).toThrowError(TypeError, 'conditionFunc parameter type of aid.best() must be Function.');
 
         expect(function () {
-          aid.best(function () {}, []);
+          aid.best(function () {
+          }, []);
         }).not.toThrowError(TypeError, 'conditionFunc parameter type of aid.best() must be Function.');
       });
 
       it('if array parameter type is not array, throw Error.', function () {
         expect(function () {
-          aid.best(function() {}, undefined);
+          aid.best(function () {
+          }, undefined);
         }).toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
 
         expect(function () {
-          aid.best(function() {}, null);
+          aid.best(function () {
+          }, null);
         }).toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
 
         expect(function () {
-          aid.best(function() {}, false);
+          aid.best(function () {
+          }, false);
         }).toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
 
         expect(function () {
-          aid.best(function() {}, true);
+          aid.best(function () {
+          }, true);
         }).toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
 
         expect(function () {
-          aid.best(function() {}, 99);
+          aid.best(function () {
+          }, 99);
         }).toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
 
         expect(function () {
-          aid.best(function() {}, '');
+          aid.best(function () {
+          }, '');
         }).toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
 
         expect(function () {
-          aid.best(function() {}, {});
+          aid.best(function () {
+          }, {});
         }).toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
 
         expect(function () {
-          aid.best(function() {}, []);
+          aid.best(function () {
+          }, []);
         }).not.toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
       });
 
       it('find best value from array with condition', function () {
-        var val = aid.best(function(x, y) {
+        var val = aid.best(function (x, y) {
           return x > y;
         }, [2, 4, 1, 5, 3]);
 
@@ -1257,7 +1274,7 @@ describe('aid.js', function () {
       });
 
       it('find best value from array with condition', function () {
-        var val = aid.best(function(x, y) {
+        var val = aid.best(function (x, y) {
           return x < y;
         }, [2, 4, 1, 5, 3]);
 
@@ -1296,7 +1313,7 @@ describe('aid.js', function () {
         }).toThrowError();
 
         expect(function () {
-          aid.curry2("");
+          aid.curry2('');
         }).toThrowError();
 
         expect(function () {
@@ -1320,7 +1337,61 @@ describe('aid.js', function () {
     });
 
     describe('.curryAll()', function () {
-      // TODO
+      it('func parameter type is not function, throw Error.', function () {
+        expect(function () {
+          aid.curryAll(undefined)
+        }).toThrowError();
+
+        expect(function () {
+          aid.curryAll(null);
+        }).toThrowError();
+
+        expect(function () {
+          aid.curryAll(false);
+        }).toThrowError();
+
+        expect(function () {
+          aid.curryAll(true);
+        }).toThrowError();
+
+        expect(function () {
+          aid.curryAll(0);
+        }).toThrowError();
+
+        expect(function () {
+          aid.curryAll('');
+        }).toThrowError();
+
+        expect(function () {
+          aid.curryAll(NaN);
+        }).toThrowError();
+
+        expect(function () {
+          aid.curryAll(Math.max);
+        }).not.toThrowError();
+      });
+
+      it('return function', function () {
+        var curriedMax = aid.curryAll(Math.max, 2);
+
+        expect(aid.isFunction(curriedMax)).toBe(true);
+      });
+
+      it('return function if arguments are not filled', function () {
+        var curriedMax = aid.curryAll(Math.max, 2),
+          notFilledMax = curriedMax(1);
+
+        expect(aid.isFunction(notFilledMax)).toBe(true);
+      });
+
+      it('return result if arguments are filled', function () {
+        var curriedMax = aid.curryAll(Math.max, 2),
+          notFilledMax = curriedMax(1),
+          result = notFilledMax(99);
+
+        expect(result).toBe(99);
+        expect(curriedMax(1, 99)).toBe(99);
+      });
     });
 
     describe('.rest()', function () {
