@@ -1568,7 +1568,7 @@ describe('aid.js', function () {
         expect(lazyAdd99.force()).toEqual([3, 2, 1, 99]);
       });
 
-      it('return object can use with aid.pipeline'), function () {
+      it('return object can use with aid.pipeline', function () {
         function double(array) {
           return array.map(function (v) {
             return v * 2;
@@ -1582,7 +1582,15 @@ describe('aid.js', function () {
         }
 
         expect(aid.pipeline([1, 2, 3], double, lazyReverseAndNegative).force()).toEqual([-6, -4, -2]);
-      }
+      });
+    });
+
+    describe('.allOf()', function () {
+      // TODO
+    });
+
+    describe('.anyOf()', function () {
+      // TODO
     });
 
     describe('.createStack()', function () {

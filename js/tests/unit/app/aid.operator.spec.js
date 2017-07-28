@@ -19,7 +19,7 @@ describe('aid.js', function () {
         });
 
         it('input "undefined", return false', function () {
-          expect(not("undefined")).toEqual(false);
+          expect(not('undefined')).toEqual(false);
         });
 
         it('input null, return true', function () {
@@ -39,7 +39,7 @@ describe('aid.js', function () {
         });
 
         it('input "", return false', function () {
-          expect(not("")).toEqual(false);
+          expect(not('')).toEqual(false);
         });
 
         it('input {}, return false', function () {
