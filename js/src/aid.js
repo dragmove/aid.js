@@ -439,6 +439,38 @@
   };
 
   /**
+   * allOf
+   *
+   * @static
+   * @method allOf
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  aid.allOf = function allOf(/*args*/) {
+    var args = Array.prototype.slice.call(arguments);
+
+    return args.every(function(val) {
+      return (val === true);
+    });
+  };
+
+  /**
+   * anyOf
+   *
+   * @static
+   * @method anyOf
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  aid.anyOf = function anyOf(/*args*/) {
+    var args = Array.prototype.slice.call(arguments);
+
+    return args.some(function(val) {
+      return (val === true);
+    });
+  };
+
+  /**
    * return function always return constant value
    * http://underscorejs.org/#constant
    *

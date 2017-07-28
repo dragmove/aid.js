@@ -1030,6 +1030,14 @@ describe('aid.js', function () {
       });
     });
 
+    describe('.allOf()', function () {
+      // TODO
+    });
+
+    describe('.anyOf()', function () {
+      // TODO
+    });
+
     describe('.constant()', function () {
       it('input value, return value intactly', function () {
         var obj = {name: 'obj'},
@@ -1583,14 +1591,6 @@ describe('aid.js', function () {
 
         expect(aid.pipeline([1, 2, 3], double, lazyReverseAndNegative).force()).toEqual([-6, -4, -2]);
       });
-    });
-
-    describe('.allOf()', function () {
-      // TODO
-    });
-
-    describe('.anyOf()', function () {
-      // TODO
     });
 
     describe('.createStack()', function () {

@@ -54,6 +54,8 @@ console.log( isNotNaN(0) ); // true
     aid.each
     aid.truthy
     aid.falsy
+    aid.allOf
+    aid.anyOf
     aid.nth
     aid.constant
     aid.plucker
