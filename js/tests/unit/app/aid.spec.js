@@ -975,11 +975,93 @@ describe('aid.js', function () {
     });
 
     describe('.truthy()', function () {
-      // TODO - truthy
+      var isBoolRegex = /true|false/;
+
+      it('input undefined, return booblean', function () {
+        expect(aid.truthy(undefined)).toMatch(isBoolRegex);
+      });
+
+      it('input "undefined", return booblean', function () {
+        expect(aid.truthy('undefined')).toMatch(isBoolRegex);
+      });
+
+      it('input null, return booblean', function () {
+        expect(aid.truthy(null)).toMatch(isBoolRegex);
+      });
+
+      it('input false, return booblean', function () {
+        expect(aid.truthy(false)).toMatch(isBoolRegex);
+      });
+
+      it('input true, return booblean', function () {
+        expect(aid.truthy(true)).toMatch(isBoolRegex);
+      });
+
+      it('input 0, return booblean', function () {
+        expect(aid.truthy(0)).toMatch(isBoolRegex);
+      });
+
+      it('input "", return booblean', function () {
+        expect(aid.truthy('')).toMatch(isBoolRegex);
+      });
+
+      it('input [], return booblean', function () {
+        expect(aid.truthy([])).toMatch(isBoolRegex);
+      });
+
+      it('input function, return booblean', function () {
+        expect(aid.truthy(function () {
+        })).toMatch(isBoolRegex);
+      });
+
+      it('input {}, return booblean', function () {
+        expect(aid.truthy({})).toMatch(isBoolRegex);
+      });
     });
 
     describe('.falsy()', function () {
-      // TODO - falsy
+      var isBoolRegex = /true|false/;
+
+      it('input undefined, return booblean', function () {
+        expect(aid.falsy(undefined)).toMatch(isBoolRegex);
+      });
+
+      it('input "undefined", return booblean', function () {
+        expect(aid.falsy('undefined')).toMatch(isBoolRegex);
+      });
+
+      it('input null, return booblean', function () {
+        expect(aid.falsy(null)).toMatch(isBoolRegex);
+      });
+
+      it('input false, return booblean', function () {
+        expect(aid.falsy(false)).toMatch(isBoolRegex);
+      });
+
+      it('input true, return booblean', function () {
+        expect(aid.falsy(true)).toMatch(isBoolRegex);
+      });
+
+      it('input 0, return booblean', function () {
+        expect(aid.falsy(0)).toMatch(isBoolRegex);
+      });
+
+      it('input "", return booblean', function () {
+        expect(aid.falsy('')).toMatch(isBoolRegex);
+      });
+
+      it('input [], return booblean', function () {
+        expect(aid.falsy([])).toMatch(isBoolRegex);
+      });
+
+      it('input function, return booblean', function () {
+        expect(aid.falsy(function () {
+        })).toMatch(isBoolRegex);
+      });
+
+      it('input {}, return booblean', function () {
+        expect(aid.falsy({})).toMatch(isBoolRegex);
+      });
     });
 
     describe('.nth()', function () {

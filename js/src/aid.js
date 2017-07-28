@@ -397,6 +397,10 @@
    * @param {Object} object
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.truthy(true) ); // true
+   * console.log( aid.truthy([]) ); // true
+   * console.log( aid.truthy(0) ); // false
+   * console.log( aid.truthy('') ); // false
    */
   aid.truthy = function truthy(object) {
     return !!object;
@@ -410,6 +414,10 @@
    * @param {Object} object
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.falsy(true) ); // false
+   * console.log( aid.falsy([]) ); // false
+   * console.log( aid.falsy(0) ); // true
+   * console.log( aid.falsy('') ); // true
    */
   aid.falsy = function falsy(object) {
     return !!!object;
@@ -439,7 +447,7 @@
   };
 
   /**
-   * allOf
+   * check all arguments are true
    *
    * @static
    * @method allOf
@@ -449,13 +457,13 @@
   aid.allOf = function allOf(/*args*/) {
     var args = Array.prototype.slice.call(arguments);
 
-    return args.every(function(val) {
+    return args.every(function (val) {
       return (val === true);
     });
   };
 
   /**
-   * anyOf
+   * check some argument is true
    *
    * @static
    * @method anyOf
@@ -465,7 +473,7 @@
   aid.anyOf = function anyOf(/*args*/) {
     var args = Array.prototype.slice.call(arguments);
 
-    return args.some(function(val) {
+    return args.some(function (val) {
       return (val === true);
     });
   };
