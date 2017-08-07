@@ -1215,11 +1215,61 @@ describe('aid.js', function () {
     });
 
     describe('.allOf()', function () {
-      // TODO
+      it('return true when values are all true', function () {
+        expect(aid.allOf(true)).toBe(true);
+        expect(aid.allOf(true, true)).toBe(true);
+      });
+
+      it('return false when values are not all true', function () {
+        expect(aid.allOf(false)).toBe(false);
+        expect(aid.allOf(1)).toBe(false);
+        expect(aid.allOf('aid')).toBe(false);
+        expect(aid.allOf([])).toBe(false);
+        expect(aid.allOf(function() {})).toBe(false);
+        expect(aid.allOf({})).toBe(false);
+        expect(aid.allOf(/^aid/)).toBe(false);
+
+        expect(aid.allOf(true, false)).toBe(false);
+        expect(aid.allOf(false, true)).toBe(false);
+        expect(aid.allOf(1, 1)).toBe(false);
+        expect(aid.allOf('aid', 'aid')).toBe(false);
+        expect(aid.allOf([], [])).toBe(false);
+        expect(aid.allOf(function() {}, function() {})).toBe(false);
+        expect(aid.allOf({}, {})).toBe(false);
+        expect(aid.allOf(/^aid/, /^aid/)).toBe(false);
+      });
     });
 
     describe('.anyOf()', function () {
-      // TODO
+      it('return true when some value is true', function () {
+        expect(aid.anyOf(true)).toBe(true);
+
+        expect(aid.anyOf(true, false)).toBe(true);
+        expect(aid.anyOf(true, 1)).toBe(true);
+        expect(aid.anyOf(true, 'aid')).toBe(true);
+        expect(aid.anyOf(true, [])).toBe(true);
+        expect(aid.anyOf(true, function() {})).toBe(true);
+        expect(aid.anyOf(true, {})).toBe(true);
+        expect(aid.anyOf(true, /^aid/)).toBe(true);
+      });
+
+      it('return false when any values are not true', function () {
+        expect(aid.anyOf(false)).toBe(false);
+        expect(aid.anyOf(1)).toBe(false);
+        expect(aid.anyOf('aid')).toBe(false);
+        expect(aid.anyOf([])).toBe(false);
+        expect(aid.anyOf(function() {})).toBe(false);
+        expect(aid.anyOf({})).toBe(false);
+        expect(aid.anyOf(/^aid/)).toBe(false);
+
+        expect(aid.anyOf(false, false)).toBe(false);
+        expect(aid.anyOf(1, 1)).toBe(false);
+        expect(aid.anyOf('aid', 'aid')).toBe(false);
+        expect(aid.anyOf([], [])).toBe(false);
+        expect(aid.anyOf(function() {}, function() {})).toBe(false);
+        expect(aid.anyOf({}, {})).toBe(false);
+        expect(aid.anyOf(/^aid/, /^aid/)).toBe(false);
+      });
     });
 
     describe('.constant()', function () {

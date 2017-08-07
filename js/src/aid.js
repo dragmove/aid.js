@@ -453,6 +453,8 @@
    * @method allOf
    * @returns {Boolean} return boolean
    * @example
+   * console.log( aid.allOf(true, true) ); // true
+   * console.log( aid.allOf(true, false) ); // false
    */
   aid.allOf = function allOf(/*args*/) {
     var args = Array.prototype.slice.call(arguments);
@@ -469,6 +471,8 @@
    * @method anyOf
    * @returns {Boolean} return boolean
    * @example
+   * console.log( anyOf(true, false) ); // true
+   * console.log( anyOf(false, false) ); // false
    */
   aid.anyOf = function anyOf(/*args*/) {
     var args = Array.prototype.slice.call(arguments);
