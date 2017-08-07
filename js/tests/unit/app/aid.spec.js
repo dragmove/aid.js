@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 describe('aid.js', function () {
   // sample - http://jasmine.github.io/2.0/introduction.html
@@ -10,7 +10,7 @@ describe('aid.js', function () {
       });
 
       it('input "undefined", return true', function () {
-        expect(aid.existy("undefined")).toEqual(true);
+        expect(aid.existy('undefined')).toEqual(true);
       });
 
       it('input null, return false', function () {
@@ -30,7 +30,7 @@ describe('aid.js', function () {
       });
 
       it('input "", return true', function () {
-        expect(aid.existy("")).toEqual(true);
+        expect(aid.existy('')).toEqual(true);
       });
 
       it('input {}, return true', function () {
@@ -44,7 +44,7 @@ describe('aid.js', function () {
       });
 
       it('input "undefined", return true', function () {
-        expect(aid.isDefined("undefined")).toEqual(true);
+        expect(aid.isDefined('undefined')).toEqual(true);
       });
 
       it('input null, return false', function () {
@@ -64,7 +64,7 @@ describe('aid.js', function () {
       });
 
       it('input "", return true', function () {
-        expect(aid.isDefined("")).toEqual(true);
+        expect(aid.isDefined('')).toEqual(true);
       });
 
       it('input {}, return true', function () {
@@ -78,7 +78,7 @@ describe('aid.js', function () {
       });
 
       it('input "undefined", return false', function () {
-        expect(aid.isBoolean("undefined")).toEqual(false);
+        expect(aid.isBoolean('undefined')).toEqual(false);
       });
 
       it('input null, return false', function () {
@@ -112,7 +112,7 @@ describe('aid.js', function () {
       });
 
       it('input "undefined", return false', function () {
-        expect(aid.isNumber("undefined")).toEqual(false);
+        expect(aid.isNumber('undefined')).toEqual(false);
       });
 
       it('input null, return false', function () {
@@ -178,7 +178,7 @@ describe('aid.js', function () {
       });
 
       it('input "undefined", return false', function () {
-        expect(aid.isInteger("undefined")).toEqual(false);
+        expect(aid.isInteger('undefined')).toEqual(false);
       });
 
       it('input null, return false', function () {
@@ -224,7 +224,7 @@ describe('aid.js', function () {
       });
 
       it('input "undefined", return true', function () {
-        expect(aid.isString("undefined")).toEqual(true);
+        expect(aid.isString('undefined')).toEqual(true);
       });
 
       it('input null, return false', function () {
@@ -258,7 +258,7 @@ describe('aid.js', function () {
       });
 
       it('input "undefined", return false', function () {
-        expect(aid.isArray("undefined")).toEqual(false);
+        expect(aid.isArray('undefined')).toEqual(false);
       });
 
       it('input null, return false', function () {
@@ -296,7 +296,7 @@ describe('aid.js', function () {
       });
 
       it('input "undefined", return false', function () {
-        expect(aid.isObject("undefined")).toEqual(false);
+        expect(aid.isObject('undefined')).toEqual(false);
       });
 
       it('input null, return false', function () {
@@ -334,7 +334,7 @@ describe('aid.js', function () {
       });
 
       it('input "undefined", return false', function () {
-        expect(aid.isFunction("undefined")).toEqual(false);
+        expect(aid.isFunction('undefined')).toEqual(false);
       });
 
       it('input null, return false', function () {
@@ -383,7 +383,7 @@ describe('aid.js', function () {
       });
 
       it('input "undefined", return false', function () {
-        expect(aid.isRegExp("undefined")).toEqual(false);
+        expect(aid.isRegExp('undefined')).toEqual(false);
       });
 
       it('input null, return false', function () {
@@ -451,7 +451,7 @@ describe('aid.js', function () {
         }).toThrowError();
 
         expect(function () {
-          aid.extend("", {say: 'hello, world'});
+          aid.extend('', {say: 'hello, world'});
         }).toThrowError();
 
         expect(function () {
@@ -815,7 +815,109 @@ describe('aid.js', function () {
     });
 
     describe('.compose()', function () {
-      // TODO - compose
+      it('func_a parameter type is not function, throw Error.', function () {
+        expect(function () {
+          aid.compose(undefined, function () {
+          });
+        }).toThrowError();
+
+        expect(function () {
+          aid.compose(null, function () {
+          });
+        }).toThrowError();
+
+        expect(function () {
+          aid.compose(false, function () {
+          });
+        }).toThrowError();
+
+        expect(function () {
+          aid.compose(true, function () {
+          });
+        }).toThrowError();
+
+        expect(function () {
+          aid.compose(0, function () {
+          });
+        }).toThrowError();
+
+        expect(function () {
+          aid.compose(NaN, function () {
+          });
+        }).toThrowError();
+
+        expect(function () {
+          aid.compose('', function () {
+          });
+        }).toThrowError();
+
+        expect(function () {
+          aid.compose([], function () {
+          });
+        }).toThrowError();
+
+        expect(function () {
+          aid.compose({}, function () {
+          });
+        }).toThrowError();
+      });
+
+      it('func_b parameter type is not function, throw Error.', function () {
+        expect(function () {
+          aid.compose(function () {
+          }, undefined);
+        }).toThrowError();
+
+        expect(function () {
+          aid.compose(function () {
+          }, null);
+        }).toThrowError();
+
+        expect(function () {
+          aid.compose(function () {
+          }, false);
+        }).toThrowError();
+
+        expect(function () {
+          aid.compose(function () {
+          }, true);
+        }).toThrowError();
+
+        expect(function () {
+          aid.compose(function () {
+          }, 0);
+        }).toThrowError();
+
+        expect(function () {
+          aid.compose(function () {
+          }, NaN);
+        }).toThrowError();
+
+        expect(function () {
+          aid.compose(function () {
+          }, '');
+        }).toThrowError();
+
+        expect(function () {
+          aid.compose(function () {
+          }, []);
+        }).toThrowError();
+
+        expect(function () {
+          aid.compose(function () {
+          }, {});
+        }).toThrowError();
+      });
+
+      it('return parameter type is function.', function () {
+        var isNotNaN = aid.compose(function (object) {
+          return !object;
+        }, isNaN);
+
+        var isFunction = aid.isFunction(isNotNaN);
+
+        expect(isFunction).toBeTruthy();
+      });
     });
 
     describe('.not()', function () {
@@ -869,7 +971,7 @@ describe('aid.js', function () {
         });
 
         it('input "undefined" to aid.not(aid.existy), return false', function () {
-          expect(notExisty("undefined")).toEqual(false);
+          expect(notExisty('undefined')).toEqual(false);
         });
 
         it('input null to aid.not(aid.existy), return true', function () {

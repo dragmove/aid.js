@@ -189,7 +189,9 @@ describe('aid.js', function () {
         }).toThrowError(TypeError);
       });
 
-      // TODO - isEpsilonEqual
+      it('return true, when Number.EPSILON > Math.abs(number_a - number_b)', function () {
+        expect(math.isEpsilonEqual(0.1 + 0.2, 0.3)).toBe(true);
+      });
     });
 
     describe('.isIndexInLoop()', function () {

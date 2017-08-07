@@ -2021,7 +2021,7 @@
   };
 
   /**
-   * get flag whether 2 numbers are equal by Number.EPSILON
+   * get flag whether 2 numbers are equal by Number.EPSILON (2.220446049250313e-16)
    *
    * @static
    * @method isEpsilonEqual
@@ -2036,9 +2036,9 @@
       throw new TypeError('math.isEpsilonEqual() requires Number parameters.');
     }
 
-    if (!Number.EPSILON) throw new Error('Number.EPSILON is not exist. math.isEpsilonEqual() can not use.');
+    var epsilon = (aid.isDefined(Number.EPSILON)) ? Number.EPSILON : 2.220446049250313e-16;
 
-    return (Math.abs(number_a - number_b) < Number.EPSILON);
+    return (Math.abs(number_a - number_b) < epsilon);
   };
 
   /**

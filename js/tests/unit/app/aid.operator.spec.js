@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 describe('aid.js', function () {
   describe('aid.operator', function () {
