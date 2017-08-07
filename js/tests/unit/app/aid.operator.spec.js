@@ -54,6 +54,9 @@ describe('aid.js', function () {
       it('input equal regexes, return true', function () {
         var regex = /^aid/;
         expect(identity(regex, regex)).toBe(true);
+
+        regex = new RegExp('^aid');
+        expect(identity(regex, regex)).toBe(true);
       });
     });
 

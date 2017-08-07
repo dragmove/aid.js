@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.52
+ * aid.js 0.1.53
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -880,17 +880,15 @@
    *
    * @static
    * @method +
-   * @param {Number} number_a
-   * @param {Number} number_b
-   * @returns {Number} return number
+   * @param {Object} object_a
+   * @param {Object} object_b
+   * @returns {Object} return object
    * @example
+   * var plus = aid.operator['+'];
+   * console.log( plus(1, 2) ); // 3
    */
-  operator['+'] = function plus(number_a, number_b) {
-    if (!aid.isNumber(number_a) || !aid.isNumber(number_b)) {
-      throw new TypeError('operator["+"] requires Number parameters.');
-    }
-
-    return number_a + number_b;
+  operator['+'] = function plus(object_a, object_b) {
+    return object_a + object_b;
   };
 
   /**
@@ -902,6 +900,8 @@
    * @param {Object} object_b
    * @returns {Boolean} return boolean
    * @example
+   * var identity = aid.operator['==='];
+   * console.log( identity(1, 1) ); // true
    */
   operator['==='] = function identity(object_a, object_b) {
     return object_a === object_b;
@@ -2028,7 +2028,7 @@
   };
 
   /**
-   * get flag whether 2 numbers are equal by Number.EPSILON
+   * get flag whether 2 numbers are equal by Number.EPSILON (2.220446049250313e-16)
    *
    * @static
    * @method isEpsilonEqual
@@ -2043,9 +2043,9 @@
       throw new TypeError('math.isEpsilonEqual() requires Number parameters.');
     }
 
-    if (!Number.EPSILON) throw new Error('Number.EPSILON is not exist. math.isEpsilonEqual() can not use.');
+    var epsilon = (aid.isDefined(Number.EPSILON)) ? Number.EPSILON : 2.220446049250313e-16;
 
-    return (Math.abs(number_a - number_b) < Number.EPSILON);
+    return (Math.abs(number_a - number_b) < epsilon);
   };
 
   /**
