@@ -3,11 +3,58 @@
 describe('aid.js', function () {
   describe('aid.operator', function () {
     describe('["+"]', function () {
-      // TODO - ["+"]
+      var plus = aid.operator['+'];
+
+      it('return value plus two numbers.', function () {
+        var result = plus(1, 2);
+        expect(aid.isNumber(result)).toBe(true);
+      });
     });
 
     describe('["==="]', function () {
-      // TODO - ["==="]
+      var identity = aid.operator['==='];
+
+      it('input undefined values, return true', function () {
+        expect(identity(undefined, undefined)).toBe(true);
+      });
+
+      it('input null values, return true', function () {
+        expect(identity(null, null)).toBe(true);
+      });
+
+      it('input equal numbers, return true', function () {
+        expect(identity(1, 1)).toBe(true);
+      });
+
+      it('input equal booleans, return true', function () {
+        expect(identity(true, true)).toBe(true);
+        expect(identity(false, false)).toBe(true);
+      });
+
+      it('input equal strings, return true', function () {
+        expect(identity('aid', 'aid')).toBe(true);
+      });
+
+      it('input equal arrays, return true', function () {
+        var arr = [1, 2, 3];
+        expect(identity(arr, arr)).toBe(true);
+      });
+
+      it('input equal functions, return true', function () {
+        var func = function () {
+        };
+        expect(identity(func, func)).toBe(true);
+      });
+
+      it('input equal objects, return true', function () {
+        var obj = {};
+        expect(identity(obj, obj)).toBe(true);
+      });
+
+      it('input equal regexes, return true', function () {
+        var regex = /^aid/;
+        expect(identity(regex, regex)).toBe(true);
+      });
     });
 
     describe('["!"]', function () {

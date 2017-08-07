@@ -146,46 +146,57 @@ describe('aid.js', function () {
     });
 
     describe('.isEpsilonEqual()', function () {
-      it('input arguments are not Number type, throw TypeError.', function () {
+      it('arguments are not Number type, throw TypeError.', function () {
         expect(function () {
-          math.getSizeWidthFit(undefined);
+          math.isEpsilonEqual(1, undefined);
+          math.isEpsilonEqual(undefined, 1);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit(null);
+          math.isEpsilonEqual(1, null);
+          math.isEpsilonEqual(null, 1);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit(false);
+          math.isEpsilonEqual(1, false);
+          math.isEpsilonEqual(false, 1);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit(true);
+          math.isEpsilonEqual(1, true);
+          math.isEpsilonEqual(true, 1);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit('');
+          math.isEpsilonEqual(1, '');
+          math.isEpsilonEqual('', 1);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit({});
+          math.isEpsilonEqual(1, {});
+          math.isEpsilonEqual({}, 1);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit([]);
+          math.isEpsilonEqual(1, []);
+          math.isEpsilonEqual([], 1);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit(function () {
+          math.isEpsilonEqual(1, function () {
           });
+          math.isEpsilonEqual(function () {
+          }, 1);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit(new RegExp('^aid'));
+          math.isEpsilonEqual(1, new RegExp('^aid'));
+          math.isEpsilonEqual(new RegExp('^aid'), 1);
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getSizeWidthFit(/^aid/);
+          math.isEpsilonEqual(1, /^aid/);
+          math.isEpsilonEqual(/^aid/, 1);
         }).toThrowError(TypeError);
       });
 
