@@ -1868,7 +1868,7 @@
    * @param {Number} number
    * @returns {String} return string
    * @example
-   * console.log( aid.string.numberWithCommas(1000000) ); // 1000000 to '1,000,000'.
+   * console.log( aid.string.numberWithCommas(1000000) ); // '1,000,000'
    */
   string.numberWithCommas = function numberWithCommas(number) {
     if (!aid.isInteger(number)) throw new TypeError('string.numberWithCommas() requires Integer Number parameter.');
