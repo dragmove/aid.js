@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.55
+ * aid.js 0.1.56
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -323,8 +323,15 @@
    * @param {Object} context
    * @returns {Function} return function
    * @example
+   * this.title = 'global - aid.js';
+   * var obj = { title: 'obj - aid.js', getTitle: function() { return this.title; } };
+   * var getObjTitle = bind(obj.getTitle, obj), getGlobalTitle = bind(obj.getTitle, window);
+   * console.log( getObjTitle() ); // 'obj - aid.js';
+   * console.log( getGlobalTitle() ); // 'global - aid.js';
    */
   aid.bind = function bind(func, context) {
+    if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.bind() must be Function.');
+
     return function () {
       return func.apply(context, arguments);
     };
@@ -335,8 +342,8 @@
    *
    * @static
    * @method compose
-   * @param {Function} function
-   * @param {Function} function
+   * @param {Function} func_a
+   * @param {Function} func_b
    * @returns {Function} return function
    * @example
    * var isNotNaN = aid.compose(aid.operator['!'], isNaN);
@@ -366,8 +373,8 @@
   aid.not = function not(func) {
     if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.not() must be Function.');
 
-    return function (object) {
-      return !func(object);
+    return function (obj) {
+      return !func(obj);
     };
   };
 
@@ -376,7 +383,7 @@
    *
    * @static
    * @method each
-   * @param {Array or String} data can loop
+   * @param {Array or String} dataCanLoop
    * @param {Function} func
    * @param {Object} context
    * @example
@@ -401,7 +408,7 @@
    *
    * @static
    * @method truthy
-   * @param {Object} object
+   * @param {Object} obj
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.truthy(true) ); // true
@@ -409,8 +416,8 @@
    * console.log( aid.truthy(0) ); // false
    * console.log( aid.truthy('') ); // false
    */
-  aid.truthy = function truthy(object) {
-    return !!object;
+  aid.truthy = function truthy(obj) {
+    return !!obj;
   };
 
   /**
@@ -418,7 +425,7 @@
    *
    * @static
    * @method falsy
-   * @param {Object} object
+   * @param {Object} obj
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.falsy(true) ); // false
@@ -426,8 +433,8 @@
    * console.log( aid.falsy(0) ); // true
    * console.log( aid.falsy('') ); // true
    */
-  aid.falsy = function falsy(object) {
-    return !!!object;
+  aid.falsy = function falsy(obj) {
+    return !!!obj;
   };
 
   /**
@@ -435,7 +442,7 @@
    *
    * @static
    * @method nth
-   * @param {Array or String} data can loop
+   * @param {Array or String} dataCanLoop
    * @param {Number} index
    * @example
    * console.log( aid.nth('string', 1) ); // 't'
@@ -495,15 +502,15 @@
    *
    * @static
    * @method constant
-   * @param {Object} object
+   * @param {Object} obj
    * @returns {Function} return function
    * @example
    * var obj = {name: 'aid.js'};
    * console.log( aid.constant(obj)() === obj ); // true
    */
-  aid.constant = function constant(object) {
+  aid.constant = function constant(obj) {
     return function () {
-      return object;
+      return obj;
     };
   };
 
@@ -916,14 +923,14 @@
    *
    * @static
    * @method !
-   * @param {Object} object
+   * @param {Object} obj
    * @returns {Boolean} return boolean
    * @example
    * var isNotNaN = aid.compose(aid.operator['!'], isNaN);
    * console.log( isNotNaN(0) ); // true
    */
-  operator['!'] = function not(object) {
-    return !object;
+  operator['!'] = function not(obj) {
+    return !obj;
   };
 
   /**

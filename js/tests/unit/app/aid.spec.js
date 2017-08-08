@@ -429,64 +429,68 @@ describe('aid.js', function () {
     });
 
     describe('.extend()', function () {
-      it('whether destination parameter type is not object or instance of object, throw Error.', function () {
+      var ERROR_MSG = 'destination parameter type of aid.extend() must be instance of Object, and object type.';
+
+      it('whether destination parameter type is not object or instance of object, throw Error', function () {
         expect(function () {
           aid.extend(undefined, {say: 'hello, world'});
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.extend(null, {say: 'hello, world'});
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.extend(false, {say: 'hello, world'});
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.extend(true, {say: 'hello, world'});
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.extend(0, {say: 'hello, world'});
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.extend('', {say: 'hello, world'});
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.extend(NaN, {say: 'hello, world'});
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
       });
 
-      it('if source parameter type is not object type, throw Error.', function () {
+      it('if source parameter type is not object type, throw Error', function () {
+        var ERROR_MSG = 'source parameter type of aid.extend() must be object type.';
+
         expect(function () {
           aid.extend({}, undefined);
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.extend({}, null);
-        }).not.toThrowError();
+        }).not.toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.extend({}, false);
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.extend({}, true);
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.extend({}, 0);
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.extend({}, '');
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.extend({}, NaN);
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
       });
 
       it('input two objects, return extended object', function () {
@@ -573,69 +577,73 @@ describe('aid.js', function () {
     });
 
     describe('.namespace()', function () {
-      it('if namespace parameter type is not string, throw Error.', function () {
+      it('if namespace parameter type is not string, throw Error', function () {
+        var ERROR_MSG = 'namespace parameter type of aid.namespace() must be String.';
+
         expect(function () {
           aid.namespace(undefined);
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.namespace(null);
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.namespace(false);
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.namespace(true);
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.namespace(0);
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.namespace([]);
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.namespace(NaN);
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
       });
 
-      it('if parent parameter type is not object or null or undefined, throw Error.', function () {
+      it('if parent parameter type is not object or null or undefined, throw Error', function () {
+        var ERROR_MSG = 'parent parameter type of aid.namespace() must be Object or null or undefined.';
+
         expect(function () {
           var obj = {};
           aid.namespace('first.second', obj);
-        }).not.toThrowError();
+        }).not.toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.namespace('first.second', undefined);
-        }).not.toThrowError();
+        }).not.toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.namespace('first.second', null);
-        }).not.toThrowError();
+        }).not.toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.namespace('first.second', false);
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.namespace('first.second', true);
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.namespace('first.second', 0);
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.namespace('first.second', []);
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.namespace('first.second', NaN);
-        }).toThrowError();
+        }).toThrowError(TypeError, ERROR_MSG);
       });
 
       it('input aid.second.third string, set aid.second.third object', function () {
@@ -674,114 +682,124 @@ describe('aid.js', function () {
       });
 
       it('if borrower parameter is not Object type, throw TypeError', function () {
+        var ERROR_MSG = 'borrower, donor parameter type of aid.borrow() must be Object.';
+
         expect(function () {
           aid.borrow(undefined, donor, 'say');
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.borrow(null, donor, 'say');
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.borrow(false, donor, 'say');
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.borrow(true, donor, 'say');
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.borrow('', donor, 'say');
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.borrow(0, donor, 'say');
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.borrow(NaN, donor, 'say');
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.borrow([], donor, 'say');
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
       });
 
       it('if donor parameter is not Object type, throw TypeError', function () {
+        var ERROR_MSG = 'borrower, donor parameter type of aid.borrow() must be Object.';
+
         expect(function () {
           aid.borrow(borrower, undefined, 'say');
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.borrow(borrower, null, 'say');
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.borrow(borrower, false, 'say');
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.borrow(borrower, true, 'say');
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.borrow(borrower, '', 'say');
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.borrow(borrower, 0, 'say');
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.borrow(borrower, NaN, 'say');
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.borrow(borrower, [], 'say');
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
       });
 
       it('if functionName parameter is not String type, throw TypeError', function () {
+        var ERROR_MSG = 'functionName parameter type of aid.borrow() must be String.';
+
         expect(function () {
           aid.borrow(borrower, donor, undefined);
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.borrow(borrower, donor, null);
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.borrow(borrower, donor, false);
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.borrow(borrower, donor, true);
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.borrow(borrower, donor, 0);
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.borrow(borrower, donor, NaN);
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.borrow(borrower, donor, {});
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.borrow(borrower, donor, []);
-        }).toThrowError(Error);
+        }).toThrowError(TypeError, ERROR_MSG);
       });
 
       it('if donor has not function with functionName, throw Error', function () {
+        var ERROR_MSG = 'donor object parameter of aid.borrow() has not function with functionName.';
+
         expect(function () {
           aid.borrow(borrower, donor, 'hello');
-        }).toThrowError(Error);
+        }).toThrowError(Error, ERROR_MSG);
       });
 
       it('if borrower already has function with functionName, throw Error', function () {
+        var ERROR_MSG = 'borrower object parameter of aid.borrow() already has function with functionName.';
+
         borrower = {
           say: function () {
             return "this method is borrower's";
@@ -790,13 +808,13 @@ describe('aid.js', function () {
 
         expect(function () {
           aid.borrow(borrower, donor, 'say');
-        }).toThrowError(Error);
+        }).toThrowError(Error, ERROR_MSG);
 
         borrower = {};
 
         expect(function () {
           aid.borrow(borrower, donor, 'say');
-        }).not.toThrowError(Error);
+        }).not.toThrowError(Error, ERROR_MSG);
       });
 
       it('after input borrower, donor, "say" parameters, borrower has say method', function () {
@@ -811,11 +829,66 @@ describe('aid.js', function () {
     });
 
     describe('.bind()', function () {
-      // TODO - bind
+      it('if func parameter is not Function type, throw TypeError', function () {
+        var ERROR_MSG = 'func parameter type of aid.bind() must be Function.';
+
+        expect(function () {
+          aid.bind(undefined);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          aid.bind(null);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          aid.bind(false);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          aid.bind(true);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          aid.bind(0);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          aid.bind(NaN);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          aid.bind('');
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          aid.bind({});
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          aid.bind([]);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          aid.bind(/^aid/);
+        }).toThrowError(TypeError, ERROR_MSG);
+      });
+
+      it('return value type is function', function () {
+        var obj = {
+          title: 'obj - aid.js',
+          getTitle: function () {
+            return this.title;
+          }
+        };
+
+        var getObjTitle = aid.bind(obj.getTitle, obj);
+
+        expect(aid.isFunction(getObjTitle)).toBeTruthy();
+      });
     });
 
     describe('.compose()', function () {
-      it('func_a parameter type is not function, throw Error.', function () {
+      it('func_a parameter type is not function, throw Error', function () {
         expect(function () {
           aid.compose(undefined, function () {
           });
@@ -862,7 +935,7 @@ describe('aid.js', function () {
         }).toThrowError();
       });
 
-      it('func_b parameter type is not function, throw Error.', function () {
+      it('func_b parameter type is not function, throw Error', function () {
         expect(function () {
           aid.compose(function () {
           }, undefined);
@@ -909,7 +982,7 @@ describe('aid.js', function () {
         }).toThrowError();
       });
 
-      it('return parameter type is function.', function () {
+      it('return value type is function', function () {
         var isNotNaN = aid.compose(function (object) {
           return !object;
         }, isNaN);
@@ -921,7 +994,7 @@ describe('aid.js', function () {
     });
 
     describe('.not()', function () {
-      it('func parameter type is not function, throw Error.', function () {
+      it('func parameter type is not function, throw Error', function () {
         expect(function () {
           aid.not(undefined)
         }).toThrowError();
@@ -951,7 +1024,7 @@ describe('aid.js', function () {
         }).toThrowError();
       });
 
-      it('func parameter type is function, does not throw Error.', function () {
+      it('func parameter type is function, does not throw Error', function () {
         expect(function () {
           aid.not(function () {
             return true;
@@ -1167,7 +1240,7 @@ describe('aid.js', function () {
     });
 
     describe('.nth()', function () {
-      it('whether dataCanLoop parameter type is not string or array, throw TypeError.', function () {
+      it('whether dataCanLoop parameter type is not string or array, throw TypeError', function () {
         expect(function () {
           aid.nth(undefined, 0);
         }).toThrowError();
@@ -1225,7 +1298,8 @@ describe('aid.js', function () {
         expect(aid.allOf(1)).toBe(false);
         expect(aid.allOf('aid')).toBe(false);
         expect(aid.allOf([])).toBe(false);
-        expect(aid.allOf(function() {})).toBe(false);
+        expect(aid.allOf(function () {
+        })).toBe(false);
         expect(aid.allOf({})).toBe(false);
         expect(aid.allOf(/^aid/)).toBe(false);
 
@@ -1234,7 +1308,9 @@ describe('aid.js', function () {
         expect(aid.allOf(1, 1)).toBe(false);
         expect(aid.allOf('aid', 'aid')).toBe(false);
         expect(aid.allOf([], [])).toBe(false);
-        expect(aid.allOf(function() {}, function() {})).toBe(false);
+        expect(aid.allOf(function () {
+        }, function () {
+        })).toBe(false);
         expect(aid.allOf({}, {})).toBe(false);
         expect(aid.allOf(/^aid/, /^aid/)).toBe(false);
       });
@@ -1248,7 +1324,8 @@ describe('aid.js', function () {
         expect(aid.anyOf(true, 1)).toBe(true);
         expect(aid.anyOf(true, 'aid')).toBe(true);
         expect(aid.anyOf(true, [])).toBe(true);
-        expect(aid.anyOf(true, function() {})).toBe(true);
+        expect(aid.anyOf(true, function () {
+        })).toBe(true);
         expect(aid.anyOf(true, {})).toBe(true);
         expect(aid.anyOf(true, /^aid/)).toBe(true);
       });
@@ -1258,7 +1335,8 @@ describe('aid.js', function () {
         expect(aid.anyOf(1)).toBe(false);
         expect(aid.anyOf('aid')).toBe(false);
         expect(aid.anyOf([])).toBe(false);
-        expect(aid.anyOf(function() {})).toBe(false);
+        expect(aid.anyOf(function () {
+        })).toBe(false);
         expect(aid.anyOf({})).toBe(false);
         expect(aid.anyOf(/^aid/)).toBe(false);
 
@@ -1266,7 +1344,9 @@ describe('aid.js', function () {
         expect(aid.anyOf(1, 1)).toBe(false);
         expect(aid.anyOf('aid', 'aid')).toBe(false);
         expect(aid.anyOf([], [])).toBe(false);
-        expect(aid.anyOf(function() {}, function() {})).toBe(false);
+        expect(aid.anyOf(function () {
+        }, function () {
+        })).toBe(false);
         expect(aid.anyOf({}, {})).toBe(false);
         expect(aid.anyOf(/^aid/, /^aid/)).toBe(false);
       });
@@ -1291,7 +1371,7 @@ describe('aid.js', function () {
     });
 
     describe('.plucker()', function () {
-      it('whether field parameter type is not string or number, throw Error.', function () {
+      it('whether field parameter type is not string or number, throw Error', function () {
         expect(function () {
           aid.plucker(undefined, 0);
         }).toThrowError();
@@ -1322,7 +1402,7 @@ describe('aid.js', function () {
         }).toThrowError();
       });
 
-      it('if field parameter type is string or number, does not throw Error.', function () {
+      it('if field parameter type is string or number, does not throw Error', function () {
         expect(function () {
           aid.plucker('title');
         }).not.toThrowError();
@@ -1335,7 +1415,7 @@ describe('aid.js', function () {
       it('return function', function () {
         var getTitle = aid.plucker('title');
 
-        it('obj parameter type is not object or array or string, throw Error.', function () {
+        it('obj parameter type is not object or array or string, throw Error', function () {
           expect(function () {
             getTitle(undefined);
           }).toThrowError();
@@ -1426,85 +1506,89 @@ describe('aid.js', function () {
     });
 
     describe('.best()', function () {
-      it('if conditionFunc parameter type is not function, throw Error.', function () {
+      it('if conditionFunc parameter type is not function, throw Error', function () {
+        var ERROR_MSG = 'conditionFunc parameter type of aid.best() must be Function.';
+
         expect(function () {
           aid.best(undefined, []);
-        }).toThrowError(TypeError, 'conditionFunc parameter type of aid.best() must be Function.');
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.best(null, []);
-        }).toThrowError(TypeError, 'conditionFunc parameter type of aid.best() must be Function.');
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.best(false, []);
-        }).toThrowError(TypeError, 'conditionFunc parameter type of aid.best() must be Function.');
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.best(true, []);
-        }).toThrowError(TypeError, 'conditionFunc parameter type of aid.best() must be Function.');
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.best(99, []);
-        }).toThrowError(TypeError, 'conditionFunc parameter type of aid.best() must be Function.');
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.best('', []);
-        }).toThrowError(TypeError, 'conditionFunc parameter type of aid.best() must be Function.');
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.best([], []);
-        }).toThrowError(TypeError, 'conditionFunc parameter type of aid.best() must be Function.');
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.best({}, []);
-        }).toThrowError(TypeError, 'conditionFunc parameter type of aid.best() must be Function.');
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.best(function () {
           }, []);
-        }).not.toThrowError(TypeError, 'conditionFunc parameter type of aid.best() must be Function.');
+        }).not.toThrowError(TypeError, ERROR_MSG);
       });
 
-      it('if array parameter type is not array, throw Error.', function () {
+      it('if array parameter type is not array, throw Error', function () {
+        var ERROR_MSG = 'array parameter type of aid.best() must be Array.';
+
         expect(function () {
           aid.best(function () {
           }, undefined);
-        }).toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.best(function () {
           }, null);
-        }).toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.best(function () {
           }, false);
-        }).toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.best(function () {
           }, true);
-        }).toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.best(function () {
           }, 99);
-        }).toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.best(function () {
           }, '');
-        }).toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.best(function () {
           }, {});
-        }).toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           aid.best(function () {
           }, []);
-        }).not.toThrowError(TypeError, 'array parameter type of aid.best() must be Array.');
+        }).not.toThrowError(TypeError, ERROR_MSG);
       });
 
       it('find best value from array with condition', function () {
@@ -1533,7 +1617,7 @@ describe('aid.js', function () {
     });
 
     describe('.curry2()', function () {
-      it('func parameter type is not function, throw Error.', function () {
+      it('func parameter type is not function, throw Error', function () {
         expect(function () {
           aid.curry2(undefined)
         }).toThrowError();
@@ -1583,7 +1667,7 @@ describe('aid.js', function () {
     });
 
     describe('.curryAll()', function () {
-      it('func parameter type is not function, throw Error.', function () {
+      it('func parameter type is not function, throw Error', function () {
         expect(function () {
           aid.curryAll(undefined)
         }).toThrowError();
@@ -1650,7 +1734,7 @@ describe('aid.js', function () {
         rest = [];
       });
 
-      it('func parameter type is not function, throw Error.', function () {
+      it('func parameter type is not function, throw Error', function () {
         expect(function () {
           aid.rest(undefined)
         }).toThrowError();
@@ -1733,7 +1817,7 @@ describe('aid.js', function () {
         expect(seed).toEqual(99);
       });
 
-      it('rest parameters type is not function, throw Error.', function () {
+      it('rest parameters type is not function, throw Error', function () {
         expect(function () {
           aid.pipeline(99, undefined);
         }).toThrowError();
@@ -1852,7 +1936,7 @@ describe('aid.js', function () {
         expect(stack.peek()).toEqual('bar');
       });
 
-      it('after execute stack.pop(), stack.length() is decreased.', function () {
+      it('after execute stack.pop(), stack.length() is decreased', function () {
         var val = stack.pop();
         expect(val).toEqual('bar');
         expect(stack.peek()).toEqual('foo');
@@ -1868,7 +1952,7 @@ describe('aid.js', function () {
         expect(stack.length()).toEqual(0);
       });
 
-      it('after execute stack.clear(), stack.length() is 0.', function () {
+      it('after execute stack.clear(), stack.length() is 0', function () {
         for (var i = 0; i < 5; ++i) {
           stack.push(i);
         }
@@ -1893,7 +1977,7 @@ describe('aid.js', function () {
         expect(linkedList).not.toEqual(null);
       });
 
-      it('getAllNodes() return head node, when LinkedList created.', function () {
+      it('getAllNodes() return head node, when LinkedList created', function () {
         var node = linkedList.getAllNodes();
         expect(node[0]).toEqual(linkedList.head);
       });
