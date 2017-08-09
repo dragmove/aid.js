@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.56
+ * aid.js 0.1.57
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
