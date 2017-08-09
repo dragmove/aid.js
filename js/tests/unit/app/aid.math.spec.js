@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 describe('aid.js', function () {
   describe('aid.math', function () {
@@ -6,143 +6,287 @@ describe('aid.js', function () {
 
     describe('.getSizeAspectFill()', function () {
       it('input arguments are not Number type, throw TypeError.', function () {
-        expect(function () {
-          math.getSizeAspectFill(undefined);
-        }).toThrowError(TypeError);
+        var ERROR_MSG = 'math.getSizeAspectFill() requires Number parameters.';
 
         expect(function () {
-          math.getSizeAspectFill(null);
-        }).toThrowError(TypeError);
+          math.getSizeAspectFill(undefined, 1, 1, 1);
+          math.getSizeAspectFill(1, undefined, 1, 1);
+          math.getSizeAspectFill(1, 1, undefined, 1);
+          math.getSizeAspectFill(1, 1, 1, undefined);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeAspectFill(false);
-        }).toThrowError(TypeError);
+          math.getSizeAspectFill(null, 1, 1, 1);
+          math.getSizeAspectFill(1, null, 1, 1);
+          math.getSizeAspectFill(1, 1, null, 1);
+          math.getSizeAspectFill(1, 1, 1, null);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeAspectFill(true);
-        }).toThrowError(TypeError);
+          math.getSizeAspectFill(false, 1, 1, 1);
+          math.getSizeAspectFill(1, false, 1, 1);
+          math.getSizeAspectFill(1, 1, false, 1);
+          math.getSizeAspectFill(1, 1, 1, false);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeAspectFill('');
-        }).toThrowError(TypeError);
+          math.getSizeAspectFill(true, 1, 1, 1);
+          math.getSizeAspectFill(1, true, 1, 1);
+          math.getSizeAspectFill(1, 1, true, 1);
+          math.getSizeAspectFill(1, 1, 1, true);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeAspectFill({});
-        }).toThrowError(TypeError);
+          math.getSizeAspectFill('', 1, 1, 1);
+          math.getSizeAspectFill(1, '', 1, 1);
+          math.getSizeAspectFill(1, 1, '', 1);
+          math.getSizeAspectFill(1, 1, 1, '');
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeAspectFill([]);
-        }).toThrowError(TypeError);
+          math.getSizeAspectFill({}, 1, 1, 1);
+          math.getSizeAspectFill(1, {}, 1, 1);
+          math.getSizeAspectFill(1, 1, {}, 1);
+          math.getSizeAspectFill(1, 1, 1, {});
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          math.getSizeAspectFill([], 1, 1, 1);
+          math.getSizeAspectFill(1, [], 1, 1);
+          math.getSizeAspectFill(1, 1, [], 1);
+          math.getSizeAspectFill(1, 1, 1, []);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           math.getSizeAspectFill(function () {
+          }, 1, 1, 1);
+          math.getSizeAspectFill(1, function () {
+          }, 1, 1);
+          math.getSizeAspectFill(1, 1, function () {
+          }, 1);
+          math.getSizeAspectFill(1, 1, 1, function () {
           });
-        }).toThrowError(TypeError);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeAspectFill(new RegExp('^aid'));
-        }).toThrowError(TypeError);
+          math.getSizeAspectFill(new RegExp('^aid'), 1, 1, 1);
+          math.getSizeAspectFill(1, new RegExp('^aid'), 1, 1);
+          math.getSizeAspectFill(1, 1, new RegExp('^aid'), 1);
+          math.getSizeAspectFill(1, 1, 1, new RegExp('^aid'));
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeAspectFill(/^aid/);
-        }).toThrowError(TypeError);
+          math.getSizeAspectFill(/^aid/, 1, 1, 1);
+          math.getSizeAspectFill(1, /^aid/, 1, 1);
+          math.getSizeAspectFill(1, 1, /^aid/, 1);
+          math.getSizeAspectFill(1, 1, 1, /^aid/);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          math.getSizeAspectFill(1, 1, 1, 1);
+          math.getSizeAspectFill(1, 1, 1, 1);
+          math.getSizeAspectFill(1, 1, 1, 1);
+          math.getSizeAspectFill(1, 1, 1, 1);
+        }).not.toThrowError(TypeError, ERROR_MSG);
       });
 
-      // TODO - getSizeAspectFill
+      it('return object has width, height variables', function () {
+        var size = math.getSizeAspectFill(1, 1, 1, 1);
+
+        expect(aid.isObject(size)).toBeTruthy();
+        expect(aid.isNumber(size.width)).toBeTruthy();
+        expect(aid.isNumber(size.height)).toBeTruthy();
+      });
     });
 
     describe('.getSizeAspectFit()', function () {
       it('input arguments are not Number type, throw TypeError.', function () {
-        expect(function () {
-          math.getSizeAspectFit(undefined);
-        }).toThrowError(TypeError);
+        var ERROR_MSG = 'math.getSizeAspectFit() requires Number parameters.';
 
         expect(function () {
-          math.getSizeAspectFit(null);
-        }).toThrowError(TypeError);
+          math.getSizeAspectFit(undefined, 1, 1, 1);
+          math.getSizeAspectFit(1, undefined, 1, 1);
+          math.getSizeAspectFit(1, 1, undefined, 1);
+          math.getSizeAspectFit(1, 1, 1, undefined);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeAspectFit(false);
-        }).toThrowError(TypeError);
+          math.getSizeAspectFit(null, 1, 1, 1);
+          math.getSizeAspectFit(1, null, 1, 1);
+          math.getSizeAspectFit(1, 1, null, 1);
+          math.getSizeAspectFit(1, 1, 1, null);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeAspectFit(true);
-        }).toThrowError(TypeError);
+          math.getSizeAspectFit(false, 1, 1, 1);
+          math.getSizeAspectFit(1, false, 1, 1);
+          math.getSizeAspectFit(1, 1, false, 1);
+          math.getSizeAspectFit(1, 1, 1, false);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeAspectFit('');
-        }).toThrowError(TypeError);
+          math.getSizeAspectFit(true, 1, 1, 1);
+          math.getSizeAspectFit(1, true, 1, 1);
+          math.getSizeAspectFit(1, 1, true, 1);
+          math.getSizeAspectFit(1, 1, 1, true);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeAspectFit({});
-        }).toThrowError(TypeError);
+          math.getSizeAspectFit('', 1, 1, 1);
+          math.getSizeAspectFit(1, '', 1, 1);
+          math.getSizeAspectFit(1, 1, '', 1);
+          math.getSizeAspectFit(1, 1, 1, '');
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeAspectFit([]);
-        }).toThrowError(TypeError);
+          math.getSizeAspectFit({}, 1, 1, 1);
+          math.getSizeAspectFit(1, {}, 1, 1);
+          math.getSizeAspectFit(1, 1, {}, 1);
+          math.getSizeAspectFit(1, 1, 1, {});
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          math.getSizeAspectFit([], 1, 1, 1);
+          math.getSizeAspectFit(1, [], 1, 1);
+          math.getSizeAspectFit(1, 1, [], 1);
+          math.getSizeAspectFit(1, 1, 1, []);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           math.getSizeAspectFit(function () {
+          }, 1, 1, 1);
+          math.getSizeAspectFit(1, function () {
+          }, 1, 1);
+          math.getSizeAspectFit(1, 1, function () {
+          }, 1);
+          math.getSizeAspectFit(1, 1, 1, function () {
           });
-        }).toThrowError(TypeError);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeAspectFit(new RegExp('^aid'));
-        }).toThrowError(TypeError);
+          math.getSizeAspectFit(new RegExp('^aid'), 1, 1, 1);
+          math.getSizeAspectFit(1, new RegExp('^aid'), 1, 1);
+          math.getSizeAspectFit(1, 1, new RegExp('^aid'), 1);
+          math.getSizeAspectFit(1, 1, 1, new RegExp('^aid'));
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeAspectFit(/^aid/);
-        }).toThrowError(TypeError);
+          math.getSizeAspectFit(/^aid/, 1, 1, 1);
+          math.getSizeAspectFit(1, /^aid/, 1, 1);
+          math.getSizeAspectFit(1, 1, /^aid/, 1);
+          math.getSizeAspectFit(1, 1, 1, /^aid/);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          math.getSizeAspectFit(1, 1, 1, 1);
+          math.getSizeAspectFit(1, 1, 1, 1);
+          math.getSizeAspectFit(1, 1, 1, 1);
+          math.getSizeAspectFit(1, 1, 1, 1);
+        }).not.toThrowError(TypeError, ERROR_MSG);
       });
 
-      // TODO - getSizeAspectFit
+      it('return object has width, height variables', function () {
+        var size = math.getSizeAspectFit(1, 1, 1, 1);
+
+        expect(aid.isObject(size)).toBeTruthy();
+        expect(aid.isNumber(size.width)).toBeTruthy();
+        expect(aid.isNumber(size.height)).toBeTruthy();
+      });
     });
 
     describe('.getSizeWidthFit()', function () {
       it('input arguments are not Number type, throw TypeError.', function () {
-        expect(function () {
-          math.getSizeWidthFit(undefined);
-        }).toThrowError(TypeError);
+        var ERROR_MSG = 'math.getSizeWidthFit() requires Number parameters.';
 
         expect(function () {
-          math.getSizeWidthFit(null);
-        }).toThrowError(TypeError);
+          math.getSizeWidthFit(undefined, 1, 1, 1);
+          math.getSizeWidthFit(1, undefined, 1, 1);
+          math.getSizeWidthFit(1, 1, undefined, 1);
+          math.getSizeWidthFit(1, 1, 1, undefined);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeWidthFit(false);
-        }).toThrowError(TypeError);
+          math.getSizeWidthFit(null, 1, 1, 1);
+          math.getSizeWidthFit(1, null, 1, 1);
+          math.getSizeWidthFit(1, 1, null, 1);
+          math.getSizeWidthFit(1, 1, 1, null);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeWidthFit(true);
-        }).toThrowError(TypeError);
+          math.getSizeWidthFit(false, 1, 1, 1);
+          math.getSizeWidthFit(1, false, 1, 1);
+          math.getSizeWidthFit(1, 1, false, 1);
+          math.getSizeWidthFit(1, 1, 1, false);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeWidthFit('');
-        }).toThrowError(TypeError);
+          math.getSizeWidthFit(true, 1, 1, 1);
+          math.getSizeWidthFit(1, true, 1, 1);
+          math.getSizeWidthFit(1, 1, true, 1);
+          math.getSizeWidthFit(1, 1, 1, true);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeWidthFit({});
-        }).toThrowError(TypeError);
+          math.getSizeWidthFit('', 1, 1, 1);
+          math.getSizeWidthFit(1, '', 1, 1);
+          math.getSizeWidthFit(1, 1, '', 1);
+          math.getSizeWidthFit(1, 1, 1, '');
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeWidthFit([]);
-        }).toThrowError(TypeError);
+          math.getSizeWidthFit({}, 1, 1, 1);
+          math.getSizeWidthFit(1, {}, 1, 1);
+          math.getSizeWidthFit(1, 1, {}, 1);
+          math.getSizeWidthFit(1, 1, 1, {});
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          math.getSizeWidthFit([], 1, 1, 1);
+          math.getSizeWidthFit(1, [], 1, 1);
+          math.getSizeWidthFit(1, 1, [], 1);
+          math.getSizeWidthFit(1, 1, 1, []);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
           math.getSizeWidthFit(function () {
+          }, 1, 1, 1);
+          math.getSizeWidthFit(1, function () {
+          }, 1, 1);
+          math.getSizeWidthFit(1, 1, function () {
+          }, 1);
+          math.getSizeWidthFit(1, 1, 1, function () {
           });
-        }).toThrowError(TypeError);
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeWidthFit(new RegExp('^aid'));
-        }).toThrowError(TypeError);
+          math.getSizeWidthFit(new RegExp('^aid'), 1, 1, 1);
+          math.getSizeWidthFit(1, new RegExp('^aid'), 1, 1);
+          math.getSizeWidthFit(1, 1, new RegExp('^aid'), 1);
+          math.getSizeWidthFit(1, 1, 1, new RegExp('^aid'));
+        }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeWidthFit(/^aid/);
-        }).toThrowError(TypeError);
+          math.getSizeWidthFit(/^aid/, 1, 1, 1);
+          math.getSizeWidthFit(1, /^aid/, 1, 1);
+          math.getSizeWidthFit(1, 1, /^aid/, 1);
+          math.getSizeWidthFit(1, 1, 1, /^aid/);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          math.getSizeWidthFit(1, 1, 1, 1);
+          math.getSizeWidthFit(1, 1, 1, 1);
+          math.getSizeWidthFit(1, 1, 1, 1);
+          math.getSizeWidthFit(1, 1, 1, 1);
+        }).not.toThrowError(TypeError, ERROR_MSG);
       });
 
-      // TODO - getSizeWidthFit
+      it('return object has width, height variables', function () {
+        var size = math.getSizeWidthFit(1, 1, 1, 1);
+
+        expect(aid.isObject(size)).toBeTruthy();
+        expect(aid.isNumber(size.width)).toBeTruthy();
+        expect(aid.isNumber(size.height)).toBeTruthy();
+      });
     });
 
     describe('.isEpsilonEqual()', function () {
