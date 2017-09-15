@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.57
+ * aid.js 0.1.58
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -2346,7 +2346,7 @@
    * console.log( aid.array.indexOf(arr, 99) ); // 5
    */
   array.indexOf = function indexOf(arr, target) {
-    if (!aid.isArray(arr)) throw new TypeError('math.indexOf() requires Number parameter.');
+    if (!aid.isArray(arr)) throw new TypeError('array.indexOf() requires Number parameter.');
 
     for (var i = 0, max = arr.length; i < max; ++i) {
       if (arr[i] === target) return i;
