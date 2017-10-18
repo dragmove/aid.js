@@ -596,5 +596,184 @@ describe('aid.js', function () {
         expect(array.getFirstObjectHasProperty(arrayHasObjects, 'no', /^(1)\d/)).toEqual({no: 11});
       });
     });
+
+    describe('.overlappedConditionSortByProperty()', function () {
+      it('return null when arrayHasObjects is not array.', function () {
+        expect(array.overlappedConditionSortByProperty(null)).toEqual(null);
+        expect(array.overlappedConditionSortByProperty(undefined)).toEqual(null);
+        expect(array.overlappedConditionSortByProperty(99)).toEqual(null);
+        expect(array.overlappedConditionSortByProperty('string')).toEqual(null);
+        expect(array.overlappedConditionSortByProperty(false)).toEqual(null);
+      });
+
+      it('return clone array when arrayHasObjects has no element.', function () {
+        expect(array.overlappedConditionSortByProperty([])).toEqual([]);
+      });
+
+      it('return clone array when arrayHasObjects has only one element.', function () {
+        var arr = [{group: 1, level: 1, date: '2017-01-01T00:00:00.000Z'}];
+        expect(array.overlappedConditionSortByProperty(arr)).toEqual(arr);
+      });
+
+      it('return clone array when sortConditions is not array.', function () {
+        var arr = [];
+
+        beforeEach(function () {
+          arr = [{group: 1, level: 1, date: '2017-01-01T00:00:00.000Z'}];
+        });
+
+        expect(array.overlappedConditionSortByProperty(arr, null)).toEqual(arr);
+        expect(array.overlappedConditionSortByProperty(arr, undefined)).toEqual(arr);
+        expect(array.overlappedConditionSortByProperty(arr, 99)).toEqual(arr);
+        expect(array.overlappedConditionSortByProperty(arr, 'string')).toEqual(arr);
+        expect(array.overlappedConditionSortByProperty(arr, false)).toEqual(arr);
+      });
+
+      it('return clone array when sortConditions has no condition.', function () {
+        var arr = [{group: 1, level: 1, date: '2017-01-01T00:00:00.000Z'}];
+        expect(array.overlappedConditionSortByProperty(arr, [])).toEqual(arr);
+      });
+
+      it('return sorted array when sortConditions has one condition.', function () {
+        var arr = [
+          {group: 1, level: 1, date: '2017-01-01T00:00:00.000Z'},
+          {group: 1, level: 2, date: '2017-01-01T00:00:00.000Z'}
+        ];
+
+        expect(array.overlappedConditionSortByProperty(arr, [{
+          property: 'level', func: function (a, b) {
+            return b.level - a.level
+          }
+        }])).toEqual(arr.reverse());
+      });
+
+      it('return sorted array when sortConditions has one condition.', function () {
+        var arr = [
+          {group: 1, level: 1, date: '2017-01-01T00:00:00.000Z'},
+          {group: 1, level: 2, date: '2017-01-01T00:00:00.000Z'}
+        ];
+
+        expect(array.overlappedConditionSortByProperty(arr, [{
+          property: 'level', func: function (a, b) {
+            return b.level - a.level;
+          }
+        }])).toEqual(arr.reverse());
+      });
+
+      it('return sorted array when sortConditions has one condition.', function () {
+        var arr = [
+          {group: 1, level: 1, date: '2017-01-01T00:00:00.000Z'},
+          {group: 1, level: 2, date: '2017-01-01T00:00:00.000Z'}
+        ];
+
+        expect(array.overlappedConditionSortByProperty(arr, [{
+          property: 'level', func: function (a, b) {
+            return a.level - b.level;
+          }
+        }])).toEqual(arr);
+
+        arr = [
+          {group: 2, level: 1, date: '2017-01-01T00:00:00.000Z'},
+          {group: 2, level: 2, date: '2017-01-01T00:00:00.000Z'},
+          {group: 2, level: 3, date: '2017-01-01T00:00:00.000Z'}
+        ];
+
+        expect(array.overlappedConditionSortByProperty(arr, [{
+          property: 'level', func: function (a, b) {
+            return b.level - a.level;
+          }
+        }])).toEqual(arr.reverse());
+
+        arr = [
+          {group: 3, level: 1, date: '2017-01-01T00:00:00.000Z'},
+          {group: 3, level: 1, date: '2017-01-02T00:00:00.000Z'}
+        ];
+
+        expect(array.overlappedConditionSortByProperty(arr, [{
+          property: 'date', func: function (a, b) {
+            return new Date(a.date).getTime() - new Date(b.date).getTime();
+          }
+        }])).toEqual(arr);
+      });
+
+      it('return sorted array when sortConditions has two conditions.', function () {
+        var arr = [
+          {group: 1, level: 1, date: '2017-01-01T00:00:00.000Z'},
+          {group: 2, level: 2, date: '2017-01-01T00:00:00.000Z'},
+          {group: 2, level: 3, date: '2017-01-01T00:00:00.000Z'},
+          {group: 1, level: 2, date: '2017-01-01T00:00:00.000Z'},
+          {group: 2, level: 1, date: '2017-01-01T00:00:00.000Z'}
+        ];
+
+        var result = array.overlappedConditionSortByProperty(arr, [{
+          property: 'group',
+          func: function (a, b) {
+            return a.group - b.group;
+          }
+        }, {
+          property: 'level',
+          func: function (a, b) {
+            return a.level - b.level;
+          }
+        }]);
+
+        expect(result).toEqual([
+          {group: 1, level: 1, date: '2017-01-01T00:00:00.000Z'},
+          {group: 1, level: 2, date: '2017-01-01T00:00:00.000Z'},
+          {group: 2, level: 1, date: '2017-01-01T00:00:00.000Z'},
+          {group: 2, level: 2, date: '2017-01-01T00:00:00.000Z'},
+          {group: 2, level: 3, date: '2017-01-01T00:00:00.000Z'}
+        ]);
+      });
+
+      it('return sorted array when sortConditions has three conditions.', function () {
+        var arr = [
+          {group: 3, level: 1, date: '2017-02-04T00:00:00.000Z'},
+          {group: 1, level: 1, date: '2017-01-01T00:00:00.000Z'},
+          {group: 2, level: 3, date: '2017-01-01T00:00:00.000Z'},
+          {group: 3, level: 1, date: '2017-01-03T00:00:00.000Z'},
+          {group: 2, level: 1, date: '2017-01-01T00:00:00.000Z'},
+          {group: 4, level: 1, date: '2017-01-01T00:00:00.000Z'},
+          {group: 3, level: 2, date: '2017-01-03T00:00:00.000Z'},
+          {group: 1, level: 2, date: '2017-01-01T00:00:00.000Z'},
+          {group: 3, level: 2, date: '2017-02-04T00:00:00.000Z'},
+          {group: 2, level: 2, date: '2017-01-01T00:00:00.000Z'}
+        ];
+
+        var result = array.overlappedConditionSortByProperty(arr, [{
+          property: 'group',
+          func: function (a, b) {
+            return a.group - b.group;
+          }
+        }, {
+          property: 'level',
+          func: function (a, b) {
+            return a.level - b.level;
+          }
+        }, {
+          property: 'date',
+          func: function (a, b) {
+            return new Date(a.date).getTime() - new Date(b.date).getTime();
+          }
+        }]);
+
+        expect(result).toEqual([
+          {group: 1, level: 1, date: '2017-01-01T00:00:00.000Z'},
+          {group: 1, level: 2, date: '2017-01-01T00:00:00.000Z'},
+
+          {group: 2, level: 1, date: '2017-01-01T00:00:00.000Z'},
+          {group: 2, level: 2, date: '2017-01-01T00:00:00.000Z'},
+          {group: 2, level: 3, date: '2017-01-01T00:00:00.000Z'},
+
+          {group: 3, level: 1, date: '2017-01-03T00:00:00.000Z'},
+          {group: 3, level: 1, date: '2017-02-04T00:00:00.000Z'},
+
+          {group: 3, level: 2, date: '2017-01-03T00:00:00.000Z'},
+          {group: 3, level: 2, date: '2017-02-04T00:00:00.000Z'},
+
+          {group: 4, level: 1, date: '2017-01-01T00:00:00.000Z'}
+        ]);
+      });
+    });
   });
 });

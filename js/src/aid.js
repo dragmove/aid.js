@@ -1891,10 +1891,10 @@
    * @param {String} str
    * @returns {Object} return object
    * @example
-   * string.getPositionFromTranslateStr('translate(99px)'); // {x: 99, y: 0}
-   * string.getPositionFromTranslateStr('translate(99px, 999px)'); // {x: 99, y: 999}
-   * string.getPositionFromTranslateStr('translateX(99px)'); // {x: 99, y: 0}
-   * string.getPositionFromTranslateStr('translateY(99px)'); // {x: 0, y: 99}
+   * console.log( aid.string.getPositionFromTranslateStr('translate(99px)') ); // {x: 99, y: 0}
+   * console.log( aid.string.getPositionFromTranslateStr('translate(99px, 999px)') ); // {x: 99, y: 999}
+   * console.log( aid.string.getPositionFromTranslateStr('translateX(99px)') ); // {x: 99, y: 0}
+   * console.log( aid.string.getPositionFromTranslateStr('translateY(99px)') ); // {x: 0, y: 99}
    */
   string.getPositionFromTranslateStr = function getPositionFromTranslateStr(str) {
     if (!aid.isString(str)) throw new TypeError('string.getPositionFromTranslateStr() requires String parameter.');
@@ -2756,6 +2756,78 @@
     }
 
     return result;
+  };
+
+  /**
+   * apply overlapped condition sort in array.
+   *
+   * @static
+   * @method overlappedConditionSortByProperty
+   * @param {Array} arrayHasObjects
+   * @param {Array} sortConditions. condition is object has property, func property
+   * @returns {Array} return array
+   * @example
+   * var arrayHasObjects = [{group: 3, level: 1, date: '2017-02-04T00:00:00.000Z'}, {group: 1, level: 1, date: '2017-01-01T00:00:00.000Z'}, {group: 2, level: 3, date: '2017-01-01T00:00:00.000Z'}, {group: 3, level: 1, date: '2017-01-03T00:00:00.000Z'}, {group: 2, level: 1, date: '2017-01-01T00:00:00.000Z'}, {group: 4, level: 1, date: '2017-01-01T00:00:00.000Z'}, {group: 3, level: 2, date: '2017-01-03T00:00:00.000Z'}, {group: 1, level: 2, date: '2017-01-01T00:00:00.000Z'}, {group: 3, level: 2, date: '2017-02-04T00:00:00.000Z'}, {group: 2, level: 2, date: '2017-01-01T00:00:00.000Z'}];
+   * var result = array.overlappedConditionSortByProperty(arr, [
+   * { property: 'group', func: function (a, b) { return a.group - b.group; } },
+   * { property: 'level', func: function (a, b) { return a.level - b.level; } },
+   * { property: 'date', func: function (a, b) { return new Date(a.date).getTime() - new Date(b.date).getTime(); } }
+   * ]);
+   * console.log(result); // [{group: 1, level: 1, date: '2017-01-01T00:00:00.000Z'}, {group: 1, level: 2, date: '2017-01-01T00:00:00.000Z'}, {group: 2, level: 1, date: '2017-01-01T00:00:00.000Z'}, {group: 2, level: 2, date: '2017-01-01T00:00:00.000Z'}, {group: 2, level: 3, date: '2017-01-01T00:00:00.000Z'}, {group: 3, level: 1, date: '2017-01-03T00:00:00.000Z'}, {group: 3, level: 1, date: '2017-02-04T00:00:00.000Z'}, {group: 3, level: 2, date: '2017-01-03T00:00:00.000Z'}, {group: 3, level: 2, date: '2017-02-04T00:00:00.000Z'}, {group: 4, level: 1, date: '2017-01-01T00:00:00.000Z'}]
+   */
+  array.overlappedConditionSortByProperty = function overlappedConditionSortByProperty(arrayHasObjects, sortConditions) {
+    if (!aid.isArray(arrayHasObjects)) return null;
+
+    var datas = Array.prototype.slice.call(arrayHasObjects);
+
+    if (datas.length <= 1) return datas;
+    if (!aid.isDefined(sortConditions) || !aid.isArray(sortConditions) || sortConditions.length <= 0) return datas;
+
+    var restArgs = aid.rest(Array.prototype.slice.call(arguments), 2),
+      conditionIndex = (restArgs.length >= 1) ? restArgs[0] : 0,
+      condition = sortConditions[conditionIndex];
+
+    if (conditionIndex <= 0) datas.sort(condition.func);
+
+    if (sortConditions.length <= 1) return datas;
+
+    // overlapped conditional sort
+    if (conditionIndex < sortConditions.length - 1) {
+      var prevProperty = condition.property,
+        nextConditionIndex = conditionIndex + 1,
+        nextCondition = sortConditions[nextConditionIndex];
+
+      var memoObj = {},
+        memoArr = [],
+        arr;
+
+      var obj, prop;
+      for (var i = 0, max = datas.length; i < max; i++) {
+        obj = datas[i];
+        prop = String(obj[prevProperty]);
+
+        if (!memoObj[prop]) {
+          memoObj[prop] = [];
+          memoArr.push(memoObj[prop]);
+        }
+
+        arr = memoObj[prop];
+        arr.push(obj);
+      }
+
+      for (var j = 0, len = memoArr.length; j < len; j++) {
+        arr = memoArr[j];
+        arr.sort(nextCondition.func);
+
+        memoArr[j] = array.overlappedConditionSortByProperty(arr, sortConditions, nextConditionIndex);
+      }
+
+      return memoArr.reduce(function (acc, curVal) {
+        return acc.concat(curVal);
+      });
+    }
+
+    return datas;
   };
 
   /**
