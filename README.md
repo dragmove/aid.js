@@ -166,6 +166,7 @@ console.log( isNotNaN(0) ); // true
     aid.array.getMatrixArr
     aid.array.binaryIndexOf
     aid.array.getFirstObjectHasProperty
+    aid.array.overlappedConditionSortByProperty
 ```
 
 * element utils
