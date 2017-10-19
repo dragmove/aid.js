@@ -140,6 +140,10 @@ console.log( isNotNaN(0) ); // true
     aid.math.getObjForPagination
     aid.math.degreeToRadian
     aid.math.radianToDegree
+    aid.math.gt
+    aid.math.lt
+    aid.math.gte
+    aid.math.lte
 ```
 
 * date utils 

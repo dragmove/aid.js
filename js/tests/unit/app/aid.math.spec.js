@@ -757,7 +757,7 @@ describe('aid.js', function () {
     });
 
     describe('.degreeToRadian()', function () {
-      it('func parameter type is not number, throw Error.', function () {
+      it('if func parameter type is not number, throw Error.', function () {
         expect(function () {
           math.degreeToRadian(undefined);
         }).toThrowError();
@@ -788,7 +788,7 @@ describe('aid.js', function () {
 
         expect(function () {
           math.degreeToRadian(NaN);
-        }).not.toThrowError();
+        }).toThrowError();
 
         expect(function () {
           math.degreeToRadian(function () {
@@ -803,7 +803,7 @@ describe('aid.js', function () {
     });
 
     describe('.radianToDegree()', function () {
-      it('func parameter type is not number, throw Error.', function () {
+      it('if func parameter type is not number, throw Error.', function () {
         expect(function () {
           math.radianToDegree(undefined);
         }).toThrowError();
@@ -834,7 +834,7 @@ describe('aid.js', function () {
 
         expect(function () {
           math.radianToDegree(NaN);
-        }).not.toThrowError();
+        }).toThrowError();
 
         expect(function () {
           math.radianToDegree(function () {
@@ -845,6 +845,514 @@ describe('aid.js', function () {
       it('return number when input number', function () {
         var degree = math.radianToDegree(90);
         expect(aid.isNumber(degree)).toBe(true);
+      });
+    });
+
+    describe('.gt()', function () {
+      it('return function if input only one parameter.', function () {
+        expect(function () {
+          aid.isFunction(math.gt(undefined));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.gt(null));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.gt(false));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.gt(true));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.gt(0));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.gt(''));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.gt([]));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.gt(NaN));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.gt(function () {
+          }));
+        }).toBeTruthy();
+      });
+
+      it('if arguments are not Number type, throw Error.', function () {
+        expect(function () {
+          aid.isFunction(math.gt(undefined)(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gt(null)(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gt(false)(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gt(true)(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gt(0)(99));
+        }).not.toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gt('')(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gt([])(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gt(NaN)(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gt(function () {
+          })(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gt(99)(undefined));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gt(99)(null));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gt(99)(false));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gt(99)(true));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gt(99)(0));
+        }).not.toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gt(99)(''));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gt(99)([]));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gt(99)(NaN));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gt(99)(function () {
+          }));
+        }).toThrowError();
+      });
+
+      it('if lhs argument is greater than rhs argument, return true.', function () {
+        expect(math.gt(-1)(-1)).toEqual(false);
+        expect(math.gt(-1)(-9)).toEqual(false);
+        expect(math.gt(0)(0)).toEqual(false);
+        expect(math.gt(1)(1)).toEqual(false);
+        expect(math.gt(9)(1)).toEqual(false);
+        expect(math.gt(-9)(-1)).toEqual(true);
+        expect(math.gt(1)(9)).toEqual(true);
+      });
+    });
+
+    describe('.lt()', function () {
+      it('return function if input only one parameter.', function () {
+        expect(function () {
+          aid.isFunction(math.lt(undefined));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.lt(null));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.lt(false));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.lt(true));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.lt(0));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.lt(''));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.lt([]));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.lt(NaN));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.lt(function () {
+          }));
+        }).toBeTruthy();
+      });
+
+      it('if arguments are not Number type, throw Error.', function () {
+        expect(function () {
+          aid.isFunction(math.lt(undefined)(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lt(null)(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lt(false)(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lt(true)(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lt(0)(99));
+        }).not.toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lt('')(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lt([])(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lt(NaN)(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lt(function () {
+          })(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lt(99)(undefined));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lt(99)(null));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lt(99)(false));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lt(99)(true));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lt(99)(0));
+        }).not.toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lt(99)(''));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lt(99)([]));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lt(99)(NaN));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lt(99)(function () {
+          }));
+        }).toThrowError();
+      });
+
+      it('if lhs argument is less than rhs argument, return true.', function () {
+        expect(math.lt(-1)(-1)).toEqual(false);
+        expect(math.lt(-1)(-9)).toEqual(true);
+        expect(math.lt(0)(0)).toEqual(false);
+        expect(math.lt(1)(1)).toEqual(false);
+        expect(math.lt(9)(1)).toEqual(true);
+        expect(math.lt(-9)(-1)).toEqual(false);
+        expect(math.lt(1)(9)).toEqual(false);
+      });
+    });
+
+    describe('.gte()', function () {
+      it('return function if input only one parameter.', function () {
+        expect(function () {
+          aid.isFunction(math.gte(undefined));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.gte(null));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.gte(false));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.gte(true));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.gte(0));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.gte(''));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.gte([]));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.gte(NaN));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.gte(function () {
+          }));
+        }).toBeTruthy();
+      });
+
+      it('if arguments are not Number type, throw Error.', function () {
+        expect(function () {
+          aid.isFunction(math.gte(undefined)(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gte(null)(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gte(false)(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gte(true)(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gte(0)(99));
+        }).not.toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gte('')(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gte([])(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gte(NaN)(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gte(function () {
+          })(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gte(99)(undefined));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gte(99)(null));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gte(99)(false));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gte(99)(true));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gte(99)(0));
+        }).not.toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gte(99)(''));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gte(99)([]));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gte(99)(NaN));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.gte(99)(function () {
+          }));
+        }).toThrowError();
+      });
+
+      it('if lhs argument is greater than equal rhs argument, return true.', function () {
+        expect(math.gte(-1)(-1)).toEqual(true);
+        expect(math.gte(-1)(-9)).toEqual(false);
+        expect(math.gte(0)(0)).toEqual(true);
+        expect(math.gte(1)(1)).toEqual(true);
+        expect(math.gte(9)(1)).toEqual(false);
+        expect(math.gte(-9)(-1)).toEqual(true);
+        expect(math.gte(1)(9)).toEqual(true);
+      });
+    });
+
+    describe('.lte()', function () {
+      it('return function if input only one parameter.', function () {
+        expect(function () {
+          aid.isFunction(math.lte(undefined));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.lte(null));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.lte(false));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.lte(true));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.lte(0));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.lte(''));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.lte([]));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.lte(NaN));
+        }).toBeTruthy();
+
+        expect(function () {
+          aid.isFunction(math.lte(function () {
+          }));
+        }).toBeTruthy();
+      });
+
+      it('if arguments are not Number type, throw Error.', function () {
+        expect(function () {
+          aid.isFunction(math.lte(undefined)(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lte(null)(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lte(false)(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lte(true)(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lte(0)(99));
+        }).not.toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lte('')(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lte([])(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lte(NaN)(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lte(function () {
+          })(99));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lte(99)(undefined));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lte(99)(null));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lte(99)(false));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lte(99)(true));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lte(99)(0));
+        }).not.toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lte(99)(''));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lte(99)([]));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lte(99)(NaN));
+        }).toThrowError();
+
+        expect(function () {
+          aid.isFunction(math.lte(99)(function () {
+          }));
+        }).toThrowError();
+      });
+
+      it('if lhs argument is less than equal rhs argument, return true.', function () {
+        expect(math.lte(-1)(-1)).toEqual(true);
+        expect(math.lte(-1)(-9)).toEqual(true);
+        expect(math.lte(0)(0)).toEqual(true);
+        expect(math.lte(1)(1)).toEqual(true);
+        expect(math.lte(9)(1)).toEqual(true);
+        expect(math.lte(-9)(-1)).toEqual(false);
+        expect(math.lte(1)(9)).toEqual(false);
       });
     });
   });

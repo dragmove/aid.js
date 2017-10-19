@@ -9,6 +9,8 @@
     this ||
     {};
 
+  var _slice = Array.prototype.slice;
+
   var aid = {},
     operator = {},
     platform = {},
@@ -83,7 +85,7 @@
   aid.isNumber = function isNumber(obj) {
     if (!aid.isDefined(obj)) return false;
 
-    return (obj.constructor === Number);
+    return (!isNaN(obj) && obj.constructor === Number);
   };
 
   /**
@@ -302,7 +304,7 @@
     if (aid.isDefined(borrower[functionName])) throw new Error('borrower object parameter of aid.borrow() already has function with functionName.');
 
     borrower[functionName] = function () {
-      var args = Array.prototype.slice.call(arguments);
+      var args = _slice.call(arguments);
       return donor[functionName].apply(this, args);
     };
   };
@@ -464,7 +466,7 @@
    * console.log( aid.allOf(true, false) ); // false
    */
   aid.allOf = function allOf(/*args*/) {
-    var args = Array.prototype.slice.call(arguments);
+    var args = _slice.call(arguments);
 
     return args.every(function (val) {
       return (val === true);
@@ -482,7 +484,7 @@
    * console.log( anyOf(false, false) ); // false
    */
   aid.anyOf = function anyOf(/*args*/) {
-    var args = Array.prototype.slice.call(arguments);
+    var args = _slice.call(arguments);
 
     return args.some(function (val) {
       return (val === true);
@@ -645,13 +647,13 @@
     var arity = curryArgsNum || func.length;
 
     return function curried() {
-      var args = Array.prototype.slice.call(arguments),
+      var args = _slice.call(arguments),
         context = this;
 
       return args.length >= arity ?
         func.apply(context, args) :
         function () {
-          var rest = Array.prototype.slice.call(arguments);
+          var rest = _slice.call(arguments);
           return curried.apply(context, args.concat(rest));
         };
     };
@@ -676,7 +678,7 @@
 
     var begin = (!aid.existy(beginIndex)) ? 1 : beginIndex;
 
-    return Array.prototype.slice.call(array, begin);
+    return _slice.call(array, begin);
   };
 
   /**
@@ -694,7 +696,7 @@
    * console.log( negativeHalf(80) ); // 80 * -1 / 2
    */
   aid.pipeline = function pipeline(seed /* args */) {
-    var restArgs = aid.rest(Array.prototype.slice.call(arguments));
+    var restArgs = aid.rest(_slice.call(arguments));
 
     aid.each(restArgs, function (value) {
       if (!aid.isFunction(value)) throw new TypeError('rest parameters type of aid.pipeline() must be Function.');
@@ -726,7 +728,7 @@
 
     return {
       invoke: function (methodName /*, args */) {
-        var args = aid.rest(Array.prototype.slice.call(arguments));
+        var args = aid.rest(_slice.call(arguments));
 
         calls.push(function (target) {
           var method = target[methodName];
@@ -2248,7 +2250,7 @@
    *
    * @static
    * @method degreeToRadian
-   * @param {Number} number
+   * @param {Number} degree
    * @returns {Number} return number
    * @example
    * console.log( aid.math.degreeToRadian(90) ); // 1.5707963267948966
@@ -2264,7 +2266,7 @@
    *
    * @static
    * @method radianToDegree
-   * @param {Number} number
+   * @param {Number} radian
    * @returns {Number} return number
    * @example
    * console.log( aid.math.radianToDegree(1.5707963267948966) ); // 90
@@ -2276,11 +2278,81 @@
   };
 
   /**
+   * greater than
+   *
+   * @static
+   * @method gt
+   * @param {Number} number
+   * @param {Number} number
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.math.gt(1)(9) ); // true
+   */
+  math.gt = aid.curry2(function (lhs, rhs) {
+    if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs))) throw new TypeError('math.gt requires Number parameters');
+
+    return lhs > rhs;
+  });
+
+  /**
+   * less than
+   *
+   * @static
+   * @method lt
+   * @param {Number} number
+   * @param {Number} number
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.math.lt(9)(1) ); // true
+   */
+  math.lt = aid.curry2(function (lhs, rhs) {
+    if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs))) throw new TypeError('math.lt requires Number parameters');
+
+    return lhs < rhs;
+  });
+
+  /**
+   * greater than equal
+   *
+   * @static
+   * @method gte
+   * @param {Number} number
+   * @param {Number} number
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.math.gte(1)(1) ); // true
+   * console.log( aid.math.gte(1)(9) ); // true
+   */
+  math.gte = aid.curry2(function (lhs, rhs) {
+    if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs))) throw new TypeError('math.gte requires Number parameters');
+
+    return lhs >= rhs;
+  });
+
+  /**
+   * less than equal
+   *
+   * @static
+   * @method lte
+   * @param {Number} number
+   * @param {Number} number
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.math.lte(1)(1) ); // true
+   * console.log( aid.math.lte(9)(1) ); // true
+   */
+  math.lte = aid.curry2(function (lhs, rhs) {
+    if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs))) throw new TypeError('math.lte requires Number parameters');
+
+    return lhs <= rhs;
+  });
+
+  /**
    * days name
    *
    * @static
    * @property date.DAYS
-   * @returns {Array} return Array
+   * @returns {Array} return array
    * @example
    */
   date.DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -2290,7 +2362,7 @@
    *
    * @static
    * @property date.MONTHS
-   * @returns {Array} return Array
+   * @returns {Array} return array
    * @example
    */
   date.MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -2393,7 +2465,7 @@
    * @param {Array} arr
    * @param {Number} firstIndex
    * @param {Number} secondIndex
-   * @returns {Array} return Array or null
+   * @returns {Array} return array or null
    * @example
    * var arr = [18, 6, 66, 44, 9, 22, 14];
    * console.log( aid.array.swap(arr, 0, 1) ); // [6, 18, 66, 44, 9, 22, 14]
@@ -2418,7 +2490,7 @@
    * @static
    * @method selectionSort
    * @param {Array} arr
-   * @returns {Array} return Array or null
+   * @returns {Array} return array or null
    * @example
    * var arr = [18, 6, 66, 44, 9, 22, 14];
    * console.log( aid.array.selectionSort(arr) ); // [6, 9, 14, 18, 22, 44, 66]
@@ -2442,7 +2514,7 @@
    * @static
    * @method insertionSort
    * @param {Array} arr
-   * @returns {Array} return Array or null
+   * @returns {Array} return array or null
    * @example
    * var arr = [18, 6, 66, 44, 9, 22, 14];
    * console.log( aid.array.insertionSort(arr) ); // [6, 9, 14, 18, 22, 44, 66]
@@ -2473,7 +2545,7 @@
    * @param {Number} startIndex
    * @param {Number} middleIndex
    * @param {Number} endIndex
-   * @returns {Array} return Array or null
+   * @returns {Array} return array or null
    * @example
    */
   array.merge = function merge(arr, startIndex, middleIndex, endIndex) {
@@ -2528,7 +2600,7 @@
    * @param {Array} arr
    * @param {Number} startIndex
    * @param {Number} endIndex
-   * @returns {Array} return Array or null
+   * @returns {Array} return array or null
    * @example
    * var arr = [18, 6, 66, 44, 9, 22, 14];
    * console.log( aid.array.mergeSort(arr, 0, arr.length - 1) ); // [6, 9, 14, 18, 22, 44, 66]
@@ -2601,7 +2673,7 @@
    * @param {Array} arr
    * @param {Number} startIndex
    * @param {Number} endIndex
-   * @returns {Array} return Array or null
+   * @returns {Array} return array or null
    * @example
    * var arr = [18, 6, 66, 44, 9, 22, 14];
    * console.log( aid.array.quickSort(arr, 0, arr.length - 1) ); // [6, 9, 14, 18, 22, 44, 66]
@@ -2628,7 +2700,7 @@
    * @method remove
    * @param {Array} arr
    * @param {Object} target
-   * @returns {Array} return Array
+   * @returns {Array} return array
    * @example
    * var arr = [1, 2, 3, 4, 5, 99];
    * console.log( aid.array.remove(arr, 99) ); // [1, 2, 3, 4, 5]
@@ -2778,12 +2850,12 @@
   array.overlappedConditionSortByProperty = function overlappedConditionSortByProperty(arrayHasObjects, sortConditions) {
     if (!aid.isArray(arrayHasObjects)) return null;
 
-    var datas = Array.prototype.slice.call(arrayHasObjects);
+    var datas = _slice.call(arrayHasObjects);
 
     if (datas.length <= 1) return datas;
     if (!aid.isDefined(sortConditions) || !aid.isArray(sortConditions) || sortConditions.length <= 0) return datas;
 
-    var restArgs = aid.rest(Array.prototype.slice.call(arguments), 2),
+    var restArgs = aid.rest(_slice.call(arguments), 2),
       conditionIndex = (restArgs.length >= 1) ? restArgs[0] : 0,
       condition = sortConditions[conditionIndex];
 

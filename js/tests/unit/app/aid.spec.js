@@ -147,12 +147,12 @@ describe('aid.js', function () {
         expect(aid.isNumber(Infinity)).toEqual(true);
       });
 
-      it('input NaN, return true', function () {
-        expect(aid.isNumber(NaN)).toEqual(true);
+      it('input NaN, return false', function () {
+        expect(aid.isNumber(NaN)).toEqual(false);
       });
 
-      it('input Number.NaN, return true', function () {
-        expect(aid.isNumber(Number.NaN)).toEqual(true);
+      it('input Number.NaN, return false', function () {
+        expect(aid.isNumber(Number.NaN)).toEqual(false);
       });
 
       it('input Number.MAX_VALUE, return true', function () {
