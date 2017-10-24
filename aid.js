@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.60
+ * aid.js 0.1.61
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -1635,8 +1635,7 @@
       }
     }
 
-    var youtubeId = '',
-      tmpArr = [];
+    var youtubeId = '', tmpArr = [];
     switch (uriType) {
       case 'watch' :
         youtubeId = string.getUriParam(uri, 'v') || '';
@@ -1660,7 +1659,7 @@
       default :
     }
 
-    var isValidURI = ( youtubeId && string.isValidYoutubeVideoId(youtubeId) );
+    var isValidURI = ( youtubeId !== '' && string.isValidYoutubeVideoId(youtubeId) );
 
     return {
       type: 'youtube',
