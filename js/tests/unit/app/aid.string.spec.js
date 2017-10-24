@@ -582,7 +582,7 @@ describe('aid.js', function () {
     });
 
     describe('.isValidYoutubeVideoId()', function () {
-      it('1st argument is not String type, throw TypeError.', function () {
+      it('youtubeId parameter is not String type, throw TypeError.', function () {
         expect(function () {
           string.isValidYoutubeVideoId(undefined);
         }).toThrowError(TypeError);
@@ -625,29 +625,29 @@ describe('aid.js', function () {
         }).toThrowError(TypeError);
       });
 
-      // TODO - isValidYoutubeVideoId
-      /*
-       it('input "", return false', function () {
-       expect( string.isValidYoutubeVideoId('') ).toEqual(false);
-       });
+      it('youtubeId parameter is not youtubeId shape string, return false', function () {
+        expect(string.isValidYoutubeVideoId('')).toEqual(false);
+        expect(string.isValidYoutubeVideoId('aid.js')).toEqual(false);
+        expect(string.isValidYoutubeVideoId('google')).toEqual(false);
+      });
 
-       it('input gathered youtube ids, return true', function () {
-       expect( string.isValidYoutubeVideoId('0lUSlV37-f8') ).toEqual(true);
-       expect( string.isValidYoutubeVideoId('QYhgIUi4kyc') ).toEqual(true);
-       expect( string.isValidYoutubeVideoId('2xhXTk0GW5A') ).toEqual(true);
-       expect( string.isValidYoutubeVideoId('Tl5toysUhzk') ).toEqual(true);
-       expect( string.isValidYoutubeVideoId('_cBo5qlczV0') ).toEqual(true);
-       expect( string.isValidYoutubeVideoId('GZjt_sA2eso') ).toEqual(true);
-       expect( string.isValidYoutubeVideoId('sno_genwMz8') ).toEqual(true);
-       expect( string.isValidYoutubeVideoId('A_4iqJn_OuM') ).toEqual(true);
-       expect( string.isValidYoutubeVideoId('9R-VcUReR8s') ).toEqual(true);
-       expect( string.isValidYoutubeVideoId('DAz_W_W7C9U') ).toEqual(true);
-       });
-       */
+      it('youtubeId parameter is youtubeId shape string, return true', function () {
+        expect(string.isValidYoutubeVideoId('0lUSlV37-f8')).toEqual(true);
+        expect(string.isValidYoutubeVideoId('QYhgIUi4kyc')).toEqual(true);
+        expect(string.isValidYoutubeVideoId('2xhXTk0GW5A')).toEqual(true);
+        expect(string.isValidYoutubeVideoId('Tl5toysUhzk')).toEqual(true);
+        expect(string.isValidYoutubeVideoId('_cBo5qlczV0')).toEqual(true);
+        expect(string.isValidYoutubeVideoId('GZjt_sA2eso')).toEqual(true);
+        expect(string.isValidYoutubeVideoId('sno_genwMz8')).toEqual(true);
+        expect(string.isValidYoutubeVideoId('A_4iqJn_OuM')).toEqual(true);
+        expect(string.isValidYoutubeVideoId('9R-VcUReR8s')).toEqual(true);
+        expect(string.isValidYoutubeVideoId('DAz_W_W7C9U')).toEqual(true);
+        expect(string.isValidYoutubeVideoId('6yPrGYvF_GU')).toEqual(true);
+      });
     });
 
     describe('.getObjCheckYoutubeURI()', function () {
-      it('1st argument is not String type, throw TypeError.', function () {
+      it('uri parameter is not String type, throw TypeError.', function () {
         expect(function () {
           string.getObjCheckYoutubeURI(undefined);
         }).toThrowError(TypeError);
@@ -690,7 +690,255 @@ describe('aid.js', function () {
         }).toThrowError(TypeError);
       });
 
-      // TODO - getObjCheckYoutubeURI
+      it('uri parameter is not youtube url, return { ... , isValidURI: false }', function () {
+        expect(aid.isObject(string.getObjCheckYoutubeURI(''))).toEqual(true);
+
+        var obj = string.getObjCheckYoutubeURI('');
+        expect(obj).toEqual({type: 'youtube', uri: '', youtubeId: '', isValidURI: false});
+
+        obj = string.getObjCheckYoutubeURI('aid.js');
+        expect(obj).toEqual({type: 'youtube', uri: 'aid.js', youtubeId: '', isValidURI: false});
+
+        obj = string.getObjCheckYoutubeURI('https://www.facebook.com/');
+        expect(obj).toEqual({type: 'youtube', uri: 'https://www.facebook.com/', youtubeId: '', isValidURI: false});
+      });
+
+      it('uri parameter is youtube url, return { ... , isValidURI: true }', function () {
+        var obj = string.getObjCheckYoutubeURI('youtube.com/watch?v=ZeGm7MDq2fo');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'youtube.com/watch?v=ZeGm7MDq2fo',
+          youtubeId: 'ZeGm7MDq2fo',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('//youtube.com/watch?v=ZeGm7MDq2fo');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: '//youtube.com/watch?v=ZeGm7MDq2fo',
+          youtubeId: 'ZeGm7MDq2fo',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('www.youtube.com/watch?v=ZeGm7MDq2fo');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'www.youtube.com/watch?v=ZeGm7MDq2fo',
+          youtubeId: 'ZeGm7MDq2fo',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('//www.youtube.com/watch?v=ZeGm7MDq2fo');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: '//www.youtube.com/watch?v=ZeGm7MDq2fo',
+          youtubeId: 'ZeGm7MDq2fo',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/watch?v=ZeGm7MDq2fo');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'http://www.youtube.com/watch?v=ZeGm7MDq2fo',
+          youtubeId: 'ZeGm7MDq2fo',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('https://www.youtube.com/watch?v=ZeGm7MDq2fo');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'https://www.youtube.com/watch?v=ZeGm7MDq2fo',
+          youtubeId: 'ZeGm7MDq2fo',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/watch?v=yVpbFMhOAwE');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'http://www.youtube.com/watch?v=yVpbFMhOAwE',
+          youtubeId: 'yVpbFMhOAwE',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/watch?v=yVpbFMhOAwE&feature=g-vrec');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'http://www.youtube.com/watch?v=yVpbFMhOAwE&feature=g-vrec',
+          youtubeId: 'yVpbFMhOAwE',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/watch?v=yVpbFMhOAwE&feature=player_embedded');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'http://www.youtube.com/watch?v=yVpbFMhOAwE&feature=player_embedded',
+          youtubeId: 'yVpbFMhOAwE',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/watch?NR=1&feature=endscreen&v=yVpbFMhOAwE');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'http://www.youtube.com/watch?NR=1&feature=endscreen&v=yVpbFMhOAwE',
+          youtubeId: 'yVpbFMhOAwE',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('https://www.youtube.com/watch?v=FZu097wb8wU&list=RDFZu097wb8wU');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'https://www.youtube.com/watch?v=FZu097wb8wU&list=RDFZu097wb8wU',
+          youtubeId: 'FZu097wb8wU',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/watch?feature=g-vrec&v=yVpbFMhOAwE');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'http://www.youtube.com/watch?feature=g-vrec&v=yVpbFMhOAwE',
+          youtubeId: 'yVpbFMhOAwE',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/watch?feature=player_embedded&v=yVpbFMhOAwE');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'http://www.youtube.com/watch?feature=player_embedded&v=yVpbFMhOAwE',
+          youtubeId: 'yVpbFMhOAwE',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('https://www.youtube.com/watch?list=RDFZu097wb8wU&v=FZu097wb8wU');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'https://www.youtube.com/watch?list=RDFZu097wb8wU&v=FZu097wb8wU',
+          youtubeId: 'FZu097wb8wU',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('https://www.youtube.com/watch?v=YgZpL-3IVoI');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'https://www.youtube.com/watch?v=YgZpL-3IVoI',
+          youtubeId: 'YgZpL-3IVoI',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('youtube.com/embed/ZeGm7MDq2fo');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'youtube.com/embed/ZeGm7MDq2fo',
+          youtubeId: 'ZeGm7MDq2fo',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('//youtube.com/embed/ZeGm7MDq2fo');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: '//youtube.com/embed/ZeGm7MDq2fo',
+          youtubeId: 'ZeGm7MDq2fo',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('www.youtube.com/embed/ZeGm7MDq2fo');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'www.youtube.com/embed/ZeGm7MDq2fo',
+          youtubeId: 'ZeGm7MDq2fo',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('//www.youtube.com/embed/ZeGm7MDq2fo');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: '//www.youtube.com/embed/ZeGm7MDq2fo',
+          youtubeId: 'ZeGm7MDq2fo',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/embed/ZeGm7MDq2fo');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'http://www.youtube.com/embed/ZeGm7MDq2fo',
+          youtubeId: 'ZeGm7MDq2fo',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('https://www.youtube.com/embed/ZeGm7MDq2fo');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'https://www.youtube.com/embed/ZeGm7MDq2fo',
+          youtubeId: 'ZeGm7MDq2fo',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('youtube.com/embed/YgZpL-3IVoI');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'youtube.com/embed/YgZpL-3IVoI',
+          youtubeId: 'YgZpL-3IVoI',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/v/yVpbFMhOAwE?fs=1&hl=en_US');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'http://www.youtube.com/v/yVpbFMhOAwE?fs=1&hl=en_US',
+          youtubeId: 'yVpbFMhOAwE',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/v/yVpbFMhOAwE?fs=1&hl=en_US');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'http://www.youtube.com/v/yVpbFMhOAwE?fs=1&hl=en_US',
+          youtubeId: 'yVpbFMhOAwE',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/v/YgZpL-3IVoI?fs=1&hl=en_US');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'http://www.youtube.com/v/YgZpL-3IVoI?fs=1&hl=en_US',
+          youtubeId: 'YgZpL-3IVoI',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('youtu.be/ZeGm7MDq2fo');
+        expect(obj).toEqual({type: 'youtube', uri: 'youtu.be/ZeGm7MDq2fo', youtubeId: 'ZeGm7MDq2fo', isValidURI: true});
+
+        obj = string.getObjCheckYoutubeURI('//youtu.be/ZeGm7MDq2fo');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: '//youtu.be/ZeGm7MDq2fo',
+          youtubeId: 'ZeGm7MDq2fo',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('http://youtu.be/ZeGm7MDq2fo');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'http://youtu.be/ZeGm7MDq2fo',
+          youtubeId: 'ZeGm7MDq2fo',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('https://youtu.be/ZeGm7MDq2fo');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'https://youtu.be/ZeGm7MDq2fo',
+          youtubeId: 'ZeGm7MDq2fo',
+          isValidURI: true
+        });
+
+        obj = string.getObjCheckYoutubeURI('https://youtu.be/YgZpL-3IVoI');
+        expect(obj).toEqual({
+          type: 'youtube',
+          uri: 'https://youtu.be/YgZpL-3IVoI',
+          youtubeId: 'YgZpL-3IVoI',
+          isValidURI: true
+        });
+      });
     });
 
     describe('.getObjCheckTwitchURI()', function () {
@@ -826,7 +1074,7 @@ describe('aid.js', function () {
         }).toThrowError(TypeError);
       });
 
-      it('return string number with commas when input number.', function() {
+      it('return string number with commas when input number.', function () {
         expect(string.numberWithCommas(1)).toBe('1');
         expect(string.numberWithCommas(10)).toBe('10');
         expect(string.numberWithCommas(100)).toBe('100');

@@ -1628,8 +1628,7 @@
       }
     }
 
-    var youtubeId = '',
-      tmpArr = [];
+    var youtubeId = '', tmpArr = [];
     switch (uriType) {
       case 'watch' :
         youtubeId = string.getUriParam(uri, 'v') || '';
@@ -1653,7 +1652,7 @@
       default :
     }
 
-    var isValidURI = ( youtubeId && string.isValidYoutubeVideoId(youtubeId) );
+    var isValidURI = ( youtubeId !== '' && string.isValidYoutubeVideoId(youtubeId) );
 
     return {
       type: 'youtube',
