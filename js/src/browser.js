@@ -1,4 +1,6 @@
-import {global} from './common';
+import {getGlobal} from './common';
+
+const global = getGlobal();
 
 /**
  * is IE browser
@@ -58,7 +60,7 @@ export const isOpera = (userAgent) => (/Opera/i.test(userAgent) || /OPR\//i.test
  * @example
  * console.log( aid.browser.isChrome(window.navigator.userAgent) );
  */
-export const isChrome = (userAgent) => (!browser.isEdge(userAgent) && !browser.isOpera(userAgent) && /Chrome/i.test(userAgent));
+export const isChrome = (userAgent) => (!isEdge(userAgent) && !isOpera(userAgent) && /Chrome/i.test(userAgent));
 
 /**
  * is Safari browser
@@ -268,25 +270,6 @@ export const getIECompatibility = (optionUserAgent) => {
  */
 export const isSupportDraggable = () => ('draggable' in document.createElement('div'));
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  * is browser support element methods related drag(ondragstart, ondrop, etc...).
  *
@@ -296,8 +279,8 @@ export const isSupportDraggable = () => ('draggable' in document.createElement('
  * @example
  * console.log( aid.browser.isSupportDragAndDrop() );
  */
-browser.isSupportDragAndDrop = function isSupportDragAndDrop() {
-  var div = document.createElement('div');
+export const isSupportDragAndDrop = () => {
+  const div = document.createElement('div');
 
   return ('ondragstart' in div && 'ondrop' in div);
 };
@@ -311,7 +294,7 @@ browser.isSupportDragAndDrop = function isSupportDragAndDrop() {
  * @example
  * console.log( aid.browser.isSupportFileApi() );
  */
-browser.isSupportFileApi = function isSupportFileApi() {
+export const isSupportFileApi = () => {
   return !!(global.File && global.FileReader && global.FileList && global.Blob);
 };
 
@@ -325,8 +308,8 @@ browser.isSupportFileApi = function isSupportFileApi() {
  * @example
  * console.log( aid.browser.isChromeExtension(window.navigator.userAgent) );
  */
-browser.isChromeExtension = function isChromeExtension(userAgent) {
-  if (browser.isChrome(userAgent) && global.chrome) {
+export const isChromeExtension = (userAgent) => {
+  if (isChrome(userAgent) && global.chrome) {
     if (!global.chrome.cookies) {
       if (global.chrome.experimental) global.chrome.cookies = global.chrome.experimental.cookies;
     }
@@ -349,13 +332,13 @@ browser.isChromeExtension = function isChromeExtension(userAgent) {
  * @example
  * console.log( aid.browser.getCookie('sampleCookieKey') );
  */
-browser.getCookie = function getCookie(key) {
-  var cookieArr = document.cookie.split('; '),
+export const getCookie = (key) => {
+  let cookieArr = document.cookie.split('; '),
     splitArr = [],
     keyStr = '',
     valueStr = '';
 
-  for (var i = 0, max = cookieArr.length; i < max; ++i) {
+  for (let i = 0, max = cookieArr.length; i < max; ++i) {
     splitArr = cookieArr[i].split('=');
     keyStr = splitArr[0];
     valueStr = global.decodeURIComponent(splitArr[1]);
@@ -379,13 +362,13 @@ browser.getCookie = function getCookie(key) {
  * @example
  * aid.browser.setCookie('sampleCookieKey', 'sampleValue', 3600, '/samplePath', 'sample.com');
  */
-browser.setCookie = function setCookie(key, value, expireSecond, path, domain) {
-  var expires = '',
+export const setCookie = (key, value, expireSecond, path, domain) => {
+  let expires = '',
     pathStr = '; path=' + ( (path) ? path : '/' ),
     domainStr = (domain) ? '; domain=' + domain : '';
 
   if (expireSecond) {
-    var date = new Date();
+    let date = new Date();
     date.setTime(date.getTime() + (expireSecond * 1000));
 
     expires = '; expires=' + date.toGMTString();

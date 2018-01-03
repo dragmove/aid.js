@@ -1,6 +1,6 @@
 {
   "name": "aid.js",
-  "version": "0.1.61",
+  "version": "0.2.0",
   "description": "A bundle of Javascript util Library for help developers. No dependency to other Libraries.",
   "keywords": [
     "aid.js",
@@ -34,17 +34,23 @@
     "url": "https://github.com/dragmove/aid.js"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.1.2",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
+    "eslint-loader": "^1.9.0",
     "gulp": "^3.9.1",
-    "gulp-eslint": "^3.0.1",
-    "gulp-header": "^1.8.8",
-    "gulp-rename": "^1.2.2",
-    "gulp-sourcemaps": "^2.4.1",
-    "gulp-uglify": "^2.1.2",
+    "gulp-eslint": "^4.0.0",
+    "gulp-load-plugins": "^1.5.0",
     "jasmine-core": "^2.6.4",
     "karma": "^1.7.0",
     "karma-chrome-launcher": "^2.0.0",
     "karma-jasmine": "^1.1.0",
     "karma-phantomjs-launcher": "^1.0.4",
-    "phantomjs": "^2.1.7"
+    "phantomjs": "^2.1.7",
+    "underscore": "^1.8.3",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.7"
   }
 }
