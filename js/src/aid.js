@@ -1,11 +1,7 @@
-import {isIE} from './browser';
+import {existy} from './base';
 
-function awesomeFunction(a, b) { return a + b; }
-
-var aid = {};
-
-aid.isIE = isIE;
-aid.awesome = awesomeFunction;
+let aid = {
+  existy: existy
+};
 
 export default aid;
-
