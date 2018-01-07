@@ -1,7 +1,17 @@
-import {existy} from './base';
+import { existy, isDefined } from './base';
+import { isIE } from './browser';
 
 let aid = {
-  existy: existy
+  /*
+   * base
+   */
+  existy,
+  isDefined,
+
+  /*
+   * browser
+   */
+  isIE
 };
 
 export default aid;

@@ -1,7 +1,6 @@
 const pkg = require('./package.json'),
   gulp = require('gulp'),
-  eslint = require('gulp-eslint'),
-  KarmaServer = require('karma').Server;
+  eslint = require('gulp-eslint');
 
 const $ = require('gulp-load-plugins')();
 
@@ -15,11 +14,3 @@ function banner() {
   */
 `;
 }
-
-// tasks
-gulp.task('karma', function (done) {
-  new KarmaServer({
-    configFile: __dirname + '/js/tests/karma.conf.js'
-    // singleRun: true
-  }, done).start();
-});

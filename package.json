@@ -26,10 +26,7 @@
     "email": "dragmove@gmail.com",
     "url": "http://dragmove.com"
   },
-  "license": {
-    "type": "MIT",
-    "url": "https://opensource.org/licenses/mit-license.php"
-  },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/dragmove/aid.js"
@@ -46,18 +43,11 @@
     "cross-env": "^5.1.3",
     "gulp": "^3.9.1",
     "gulp-eslint": "^4.0.0",
-    "gulp-load-plugins": "^1.5.0",
-    "jasmine-core": "^2.6.4",
-    "karma": "^1.7.0",
-    "karma-babel-preprocessor": "^7.0.0",
-    "karma-chrome-launcher": "^2.0.0",
-    "karma-jasmine": "^1.1.0",
-    "karma-phantomjs-launcher": "^1.0.4",
-    "phantomjs": "^2.1.7"
+    "gulp-load-plugins": "^1.5.0"
   },
 
   "ava": {
-    "files": ["js/tests/test.js"],
+    "files": ["js/tests/test.*.js"],
     "source": ["js/src/*.js"],
     "match": [],
     "failFast": true,
