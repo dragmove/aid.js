@@ -3,7 +3,7 @@
 
 
 ## About
-* A bundle of Javascript util Library for help developers.
+* A bundle of Javascript util Library to help developers.
 * No dependency to other Libraries.
 
 Thanks to whoever use aid.js.
