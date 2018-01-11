@@ -1,6 +1,6 @@
 {
   "name": "aid.js",
-  "version": "0.1.61",
+  "version": "0.2.1",
   "description": "A bundle of Javascript util Library for help developers. No dependency to other Libraries.",
   "keywords": [
     "aid.js",
@@ -18,7 +18,7 @@
   },
   "main": "./dist/aid.js",
   "scripts": {
-    "build": "babel js/src --out-dir dist",
+    "build": "npx babel js/src --out-dir dist",
     "test": "ava --watch"
   },
   "author": {
@@ -45,13 +45,18 @@
     "gulp-eslint": "^4.0.0",
     "gulp-load-plugins": "^1.5.0"
   },
-
   "ava": {
-    "files": ["js/tests/test.*.js"],
-    "source": ["js/src/*.js"],
+    "files": [
+      "js/tests/test.*.js"
+    ],
+    "source": [
+      "js/src/*.js"
+    ],
     "match": [],
     "failFast": true,
-    "require": ["babel-register"],
+    "require": [
+      "babel-register"
+    ],
     "babel": "inherit"
   }
 }
