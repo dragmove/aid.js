@@ -1,9 +1,9 @@
 /*
- * aid.js 0.1.62
+ * aid.js 0.1.63
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
- * Copyright (c) 2016-2017 Hyun-Seok.Kim, dragmove@gmail.com
+ * Copyright (c) 2016-2018 Hyun-Seok.Kim, dragmove@gmail.com
  */
 (function () {
   'use strict';
@@ -757,6 +757,21 @@
       }
     };
   };
+
+  /**
+   * check two parameters are equal
+   *
+   * @static
+   * @method eq
+   * @param {Object} obj
+   * @param {Object} obj
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.eq(99)(99) ); // true
+   */
+  aid.eq = aid.curry2(function (lhs, rhs) {
+    return lhs === rhs;
+  });
 
   /*
    * Data Structure

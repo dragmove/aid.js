@@ -12,7 +12,7 @@ var banner = `/*
  * ${pkg.homepage}
  *
  * The MIT License (MIT)
- * Copyright (c) 2016-2017 Hyun-Seok.Kim, dragmove@gmail.com
+ * Copyright (c) 2016-2018 Hyun-Seok.Kim, dragmove@gmail.com
  */
 `;
 

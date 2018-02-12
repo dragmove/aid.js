@@ -751,6 +751,21 @@
     };
   };
 
+  /**
+   * check two parameters are equal
+   *
+   * @static
+   * @method eq
+   * @param {Object} obj
+   * @param {Object} obj
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.eq(99)(99) ); // true
+   */
+  aid.eq = aid.curry2(function (lhs, rhs) {
+    return lhs === rhs;
+  });
+
   /*
    * Data Structure
    */
