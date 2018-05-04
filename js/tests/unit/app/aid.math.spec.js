@@ -58,14 +58,10 @@ describe('aid.js', function () {
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeAspectFill(function () {
-          }, 1, 1, 1);
-          math.getSizeAspectFill(1, function () {
-          }, 1, 1);
-          math.getSizeAspectFill(1, 1, function () {
-          }, 1);
-          math.getSizeAspectFill(1, 1, 1, function () {
-          });
+          math.getSizeAspectFill(function () {}, 1, 1, 1);
+          math.getSizeAspectFill(1, function () {}, 1, 1);
+          math.getSizeAspectFill(1, 1, function () {}, 1);
+          math.getSizeAspectFill(1, 1, 1, function () {});
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
@@ -153,14 +149,10 @@ describe('aid.js', function () {
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeAspectFit(function () {
-          }, 1, 1, 1);
-          math.getSizeAspectFit(1, function () {
-          }, 1, 1);
-          math.getSizeAspectFit(1, 1, function () {
-          }, 1);
-          math.getSizeAspectFit(1, 1, 1, function () {
-          });
+          math.getSizeAspectFit(function () {}, 1, 1, 1);
+          math.getSizeAspectFit(1, function () {}, 1, 1);
+          math.getSizeAspectFit(1, 1, function () {}, 1);
+          math.getSizeAspectFit(1, 1, 1, function () {});
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
@@ -248,14 +240,10 @@ describe('aid.js', function () {
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getSizeWidthFit(function () {
-          }, 1, 1, 1);
-          math.getSizeWidthFit(1, function () {
-          }, 1, 1);
-          math.getSizeWidthFit(1, 1, function () {
-          }, 1);
-          math.getSizeWidthFit(1, 1, 1, function () {
-          });
+          math.getSizeWidthFit(function () {}, 1, 1, 1);
+          math.getSizeWidthFit(1, function () {}, 1, 1);
+          math.getSizeWidthFit(1, 1, function () {}, 1);
+          math.getSizeWidthFit(1, 1, 1, function () {});
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
@@ -327,10 +315,8 @@ describe('aid.js', function () {
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.isEpsilonEqual(1, function () {
-          });
-          math.isEpsilonEqual(function () {
-          }, 1);
+          math.isEpsilonEqual(1, function () {});
+          math.isEpsilonEqual(function () {}, 1);
         }).toThrowError(TypeError);
 
         expect(function () {
@@ -394,8 +380,7 @@ describe('aid.js', function () {
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.isIndexInLoop(8, 5, 6, function () {
-          });
+          math.isIndexInLoop(8, 5, 6, function () {});
         }).toThrowError(TypeError);
 
         expect(function () {
@@ -479,8 +464,7 @@ describe('aid.js', function () {
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getLoopedLastIndex(8, 1, function () {
-          });
+          math.getLoopedLastIndex(8, 1, function () {});
         }).toThrowError(TypeError);
 
         expect(function () {
@@ -559,8 +543,7 @@ describe('aid.js', function () {
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.getReverseLoopedFirstIndex(8, 1, function () {
-          });
+          math.getReverseLoopedFirstIndex(8, 1, function () {});
         }).toThrowError(TypeError);
 
         expect(function () {
@@ -633,8 +616,7 @@ describe('aid.js', function () {
         }).toThrowError(TypeError);
 
         expect(function () {
-          math.factorial(function () {
-          });
+          math.factorial(function () {});
         }).toThrowError(TypeError);
 
         expect(function () {
@@ -791,8 +773,7 @@ describe('aid.js', function () {
         }).toThrowError();
 
         expect(function () {
-          math.degreeToRadian(function () {
-          });
+          math.degreeToRadian(function () {});
         }).toThrowError();
       });
 
@@ -837,14 +818,102 @@ describe('aid.js', function () {
         }).toThrowError();
 
         expect(function () {
-          math.radianToDegree(function () {
-          });
+          math.radianToDegree(function () {});
         }).toThrowError();
       });
 
       it('return number when input number', function () {
         var degree = math.radianToDegree(90);
         expect(aid.isNumber(degree)).toBe(true);
+      });
+    });
+
+    describe('.getDistanceBetweenTwoPoints()', function () {
+      it('input arguments are not Number type, throw TypeError.', function () {
+        var ERROR_MSG = 'math.getDistanceBetweenTwoPoints() requires Number parameters.';
+
+        expect(function () {
+          math.getDistanceBetweenTwoPoints(undefined, 1, 1, 1);
+          math.getDistanceBetweenTwoPoints(1, undefined, 1, 1);
+          math.getDistanceBetweenTwoPoints(1, 1, undefined, 1);
+          math.getDistanceBetweenTwoPoints(1, 1, 1, undefined);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          math.getDistanceBetweenTwoPoints(null, 1, 1, 1);
+          math.getDistanceBetweenTwoPoints(1, null, 1, 1);
+          math.getDistanceBetweenTwoPoints(1, 1, null, 1);
+          math.getDistanceBetweenTwoPoints(1, 1, 1, null);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          math.getDistanceBetweenTwoPoints(false, 1, 1, 1);
+          math.getDistanceBetweenTwoPoints(1, false, 1, 1);
+          math.getDistanceBetweenTwoPoints(1, 1, false, 1);
+          math.getDistanceBetweenTwoPoints(1, 1, 1, false);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          math.getDistanceBetweenTwoPoints(true, 1, 1, 1);
+          math.getDistanceBetweenTwoPoints(1, true, 1, 1);
+          math.getDistanceBetweenTwoPoints(1, 1, true, 1);
+          math.getDistanceBetweenTwoPoints(1, 1, 1, true);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          math.getDistanceBetweenTwoPoints('', 1, 1, 1);
+          math.getDistanceBetweenTwoPoints(1, '', 1, 1);
+          math.getDistanceBetweenTwoPoints(1, 1, '', 1);
+          math.getDistanceBetweenTwoPoints(1, 1, 1, '');
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          math.getDistanceBetweenTwoPoints({}, 1, 1, 1);
+          math.getDistanceBetweenTwoPoints(1, {}, 1, 1);
+          math.getDistanceBetweenTwoPoints(1, 1, {}, 1);
+          math.getDistanceBetweenTwoPoints(1, 1, 1, {});
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          math.getDistanceBetweenTwoPoints([], 1, 1, 1);
+          math.getDistanceBetweenTwoPoints(1, [], 1, 1);
+          math.getDistanceBetweenTwoPoints(1, 1, [], 1);
+          math.getDistanceBetweenTwoPoints(1, 1, 1, []);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          math.getDistanceBetweenTwoPoints(function () {}, 1, 1, 1);
+          math.getDistanceBetweenTwoPoints(1, function () {}, 1, 1);
+          math.getDistanceBetweenTwoPoints(1, 1, function () {}, 1);
+          math.getDistanceBetweenTwoPoints(1, 1, 1, function () {});
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          math.getDistanceBetweenTwoPoints(new RegExp('^aid'), 1, 1, 1);
+          math.getDistanceBetweenTwoPoints(1, new RegExp('^aid'), 1, 1);
+          math.getDistanceBetweenTwoPoints(1, 1, new RegExp('^aid'), 1);
+          math.getDistanceBetweenTwoPoints(1, 1, 1, new RegExp('^aid'));
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          math.getDistanceBetweenTwoPoints(/^aid/, 1, 1, 1);
+          math.getDistanceBetweenTwoPoints(1, /^aid/, 1, 1);
+          math.getDistanceBetweenTwoPoints(1, 1, /^aid/, 1);
+          math.getDistanceBetweenTwoPoints(1, 1, 1, /^aid/);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          math.getDistanceBetweenTwoPoints(1, 1, 1, 1);
+          math.getDistanceBetweenTwoPoints(1, 1, 1, 1);
+          math.getDistanceBetweenTwoPoints(1, 1, 1, 1);
+          math.getDistanceBetweenTwoPoints(1, 1, 1, 1);
+        }).not.toThrowError(TypeError, ERROR_MSG);
+      });
+
+      it('return number.', function () {
+        var distance = math.getDistanceBetweenTwoPoints(0, 0, 100, 100);
+
+        expect(aid.isNumber(distance)).toBeTruthy();
       });
     });
 
@@ -883,8 +952,7 @@ describe('aid.js', function () {
         }).toBeTruthy();
 
         expect(function () {
-          aid.isFunction(math.gt(function () {
-          }));
+          aid.isFunction(math.gt(function () {}));
         }).toBeTruthy();
       });
 
@@ -922,8 +990,7 @@ describe('aid.js', function () {
         }).toThrowError();
 
         expect(function () {
-          aid.isFunction(math.gt(function () {
-          })(99));
+          aid.isFunction(math.gt(function () {})(99));
         }).toThrowError();
 
         expect(function () {
@@ -959,8 +1026,7 @@ describe('aid.js', function () {
         }).toThrowError();
 
         expect(function () {
-          aid.isFunction(math.gt(99)(function () {
-          }));
+          aid.isFunction(math.gt(99)(function () {}));
         }).toThrowError();
       });
 
@@ -1010,8 +1076,7 @@ describe('aid.js', function () {
         }).toBeTruthy();
 
         expect(function () {
-          aid.isFunction(math.lt(function () {
-          }));
+          aid.isFunction(math.lt(function () {}));
         }).toBeTruthy();
       });
 
@@ -1049,8 +1114,7 @@ describe('aid.js', function () {
         }).toThrowError();
 
         expect(function () {
-          aid.isFunction(math.lt(function () {
-          })(99));
+          aid.isFunction(math.lt(function () {})(99));
         }).toThrowError();
 
         expect(function () {
@@ -1086,8 +1150,7 @@ describe('aid.js', function () {
         }).toThrowError();
 
         expect(function () {
-          aid.isFunction(math.lt(99)(function () {
-          }));
+          aid.isFunction(math.lt(99)(function () {}));
         }).toThrowError();
       });
 
@@ -1137,8 +1200,7 @@ describe('aid.js', function () {
         }).toBeTruthy();
 
         expect(function () {
-          aid.isFunction(math.gte(function () {
-          }));
+          aid.isFunction(math.gte(function () {}));
         }).toBeTruthy();
       });
 
@@ -1176,8 +1238,7 @@ describe('aid.js', function () {
         }).toThrowError();
 
         expect(function () {
-          aid.isFunction(math.gte(function () {
-          })(99));
+          aid.isFunction(math.gte(function () {})(99));
         }).toThrowError();
 
         expect(function () {
@@ -1213,8 +1274,7 @@ describe('aid.js', function () {
         }).toThrowError();
 
         expect(function () {
-          aid.isFunction(math.gte(99)(function () {
-          }));
+          aid.isFunction(math.gte(99)(function () {}));
         }).toThrowError();
       });
 
@@ -1264,8 +1324,7 @@ describe('aid.js', function () {
         }).toBeTruthy();
 
         expect(function () {
-          aid.isFunction(math.lte(function () {
-          }));
+          aid.isFunction(math.lte(function () {}));
         }).toBeTruthy();
       });
 
@@ -1303,8 +1362,7 @@ describe('aid.js', function () {
         }).toThrowError();
 
         expect(function () {
-          aid.isFunction(math.lte(function () {
-          })(99));
+          aid.isFunction(math.lte(function () {})(99));
         }).toThrowError();
 
         expect(function () {
@@ -1340,8 +1398,7 @@ describe('aid.js', function () {
         }).toThrowError();
 
         expect(function () {
-          aid.isFunction(math.lte(99)(function () {
-          }));
+          aid.isFunction(math.lte(99)(function () {}));
         }).toThrowError();
       });
 

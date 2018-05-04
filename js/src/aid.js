@@ -2305,12 +2305,15 @@
    * @param {Number} point2_y
    * @returns {Number} return number
    * @example
-   * var point1 = {x: 0, y: 0};
+   * var point1 = {x: 0, y: 0}
    * var point2 = {x: 100, y: 100};
-   * console.log(MathUtil.getDistanceBetweenTwoPoints(point1.x, point1.y, point2.x, point2.y));
+   * console.log(MathUtil.getDistanceBetweenTwoPoints(point1.x, point1.y, point2.x, point2.y)); // 141.4213562373095
    */
   math.getDistanceBetweenTwoPoints = function getDistanceBetweenTwoPoints(point1_x, point1_y, point2_x, point2_y) {
-    if (!isNumber(point1_x) || !isNumber(point1_y) || !isNumber(point2_x) || !isNumber(point2_y)) throw new TypeError('math.getDistanceBetweenTwoPoints() requires Number parameters.');
+    var isNumber = aid.isNumber;
+    if (!isNumber(point1_x) || !isNumber(point1_y) || !isNumber(point2_x) || !isNumber(point2_y)) {
+      throw new TypeError('math.getDistanceBetweenTwoPoints() requires Number parameters.');
+    }
 
     var distance = Math.sqrt(Math.pow(point1_x - point2_x, 2) + Math.pow(point1_y - point2_y, 2));
 
