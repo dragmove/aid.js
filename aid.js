@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.63
+ * aid.js 0.1.64
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -13,8 +13,7 @@
   // instead of `window` for `WebWorker` support.
   var global = typeof self == 'object' && self.self === self && self ||
     typeof global == 'object' && global.global === global && global ||
-    this ||
-    {};
+    this || {};
 
   var _slice = Array.prototype.slice;
 
@@ -73,7 +72,7 @@
    * @example
    * console.log( aid.isBoolean(false) ); // true
    */
-  aid.isBoolean = function (obj) {
+  aid.isBoolean = function isBoolean(obj) {
     if (!aid.isDefined(obj)) return false;
 
     return (obj.constructor === Boolean);
@@ -105,7 +104,7 @@
    * @example
    * console.log( aid.isInteger(-1) ); // true
    */
-  aid.isInteger = function (obj) {
+  aid.isInteger = function isInteger(obj) {
     if (!aid.isNumber(obj)) return false;
 
     // https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger
@@ -244,8 +243,7 @@
    */
   aid.inherit = (function () {
     // use closure, protect gabarge collection.
-    var F = function () {
-    };
+    var F = function () {};
 
     return function inherit(ChildClass, ParentClass) {
       F.prototype = ParentClass.prototype;
@@ -472,7 +470,7 @@
    * console.log( aid.allOf(true, true) ); // true
    * console.log( aid.allOf(true, false) ); // false
    */
-  aid.allOf = function allOf(/*args*/) {
+  aid.allOf = function allOf( /*args*/ ) {
     var args = _slice.call(arguments);
 
     return args.every(function (val) {
@@ -490,7 +488,7 @@
    * console.log( anyOf(true, false) ); // true
    * console.log( anyOf(false, false) ); // false
    */
-  aid.anyOf = function anyOf(/*args*/) {
+  aid.anyOf = function anyOf( /*args*/ ) {
     var args = _slice.call(arguments);
 
     return args.some(function (val) {
@@ -702,7 +700,7 @@
    * console.log( aid.pipeline(80, negative) ); // -80
    * console.log( negativeHalf(80) ); // 80 * -1 / 2
    */
-  aid.pipeline = function pipeline(seed /* args */) {
+  aid.pipeline = function pipeline(seed /* args */ ) {
     var restArgs = aid.rest(_slice.call(arguments));
 
     aid.each(restArgs, function (value) {
@@ -734,7 +732,7 @@
     var calls = [];
 
     return {
-      invoke: function (methodName /*, args */) {
+      invoke: function (methodName /*, args */ ) {
         var args = aid.rest(_slice.call(arguments));
 
         calls.push(function (target) {
@@ -1003,7 +1001,7 @@
    * @example
    * console.log( aid.platform.isAndroid(window.navigator.userAgent) );
    */
-  platform.isAndroid = function (userAgent) {
+  platform.isAndroid = function isAndroid(userAgent) {
     return /android/i.test(userAgent);
   };
 
@@ -1017,7 +1015,7 @@
    * @example
    * console.log( aid.browser.isIE(window.navigator.userAgent) );
    */
-  browser.isIE = function (userAgent) {
+  browser.isIE = function isIE(userAgent) {
     return /msie/i.test(userAgent) || /trident/i.test(userAgent);
   };
 
@@ -1032,7 +1030,7 @@
    * console.log( aid.browser.isEdge(window.navigator.userAgent) );
    */
   browser.isEdge = function isEdge(userAgent) {
-    return ( /Gecko/i.test(userAgent) && /Edge/i.test(userAgent) );
+    return (/Gecko/i.test(userAgent) && /Edge/i.test(userAgent));
   };
 
   /**
@@ -1060,7 +1058,7 @@
    * console.log( aid.browser.isOpera(window.navigator.userAgent) );
    */
   browser.isOpera = function isOpera(userAgent) {
-    return ( /Opera/i.test(userAgent) || /OPR\//i.test(userAgent) );
+    return (/Opera/i.test(userAgent) || /OPR\//i.test(userAgent));
   };
 
   /**
@@ -1074,7 +1072,7 @@
    * console.log( aid.browser.isChrome(window.navigator.userAgent) );
    */
   browser.isChrome = function isChrome(userAgent) {
-    return ( !browser.isEdge(userAgent) && !browser.isOpera(userAgent) && /Chrome/i.test(userAgent) );
+    return (!browser.isEdge(userAgent) && !browser.isOpera(userAgent) && /Chrome/i.test(userAgent));
   };
 
   /**
@@ -1088,7 +1086,7 @@
    * console.log( aid.browser.isSafari(window.navigator.userAgent) );
    */
   browser.isSafari = function isSafari(userAgent) {
-    return ( !/Chrome/i.test(userAgent) && /Safari/i.test(userAgent) );
+    return (!/Chrome/i.test(userAgent) && /Safari/i.test(userAgent));
   };
 
   /**
@@ -1138,7 +1136,7 @@
    * @example
    * console.log( aid.browser.getOperaVersion(window.navigator.userAgent) );
    */
-  browser.getOperaVersion = function (userAgent) {
+  browser.getOperaVersion = function getOperaVersion(userAgent) {
     if (browser.isOpera(userAgent)) {
       if (/Opera/i.test(userAgent)) {
         if (/Version[\/\s](\d+\.\d+)/i.test(userAgent)) return parseFloat(RegExp.$1, 10);
@@ -1385,7 +1383,7 @@
    */
   browser.setCookie = function setCookie(key, value, expireSecond, path, domain) {
     var expires = '',
-      pathStr = '; path=' + ( (path) ? path : '/' ),
+      pathStr = '; path=' + ((path) ? path : '/'),
       domainStr = (domain) ? '; domain=' + domain : '';
 
     if (expireSecond) {
@@ -1429,7 +1427,8 @@
 
     if (!str.length) return true;
 
-    var obj = {}, char = '';
+    var obj = {},
+      char = '';
     for (var i = 0, max = str.length; i < max; i++) {
       char = str.charAt(i);
 
@@ -1476,7 +1475,7 @@
 
     // html5 form email check regex - https://www.w3.org/TR/html5/forms.html#e-mail-state-(type=email)
     var emailRegex = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
-    return ( emailRegex.exec(emailStr) ? true : false );
+    return (emailRegex.exec(emailStr) ? true : false);
   };
 
   /**
@@ -1489,7 +1488,7 @@
    * @example
    * console.log( aid.string.isIFrame('<iframe src=""></iframe>') ); // true
    */
-  string.isIFrame = function (iframeStr) {
+  string.isIFrame = function isIFrame(iframeStr) {
     if (!aid.isString(iframeStr)) throw new TypeError('string.isIFrame() requires String parameter.');
 
     return /^(<iframe).*(<\/iframe>|\/>)$/.test(iframeStr);
@@ -1650,31 +1649,32 @@
       }
     }
 
-    var youtubeId = '', tmpArr = [];
+    var youtubeId = '',
+      tmpArr = [];
     switch (uriType) {
-      case 'watch' :
+      case 'watch':
         youtubeId = string.getUriParam(uri, 'v') || '';
         break;
 
-      case 'embed' :
+      case 'embed':
         tmpArr = uri.split('?')[0].split('/');
         youtubeId = tmpArr[tmpArr.length - 1] || '';
         break;
 
-      case 'v' :
+      case 'v':
         tmpArr = uri.split('?')[0].split('/');
         youtubeId = tmpArr[tmpArr.length - 1] || '';
         break;
 
-      case 'youtu.be' :
+      case 'youtu.be':
         tmpArr = uri.split('?')[0].split('/');
         youtubeId = tmpArr[tmpArr.length - 1] || '';
         break;
 
-      default :
+      default:
     }
 
-    var isValidURI = ( youtubeId !== '' && string.isValidYoutubeVideoId(youtubeId) );
+    var isValidURI = (youtubeId !== '' && string.isValidYoutubeVideoId(youtubeId));
 
     return {
       type: 'youtube',
@@ -1760,38 +1760,38 @@
     var tmpArr = [];
     switch (uriType) {
       // https://www.twitch.tv/surrenderhs
-      case 'liveChannel' :
+      case 'liveChannel':
         tmpArr = TWITCH_REGEXES[uriType].exec(uri);
         channelName = tmpArr[1];
         break;
 
-      // https://player.twitch.tv/?channel=surrenderhs
-      case 'liveVideo' :
+        // https://player.twitch.tv/?channel=surrenderhs
+      case 'liveVideo':
         tmpArr = TWITCH_REGEXES[uriType].exec(uri);
         channelName = tmpArr[1];
         break;
 
-      // https://www.twitch.tv/surrenderhs/chat?popout=
-      case 'chatting' :
+        // https://www.twitch.tv/surrenderhs/chat?popout=
+      case 'chatting':
         tmpArr = TWITCH_REGEXES[uriType].exec(uri);
         channelName = tmpArr[1];
         isChatting = true;
         break;
 
-      // https://www.twitch.tv/surrenderhs/v/56097351
-      case 'pastChannel' :
+        // https://www.twitch.tv/surrenderhs/v/56097351
+      case 'pastChannel':
         tmpArr = TWITCH_REGEXES[uriType].exec(uri);
         channelName = tmpArr[1];
         videoId = tmpArr[2];
         break;
 
-      // https://player.twitch.tv/?video=v56097351
-      case 'pastVideo' :
+        // https://player.twitch.tv/?video=v56097351
+      case 'pastVideo':
         tmpArr = TWITCH_REGEXES[uriType].exec(uri);
         videoId = tmpArr[1];
         break;
 
-      default :
+      default:
     }
 
     isValidURI = (channelName || videoId) ? true : false;
@@ -1922,7 +1922,10 @@
   string.getPositionFromTranslateStr = function getPositionFromTranslateStr(str) {
     if (!aid.isString(str)) throw new TypeError('string.getPositionFromTranslateStr() requires String parameter.');
 
-    var obj = {x: 0, y: 0};
+    var obj = {
+      x: 0,
+      y: 0
+    };
     if (!aid.isDefined(str)) return obj;
 
     var values = str.match(/[+-]?(\d*\.)?\d+/g);
@@ -2296,6 +2299,32 @@
     if (!aid.isNumber(radian)) throw new TypeError('math.radianToDegree() requires Number parameter.');
 
     return radian * 180 / Math.PI;
+  };
+
+  /**
+   * get distance between two points
+   *
+   * @static
+   * @method getDistanceBetweenTwoPoints
+   * @param {Number} point1_x
+   * @param {Number} point1_y
+   * @param {Number} point2_x
+   * @param {Number} point2_y
+   * @returns {Number} return number
+   * @example
+   * var point1 = {x: 0, y: 0}
+   * var point2 = {x: 100, y: 100};
+   * console.log(MathUtil.getDistanceBetweenTwoPoints(point1.x, point1.y, point2.x, point2.y)); // 141.4213562373095
+   */
+  math.getDistanceBetweenTwoPoints = function getDistanceBetweenTwoPoints(point1_x, point1_y, point2_x, point2_y) {
+    var isNumber = aid.isNumber;
+    if (!isNumber(point1_x) || !isNumber(point1_y) || !isNumber(point2_x) || !isNumber(point2_y)) {
+      throw new TypeError('math.getDistanceBetweenTwoPoints() requires Number parameters.');
+    }
+
+    var distance = Math.sqrt(Math.pow(point1_x - point2_x, 2) + Math.pow(point1_y - point2_y, 2));
+
+    return distance;
   };
 
   /**
@@ -2755,7 +2784,8 @@
 
     if (arguments.length !== 3) throw Error('array.getMatrixArr() requires 3 parameters.');
 
-    var arr = [], columns = [];
+    var arr = [],
+      columns = [];
     for (var i = 0; i < rowNum; ++i) {
       columns = [];
 
