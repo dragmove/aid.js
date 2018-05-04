@@ -1911,6 +1911,48 @@ describe('aid.js', function () {
       });
     });
 
+    describe('.eq()', function () {
+      it('input equal primitive values, return true', function () {
+        expect(aid.eq(undefined)(undefined)).toEqual(true);
+
+        expect(aid.eq(null)(null)).toEqual(true);
+
+        expect(aid.eq(true)(true)).toEqual(true);
+
+        expect(aid.eq(99)(99)).toEqual(true);
+
+        expect(aid.eq('aid')('aid')).toEqual(true);
+
+        // TODO: Test Symbol
+      });
+
+      it('input one reference, return true', function () {
+        var arr = [],
+          obj = {},
+          date = new Date(),
+          regex = new RegExp();
+
+        var func = function () {
+        };
+
+        var instance = new func();
+
+        expect(aid.eq(arr)(arr)).toEqual(true);
+
+        expect(aid.eq(obj)(obj)).toEqual(true);
+
+        expect(aid.eq(date)(date)).toEqual(true);
+
+        expect(aid.eq(regex)(regex)).toEqual(true);
+
+        expect(aid.eq(func)(func)).toEqual(true);
+
+        expect(aid.eq(instance)(instance)).toEqual(true);
+
+        // TODO: Test Map, Set, WeakMap, WeakSet
+      });
+    });
+
     describe('.createStack()', function () {
       var stack = aid.createStack();
 
