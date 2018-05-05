@@ -829,89 +829,116 @@ describe('aid.js', function () {
     });
 
     describe('.getDistanceBetweenTwoPoints()', function () {
-      it('input arguments are not Number type, throw TypeError.', function () {
-        var ERROR_MSG = 'math.getDistanceBetweenTwoPoints() requires Number parameters.';
+      var point1 = {
+          x: 0,
+          y: 0
+        },
+        point2 = {
+          x: 100,
+          y: 100
+        };
+
+      it('input arguments are not Object type, throw TypeError.', function () {
+        var ERROR_MSG = 'math.getDistanceBetweenTwoPoints() requires Object parameters.';
 
         expect(function () {
-          math.getDistanceBetweenTwoPoints(undefined, 1, 1, 1);
-          math.getDistanceBetweenTwoPoints(1, undefined, 1, 1);
-          math.getDistanceBetweenTwoPoints(1, 1, undefined, 1);
-          math.getDistanceBetweenTwoPoints(1, 1, 1, undefined);
+          math.getDistanceBetweenTwoPoints(undefined, point2);
+          math.getDistanceBetweenTwoPoints(point1, undefined);
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getDistanceBetweenTwoPoints(null, 1, 1, 1);
-          math.getDistanceBetweenTwoPoints(1, null, 1, 1);
-          math.getDistanceBetweenTwoPoints(1, 1, null, 1);
-          math.getDistanceBetweenTwoPoints(1, 1, 1, null);
+          math.getDistanceBetweenTwoPoints(null, point2);
+          math.getDistanceBetweenTwoPoints(point1, null);
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getDistanceBetweenTwoPoints(false, 1, 1, 1);
-          math.getDistanceBetweenTwoPoints(1, false, 1, 1);
-          math.getDistanceBetweenTwoPoints(1, 1, false, 1);
-          math.getDistanceBetweenTwoPoints(1, 1, 1, false);
+          math.getDistanceBetweenTwoPoints(false, point2);
+          math.getDistanceBetweenTwoPoints(point1, false);
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getDistanceBetweenTwoPoints(true, 1, 1, 1);
-          math.getDistanceBetweenTwoPoints(1, true, 1, 1);
-          math.getDistanceBetweenTwoPoints(1, 1, true, 1);
-          math.getDistanceBetweenTwoPoints(1, 1, 1, true);
+          math.getDistanceBetweenTwoPoints(true, point2);
+          math.getDistanceBetweenTwoPoints(point1, true);
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getDistanceBetweenTwoPoints('', 1, 1, 1);
-          math.getDistanceBetweenTwoPoints(1, '', 1, 1);
-          math.getDistanceBetweenTwoPoints(1, 1, '', 1);
-          math.getDistanceBetweenTwoPoints(1, 1, 1, '');
+          math.getDistanceBetweenTwoPoints('', point2);
+          math.getDistanceBetweenTwoPoints(point1, '');
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getDistanceBetweenTwoPoints({}, 1, 1, 1);
-          math.getDistanceBetweenTwoPoints(1, {}, 1, 1);
-          math.getDistanceBetweenTwoPoints(1, 1, {}, 1);
-          math.getDistanceBetweenTwoPoints(1, 1, 1, {});
+          math.getDistanceBetweenTwoPoints([], point2);
+          math.getDistanceBetweenTwoPoints(point1, []);
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getDistanceBetweenTwoPoints([], 1, 1, 1);
-          math.getDistanceBetweenTwoPoints(1, [], 1, 1);
-          math.getDistanceBetweenTwoPoints(1, 1, [], 1);
-          math.getDistanceBetweenTwoPoints(1, 1, 1, []);
+          math.getDistanceBetweenTwoPoints(function () {}, point2);
+          math.getDistanceBetweenTwoPoints(point1, function () {});
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getDistanceBetweenTwoPoints(function () {}, 1, 1, 1);
-          math.getDistanceBetweenTwoPoints(1, function () {}, 1, 1);
-          math.getDistanceBetweenTwoPoints(1, 1, function () {}, 1);
-          math.getDistanceBetweenTwoPoints(1, 1, 1, function () {});
+          math.getDistanceBetweenTwoPoints(new RegExp('^aid'), point2);
+          math.getDistanceBetweenTwoPoints(point1, new RegExp('^aid'));
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getDistanceBetweenTwoPoints(new RegExp('^aid'), 1, 1, 1);
-          math.getDistanceBetweenTwoPoints(1, new RegExp('^aid'), 1, 1);
-          math.getDistanceBetweenTwoPoints(1, 1, new RegExp('^aid'), 1);
-          math.getDistanceBetweenTwoPoints(1, 1, 1, new RegExp('^aid'));
+          math.getDistanceBetweenTwoPoints(/^aid/, point2);
+          math.getDistanceBetweenTwoPoints(point1, /^aid/);
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getDistanceBetweenTwoPoints(/^aid/, 1, 1, 1);
-          math.getDistanceBetweenTwoPoints(1, /^aid/, 1, 1);
-          math.getDistanceBetweenTwoPoints(1, 1, /^aid/, 1);
-          math.getDistanceBetweenTwoPoints(1, 1, 1, /^aid/);
+          math.getDistanceBetweenTwoPoints(1, point2);
+          math.getDistanceBetweenTwoPoints(point1, 1);
+        }).toThrowError(TypeError, ERROR_MSG);
+      });
+
+      it('input arguments are not object has x, y property of Number type, throw Error.', function () {
+        var ERROR_MSG = 'math.getDistanceBetweenTwoPoints() requires object parameters have x, y property.';
+
+        expect(function () {
+          math.getDistanceBetweenTwoPoints({}, point2);
+          math.getDistanceBetweenTwoPoints(point1, {});
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function () {
-          math.getDistanceBetweenTwoPoints(1, 1, 1, 1);
-          math.getDistanceBetweenTwoPoints(1, 1, 1, 1);
-          math.getDistanceBetweenTwoPoints(1, 1, 1, 1);
-          math.getDistanceBetweenTwoPoints(1, 1, 1, 1);
+          math.getDistanceBetweenTwoPoints({
+            foo: 0,
+            bar: 0
+          }, point2);
+          math.getDistanceBetweenTwoPoints(point1, {
+            foo: 0,
+            bar: 0
+          });
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          math.getDistanceBetweenTwoPoints({
+            x: 0
+          }, point2);
+          math.getDistanceBetweenTwoPoints(point1, {
+            y: 0
+          });
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          math.getDistanceBetweenTwoPoints({
+            x: 0,
+            y: NaN
+          }, point2);
+          math.getDistanceBetweenTwoPoints(point1, {
+            x: NaN,
+            y: 0
+          });
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function () {
+          math.getDistanceBetweenTwoPoints(point1, point2);
         }).not.toThrowError(TypeError, ERROR_MSG);
       });
 
       it('return number.', function () {
-        var distance = math.getDistanceBetweenTwoPoints(0, 0, 100, 100);
+        var distance = math.getDistanceBetweenTwoPoints(point1, point2);
+        console.log('distance :', distance);
 
         expect(aid.isNumber(distance)).toBeTruthy();
       });

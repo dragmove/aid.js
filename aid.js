@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.65
+ * aid.js 0.1.66
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -2306,23 +2306,25 @@
    *
    * @static
    * @method getDistanceBetweenTwoPoints
-   * @param {Number} point1_x
-   * @param {Number} point1_y
-   * @param {Number} point2_x
-   * @param {Number} point2_y
+   * @param {Object} point1
+   * @param {Object} point2
    * @returns {Number} return number
    * @example
    * var point1 = {x: 0, y: 0}
    * var point2 = {x: 100, y: 100};
-   * console.log(MathUtil.getDistanceBetweenTwoPoints(point1.x, point1.y, point2.x, point2.y)); // 141.4213562373095
+   * console.log(MathUtil.getDistanceBetweenTwoPoints(point1, point2)); // 141.4213562373095
    */
-  math.getDistanceBetweenTwoPoints = function getDistanceBetweenTwoPoints(point1_x, point1_y, point2_x, point2_y) {
-    var isNumber = aid.isNumber;
-    if (!isNumber(point1_x) || !isNumber(point1_y) || !isNumber(point2_x) || !isNumber(point2_y)) {
-      throw new TypeError('math.getDistanceBetweenTwoPoints() requires Number parameters.');
+  math.getDistanceBetweenTwoPoints = function getDistanceBetweenTwoPoints(point1, point2) {
+    if (!aid.isObject(point1) || !aid.isObject(point2)) {
+      throw new TypeError('math.getDistanceBetweenTwoPoints() requires Object parameters.');
     }
 
-    var distance = Math.sqrt(Math.pow(point1_x - point2_x, 2) + Math.pow(point1_y - point2_y, 2));
+    var isNumber = aid.isNumber;
+    if (!isNumber(point1.x) || !isNumber(point1.y) || !isNumber(point2.x) || !isNumber(point2.y)) {
+      throw new TypeError('math.getDistanceBetweenTwoPoints() requires object parameters have x, y property.');
+    }
+
+    var distance = Math.sqrt(Math.pow(point1.x - point2.x, 2) + Math.pow(point1.y - point2.y, 2));
 
     return distance;
   };
