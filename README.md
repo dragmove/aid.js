@@ -143,6 +143,7 @@ console.log( isNotNaN(0) ); // true
     aid.math.radianToDegree
     aid.math.getHeightOfRightTriangle
     aid.math.getDistanceBetweenTwoPoints
+    aid.math.getOrthogonalPointBetweenLineAndSomePoint
     aid.math.gt
     aid.math.lt
     aid.math.gte
