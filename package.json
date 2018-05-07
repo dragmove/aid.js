@@ -1,6 +1,6 @@
 {
   "name": "aid.js",
-  "version": "0.1.66",
+  "version": "0.1.67",
   "description": "A Bundle of Javascript util Library to help developers. No dependency to other Libraries.",
   "keywords": [
     "aid.js",
@@ -26,10 +26,7 @@
     "email": "dragmove@gmail.com",
     "url": "http://dragmove.com"
   },
-  "license": {
-    "type": "MIT",
-    "url": "https://opensource.org/licenses/mit-license.php"
-  },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/dragmove/aid.js"

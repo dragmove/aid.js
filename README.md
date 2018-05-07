@@ -141,6 +141,7 @@ console.log( isNotNaN(0) ); // true
     aid.math.getObjForPagination
     aid.math.degreeToRadian
     aid.math.radianToDegree
+    aid.math.getHeightOfRightTriangle
     aid.math.getDistanceBetweenTwoPoints
     aid.math.gt
     aid.math.lt

@@ -1,12 +1,14 @@
-(function () {
+(function() {
   'use strict';
 
   // Establish the global object, `window` (`self`) in the browser, `global`
   // on the server, or `this` in some virtual machines. We use `self`
   // instead of `window` for `WebWorker` support.
-  var global = typeof self == 'object' && self.self === self && self ||
-    typeof global == 'object' && global.global === global && global ||
-    this || {};
+  var global =
+    (typeof self == 'object' && self.self === self && self) ||
+    (typeof global == 'object' && global.global === global && global) ||
+    this ||
+    {};
 
   var _slice = Array.prototype.slice;
 
@@ -68,7 +70,7 @@
   aid.isBoolean = function isBoolean(obj) {
     if (!aid.isDefined(obj)) return false;
 
-    return (obj.constructor === Boolean);
+    return obj.constructor === Boolean;
   };
 
   /**
@@ -84,7 +86,7 @@
   aid.isNumber = function isNumber(obj) {
     if (!aid.isDefined(obj)) return false;
 
-    return (!isNaN(obj) && obj.constructor === Number);
+    return !isNaN(obj) && obj.constructor === Number;
   };
 
   /**
@@ -101,7 +103,7 @@
     if (!aid.isNumber(obj)) return false;
 
     // https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger
-    return (isFinite(obj) && Math.floor(obj) === obj);
+    return isFinite(obj) && Math.floor(obj) === obj;
   };
 
   /**
@@ -117,7 +119,7 @@
   aid.isString = function isString(obj) {
     if (!aid.isDefined(obj)) return false;
 
-    return (obj.constructor === String);
+    return obj.constructor === String;
   };
 
   /**
@@ -133,7 +135,7 @@
   aid.isArray = function isArray(obj) {
     if (!aid.isDefined(obj)) return false;
 
-    return (obj.constructor === Array);
+    return obj.constructor === Array;
   };
 
   /**
@@ -149,7 +151,7 @@
   aid.isObject = function isObject(obj) {
     if (!aid.isDefined(obj)) return false;
 
-    return (obj.constructor === Object);
+    return obj.constructor === Object;
   };
 
   /**
@@ -165,7 +167,7 @@
   aid.isFunction = function isFunction(obj) {
     if (!aid.isDefined(obj)) return false;
 
-    return (obj.constructor === Function);
+    return obj.constructor === Function;
   };
 
   /**
@@ -182,7 +184,7 @@
   aid.isRegExp = function isRegExp(obj) {
     if (!aid.isDefined(obj)) return false;
 
-    return (obj.constructor === RegExp);
+    return obj.constructor === RegExp;
   };
 
   /**
@@ -234,9 +236,9 @@
    * @param {class} ParentClass - parent class function
    * @example
    */
-  aid.inherit = (function () {
+  aid.inherit = (function() {
     // use closure, protect gabarge collection.
-    var F = function () {};
+    var F = function() {};
 
     return function inherit(ChildClass, ParentClass) {
       F.prototype = ParentClass.prototype;
@@ -245,7 +247,7 @@
       ChildClass.prototype.constructor = ChildClass;
       ChildClass.super = ParentClass.prototype;
     };
-  }());
+  })();
 
   /**
    * create namespace
@@ -258,7 +260,7 @@
    * @example
    * aid.namespace('first.second.third'); // create first.second.third object
    */
-  aid.namespace = function (namespace, parent) {
+  aid.namespace = function(namespace, parent) {
     if (!aid.isString(namespace)) throw new TypeError('namespace parameter type of aid.namespace() must be String.');
 
     if (!(aid.isObject(parent) || !aid.isDefined(parent))) {
@@ -293,15 +295,18 @@
    * console.log( borrower.say() ); // 'hello, world'
    */
   aid.borrow = function borrow(borrower, donor, functionName) {
-    if (!aid.isObject(borrower) || !aid.isObject(donor)) throw new TypeError('borrower, donor parameter type of aid.borrow() must be Object.');
+    if (!aid.isObject(borrower) || !aid.isObject(donor))
+      throw new TypeError('borrower, donor parameter type of aid.borrow() must be Object.');
 
     if (!aid.isString(functionName)) throw new TypeError('functionName parameter type of aid.borrow() must be String.');
 
-    if (!aid.isDefined(donor[functionName])) throw new Error('donor object parameter of aid.borrow() has not function with functionName.');
+    if (!aid.isDefined(donor[functionName]))
+      throw new Error('donor object parameter of aid.borrow() has not function with functionName.');
 
-    if (aid.isDefined(borrower[functionName])) throw new Error('borrower object parameter of aid.borrow() already has function with functionName.');
+    if (aid.isDefined(borrower[functionName]))
+      throw new Error('borrower object parameter of aid.borrow() already has function with functionName.');
 
-    borrower[functionName] = function () {
+    borrower[functionName] = function() {
       var args = _slice.call(arguments);
       return donor[functionName].apply(this, args);
     };
@@ -325,7 +330,7 @@
   aid.bind = function bind(func, context) {
     if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.bind() must be Function.');
 
-    return function () {
+    return function() {
       return func.apply(context, arguments);
     };
   };
@@ -347,7 +352,7 @@
       throw new TypeError('func_a, func_b parameter type of aid.compose() must be Function.');
     }
 
-    return function () {
+    return function() {
       return func_a(func_b.apply(null, arguments));
     };
   };
@@ -366,7 +371,7 @@
   aid.not = function not(func) {
     if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.not() must be Function.');
 
-    return function (obj) {
+    return function(obj) {
       return !func(obj);
     };
   };
@@ -389,7 +394,7 @@
       throw new TypeError('dataCanLoop parameter type of aid.each() must be Array or String.');
     }
 
-    var _context = (aid.existy(context)) ? context : null;
+    var _context = aid.existy(context) ? context : null;
 
     for (var i = 0, max = dataCanLoop.length; i < max; i++) {
       func.call(_context, dataCanLoop[i]);
@@ -450,7 +455,7 @@
 
     if (!aid.isInteger(index)) throw new TypeError('index parameter type of aid.nth() must be Integer Number.');
 
-    return (index < 0 || index > dataCanLoop.length - 1) ? null : dataCanLoop[index];
+    return index < 0 || index > dataCanLoop.length - 1 ? null : dataCanLoop[index];
   };
 
   /**
@@ -463,11 +468,11 @@
    * console.log( aid.allOf(true, true) ); // true
    * console.log( aid.allOf(true, false) ); // false
    */
-  aid.allOf = function allOf( /*args*/ ) {
+  aid.allOf = function allOf(/*args*/) {
     var args = _slice.call(arguments);
 
-    return args.every(function (val) {
-      return (val === true);
+    return args.every(function(val) {
+      return val === true;
     });
   };
 
@@ -481,11 +486,11 @@
    * console.log( anyOf(true, false) ); // true
    * console.log( anyOf(false, false) ); // false
    */
-  aid.anyOf = function anyOf( /*args*/ ) {
+  aid.anyOf = function anyOf(/*args*/) {
     var args = _slice.call(arguments);
 
-    return args.some(function (val) {
-      return (val === true);
+    return args.some(function(val) {
+      return val === true;
     });
   };
 
@@ -502,7 +507,7 @@
    * console.log( aid.constant(obj)() === obj ); // true
    */
   aid.constant = function constant(obj) {
-    return function () {
+    return function() {
       return obj;
     };
   };
@@ -532,9 +537,11 @@
       throw new TypeError('field parameter type of aid.plucker() must be String or Number.');
     }
 
-    return function (obj) {
+    return function(obj) {
       if (!(aid.isObject(obj) || aid.isArray(obj) || aid.isString(obj))) {
-        throw new TypeError('obj parameter type of function (get from aid.plucker()) must be Object or Array or String.');
+        throw new TypeError(
+          'obj parameter type of function (get from aid.plucker()) must be Object or Array or String.'
+        );
       }
 
       return obj[field];
@@ -552,11 +559,12 @@
    * console.log( aid.best(function(x, y) { return x > y; }, [2, 4, 1, 5, 3]) ); // 5
    */
   aid.best = function best(conditionFunc, array) {
-    if (!aid.isFunction(conditionFunc)) throw new TypeError('conditionFunc parameter type of aid.best() must be Function.');
+    if (!aid.isFunction(conditionFunc))
+      throw new TypeError('conditionFunc parameter type of aid.best() must be Function.');
 
     if (!aid.isArray(array)) throw new TypeError('array parameter type of aid.best() must be Array.');
 
-    return array.reduce(function (previousValue, currentValue) {
+    return array.reduce(function(previousValue, currentValue) {
       return conditionFunc(previousValue, currentValue) ? previousValue : currentValue;
     });
   };
@@ -574,9 +582,11 @@
    * console.log( aid.iterateUntil(function(n) { return n + n; }, function(n) { return n <= 1042 }, 1) ); // [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]
    */
   aid.iterateUntil = function iterateUntil(calculateFunc, conditionFunc, initialValue) {
-    if (!aid.isFunction(calculateFunc)) throw new TypeError('calculateFunc parameter type of aid.iterateUntil() must be Function.');
+    if (!aid.isFunction(calculateFunc))
+      throw new TypeError('calculateFunc parameter type of aid.iterateUntil() must be Function.');
 
-    if (!aid.isFunction(conditionFunc)) throw new TypeError('conditionFunc parameter type of aid.iterateUntil() must be Function.');
+    if (!aid.isFunction(conditionFunc))
+      throw new TypeError('conditionFunc parameter type of aid.iterateUntil() must be Function.');
 
     var array = [],
       result = calculateFunc(initialValue);
@@ -601,7 +611,7 @@
   aid.curry = function curry(func) {
     if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.curry() must be Function.');
 
-    return function (arg) {
+    return function(arg) {
       return func(arg);
     };
   };
@@ -620,8 +630,8 @@
   aid.curry2 = function curry2(func) {
     if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.curry2() must be Function.');
 
-    return function (secondArg) {
-      return function (firstArg) {
+    return function(secondArg) {
+      return function(firstArg) {
         return func(firstArg, secondArg);
       };
     };
@@ -648,12 +658,12 @@
       var args = _slice.call(arguments),
         context = this;
 
-      return args.length >= arity ?
-        func.apply(context, args) :
-        function () {
-          var rest = _slice.call(arguments);
-          return curried.apply(context, args.concat(rest));
-        };
+      return args.length >= arity
+        ? func.apply(context, args)
+        : function() {
+            var rest = _slice.call(arguments);
+            return curried.apply(context, args.concat(rest));
+          };
     };
   };
 
@@ -674,7 +684,7 @@
   aid.rest = function rest(array, beginIndex) {
     if (!aid.isArray(array)) throw new TypeError('array parameter type of aid.rest() must be Array.');
 
-    var begin = (!aid.existy(beginIndex)) ? 1 : beginIndex;
+    var begin = !aid.existy(beginIndex) ? 1 : beginIndex;
 
     return _slice.call(array, begin);
   };
@@ -693,14 +703,18 @@
    * console.log( aid.pipeline(80, negative) ); // -80
    * console.log( negativeHalf(80) ); // 80 * -1 / 2
    */
-  aid.pipeline = function pipeline(seed /* args */ ) {
+  aid.pipeline = function pipeline(seed /* args */) {
     var restArgs = aid.rest(_slice.call(arguments));
 
-    aid.each(restArgs, function (value) {
-      if (!aid.isFunction(value)) throw new TypeError('rest parameters type of aid.pipeline() must be Function.');
-    }, null);
+    aid.each(
+      restArgs,
+      function(value) {
+        if (!aid.isFunction(value)) throw new TypeError('rest parameters type of aid.pipeline() must be Function.');
+      },
+      null
+    );
 
-    return restArgs.reduce(function (prev, current) {
+    return restArgs.reduce(function(prev, current) {
       return current(prev);
     }, seed);
   };
@@ -725,10 +739,10 @@
     var calls = [];
 
     return {
-      invoke: function (methodName /*, args */ ) {
+      invoke: function(methodName /*, args */) {
         var args = aid.rest(_slice.call(arguments));
 
-        calls.push(function (target) {
+        calls.push(function(target) {
           var method = target[methodName];
 
           if (!aid.isDefined(method)) {
@@ -741,8 +755,8 @@
         return this;
       },
 
-      force: function () {
-        return calls.reduce(function (ret, thunk) {
+      force: function() {
+        return calls.reduce(function(ret, thunk) {
           return thunk(ret);
         }, obj);
       }
@@ -760,7 +774,7 @@
    * @example
    * console.log( aid.eq(99)(99) ); // true
    */
-  aid.eq = aid.curry2(function (lhs, rhs) {
+  aid.eq = aid.curry2(function(lhs, rhs) {
     return lhs === rhs;
   });
 
@@ -768,7 +782,7 @@
    * Data Structure
    */
   // Stack
-  var Stack = function () {
+  var Stack = function() {
     this._dataStore = [];
     this._top = 0;
   };
@@ -787,7 +801,7 @@
   };
 
   Stack.prototype.length = function length() {
-    return (this._top > 0) ? this._top : 0;
+    return this._top > 0 ? this._top : 0;
   };
 
   Stack.prototype.clear = function clear() {
@@ -795,12 +809,12 @@
     this._top = 0;
   };
 
-  aid.createStack = function () {
+  aid.createStack = function() {
     return new Stack();
   };
 
   // Queue
-  var Queue = function () {
+  var Queue = function() {
     this._dataStore = [];
   };
 
@@ -834,13 +848,13 @@
   };
 
   // LinkedList node
-  var LinkedListNode = function (data) {
+  var LinkedListNode = function(data) {
     this.data = data;
     this.next = null;
   };
 
   // LinkedList
-  var LinkedList = function () {
+  var LinkedList = function() {
     this.head = new LinkedListNode('head');
   };
 
@@ -857,7 +871,7 @@
     if (this.head.data === data) return null;
 
     var node = this.head;
-    while ((node.next !== null) && (node.next.data !== data)) {
+    while (node.next !== null && node.next.data !== data) {
       node = node.next;
     }
     return node;
@@ -1023,7 +1037,7 @@
    * console.log( aid.browser.isEdge(window.navigator.userAgent) );
    */
   browser.isEdge = function isEdge(userAgent) {
-    return (/Gecko/i.test(userAgent) && /Edge/i.test(userAgent));
+    return /Gecko/i.test(userAgent) && /Edge/i.test(userAgent);
   };
 
   /**
@@ -1051,7 +1065,7 @@
    * console.log( aid.browser.isOpera(window.navigator.userAgent) );
    */
   browser.isOpera = function isOpera(userAgent) {
-    return (/Opera/i.test(userAgent) || /OPR\//i.test(userAgent));
+    return /Opera/i.test(userAgent) || /OPR\//i.test(userAgent);
   };
 
   /**
@@ -1065,7 +1079,7 @@
    * console.log( aid.browser.isChrome(window.navigator.userAgent) );
    */
   browser.isChrome = function isChrome(userAgent) {
-    return (!browser.isEdge(userAgent) && !browser.isOpera(userAgent) && /Chrome/i.test(userAgent));
+    return !browser.isEdge(userAgent) && !browser.isOpera(userAgent) && /Chrome/i.test(userAgent);
   };
 
   /**
@@ -1079,7 +1093,7 @@
    * console.log( aid.browser.isSafari(window.navigator.userAgent) );
    */
   browser.isSafari = function isSafari(userAgent) {
-    return (!/Chrome/i.test(userAgent) && /Safari/i.test(userAgent));
+    return !/Chrome/i.test(userAgent) && /Safari/i.test(userAgent);
   };
 
   /**
@@ -1190,7 +1204,7 @@
    * console.log( aid.browser.getIECompatibility('mozilla/5.0 (windows nt 6.1; wow64) applewebkit/537.36 (khtml, like gecko) hrome/39.0.2171.65 safari/537.36') );
    */
   browser.getIECompatibility = function getIECompatibility(optionUserAgent) {
-    var ua = (optionUserAgent) ? optionUserAgent : global.navigator.userAgent.toLowerCase(),
+    var ua = optionUserAgent ? optionUserAgent : global.navigator.userAgent.toLowerCase(),
       regex_msie = /msie/i,
       regex_msie7 = /msie 7/i,
       regex_msie8 = /msie 8/i,
@@ -1219,7 +1233,6 @@
     }
 
     if (regex_msie.test(ua) && regex_trident7.test(ua)) {
-
       // IE11 compatibility mode
       if (regex_msie7.test(ua))
         return {
@@ -1279,7 +1292,7 @@
   browser.isSupportDraggable = function isSupportDraggable() {
     var div = document.createElement('div');
 
-    return ('draggable' in div);
+    return 'draggable' in div;
   };
 
   /**
@@ -1294,7 +1307,7 @@
   browser.isSupportDragAndDrop = function isSupportDragAndDrop() {
     var div = document.createElement('div');
 
-    return ('ondragstart' in div && 'ondrop' in div);
+    return 'ondragstart' in div && 'ondrop' in div;
   };
 
   /**
@@ -1376,12 +1389,12 @@
    */
   browser.setCookie = function setCookie(key, value, expireSecond, path, domain) {
     var expires = '',
-      pathStr = '; path=' + ((path) ? path : '/'),
-      domainStr = (domain) ? '; domain=' + domain : '';
+      pathStr = '; path=' + (path ? path : '/'),
+      domainStr = domain ? '; domain=' + domain : '';
 
     if (expireSecond) {
       var date = new Date();
-      date.setTime(date.getTime() + (expireSecond * 1000));
+      date.setTime(date.getTime() + expireSecond * 1000);
 
       expires = '; expires=' + date.toGMTString();
     }
@@ -1467,8 +1480,10 @@
     if (!aid.isString(emailStr)) throw new TypeError('string.isEmail() requires String parameter.');
 
     // html5 form email check regex - https://www.w3.org/TR/html5/forms.html#e-mail-state-(type=email)
-    var emailRegex = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
-    return (emailRegex.exec(emailStr) ? true : false);
+    var emailRegex = new RegExp(
+      "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+    );
+    return emailRegex.exec(emailStr) ? true : false;
   };
 
   /**
@@ -1545,7 +1560,8 @@
     var paramStr = tmpArr[1],
       params = paramStr.split('&');
 
-    var keyValueArr, obj = {};
+    var keyValueArr,
+      obj = {};
     for (var i = 0, max = params.length; i < max; ++i) {
       keyValueArr = params[i].split('=');
       if (keyValueArr.length <= 1) return null;
@@ -1570,7 +1586,8 @@
   string.getUriCombinedParams = function getUriCombinedParams(uri, parameters) {
     if (!aid.isString(uri)) throw new TypeError('uri parameter type of string.getUriCombinedParams() must be String.');
 
-    if (!aid.isObject(parameters)) throw new TypeError('parameters parameter type of string.getUriCombinedParams() must be Object.');
+    if (!aid.isObject(parameters))
+      throw new TypeError('parameters parameter type of string.getUriCombinedParams() must be Object.');
 
     if (!uri) return '';
     if (!parameters) return uri;
@@ -1583,10 +1600,10 @@
     if (str === '') return uri;
 
     var tmpArr = uri.split('#'),
-      hashStr = (aid.isDefined(tmpArr[1])) ? '#' + tmpArr[1] : '';
+      hashStr = aid.isDefined(tmpArr[1]) ? '#' + tmpArr[1] : '';
 
     uri = tmpArr[0];
-    uri = ((uri.indexOf('?') >= 0) ? (uri + str) : (uri + '?' + str.substr(1))) + hashStr;
+    uri = (uri.indexOf('?') >= 0 ? uri + str : uri + '?' + str.substr(1)) + hashStr;
 
     return uri;
   };
@@ -1602,7 +1619,8 @@
    * console.log( aid.string.isValidYoutubeVideoId('mYIfiQlfaas') ); // true
    */
   string.isValidYoutubeVideoId = function isValidYoutubeVideoId(youtubeId) {
-    if (!aid.isString(youtubeId)) throw new TypeError('youtubeId parameter type of string.isValidYoutubeVideoId() must be String.');
+    if (!aid.isString(youtubeId))
+      throw new TypeError('youtubeId parameter type of string.isValidYoutubeVideoId() must be String.');
 
     var regex = /^(\w|-|_){11}$/;
     return regex.exec(youtubeId) ? true : false;
@@ -1624,9 +1642,9 @@
     if (!aid.isString(uri)) throw new TypeError('uri parameter type of string.getObjCheckYoutubeURI() must be String.');
 
     var YOUTUBE_REGEXES = {
-      'watch': /^(?:(?:https?:)?\/\/)?(?:www\.)?youtube\.com\/watch/,
-      'embed': /^(?:(?:https?:)?\/\/)?(?:www\.)?youtube\.com\/(?:embed\/((?:\w|-|_){11}))/,
-      'v': /^(?:(?:https?:)?\/\/)?(?:www\.)?youtube\.com\/(?:v\/((?:\w|-|_){11}))/,
+      watch: /^(?:(?:https?:)?\/\/)?(?:www\.)?youtube\.com\/watch/,
+      embed: /^(?:(?:https?:)?\/\/)?(?:www\.)?youtube\.com\/(?:embed\/((?:\w|-|_){11}))/,
+      v: /^(?:(?:https?:)?\/\/)?(?:www\.)?youtube\.com\/(?:v\/((?:\w|-|_){11}))/,
       'youtu.be': /^(?:(?:https?:)?\/\/)?(?:www\.)?youtu\.be\/((?:\w|-|_){11})/
     };
 
@@ -1667,7 +1685,7 @@
       default:
     }
 
-    var isValidURI = (youtubeId !== '' && string.isValidYoutubeVideoId(youtubeId));
+    var isValidURI = youtubeId !== '' && string.isValidYoutubeVideoId(youtubeId);
 
     return {
       type: 'youtube',
@@ -1725,11 +1743,11 @@
     if (!aid.isString(uri)) throw new TypeError('uri parameter type of string.getObjCheckTwitchURI() must be String.');
 
     var TWITCH_REGEXES = {
-      'liveChannel': /^(?:(?:https?:)?\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9][\w]{2,24})$/,
-      'liveVideo': /^(?:(?:https?:)?\/\/)?player\.twitch\.tv\/\?channel\=([a-zA-Z0-9][\w]{2,24})$/,
-      'chatting': /^(?:(?:https?:)?\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9][\w]{2,24})\/chat/,
-      'pastChannel': /^(?:(?:https?:)?\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9][\w]{2,24})\/v\/(\d+)/,
-      'pastVideo': /^(?:(?:https?:)?\/\/)?player\.twitch\.tv\/\?video\=v(\d+)/
+      liveChannel: /^(?:(?:https?:)?\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9][\w]{2,24})$/,
+      liveVideo: /^(?:(?:https?:)?\/\/)?player\.twitch\.tv\/\?channel\=([a-zA-Z0-9][\w]{2,24})$/,
+      chatting: /^(?:(?:https?:)?\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9][\w]{2,24})\/chat/,
+      pastChannel: /^(?:(?:https?:)?\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9][\w]{2,24})\/v\/(\d+)/,
+      pastVideo: /^(?:(?:https?:)?\/\/)?player\.twitch\.tv\/\?video\=v(\d+)/
     };
 
     var channelName = '',
@@ -1758,27 +1776,27 @@
         channelName = tmpArr[1];
         break;
 
-        // https://player.twitch.tv/?channel=surrenderhs
+      // https://player.twitch.tv/?channel=surrenderhs
       case 'liveVideo':
         tmpArr = TWITCH_REGEXES[uriType].exec(uri);
         channelName = tmpArr[1];
         break;
 
-        // https://www.twitch.tv/surrenderhs/chat?popout=
+      // https://www.twitch.tv/surrenderhs/chat?popout=
       case 'chatting':
         tmpArr = TWITCH_REGEXES[uriType].exec(uri);
         channelName = tmpArr[1];
         isChatting = true;
         break;
 
-        // https://www.twitch.tv/surrenderhs/v/56097351
+      // https://www.twitch.tv/surrenderhs/v/56097351
       case 'pastChannel':
         tmpArr = TWITCH_REGEXES[uriType].exec(uri);
         channelName = tmpArr[1];
         videoId = tmpArr[2];
         break;
 
-        // https://player.twitch.tv/?video=v56097351
+      // https://player.twitch.tv/?video=v56097351
       case 'pastVideo':
         tmpArr = TWITCH_REGEXES[uriType].exec(uri);
         videoId = tmpArr[1];
@@ -1787,7 +1805,7 @@
       default:
     }
 
-    isValidURI = (channelName || videoId) ? true : false;
+    isValidURI = channelName || videoId ? true : false;
 
     return {
       type: 'twitch',
@@ -1811,19 +1829,26 @@
    * console.log( aid.string.getDocumentPrefixedProperty('visibilityState', true) ); // return 'visibilityState' or 'webkitVisibilityState' or 'mozVisibilityState' or 'msVisibilityState' or 'oVisibilityState'.
    * console.log( aid.string.getDocumentPrefixedProperty('12345', false) ); // if browser doesn't have property, return ''.
    */
-  string.getDocumentPrefixedProperty = function getDocumentPrefixedProperty(propertyName, isPropertyFirstCharToUpperCase) {
-    if (!aid.isString(propertyName)) throw new TypeError('propertyName parameter type of string.getDocumentPrefixedProperty() must be String.');
+  string.getDocumentPrefixedProperty = function getDocumentPrefixedProperty(
+    propertyName,
+    isPropertyFirstCharToUpperCase
+  ) {
+    if (!aid.isString(propertyName))
+      throw new TypeError('propertyName parameter type of string.getDocumentPrefixedProperty() must be String.');
 
-    if (!aid.isBoolean(isPropertyFirstCharToUpperCase)) throw new TypeError('isPropertyFirstCharToUpperCase parameter type of string.getDocumentPrefixedProperty() must be Boolean.');
+    if (!aid.isBoolean(isPropertyFirstCharToUpperCase))
+      throw new TypeError(
+        'isPropertyFirstCharToUpperCase parameter type of string.getDocumentPrefixedProperty() must be Boolean.'
+      );
 
     if (propertyName in global.document) return propertyName;
 
     var PREFIXES = ['webkit', 'moz', 'ms', 'o'],
-      isPropFirstCharUppercase = (isPropertyFirstCharToUpperCase === true) ? true : false;
+      isPropFirstCharUppercase = isPropertyFirstCharToUpperCase === true ? true : false;
 
     var prop = '';
     for (var i = 0, max = PREFIXES.length; i < max; i++) {
-      prop = (isPropFirstCharUppercase) ? propertyName.charAt(0).toUpperCase() + propertyName.slice(1) : propertyName;
+      prop = isPropFirstCharUppercase ? propertyName.charAt(0).toUpperCase() + propertyName.slice(1) : propertyName;
 
       prop = PREFIXES[i] + prop;
       if (prop in document) return prop;
@@ -1843,19 +1868,23 @@
    * console.log( aid.string.getElementPrefixedStyle('12345', false) ); // if browser doesn't have style property, return ''.
    */
   string.getElementPrefixedStyle = function getElementPrefixedStyle(propertyName, isPropertyFirstCharToUpperCase) {
-    if (!aid.isString(propertyName)) throw new TypeError('propertyName parameter type of string.getElementPrefixedStyle() must be String.');
+    if (!aid.isString(propertyName))
+      throw new TypeError('propertyName parameter type of string.getElementPrefixedStyle() must be String.');
 
-    if (!aid.isBoolean(isPropertyFirstCharToUpperCase)) throw new TypeError('isPropertyFirstCharToUpperCase parameter type of string.getElementPrefixedStyle() must be Boolean.');
+    if (!aid.isBoolean(isPropertyFirstCharToUpperCase))
+      throw new TypeError(
+        'isPropertyFirstCharToUpperCase parameter type of string.getElementPrefixedStyle() must be Boolean.'
+      );
 
     var style = global.document.createElement('div').style;
     if (propertyName in style) return propertyName;
 
     var PREFIXES = ['webkit', 'moz', 'ms', 'o'],
-      isPropFirstCharUppercase = (isPropertyFirstCharToUpperCase === true) ? true : false;
+      isPropFirstCharUppercase = isPropertyFirstCharToUpperCase === true ? true : false;
 
     var prop = '';
     for (var i = 0, max = PREFIXES.length; i < max; i++) {
-      prop = (isPropFirstCharUppercase) ? propertyName.charAt(0).toUpperCase() + propertyName.slice(1) : propertyName;
+      prop = isPropFirstCharUppercase ? propertyName.charAt(0).toUpperCase() + propertyName.slice(1) : propertyName;
 
       prop = PREFIXES[i] + prop;
       if (prop in style) return prop;
@@ -1981,10 +2010,10 @@
     }
 
     var modifiedSizeW = fillWidth,
-      modifiedSizeH = Math.ceil((fillWidth / srcWidth) * srcHeight);
+      modifiedSizeH = Math.ceil(fillWidth / srcWidth * srcHeight);
 
     if (modifiedSizeH < fillHeight) {
-      modifiedSizeW = Math.ceil((fillHeight / srcHeight) * srcWidth);
+      modifiedSizeW = Math.ceil(fillHeight / srcHeight * srcWidth);
       modifiedSizeH = fillHeight;
     }
 
@@ -2042,7 +2071,7 @@
     }
 
     var modifiedSizeW = fitWidth,
-      modifiedSizeH = Math.ceil((fitWidth / srcWidth) * srcHeight);
+      modifiedSizeH = Math.ceil(fitWidth / srcWidth * srcHeight);
 
     return {
       width: modifiedSizeW,
@@ -2066,9 +2095,9 @@
       throw new TypeError('math.isEpsilonEqual() requires Number parameters.');
     }
 
-    var epsilon = (aid.isDefined(Number.EPSILON)) ? Number.EPSILON : 2.220446049250313e-16;
+    var epsilon = aid.isDefined(Number.EPSILON) ? Number.EPSILON : 2.220446049250313e-16;
 
-    return (Math.abs(number_a - number_b) < epsilon);
+    return Math.abs(number_a - number_b) < epsilon;
   };
 
   /**
@@ -2108,7 +2137,7 @@
     var index = firstIndex;
     for (var i = 0; i < loopGap; i++) {
       if (index === searchIndex) return true;
-      index = (index + 1 > totalLength) ? 1 : index + 1;
+      index = index + 1 > totalLength ? 1 : index + 1;
     }
 
     return false;
@@ -2142,12 +2171,14 @@
     }
 
     if (loopGap > totalLength || firstIndex > totalLength) {
-      throw new Error('loopGap, firstIndex parameter of math.getLoopedLastIndex() can not bigger than totalLength parameter.');
+      throw new Error(
+        'loopGap, firstIndex parameter of math.getLoopedLastIndex() can not bigger than totalLength parameter.'
+      );
     }
 
     var index = firstIndex;
     for (var i = 0; i < loopGap - 1; i++) {
-      index = (index + 1 > totalLength) ? 1 : index + 1;
+      index = index + 1 > totalLength ? 1 : index + 1;
     }
 
     return index;
@@ -2177,16 +2208,18 @@
     }
 
     if (totalLength < 1 || lastIndex < 1) {
-      throw new Error('totalLength, lastIndex parameter of math.getReverseLoopedFirstIndex can not smaller than 1.');
+      throw new Error('totalLength, lastIndex parameter of math.getReverseLoopedFirstIndex() can not smaller than 1.');
     }
 
     if (loopGap > totalLength || lastIndex > totalLength) {
-      throw new Error('loopGap, lastIndex parameter of math.getReverseLoopedFirstIndex can not bigger than totalLength parameter.');
+      throw new Error(
+        'loopGap, lastIndex parameter of math.getReverseLoopedFirstIndex() can not bigger than totalLength parameter.'
+      );
     }
 
     var index = lastIndex;
     for (var i = 0; i < loopGap - 1; i++) {
-      index = (index - 1 < 1) ? totalLength : index - 1;
+      index = index - 1 < 1 ? totalLength : index - 1;
     }
 
     return index;
@@ -2223,11 +2256,21 @@
    * @example
    * console.log( aid.math.getObjForPagination(39, 10, 5, 1) ); // {totalPostNum: 39, displayPostNumPerPage: 10, displayPaginationBtnNum: 5, pageIndex: 1, totalPageNum: 4, prevPageIndex: 0, firstPageIndex: 1, lastPageIndex: 4, nextPageIndex: 0}
    */
-  math.getObjForPagination = function getObjForPagination(totalPostNum, displayPostNumPerPage, displayPaginationBtnNum, pageIndex) {
+  math.getObjForPagination = function getObjForPagination(
+    totalPostNum,
+    displayPostNumPerPage,
+    displayPaginationBtnNum,
+    pageIndex
+  ) {
     if (arguments.length < 4) throw new Error('math.getObjForPagination() requires 4 parameters.');
 
     var isInteger = aid.isInteger;
-    if (!isInteger(totalPostNum) || !isInteger(displayPostNumPerPage) || !isInteger(displayPaginationBtnNum) || !isInteger(pageIndex)) {
+    if (
+      !isInteger(totalPostNum) ||
+      !isInteger(displayPostNumPerPage) ||
+      !isInteger(displayPaginationBtnNum) ||
+      !isInteger(pageIndex)
+    ) {
       throw new TypeError('math.getObjForPagination() requires Integer Number parameters.');
     }
 
@@ -2241,7 +2284,7 @@
 
     var paginationBtnGroupIndex = Math.floor((pageIndex - 1) / displayPaginationBtnNum),
       prevPageIndex = paginationBtnGroupIndex * displayPaginationBtnNum,
-      firstPageIndex = (paginationBtnGroupIndex * displayPaginationBtnNum) + 1,
+      firstPageIndex = paginationBtnGroupIndex * displayPaginationBtnNum + 1,
       lastPageIndex = firstPageIndex + displayPaginationBtnNum - 1,
       nextPageIndex = lastPageIndex + 1;
 
@@ -2295,6 +2338,30 @@
   };
 
   /**
+   * get height of right triangle from base line width, acute angle
+   *
+   * @static
+   * @method getHeightOfRightTriangle
+   * @param {Number} baseLineWidth
+   * @param {Number} acuteAngleDegree
+   * @returns {Number} return number
+   * @example
+   * console.log( aid.math.getHeightOfRightTriangle(100, 30) ); // 57.73502691896256
+   */
+  math.getHeightOfRightTriangle = function(baseLineWidth, acuteAngleDegree) {
+    if (!aid.isNumber(baseLineWidth) || !aid.isNumber(acuteAngleDegree)) {
+      throw new TypeError('math.getHeightOfRightTriangle() requires Number parameters.');
+    }
+
+    if (acuteAngleDegree >= 90)
+      throw new Error(
+        'acuteAngleDegree parameter of math.getHeightOfRightTriangle() can not greater than or equal to 90.'
+      );
+
+    return baseLineWidth * Math.tan(math.degreeToRadian(acuteAngleDegree));
+  };
+
+  /**
    * get distance between two points
    *
    * @static
@@ -2333,7 +2400,7 @@
    * @example
    * console.log( aid.math.gt(1)(9) ); // true
    */
-  math.gt = aid.curry2(function (lhs, rhs) {
+  math.gt = aid.curry2(function(lhs, rhs) {
     if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs))) throw new TypeError('math.gt requires Number parameters');
 
     return lhs > rhs;
@@ -2350,7 +2417,7 @@
    * @example
    * console.log( aid.math.lt(9)(1) ); // true
    */
-  math.lt = aid.curry2(function (lhs, rhs) {
+  math.lt = aid.curry2(function(lhs, rhs) {
     if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs))) throw new TypeError('math.lt requires Number parameters');
 
     return lhs < rhs;
@@ -2368,7 +2435,7 @@
    * console.log( aid.math.gte(1)(1) ); // true
    * console.log( aid.math.gte(1)(9) ); // true
    */
-  math.gte = aid.curry2(function (lhs, rhs) {
+  math.gte = aid.curry2(function(lhs, rhs) {
     if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs))) throw new TypeError('math.gte requires Number parameters');
 
     return lhs >= rhs;
@@ -2386,7 +2453,7 @@
    * console.log( aid.math.lte(1)(1) ); // true
    * console.log( aid.math.lte(9)(1) ); // true
    */
-  math.lte = aid.curry2(function (lhs, rhs) {
+  math.lte = aid.curry2(function(lhs, rhs) {
     if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs))) throw new TypeError('math.lte requires Number parameters');
 
     return lhs <= rhs;
@@ -2410,7 +2477,20 @@
    * @returns {Array} return array
    * @example
    */
-  date.MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  date.MONTHS = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
 
   /**
    * 1 minutes to second unit (60 sec)
@@ -2486,7 +2566,7 @@
   array.indexOfMin = function indexOfMin(arr, startSearchIndex) {
     if (!aid.isArray(arr) || !aid.isInteger(startSearchIndex)) return -1;
 
-    var startIndex = (startSearchIndex > 0) ? startSearchIndex : 0;
+    var startIndex = startSearchIndex > 0 ? startSearchIndex : 0;
     if (arr.length <= startIndex) return -1;
 
     var minVal = arr[startIndex],
@@ -2607,7 +2687,6 @@
     while (i <= middleIndex && j <= endIndex) {
       if (arr[i] <= arr[j]) {
         tmpArr[k++] = arr[i++];
-
       } else {
         tmpArr[k++] = arr[j++];
       }
@@ -2619,7 +2698,6 @@
         tmpArr[k] = arr[r];
         k++;
       }
-
     } else {
       // set rest left array
       for (var l = i; l <= middleIndex; l++) {
@@ -2818,11 +2896,9 @@
 
       if (target === sortedArray[middle]) {
         return middle;
-
       } else {
         if (target < sortedArray[middle]) {
           last = middle - 1;
-
         } else {
           first = middle + 1;
         }
@@ -2849,12 +2925,17 @@
    * console.log( aid.array.getFirstObjectHasProperty(arrayHasObjects, 'no', new RegExp('^1')) ); // {no: 11}
    * console.log( aid.array.getFirstObjectHasProperty(arrayHasObjects, 'no', /^(1)\d/) ); // {no: 11}
    */
-  array.getFirstObjectHasProperty = function getFirstObjectHasProperty(arrayHasObjects, propertyKey, findPropertyValueOrRegex) {
+  array.getFirstObjectHasProperty = function getFirstObjectHasProperty(
+    arrayHasObjects,
+    propertyKey,
+    findPropertyValueOrRegex
+  ) {
     if (!aid.isArray(arrayHasObjects) || arrayHasObjects.length <= 0) return null;
 
     if (!aid.isString(propertyKey)) return null;
 
-    var obj, result = null;
+    var obj,
+      result = null;
     for (var i = 0, max = arrayHasObjects.length; i < max; ++i) {
       obj = arrayHasObjects[i];
       if (!obj.hasOwnProperty(propertyKey)) continue;
@@ -2864,7 +2945,6 @@
           result = obj;
           break;
         }
-
       } else {
         if (obj[propertyKey] === findPropertyValueOrRegex) {
           result = obj;
@@ -2893,7 +2973,10 @@
    * ]);
    * console.log(result); // [{group: 1, level: 1, date: '2017-01-01T00:00:00.000Z'}, {group: 1, level: 2, date: '2017-01-01T00:00:00.000Z'}, {group: 2, level: 1, date: '2017-01-01T00:00:00.000Z'}, {group: 2, level: 2, date: '2017-01-01T00:00:00.000Z'}, {group: 2, level: 3, date: '2017-01-01T00:00:00.000Z'}, {group: 3, level: 1, date: '2017-01-03T00:00:00.000Z'}, {group: 3, level: 1, date: '2017-02-04T00:00:00.000Z'}, {group: 3, level: 2, date: '2017-01-03T00:00:00.000Z'}, {group: 3, level: 2, date: '2017-02-04T00:00:00.000Z'}, {group: 4, level: 1, date: '2017-01-01T00:00:00.000Z'}]
    */
-  array.overlappedConditionSortByProperty = function overlappedConditionSortByProperty(arrayHasObjects, sortConditions) {
+  array.overlappedConditionSortByProperty = function overlappedConditionSortByProperty(
+    arrayHasObjects,
+    sortConditions
+  ) {
     if (!aid.isArray(arrayHasObjects)) return null;
 
     var datas = _slice.call(arrayHasObjects);
@@ -2902,7 +2985,7 @@
     if (!aid.isDefined(sortConditions) || !aid.isArray(sortConditions) || sortConditions.length <= 0) return datas;
 
     var restArgs = aid.rest(_slice.call(arguments), 2),
-      conditionIndex = (restArgs.length >= 1) ? restArgs[0] : 0,
+      conditionIndex = restArgs.length >= 1 ? restArgs[0] : 0,
       condition = sortConditions[conditionIndex];
 
     if (conditionIndex <= 0) datas.sort(condition.func);
@@ -2940,7 +3023,7 @@
         memoArr[j] = array.overlappedConditionSortByProperty(arr, sortConditions, nextConditionIndex);
       }
 
-      return memoArr.reduce(function (acc, curVal) {
+      return memoArr.reduce(function(acc, curVal) {
         return acc.concat(curVal);
       });
     }
@@ -2986,14 +3069,14 @@
     if (!ele) return false;
 
     var rect = ele.getBoundingClientRect(),
-      windowHeight = (global.innerHeight || document.documentElement.clientHeight),
-      windowWidth = (global.innerWidth || document.documentElement.clientWidth);
+      windowHeight = global.innerHeight || document.documentElement.clientHeight,
+      windowWidth = global.innerWidth || document.documentElement.clientWidth;
 
     // http://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap
-    var verticallyInView = (rect.top <= windowHeight) && ((rect.top + rect.height) >= 0),
-      horizontallyInView = (rect.left <= windowWidth) && ((rect.left + rect.width) >= 0);
+    var verticallyInView = rect.top <= windowHeight && rect.top + rect.height >= 0,
+      horizontallyInView = rect.left <= windowWidth && rect.left + rect.width >= 0;
 
-    return (verticallyInView && horizontallyInView);
+    return verticallyInView && horizontallyInView;
   };
 
   /**
@@ -3007,16 +3090,16 @@
    * @example
    * aid.file.appendScriptFile('https://apis.google.com/js/client.js', document.head, function() { console.log('load script file completely'); });
    */
-  file.appendScriptFile = function appendScriptFile(fileUrl, targetElementToAppend, loadCompleteCallback) { // document.head, document.body
+  file.appendScriptFile = function appendScriptFile(fileUrl, targetElementToAppend, loadCompleteCallback) {
+    // document.head, document.body
     var script = document.createElement('script');
     script.type = 'text/javascript';
 
     if (typeof loadCompleteCallback === 'function') {
       if (typeof script.onreadystatechange === 'undefined') {
         script.onload = loadCompleteCallback;
-
       } else {
-        script.onreadystatechange = function () {
+        script.onreadystatechange = function() {
           if (script.readyState === 'loaded' || script.readyState === 'complete') {
             script.onreadystatechange = null;
             loadCompleteCallback();
@@ -3032,7 +3115,6 @@
 
     if (ele) {
       ele.appendChild(script);
-
     } else {
       var firstScript = document.getElementsByTagName('script')[0];
       firstScript.parentNode.insertBefore(script, firstScript);
@@ -3057,10 +3139,10 @@
       exports = module.exports = aid;
     }
   } else if (typeof define === 'function' && define.amd) {
-    define('aid', [], function () {
+    define('aid', [], function() {
       return aid;
     });
   } else {
     global.aid = aid;
   }
-}());
+})();
