@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   // Establish the global object, `window` (`self`) in the browser, `global`
@@ -7,7 +7,8 @@
   var global =
     (typeof self == 'object' && self.self === self && self) ||
     (typeof global == 'object' && global.global === global && global) ||
-    this || {};
+    this ||
+    {};
 
   var _slice = Array.prototype.slice;
 
@@ -20,7 +21,8 @@
     date = {},
     array = {},
     element = {},
-    file = {};
+    file = {},
+    clipboard = {};
 
   /**
    * get object is null/undefined or other
@@ -235,9 +237,9 @@
    * @param {class} ParentClass - parent class function
    * @example
    */
-  aid.inherit = (function () {
+  aid.inherit = (function() {
     // use closure, protect gabarge collection.
-    var F = function () {};
+    var F = function() {};
 
     return function inherit(ChildClass, ParentClass) {
       F.prototype = ParentClass.prototype;
@@ -259,7 +261,7 @@
    * @example
    * aid.namespace('first.second.third'); // create first.second.third object
    */
-  aid.namespace = function (namespace, parent) {
+  aid.namespace = function(namespace, parent) {
     if (!aid.isString(namespace)) throw new TypeError('namespace parameter type of aid.namespace() must be String.');
 
     if (!(aid.isObject(parent) || !aid.isDefined(parent))) {
@@ -305,7 +307,7 @@
     if (aid.isDefined(borrower[functionName]))
       throw new Error('borrower object parameter of aid.borrow() already has function with functionName.');
 
-    borrower[functionName] = function () {
+    borrower[functionName] = function() {
       var args = _slice.call(arguments);
       return donor[functionName].apply(this, args);
     };
@@ -329,7 +331,7 @@
   aid.bind = function bind(func, context) {
     if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.bind() must be Function.');
 
-    return function () {
+    return function() {
       return func.apply(context, arguments);
     };
   };
@@ -351,7 +353,7 @@
       throw new TypeError('func_a, func_b parameter type of aid.compose() must be Function.');
     }
 
-    return function () {
+    return function() {
       return func_a(func_b.apply(null, arguments));
     };
   };
@@ -370,7 +372,7 @@
   aid.not = function not(func) {
     if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.not() must be Function.');
 
-    return function (obj) {
+    return function(obj) {
       return !func(obj);
     };
   };
@@ -467,10 +469,10 @@
    * console.log( aid.allOf(true, true) ); // true
    * console.log( aid.allOf(true, false) ); // false
    */
-  aid.allOf = function allOf( /*args*/ ) {
+  aid.allOf = function allOf(/*args*/) {
     var args = _slice.call(arguments);
 
-    return args.every(function (val) {
+    return args.every(function(val) {
       return val === true;
     });
   };
@@ -485,10 +487,10 @@
    * console.log( anyOf(true, false) ); // true
    * console.log( anyOf(false, false) ); // false
    */
-  aid.anyOf = function anyOf( /*args*/ ) {
+  aid.anyOf = function anyOf(/*args*/) {
     var args = _slice.call(arguments);
 
-    return args.some(function (val) {
+    return args.some(function(val) {
       return val === true;
     });
   };
@@ -506,7 +508,7 @@
    * console.log( aid.constant(obj)() === obj ); // true
    */
   aid.constant = function constant(obj) {
-    return function () {
+    return function() {
       return obj;
     };
   };
@@ -536,7 +538,7 @@
       throw new TypeError('field parameter type of aid.plucker() must be String or Number.');
     }
 
-    return function (obj) {
+    return function(obj) {
       if (!(aid.isObject(obj) || aid.isArray(obj) || aid.isString(obj))) {
         throw new TypeError(
           'obj parameter type of function (get from aid.plucker()) must be Object or Array or String.'
@@ -563,7 +565,7 @@
 
     if (!aid.isArray(array)) throw new TypeError('array parameter type of aid.best() must be Array.');
 
-    return array.reduce(function (previousValue, currentValue) {
+    return array.reduce(function(previousValue, currentValue) {
       return conditionFunc(previousValue, currentValue) ? previousValue : currentValue;
     });
   };
@@ -610,7 +612,7 @@
   aid.curry = function curry(func) {
     if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.curry() must be Function.');
 
-    return function (arg) {
+    return function(arg) {
       return func(arg);
     };
   };
@@ -629,8 +631,8 @@
   aid.curry2 = function curry2(func) {
     if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.curry2() must be Function.');
 
-    return function (secondArg) {
-      return function (firstArg) {
+    return function(secondArg) {
+      return function(firstArg) {
         return func(firstArg, secondArg);
       };
     };
@@ -657,12 +659,12 @@
       var args = _slice.call(arguments),
         context = this;
 
-      return args.length >= arity ?
-        func.apply(context, args) :
-        function () {
-          var rest = _slice.call(arguments);
-          return curried.apply(context, args.concat(rest));
-        };
+      return args.length >= arity
+        ? func.apply(context, args)
+        : function() {
+            var rest = _slice.call(arguments);
+            return curried.apply(context, args.concat(rest));
+          };
     };
   };
 
@@ -702,18 +704,18 @@
    * console.log( aid.pipeline(80, negative) ); // -80
    * console.log( negativeHalf(80) ); // 80 * -1 / 2
    */
-  aid.pipeline = function pipeline(seed /* args */ ) {
+  aid.pipeline = function pipeline(seed /* args */) {
     var restArgs = aid.rest(_slice.call(arguments));
 
     aid.each(
       restArgs,
-      function (value) {
+      function(value) {
         if (!aid.isFunction(value)) throw new TypeError('rest parameters type of aid.pipeline() must be Function.');
       },
       null
     );
 
-    return restArgs.reduce(function (prev, current) {
+    return restArgs.reduce(function(prev, current) {
       return current(prev);
     }, seed);
   };
@@ -738,10 +740,10 @@
     var calls = [];
 
     return {
-      invoke: function (methodName /*, args */ ) {
+      invoke: function(methodName /*, args */) {
         var args = aid.rest(_slice.call(arguments));
 
-        calls.push(function (target) {
+        calls.push(function(target) {
           var method = target[methodName];
 
           if (!aid.isDefined(method)) {
@@ -754,8 +756,8 @@
         return this;
       },
 
-      force: function () {
-        return calls.reduce(function (ret, thunk) {
+      force: function() {
+        return calls.reduce(function(ret, thunk) {
           return thunk(ret);
         }, obj);
       }
@@ -773,7 +775,7 @@
    * @example
    * console.log( aid.eq(99)(99) ); // true
    */
-  aid.eq = aid.curry2(function (lhs, rhs) {
+  aid.eq = aid.curry2(function(lhs, rhs) {
     return lhs === rhs;
   });
 
@@ -781,7 +783,7 @@
    * Data Structure
    */
   // Stack
-  var Stack = function () {
+  var Stack = function() {
     this._dataStore = [];
     this._top = 0;
   };
@@ -808,12 +810,12 @@
     this._top = 0;
   };
 
-  aid.createStack = function () {
+  aid.createStack = function() {
     return new Stack();
   };
 
   // Queue
-  var Queue = function () {
+  var Queue = function() {
     this._dataStore = [];
   };
 
@@ -847,13 +849,13 @@
   };
 
   // LinkedList node
-  var LinkedListNode = function (data) {
+  var LinkedListNode = function(data) {
     this.data = data;
     this.next = null;
   };
 
   // LinkedList
-  var LinkedList = function () {
+  var LinkedList = function() {
     this.head = new LinkedListNode('head');
   };
 
@@ -1775,27 +1777,27 @@
         channelName = tmpArr[1];
         break;
 
-        // https://player.twitch.tv/?channel=surrenderhs
+      // https://player.twitch.tv/?channel=surrenderhs
       case 'liveVideo':
         tmpArr = TWITCH_REGEXES[uriType].exec(uri);
         channelName = tmpArr[1];
         break;
 
-        // https://www.twitch.tv/surrenderhs/chat?popout=
+      // https://www.twitch.tv/surrenderhs/chat?popout=
       case 'chatting':
         tmpArr = TWITCH_REGEXES[uriType].exec(uri);
         channelName = tmpArr[1];
         isChatting = true;
         break;
 
-        // https://www.twitch.tv/surrenderhs/v/56097351
+      // https://www.twitch.tv/surrenderhs/v/56097351
       case 'pastChannel':
         tmpArr = TWITCH_REGEXES[uriType].exec(uri);
         channelName = tmpArr[1];
         videoId = tmpArr[2];
         break;
 
-        // https://player.twitch.tv/?video=v56097351
+      // https://player.twitch.tv/?video=v56097351
       case 'pastVideo':
         tmpArr = TWITCH_REGEXES[uriType].exec(uri);
         videoId = tmpArr[1];
@@ -2264,7 +2266,8 @@
     if (arguments.length < 4) throw new Error('math.getObjForPagination() requires 4 parameters.');
 
     var isInteger = aid.isInteger;
-    if (!isInteger(totalPostNum) ||
+    if (
+      !isInteger(totalPostNum) ||
       !isInteger(displayPostNumPerPage) ||
       !isInteger(displayPaginationBtnNum) ||
       !isInteger(pageIndex)
@@ -2402,15 +2405,28 @@
    * var somePoint = {x: 50, y: 100};
    * console.log( aid.math.getOrthogonalPointBetweenLineAndSomePoint(collinearPoint1, collinearPoint2, somePoint) ); // {x: 75, y: 75}
    */
-  math.getOrthogonalPointBetweenLineAndSomePoint = function getOrthogonalPointBetweenLineAndSomePoint(collinearPoint1, collinearPoint2, somePoint) {
+  math.getOrthogonalPointBetweenLineAndSomePoint = function getOrthogonalPointBetweenLineAndSomePoint(
+    collinearPoint1,
+    collinearPoint2,
+    somePoint
+  ) {
     var isObject = aid.isObject;
     if (!isObject(collinearPoint1) || !isObject(collinearPoint2) || !isObject(somePoint)) {
       throw new TypeError('math.getOrthogonalPointBetweenLineAndSomePoint() requires Object parameters.');
     }
 
     var isNumber = aid.isNumber;
-    if (!isNumber(collinearPoint1.x) || !isNumber(collinearPoint1.y) || !isNumber(collinearPoint2.x) || !isNumber(collinearPoint2.y) || !isNumber(somePoint.x) || !isNumber(somePoint.y)) {
-      throw new TypeError('math.getOrthogonalPointBetweenLineAndSomePoint() requires object parameters have x, y property.');
+    if (
+      !isNumber(collinearPoint1.x) ||
+      !isNumber(collinearPoint1.y) ||
+      !isNumber(collinearPoint2.x) ||
+      !isNumber(collinearPoint2.y) ||
+      !isNumber(somePoint.x) ||
+      !isNumber(somePoint.y)
+    ) {
+      throw new TypeError(
+        'math.getOrthogonalPointBetweenLineAndSomePoint() requires object parameters have x, y property.'
+      );
     }
 
     if (collinearPoint1.x === collinearPoint2.x && collinearPoint1.y === collinearPoint2.y) {
@@ -2421,21 +2437,25 @@
     var diffX = collinearPoint2.x - collinearPoint1.x,
       diffY = collinearPoint2.y - collinearPoint1.y;
 
-    if (diffX === 0) return {
-      x: collinearPoint1.x,
-      y: somePoint.y
-    };
+    if (diffX === 0)
+      return {
+        x: collinearPoint1.x,
+        y: somePoint.y
+      };
 
-    if (diffY === 0) return {
-      x: somePoint.x,
-      y: collinearPoint1.y
-    };
+    if (diffY === 0)
+      return {
+        x: somePoint.x,
+        y: collinearPoint1.y
+      };
 
     var lineSlope = diffY / diffX,
       somePointLineSlope = -1 / lineSlope;
 
     var orthogonalPoint = {};
-    orthogonalPoint.x = (somePointLineSlope * somePoint.x - lineSlope * collinearPoint1.x + collinearPoint1.y - somePoint.y) / (somePointLineSlope - lineSlope);
+    orthogonalPoint.x =
+      (somePointLineSlope * somePoint.x - lineSlope * collinearPoint1.x + collinearPoint1.y - somePoint.y) /
+      (somePointLineSlope - lineSlope);
     orthogonalPoint.y = somePointLineSlope * (orthogonalPoint.x - somePoint.x) + somePoint.y;
 
     return orthogonalPoint;
@@ -2452,7 +2472,7 @@
    * @example
    * console.log( aid.math.gt(1)(9) ); // true
    */
-  math.gt = aid.curry2(function (lhs, rhs) {
+  math.gt = aid.curry2(function(lhs, rhs) {
     if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs))) throw new TypeError('math.gt requires Number parameters');
 
     return lhs > rhs;
@@ -2469,7 +2489,7 @@
    * @example
    * console.log( aid.math.lt(9)(1) ); // true
    */
-  math.lt = aid.curry2(function (lhs, rhs) {
+  math.lt = aid.curry2(function(lhs, rhs) {
     if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs))) throw new TypeError('math.lt requires Number parameters');
 
     return lhs < rhs;
@@ -2487,7 +2507,7 @@
    * console.log( aid.math.gte(1)(1) ); // true
    * console.log( aid.math.gte(1)(9) ); // true
    */
-  math.gte = aid.curry2(function (lhs, rhs) {
+  math.gte = aid.curry2(function(lhs, rhs) {
     if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs))) throw new TypeError('math.gte requires Number parameters');
 
     return lhs >= rhs;
@@ -2505,7 +2525,7 @@
    * console.log( aid.math.lte(1)(1) ); // true
    * console.log( aid.math.lte(9)(1) ); // true
    */
-  math.lte = aid.curry2(function (lhs, rhs) {
+  math.lte = aid.curry2(function(lhs, rhs) {
     if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs))) throw new TypeError('math.lte requires Number parameters');
 
     return lhs <= rhs;
@@ -3075,7 +3095,7 @@
         memoArr[j] = array.overlappedConditionSortByProperty(arr, sortConditions, nextConditionIndex);
       }
 
-      return memoArr.reduce(function (acc, curVal) {
+      return memoArr.reduce(function(acc, curVal) {
         return acc.concat(curVal);
       });
     }
@@ -3151,7 +3171,7 @@
       if (typeof script.onreadystatechange === 'undefined') {
         script.onload = loadCompleteCallback;
       } else {
-        script.onreadystatechange = function () {
+        script.onreadystatechange = function() {
           if (script.readyState === 'loaded' || script.readyState === 'complete') {
             script.onreadystatechange = null;
             loadCompleteCallback();
@@ -3173,11 +3193,68 @@
     }
   };
 
+  /**
+   * TODO: Arrange this function
+   *
+   * @static
+   * @method copyText
+   * @param {String} text
+   * @param {Function} doneCallback
+   * @param {Function} failCallback
+   * @example
+   * // TODO
+   */
+  clipboard.copyText = function copyText(text, doneCallback, failCallback) {
+    if (isDefined(doneCallback) && !isFunction(doneCallback))
+      throw TypeError('doneCallback parameter type of clipboard.copyText() must be undefined or null or Function.');
+    if (isDefined(failCallback) && !isFunction(failCallback))
+      throw TypeError('failCallback parameter type of clipboard.copyText() must be undefined or null or Function.');
+
+    if (!navigator.clipboard) {
+      // fallback
+      var textArea = document.createElement('textarea');
+      textArea.style.position = 'fixed';
+      textArea.style.top = '-9999px';
+      textArea.style.left = '-9999px';
+      textArea.style.width = '2em'; // setting to 1px / 1em doesn't work as this gives a negative w/h on some browsers.
+      textArea.style.height = '2em';
+      textArea.value = text;
+      document.body.appendChild(textArea);
+
+      textArea.focus();
+      textArea.select();
+
+      try {
+        var isSuccessCopy = document.execCommand('copy');
+        if (isSuccessCopy) {
+          if (doneCallback) doneCallback.call(null, text);
+          return;
+        }
+
+        if (failCallback) failCallback.call(null, new Error('')); // TODO: define error message
+      } catch (error) {
+        if (failCallback) failCallback.call(null, error);
+      }
+
+      document.body.removeChild(textArea);
+    } else {
+      // https://developer.mozilla.org/en-US/docs/Web/API/Clipboard
+      navigator.clipboard.writeText(text).then(
+        function() {
+          doneCallback.call(null, text);
+        },
+        function(error) {
+          failCallback.call(null, error);
+        }
+      );
+    }
+  };
+
   /*
    * export
    */
-  aid.platform = platform;
   aid.operator = operator;
+  aid.platform = platform;
   aid.browser = browser;
   aid.string = string;
   aid.math = math;
@@ -3185,13 +3262,14 @@
   aid.array = array;
   aid.element = element;
   aid.file = file;
+  aid.clipboard = clipboard;
 
   if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
       exports = module.exports = aid;
     }
   } else if (typeof define === 'function' && define.amd) {
-    define('aid', [], function () {
+    define('aid', [], function() {
       return aid;
     });
   } else {
