@@ -371,8 +371,8 @@
   aid.not = function not(func) {
     if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.not() must be Function.');
 
-    return function (obj) {
-      return !func(obj);
+    return function () {
+      return !func.apply(null, arguments);
     };
   };
 
