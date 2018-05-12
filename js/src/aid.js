@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   // Establish the global object, `window` (`self`) in the browser, `global`
@@ -7,8 +7,7 @@
   var global =
     (typeof self == 'object' && self.self === self && self) ||
     (typeof global == 'object' && global.global === global && global) ||
-    this ||
-    {};
+    this || {};
 
   var _slice = Array.prototype.slice;
 
@@ -237,9 +236,9 @@
    * @param {class} ParentClass - parent class function
    * @example
    */
-  aid.inherit = (function() {
+  aid.inherit = (function () {
     // use closure, protect gabarge collection.
-    var F = function() {};
+    var F = function () {};
 
     return function inherit(ChildClass, ParentClass) {
       F.prototype = ParentClass.prototype;
@@ -261,7 +260,7 @@
    * @example
    * aid.namespace('first.second.third'); // create first.second.third object
    */
-  aid.namespace = function(namespace, parent) {
+  aid.namespace = function (namespace, parent) {
     if (!aid.isString(namespace)) throw new TypeError('namespace parameter type of aid.namespace() must be String.');
 
     if (!(aid.isObject(parent) || !aid.isDefined(parent))) {
@@ -307,7 +306,7 @@
     if (aid.isDefined(borrower[functionName]))
       throw new Error('borrower object parameter of aid.borrow() already has function with functionName.');
 
-    borrower[functionName] = function() {
+    borrower[functionName] = function () {
       var args = _slice.call(arguments);
       return donor[functionName].apply(this, args);
     };
@@ -331,7 +330,7 @@
   aid.bind = function bind(func, context) {
     if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.bind() must be Function.');
 
-    return function() {
+    return function () {
       return func.apply(context, arguments);
     };
   };
@@ -353,7 +352,7 @@
       throw new TypeError('func_a, func_b parameter type of aid.compose() must be Function.');
     }
 
-    return function() {
+    return function () {
       return func_a(func_b.apply(null, arguments));
     };
   };
@@ -372,7 +371,7 @@
   aid.not = function not(func) {
     if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.not() must be Function.');
 
-    return function(obj) {
+    return function (obj) {
       return !func(obj);
     };
   };
@@ -469,10 +468,10 @@
    * console.log( aid.allOf(true, true) ); // true
    * console.log( aid.allOf(true, false) ); // false
    */
-  aid.allOf = function allOf(/*args*/) {
+  aid.allOf = function allOf( /*args*/ ) {
     var args = _slice.call(arguments);
 
-    return args.every(function(val) {
+    return args.every(function (val) {
       return val === true;
     });
   };
@@ -487,10 +486,10 @@
    * console.log( anyOf(true, false) ); // true
    * console.log( anyOf(false, false) ); // false
    */
-  aid.anyOf = function anyOf(/*args*/) {
+  aid.anyOf = function anyOf( /*args*/ ) {
     var args = _slice.call(arguments);
 
-    return args.some(function(val) {
+    return args.some(function (val) {
       return val === true;
     });
   };
@@ -508,7 +507,7 @@
    * console.log( aid.constant(obj)() === obj ); // true
    */
   aid.constant = function constant(obj) {
-    return function() {
+    return function () {
       return obj;
     };
   };
@@ -538,7 +537,7 @@
       throw new TypeError('field parameter type of aid.plucker() must be String or Number.');
     }
 
-    return function(obj) {
+    return function (obj) {
       if (!(aid.isObject(obj) || aid.isArray(obj) || aid.isString(obj))) {
         throw new TypeError(
           'obj parameter type of function (get from aid.plucker()) must be Object or Array or String.'
@@ -565,7 +564,7 @@
 
     if (!aid.isArray(array)) throw new TypeError('array parameter type of aid.best() must be Array.');
 
-    return array.reduce(function(previousValue, currentValue) {
+    return array.reduce(function (previousValue, currentValue) {
       return conditionFunc(previousValue, currentValue) ? previousValue : currentValue;
     });
   };
@@ -612,7 +611,7 @@
   aid.curry = function curry(func) {
     if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.curry() must be Function.');
 
-    return function(arg) {
+    return function (arg) {
       return func(arg);
     };
   };
@@ -631,8 +630,8 @@
   aid.curry2 = function curry2(func) {
     if (!aid.isFunction(func)) throw new TypeError('func parameter type of aid.curry2() must be Function.');
 
-    return function(secondArg) {
-      return function(firstArg) {
+    return function (secondArg) {
+      return function (firstArg) {
         return func(firstArg, secondArg);
       };
     };
@@ -659,12 +658,12 @@
       var args = _slice.call(arguments),
         context = this;
 
-      return args.length >= arity
-        ? func.apply(context, args)
-        : function() {
-            var rest = _slice.call(arguments);
-            return curried.apply(context, args.concat(rest));
-          };
+      return args.length >= arity ?
+        func.apply(context, args) :
+        function () {
+          var rest = _slice.call(arguments);
+          return curried.apply(context, args.concat(rest));
+        };
     };
   };
 
@@ -704,18 +703,18 @@
    * console.log( aid.pipeline(80, negative) ); // -80
    * console.log( negativeHalf(80) ); // 80 * -1 / 2
    */
-  aid.pipeline = function pipeline(seed /* args */) {
+  aid.pipeline = function pipeline(seed /* args */ ) {
     var restArgs = aid.rest(_slice.call(arguments));
 
     aid.each(
       restArgs,
-      function(value) {
+      function (value) {
         if (!aid.isFunction(value)) throw new TypeError('rest parameters type of aid.pipeline() must be Function.');
       },
       null
     );
 
-    return restArgs.reduce(function(prev, current) {
+    return restArgs.reduce(function (prev, current) {
       return current(prev);
     }, seed);
   };
@@ -740,14 +739,14 @@
     var calls = [];
 
     return {
-      invoke: function(methodName /*, args */) {
+      invoke: function (methodName /*, args */ ) {
         var args = aid.rest(_slice.call(arguments));
 
-        calls.push(function(target) {
+        calls.push(function (target) {
           var method = target[methodName];
 
           if (!aid.isDefined(method)) {
-            throw Error(target.constructor.name + ' has not ' + methodName + ' method');
+            throw Error(target.constructor.name + ' has not ' + methodName + ' method.');
           }
 
           return method.apply(target, args);
@@ -756,8 +755,8 @@
         return this;
       },
 
-      force: function() {
-        return calls.reduce(function(ret, thunk) {
+      force: function () {
+        return calls.reduce(function (ret, thunk) {
           return thunk(ret);
         }, obj);
       }
@@ -775,7 +774,7 @@
    * @example
    * console.log( aid.eq(99)(99) ); // true
    */
-  aid.eq = aid.curry2(function(lhs, rhs) {
+  aid.eq = aid.curry2(function (lhs, rhs) {
     return lhs === rhs;
   });
 
@@ -783,7 +782,7 @@
    * Data Structure
    */
   // Stack
-  var Stack = function() {
+  var Stack = function () {
     this._dataStore = [];
     this._top = 0;
   };
@@ -810,12 +809,12 @@
     this._top = 0;
   };
 
-  aid.createStack = function() {
+  aid.createStack = function () {
     return new Stack();
   };
 
   // Queue
-  var Queue = function() {
+  var Queue = function () {
     this._dataStore = [];
   };
 
@@ -849,13 +848,13 @@
   };
 
   // LinkedList node
-  var LinkedListNode = function(data) {
+  var LinkedListNode = function (data) {
     this.data = data;
     this.next = null;
   };
 
   // LinkedList
-  var LinkedList = function() {
+  var LinkedList = function () {
     this.head = new LinkedListNode('head');
   };
 
@@ -1777,27 +1776,27 @@
         channelName = tmpArr[1];
         break;
 
-      // https://player.twitch.tv/?channel=surrenderhs
+        // https://player.twitch.tv/?channel=surrenderhs
       case 'liveVideo':
         tmpArr = TWITCH_REGEXES[uriType].exec(uri);
         channelName = tmpArr[1];
         break;
 
-      // https://www.twitch.tv/surrenderhs/chat?popout=
+        // https://www.twitch.tv/surrenderhs/chat?popout=
       case 'chatting':
         tmpArr = TWITCH_REGEXES[uriType].exec(uri);
         channelName = tmpArr[1];
         isChatting = true;
         break;
 
-      // https://www.twitch.tv/surrenderhs/v/56097351
+        // https://www.twitch.tv/surrenderhs/v/56097351
       case 'pastChannel':
         tmpArr = TWITCH_REGEXES[uriType].exec(uri);
         channelName = tmpArr[1];
         videoId = tmpArr[2];
         break;
 
-      // https://player.twitch.tv/?video=v56097351
+        // https://player.twitch.tv/?video=v56097351
       case 'pastVideo':
         tmpArr = TWITCH_REGEXES[uriType].exec(uri);
         videoId = tmpArr[1];
@@ -2128,11 +2127,11 @@
     }
 
     if (totalLength < 1 || firstIndex < 1) {
-      throw new Error('totalLength, firstIndex parameter of math.isIndexInLoop() can not smaller than 1.');
+      throw new Error('totalLength, firstIndex parameter of math.isIndexInLoop() cannot smaller than 1.');
     }
 
     if (loopGap > totalLength) {
-      throw new Error('loopGap parameter of math.isIndexInLoop() can not bigger than totalLength parameter.');
+      throw new Error('loopGap parameter of math.isIndexInLoop() cannot bigger than totalLength parameter.');
     }
 
     var index = firstIndex;
@@ -2168,12 +2167,12 @@
     }
 
     if (totalLength < 1 || firstIndex < 1) {
-      throw new Error('totalLength, firstIndex parameter of math.getLoopedLastIndex() can not smaller than 1.');
+      throw new Error('totalLength, firstIndex parameter of math.getLoopedLastIndex() cannot smaller than 1.');
     }
 
     if (loopGap > totalLength || firstIndex > totalLength) {
       throw new Error(
-        'loopGap, firstIndex parameter of math.getLoopedLastIndex() can not bigger than totalLength parameter.'
+        'loopGap, firstIndex parameter of math.getLoopedLastIndex() cannot bigger than totalLength parameter.'
       );
     }
 
@@ -2209,12 +2208,12 @@
     }
 
     if (totalLength < 1 || lastIndex < 1) {
-      throw new Error('totalLength, lastIndex parameter of math.getReverseLoopedFirstIndex() can not smaller than 1.');
+      throw new Error('totalLength, lastIndex parameter of math.getReverseLoopedFirstIndex() cannot smaller than 1.');
     }
 
     if (loopGap > totalLength || lastIndex > totalLength) {
       throw new Error(
-        'loopGap, lastIndex parameter of math.getReverseLoopedFirstIndex() can not bigger than totalLength parameter.'
+        'loopGap, lastIndex parameter of math.getReverseLoopedFirstIndex() cannot bigger than totalLength parameter.'
       );
     }
 
@@ -2266,8 +2265,7 @@
     if (arguments.length < 4) throw new Error('math.getObjForPagination() requires 4 parameters.');
 
     var isInteger = aid.isInteger;
-    if (
-      !isInteger(totalPostNum) ||
+    if (!isInteger(totalPostNum) ||
       !isInteger(displayPostNumPerPage) ||
       !isInteger(displayPaginationBtnNum) ||
       !isInteger(pageIndex)
@@ -2356,7 +2354,7 @@
 
     if (acuteAngleDegree >= 90)
       throw new Error(
-        'acuteAngleDegree parameter of math.getHeightOfRightTriangle() can not greater than or equal to 90.'
+        'acuteAngleDegree parameter of math.getHeightOfRightTriangle() cannot greater than or equal to 90.'
       );
 
     return baseLineWidth * Math.tan(math.degreeToRadian(acuteAngleDegree));
@@ -2416,8 +2414,7 @@
     }
 
     var isNumber = aid.isNumber;
-    if (
-      !isNumber(collinearPoint1.x) ||
+    if (!isNumber(collinearPoint1.x) ||
       !isNumber(collinearPoint1.y) ||
       !isNumber(collinearPoint2.x) ||
       !isNumber(collinearPoint2.y) ||
@@ -2472,7 +2469,7 @@
    * @example
    * console.log( aid.math.gt(1)(9) ); // true
    */
-  math.gt = aid.curry2(function(lhs, rhs) {
+  math.gt = aid.curry2(function (lhs, rhs) {
     if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs))) throw new TypeError('math.gt requires Number parameters');
 
     return lhs > rhs;
@@ -2489,7 +2486,7 @@
    * @example
    * console.log( aid.math.lt(9)(1) ); // true
    */
-  math.lt = aid.curry2(function(lhs, rhs) {
+  math.lt = aid.curry2(function (lhs, rhs) {
     if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs))) throw new TypeError('math.lt requires Number parameters');
 
     return lhs < rhs;
@@ -2507,7 +2504,7 @@
    * console.log( aid.math.gte(1)(1) ); // true
    * console.log( aid.math.gte(1)(9) ); // true
    */
-  math.gte = aid.curry2(function(lhs, rhs) {
+  math.gte = aid.curry2(function (lhs, rhs) {
     if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs))) throw new TypeError('math.gte requires Number parameters');
 
     return lhs >= rhs;
@@ -2525,7 +2522,7 @@
    * console.log( aid.math.lte(1)(1) ); // true
    * console.log( aid.math.lte(9)(1) ); // true
    */
-  math.lte = aid.curry2(function(lhs, rhs) {
+  math.lte = aid.curry2(function (lhs, rhs) {
     if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs))) throw new TypeError('math.lte requires Number parameters');
 
     return lhs <= rhs;
@@ -3095,7 +3092,7 @@
         memoArr[j] = array.overlappedConditionSortByProperty(arr, sortConditions, nextConditionIndex);
       }
 
-      return memoArr.reduce(function(acc, curVal) {
+      return memoArr.reduce(function (acc, curVal) {
         return acc.concat(curVal);
       });
     }
@@ -3171,7 +3168,7 @@
       if (typeof script.onreadystatechange === 'undefined') {
         script.onload = loadCompleteCallback;
       } else {
-        script.onreadystatechange = function() {
+        script.onreadystatechange = function () {
           if (script.readyState === 'loaded' || script.readyState === 'complete') {
             script.onreadystatechange = null;
             loadCompleteCallback();
@@ -3225,13 +3222,14 @@
       textArea.select();
 
       try {
+        // https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand
         var isSuccessCopy = document.execCommand('copy');
         if (isSuccessCopy) {
           if (doneCallback) doneCallback.call(null, text);
           return;
         }
 
-        if (failCallback) failCallback.call(null, new Error('')); // TODO: define error message
+        if (failCallback) failCallback.call(null, new Error('clipboard.copyText() cannot copy text with using document.execCommand("copy").'));
       } catch (error) {
         if (failCallback) failCallback.call(null, error);
       }
@@ -3240,10 +3238,10 @@
     } else {
       // https://developer.mozilla.org/en-US/docs/Web/API/Clipboard
       navigator.clipboard.writeText(text).then(
-        function() {
+        function () {
           doneCallback.call(null, text);
         },
-        function(error) {
+        function (error) {
           failCallback.call(null, error);
         }
       );
@@ -3269,7 +3267,7 @@
       exports = module.exports = aid;
     }
   } else if (typeof define === 'function' && define.amd) {
-    define('aid', [], function() {
+    define('aid', [], function () {
       return aid;
     });
   } else {

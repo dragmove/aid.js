@@ -884,7 +884,7 @@ describe('aid.js', function () {
 
       it('acuteAngleDegree parameter is greater than or equal to 90, throw Error.', function () {
         var ERROR_MSG =
-          'acuteAngleDegree parameter of math.getHeightOfRightTriangle() can not greater than or equal to 90.';
+          'acuteAngleDegree parameter of math.getHeightOfRightTriangle() cannot greater than or equal to 90.';
 
         expect(function () {
           math.getHeightOfRightTriangle(100, 90);
