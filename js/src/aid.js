@@ -3196,19 +3196,20 @@
    * @static
    * @method copyText
    * @param {String} text
-   * @param {Function} doneCallback
-   * @param {Function} failCallback
+   * @param {Function} successCallback
+   * @param {Function} errorCallback
    * @example
    * // TODO
    */
-  clipboard.copyText = function copyText(text, doneCallback, failCallback) {
-    if (isDefined(doneCallback) && !isFunction(doneCallback))
-      throw TypeError('doneCallback parameter type of clipboard.copyText() must be undefined or null or Function.');
-    if (isDefined(failCallback) && !isFunction(failCallback))
-      throw TypeError('failCallback parameter type of clipboard.copyText() must be undefined or null or Function.');
+  clipboard.copyText = function copyText(text, successCallback, errorCallback) {
+    if (isDefined(successCallback) && !isFunction(successCallback))
+      throw TypeError('successCallback parameter type of clipboard.copyText() must be undefined or null or Function.');
+
+    if (isDefined(errorCallback) && !isFunction(errorCallback))
+      throw TypeError('errorCallback parameter type of clipboard.copyText() must be undefined or null or Function.');
 
     if (!navigator.clipboard) {
-      // fallback
+      // fallback. no support 
       var textArea = document.createElement('textarea');
       textArea.style.position = 'fixed';
       textArea.style.top = '-9999px';
@@ -3225,24 +3226,25 @@
         // https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand
         var isSuccessCopy = document.execCommand('copy');
         if (isSuccessCopy) {
-          if (doneCallback) doneCallback.call(null, text);
+          if (successCallback) successCallback.call(null, text);
           return;
         }
 
-        if (failCallback) failCallback.call(null, new Error('clipboard.copyText() cannot copy text with using document.execCommand("copy").'));
+        if (errorCallback) errorCallback.call(null, new Error('clipboard.copyText() cannot copy text with using document.execCommand("copy").'));
       } catch (error) {
-        if (failCallback) failCallback.call(null, error);
+        if (errorCallback) errorCallback.call(null, error);
       }
 
       document.body.removeChild(textArea);
     } else {
       // https://developer.mozilla.org/en-US/docs/Web/API/Clipboard
-      navigator.clipboard.writeText(text).then(
+      var promise = navigator.clipboard.writeText(text)
+      promise.then(
         function () {
-          doneCallback.call(null, text);
+          successCallback.call(null, text);
         },
         function (error) {
-          failCallback.call(null, error);
+          errorCallback.call(null, error);
         }
       );
     }
