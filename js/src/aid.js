@@ -214,10 +214,11 @@
    */
   aid.extend = function extend(destination, source) {
     if (!(destination instanceof Object) || !(typeof destination === 'object')) {
-      throw TypeError('destination parameter type of aid.extend() must be instance of Object, and object type.');
+      throw new TypeError('destination parameter type of aid.extend() must be instance of Object, and object type.');
     }
 
-    if (!(typeof source === 'object')) throw TypeError('source parameter type of aid.extend() must be object type.');
+    if (!(typeof source === 'object'))
+      throw new TypeError('source parameter type of aid.extend() must be object type.');
 
     for (var key in source) {
       if (source.hasOwnProperty(key)) {
@@ -3205,11 +3206,20 @@
    * aid.clipboard.copyText('aid.js', function(str) { console.log(str); // 'aid.js' }, function(error) { console.log(error); });
    */
   clipboard.copyText = function copyText(str, successCallback, errorCallback) {
-    if (isDefined(successCallback) && !isFunction(successCallback))
-      throw TypeError('successCallback parameter type of clipboard.copyText() must be undefined or null or Function.');
+    if (!aid.isString(str)) {
+      console.log('oh no');
+      throw new TypeError('str parameter type of clipboard.copyText() must be String.');
+    }
 
-    if (isDefined(errorCallback) && !isFunction(errorCallback))
-      throw TypeError('errorCallback parameter type of clipboard.copyText() must be undefined or null or Function.');
+    if (aid.isDefined(successCallback) && !aid.isFunction(successCallback))
+      throw new TypeError(
+        'successCallback parameter type of clipboard.copyText() must be undefined or null or Function.'
+      );
+
+    if (aid.isDefined(errorCallback) && !aid.isFunction(errorCallback))
+      throw new TypeError(
+        'errorCallback parameter type of clipboard.copyText() must be undefined or null or Function.'
+      );
 
     if (!navigator.clipboard) {
       // fallback. no support
