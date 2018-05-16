@@ -1,14 +1,14 @@
 'use strict';
 
-describe('aid.js', function() {
-  describe('aid.clipboard', function() {
+describe('aid.js', function () {
+  describe('aid.clipboard', function () {
     var clipboard = aid.clipboard;
 
-    describe('.copyText()', function() {
-      it('if 1st argument is not String type, throw TypeError', function() {
+    describe('.copyText()', function () {
+      it('if 1st argument is not String type, throw TypeError', function () {
         var ERROR_MSG = 'str parameter type of clipboard.copyText() must be String.';
 
-        expect(function() {
+        expect(function () {
           clipboard.copyText(undefined);
           clipboard.copyText(null);
           clipboard.copyText(false);
@@ -16,10 +16,10 @@ describe('aid.js', function() {
           clipboard.copyText(0);
           clipboard.copyText({});
           clipboard.copyText([]);
-          clipboard.copyText(function() {});
+          clipboard.copyText(function () {});
           clipboard.copyText(new RegExp('^aid'));
           clipboard.copyText(/^aid'/);
-        });
+        }).toThrowError(TypeError, ERROR_MSG);
       });
 
       /*
