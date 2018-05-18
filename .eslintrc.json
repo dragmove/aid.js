@@ -4,9 +4,14 @@
     "commonjs": true,
     "node": true,
     "jquery": true,
-    "amd": true
+    "amd": true,
+    "jasmine": true
   },
-  "extends": "eslint:recommended",
+  "plugins": ["jasmine"],
+  "extends": ["eslint:recommended", "plugin:jasmine/recommended"],
+  "globals": {
+    "aid": false
+  },
   "rules": {
     "indent": [
       "error",
@@ -16,14 +21,7 @@
       }
     ],
     "linebreak-style": "off",
-    "quotes": [
-      "error",
-      "single"
-    ],
-    "semi": [
-      "error",
-      "always"
-    ],
+    "semi": ["error", "always"],
     "no-extra-boolean-cast": "off",
     "quotes": [
       "error",
