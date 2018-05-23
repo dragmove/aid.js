@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.70
+ * aid.js 0.1.71
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -23,6 +23,7 @@
     math = {},
     date = {},
     array = {},
+    object = {},
     element = {},
     file = {},
     clipboard = {};
@@ -1521,12 +1522,16 @@
     var paramStr = tmpArr[1],
       params = paramStr.split('&');
 
-    var keyValueArr;
-    for (var i = 0, max = params.length; i < max; ++i) {
-      keyValueArr = params[i].split('=');
+    for (var param = '', eqIndex = -1, keyStr = '', valueStr = '', i = 0, max = params.length; i < max; ++i) {
+      param = params[i];
 
-      if (keyValueArr.length <= 1) keyValueArr.push('');
-      if (keyValueArr[0] === parameterName) return global.decodeURIComponent(keyValueArr[1]);
+      eqIndex = param.indexOf('=');
+      if (eqIndex >= 0) {
+        keyStr = param.substr(0, eqIndex);
+        valueStr = param.substr(eqIndex + 1);
+
+        if (keyStr === parameterName) return valueStr;
+      }
     }
 
     return '';
@@ -1554,14 +1559,22 @@
     var paramStr = tmpArr[1],
       params = paramStr.split('&');
 
-    var keyValueArr,
-      obj = {};
-    for (var i = 0, max = params.length; i < max; ++i) {
-      keyValueArr = params[i].split('=');
-      if (keyValueArr.length <= 1) return null;
+    if (params.length <= 0) return null;
 
-      obj[keyValueArr[0]] = keyValueArr[1];
+    var obj = {};
+    for (var param = '', eqIndex = -1, keyStr = '', valueStr = '', i = 0, max = params.length; i < max; ++i) {
+      param = params[i];
+
+      eqIndex = param.indexOf('=');
+      if (eqIndex >= 0) {
+        keyStr = param.substr(0, eqIndex);
+        valueStr = param.substr(eqIndex + 1);
+
+        if (keyStr) obj[keyStr] = valueStr;
+      }
     }
+
+    if (aid.object.isEmpty(obj)) return null;
 
     return obj;
   };
@@ -3032,6 +3045,25 @@
   };
 
   /**
+   * check object has properties.
+   *
+   * @static
+   * @method isEmpty
+   * @param {Object} obj
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  object.isEmpty = function isEmpty(obj) {
+    if (!aid.isObject(obj)) throw new TypeError('obj parameter type of object.isEmpty() must be Object.');
+
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) return false;
+    }
+
+    return true;
+  };
+
+  /**
    * check element is in viewport entirely.
    *
    * @static
@@ -3185,6 +3217,7 @@
   aid.math = math;
   aid.date = date;
   aid.array = array;
+  aid.object = object;
   aid.element = element;
   aid.file = file;
   aid.clipboard = clipboard;

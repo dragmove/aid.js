@@ -372,6 +372,22 @@ describe('aid.js', function() {
       it('get name from "http://www.google.com?name=foo&age=99&address=seoul#foo=1&bar=3", return ""', function() {
         expect(string.getUriParam('http://www.google.com?name=foo&age=99&address=seoul#foo=1&bar=3', 'name')).toEqual('foo');
       });
+
+      it('get address from "http://www.google.com?name=foo&age=99&address=seoul#foo=1&bar=3", return "seoul"', function() {
+        expect(string.getUriParam('http://www.google.com?name=foo&age=99&address=seoul#foo=1&bar=3', 'address')).toEqual('seoul');
+      });
+
+      it('get age from "http://www.google.com?age", return ""', function() {
+        expect(string.getUriParam('http://www.google.com?age', 'age')).toEqual('');
+      });
+
+      it('get age from "http://www.google.com?age=", return ""', function() {
+        expect(string.getUriParam('http://www.google.com?age=', 'age')).toEqual('');
+      });
+
+      it('get age from "http://www.google.com?age===", return "=="', function() {
+        expect(string.getUriParam('http://www.google.com?age===', 'age')).toEqual('==');
+      });
     });
 
     describe('.getUriParams()', function() {
@@ -425,6 +441,20 @@ describe('aid.js', function() {
         expect(string.getUriParams('http://www.google.com')).toEqual(null);
       });
 
+      it('get parameters from "http://www.google.com?=", return null', function() {
+        expect(string.getUriParams('http://www.google.com?=')).toEqual(null);
+      });
+
+      it('get parameters from "http://www.google.com?name", return null', function() {
+        expect(string.getUriParams('http://www.google.com?name')).toEqual(null);
+      });
+
+      it('get parameters from "http://www.google.com?name=", return {name: ""}', function() {
+        expect(string.getUriParams('http://www.google.com?name=')).toEqual({
+          name: ''
+        });
+      });
+
       it('get parameters from "http://www.google.com?name=foo", return {name:"foo"}', function() {
         expect(string.getUriParams('http://www.google.com?name=foo')).toEqual({
           name: 'foo'
@@ -446,6 +476,29 @@ describe('aid.js', function() {
           name: 'foo',
           age: '99',
           address: 'seoul'
+        });
+      });
+
+      it('get parameters from "http://www.google.com?name=foo&age", return {name: "foo"}', function() {
+        var uri = 'http://www.google.com?name=foo&age';
+        expect(string.getUriParams(uri)).toEqual({
+          name: 'foo'
+        });
+      });
+
+      it('get parameters from "http://www.google.com?name=foo&age=", return {name: "foo", age: ""}', function() {
+        var uri = 'http://www.google.com?name=foo&age=';
+        expect(string.getUriParams(uri)).toEqual({
+          name: 'foo',
+          age: ''
+        });
+      });
+
+      it('get parameters from "http://www.google.com?name=foo&age===", return {name: "foo", age: "=="}', function() {
+        var uri = 'http://www.google.com?name=foo&age===';
+        expect(string.getUriParams(uri)).toEqual({
+          name: 'foo',
+          age: '=='
         });
       });
     });

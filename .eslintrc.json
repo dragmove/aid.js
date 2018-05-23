@@ -23,6 +23,7 @@
     "linebreak-style": "off",
     "semi": ["error", "always"],
     "no-extra-boolean-cast": "off",
+    "no-useless-escape": "off",
     "quotes": [
       "error",
       "single",
