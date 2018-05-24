@@ -72,6 +72,7 @@ aid.rest
 aid.pipeline
 aid.lazyChain
 aid.eq
+aid.alt
 ```
 
 * operator utils

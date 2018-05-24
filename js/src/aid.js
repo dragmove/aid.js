@@ -4,7 +4,11 @@
   // Establish the global object, `window` (`self`) in the browser, `global`
   // on the server, or `this` in some virtual machines. We use `self`
   // instead of `window` for `WebWorker` support.
-  var global = (typeof self == 'object' && self.self === self && self) || (typeof global == 'object' && global.global === global && global) || this || {};
+  var global =
+    (typeof self == 'object' && self.self === self && self) ||
+    (typeof global == 'object' && global.global === global && global) ||
+    this ||
+    {};
 
   var _slice = Array.prototype.slice;
 
@@ -214,7 +218,8 @@
       throw new TypeError('destination parameter type of aid.extend() must be instance of Object, and object type.');
     }
 
-    if (!(typeof source === 'object')) throw new TypeError('source parameter type of aid.extend() must be object type.');
+    if (!(typeof source === 'object'))
+      throw new TypeError('source parameter type of aid.extend() must be object type.');
 
     for (var key in source) {
       if (source.hasOwnProperty(key)) {
@@ -293,13 +298,16 @@
    * console.log( borrower.say() ); // 'hello, world'
    */
   aid.borrow = function borrow(borrower, donor, functionName) {
-    if (!aid.isObject(borrower) || !aid.isObject(donor)) throw new TypeError('borrower, donor parameter type of aid.borrow() must be Object.');
+    if (!aid.isObject(borrower) || !aid.isObject(donor))
+      throw new TypeError('borrower, donor parameter type of aid.borrow() must be Object.');
 
     if (!aid.isString(functionName)) throw new TypeError('functionName parameter type of aid.borrow() must be String.');
 
-    if (!aid.isDefined(donor[functionName])) throw new Error('donor object parameter of aid.borrow() has not function with functionName.');
+    if (!aid.isDefined(donor[functionName]))
+      throw new Error('donor object parameter of aid.borrow() has not function with functionName.');
 
-    if (aid.isDefined(borrower[functionName])) throw new Error('borrower object parameter of aid.borrow() already has function with functionName.');
+    if (aid.isDefined(borrower[functionName]))
+      throw new Error('borrower object parameter of aid.borrow() already has function with functionName.');
 
     borrower[functionName] = function() {
       var args = _slice.call(arguments);
@@ -534,7 +542,9 @@
 
     return function(obj) {
       if (!(aid.isObject(obj) || aid.isArray(obj) || aid.isString(obj))) {
-        throw new TypeError('obj parameter type of function (get from aid.plucker()) must be Object or Array or String.');
+        throw new TypeError(
+          'obj parameter type of function (get from aid.plucker()) must be Object or Array or String.'
+        );
       }
 
       return obj[field];
@@ -552,7 +562,8 @@
    * console.log( aid.best(function(x, y) { return x > y; }, [2, 4, 1, 5, 3]) ); // 5
    */
   aid.best = function best(conditionFunc, array) {
-    if (!aid.isFunction(conditionFunc)) throw new TypeError('conditionFunc parameter type of aid.best() must be Function.');
+    if (!aid.isFunction(conditionFunc))
+      throw new TypeError('conditionFunc parameter type of aid.best() must be Function.');
 
     if (!aid.isArray(array)) throw new TypeError('array parameter type of aid.best() must be Array.');
 
@@ -574,9 +585,11 @@
    * console.log( aid.iterateUntil(function(n) { return n + n; }, function(n) { return n <= 1042 }, 1) ); // [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]
    */
   aid.iterateUntil = function iterateUntil(calculateFunc, conditionFunc, initialValue) {
-    if (!aid.isFunction(calculateFunc)) throw new TypeError('calculateFunc parameter type of aid.iterateUntil() must be Function.');
+    if (!aid.isFunction(calculateFunc))
+      throw new TypeError('calculateFunc parameter type of aid.iterateUntil() must be Function.');
 
-    if (!aid.isFunction(conditionFunc)) throw new TypeError('conditionFunc parameter type of aid.iterateUntil() must be Function.');
+    if (!aid.isFunction(conditionFunc))
+      throw new TypeError('conditionFunc parameter type of aid.iterateUntil() must be Function.');
 
     var array = [],
       result = calculateFunc(initialValue);
@@ -767,6 +780,33 @@
   aid.eq = aid.curry2(function(lhs, rhs) {
     return lhs === rhs;
   });
+
+  /**
+   * alt combinator
+   *
+   * @static
+   * @method alt
+   * @param {Function} func_a
+   * @param {Function} func_b
+   * @returns {Object} return value
+   * @example
+   * var alt = aid.alt(function(val) { return val; }, function(val) { return !val; });
+   * console.log( alt(false) ); // true
+   */
+  aid.alt = function alt(func_a, func_b) {
+    if (!aid.isFunction(func_a) || !aid.isFunction(func_b)) {
+      throw new TypeError('func_a, func_b parameter type of aid.alt() must be Function.');
+    }
+
+    return function(value) {
+      var result_a = func_a(value);
+
+      // undefined, null, false
+      if (!aid.isDefined(result_a) || result_a === false) return func_b(value);
+
+      return result_a;
+    };
+  };
 
   /*
    * Data Structure
@@ -1470,7 +1510,9 @@
     if (!aid.isString(emailStr)) throw new TypeError('string.isEmail() requires String parameter.');
 
     // html5 form email check regex - https://www.w3.org/TR/html5/forms.html#e-mail-state-(type=email)
-    var emailRegex = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
+    var emailRegex = new RegExp(
+      "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+    );
     return emailRegex.exec(emailStr) ? true : false;
   };
 
@@ -1586,7 +1628,8 @@
   string.getUriCombinedParams = function getUriCombinedParams(uri, parameters) {
     if (!aid.isString(uri)) throw new TypeError('uri parameter type of string.getUriCombinedParams() must be String.');
 
-    if (!aid.isObject(parameters)) throw new TypeError('parameters parameter type of string.getUriCombinedParams() must be Object.');
+    if (!aid.isObject(parameters))
+      throw new TypeError('parameters parameter type of string.getUriCombinedParams() must be Object.');
 
     if (!uri) return '';
     if (!parameters) return uri;
@@ -1618,7 +1661,8 @@
    * console.log( aid.string.isValidYoutubeVideoId('mYIfiQlfaas') ); // true
    */
   string.isValidYoutubeVideoId = function isValidYoutubeVideoId(youtubeId) {
-    if (!aid.isString(youtubeId)) throw new TypeError('youtubeId parameter type of string.isValidYoutubeVideoId() must be String.');
+    if (!aid.isString(youtubeId))
+      throw new TypeError('youtubeId parameter type of string.isValidYoutubeVideoId() must be String.');
 
     var regex = /^(\w|-|_){11}$/;
     return regex.exec(youtubeId) ? true : false;
@@ -1827,10 +1871,17 @@
    * console.log( aid.string.getDocumentPrefixedProperty('visibilityState', true) ); // return 'visibilityState' or 'webkitVisibilityState' or 'mozVisibilityState' or 'msVisibilityState' or 'oVisibilityState'.
    * console.log( aid.string.getDocumentPrefixedProperty('12345', false) ); // if browser doesn't have property, return ''.
    */
-  string.getDocumentPrefixedProperty = function getDocumentPrefixedProperty(propertyName, isPropertyFirstCharToUpperCase) {
-    if (!aid.isString(propertyName)) throw new TypeError('propertyName parameter type of string.getDocumentPrefixedProperty() must be String.');
+  string.getDocumentPrefixedProperty = function getDocumentPrefixedProperty(
+    propertyName,
+    isPropertyFirstCharToUpperCase
+  ) {
+    if (!aid.isString(propertyName))
+      throw new TypeError('propertyName parameter type of string.getDocumentPrefixedProperty() must be String.');
 
-    if (!aid.isBoolean(isPropertyFirstCharToUpperCase)) throw new TypeError('isPropertyFirstCharToUpperCase parameter type of string.getDocumentPrefixedProperty() must be Boolean.');
+    if (!aid.isBoolean(isPropertyFirstCharToUpperCase))
+      throw new TypeError(
+        'isPropertyFirstCharToUpperCase parameter type of string.getDocumentPrefixedProperty() must be Boolean.'
+      );
 
     if (propertyName in global.document) return propertyName;
 
@@ -1859,9 +1910,13 @@
    * console.log( aid.string.getElementPrefixedStyle('12345', false) ); // if browser doesn't have style property, return ''.
    */
   string.getElementPrefixedStyle = function getElementPrefixedStyle(propertyName, isPropertyFirstCharToUpperCase) {
-    if (!aid.isString(propertyName)) throw new TypeError('propertyName parameter type of string.getElementPrefixedStyle() must be String.');
+    if (!aid.isString(propertyName))
+      throw new TypeError('propertyName parameter type of string.getElementPrefixedStyle() must be String.');
 
-    if (!aid.isBoolean(isPropertyFirstCharToUpperCase)) throw new TypeError('isPropertyFirstCharToUpperCase parameter type of string.getElementPrefixedStyle() must be Boolean.');
+    if (!aid.isBoolean(isPropertyFirstCharToUpperCase))
+      throw new TypeError(
+        'isPropertyFirstCharToUpperCase parameter type of string.getElementPrefixedStyle() must be Boolean.'
+      );
 
     var style = global.document.createElement('div').style;
     if (propertyName in style) return propertyName;
@@ -2158,7 +2213,9 @@
     }
 
     if (loopGap > totalLength || firstIndex > totalLength) {
-      throw new Error('loopGap, firstIndex parameter of math.getLoopedLastIndex() cannot bigger than totalLength parameter.');
+      throw new Error(
+        'loopGap, firstIndex parameter of math.getLoopedLastIndex() cannot bigger than totalLength parameter.'
+      );
     }
 
     var index = firstIndex;
@@ -2197,7 +2254,9 @@
     }
 
     if (loopGap > totalLength || lastIndex > totalLength) {
-      throw new Error('loopGap, lastIndex parameter of math.getReverseLoopedFirstIndex() cannot bigger than totalLength parameter.');
+      throw new Error(
+        'loopGap, lastIndex parameter of math.getReverseLoopedFirstIndex() cannot bigger than totalLength parameter.'
+      );
     }
 
     var index = lastIndex;
@@ -2239,11 +2298,21 @@
    * @example
    * console.log( aid.math.getObjForPagination(39, 10, 5, 1) ); // {totalPostNum: 39, displayPostNumPerPage: 10, displayPaginationBtnNum: 5, pageIndex: 1, totalPageNum: 4, prevPageIndex: 0, firstPageIndex: 1, lastPageIndex: 4, nextPageIndex: 0}
    */
-  math.getObjForPagination = function getObjForPagination(totalPostNum, displayPostNumPerPage, displayPaginationBtnNum, pageIndex) {
+  math.getObjForPagination = function getObjForPagination(
+    totalPostNum,
+    displayPostNumPerPage,
+    displayPaginationBtnNum,
+    pageIndex
+  ) {
     if (arguments.length < 4) throw new Error('math.getObjForPagination() requires 4 parameters.');
 
     var isInteger = aid.isInteger;
-    if (!isInteger(totalPostNum) || !isInteger(displayPostNumPerPage) || !isInteger(displayPaginationBtnNum) || !isInteger(pageIndex)) {
+    if (
+      !isInteger(totalPostNum) ||
+      !isInteger(displayPostNumPerPage) ||
+      !isInteger(displayPaginationBtnNum) ||
+      !isInteger(pageIndex)
+    ) {
       throw new TypeError('math.getObjForPagination() requires Integer Number parameters.');
     }
 
@@ -2326,7 +2395,10 @@
       throw new TypeError('math.getHeightOfRightTriangle() requires Number parameters.');
     }
 
-    if (acuteAngleDegree >= 90) throw new Error('acuteAngleDegree parameter of math.getHeightOfRightTriangle() cannot greater than or equal to 90.');
+    if (acuteAngleDegree >= 90)
+      throw new Error(
+        'acuteAngleDegree parameter of math.getHeightOfRightTriangle() cannot greater than or equal to 90.'
+      );
 
     return baseLineWidth * Math.tan(math.degreeToRadian(acuteAngleDegree));
   };
@@ -2374,15 +2446,28 @@
    * var somePoint = {x: 50, y: 100};
    * console.log( aid.math.getOrthogonalPointBetweenLineAndSomePoint(collinearPoint1, collinearPoint2, somePoint) ); // {x: 75, y: 75}
    */
-  math.getOrthogonalPointBetweenLineAndSomePoint = function getOrthogonalPointBetweenLineAndSomePoint(collinearPoint1, collinearPoint2, somePoint) {
+  math.getOrthogonalPointBetweenLineAndSomePoint = function getOrthogonalPointBetweenLineAndSomePoint(
+    collinearPoint1,
+    collinearPoint2,
+    somePoint
+  ) {
     var isObject = aid.isObject;
     if (!isObject(collinearPoint1) || !isObject(collinearPoint2) || !isObject(somePoint)) {
       throw new TypeError('math.getOrthogonalPointBetweenLineAndSomePoint() requires Object parameters.');
     }
 
     var isNumber = aid.isNumber;
-    if (!isNumber(collinearPoint1.x) || !isNumber(collinearPoint1.y) || !isNumber(collinearPoint2.x) || !isNumber(collinearPoint2.y) || !isNumber(somePoint.x) || !isNumber(somePoint.y)) {
-      throw new TypeError('math.getOrthogonalPointBetweenLineAndSomePoint() requires object parameters have x, y property.');
+    if (
+      !isNumber(collinearPoint1.x) ||
+      !isNumber(collinearPoint1.y) ||
+      !isNumber(collinearPoint2.x) ||
+      !isNumber(collinearPoint2.y) ||
+      !isNumber(somePoint.x) ||
+      !isNumber(somePoint.y)
+    ) {
+      throw new TypeError(
+        'math.getOrthogonalPointBetweenLineAndSomePoint() requires object parameters have x, y property.'
+      );
     }
 
     if (collinearPoint1.x === collinearPoint2.x && collinearPoint1.y === collinearPoint2.y) {
@@ -2409,7 +2494,9 @@
       somePointLineSlope = -1 / lineSlope;
 
     var orthogonalPoint = {};
-    orthogonalPoint.x = (somePointLineSlope * somePoint.x - lineSlope * collinearPoint1.x + collinearPoint1.y - somePoint.y) / (somePointLineSlope - lineSlope);
+    orthogonalPoint.x =
+      (somePointLineSlope * somePoint.x - lineSlope * collinearPoint1.x + collinearPoint1.y - somePoint.y) /
+      (somePointLineSlope - lineSlope);
     orthogonalPoint.y = somePointLineSlope * (orthogonalPoint.x - somePoint.x) + somePoint.y;
 
     return orthogonalPoint;
@@ -2503,7 +2590,20 @@
    * @returns {Array} return array
    * @example
    */
-  date.MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  date.MONTHS = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
 
   /**
    * 1 minutes to second unit (60 sec)
@@ -2938,7 +3038,11 @@
    * console.log( aid.array.getFirstObjectHasProperty(arrayHasObjects, 'no', new RegExp('^1')) ); // {no: 11}
    * console.log( aid.array.getFirstObjectHasProperty(arrayHasObjects, 'no', /^(1)\d/) ); // {no: 11}
    */
-  array.getFirstObjectHasProperty = function getFirstObjectHasProperty(arrayHasObjects, propertyKey, findPropertyValueOrRegex) {
+  array.getFirstObjectHasProperty = function getFirstObjectHasProperty(
+    arrayHasObjects,
+    propertyKey,
+    findPropertyValueOrRegex
+  ) {
     if (!aid.isArray(arrayHasObjects) || arrayHasObjects.length <= 0) return null;
 
     if (!aid.isString(propertyKey)) return null;
@@ -2982,7 +3086,10 @@
    * ]);
    * console.log(result); // [{group: 1, level: 1, date: '2017-01-01T00:00:00.000Z'}, {group: 1, level: 2, date: '2017-01-01T00:00:00.000Z'}, {group: 2, level: 1, date: '2017-01-01T00:00:00.000Z'}, {group: 2, level: 2, date: '2017-01-01T00:00:00.000Z'}, {group: 2, level: 3, date: '2017-01-01T00:00:00.000Z'}, {group: 3, level: 1, date: '2017-01-03T00:00:00.000Z'}, {group: 3, level: 1, date: '2017-02-04T00:00:00.000Z'}, {group: 3, level: 2, date: '2017-01-03T00:00:00.000Z'}, {group: 3, level: 2, date: '2017-02-04T00:00:00.000Z'}, {group: 4, level: 1, date: '2017-01-01T00:00:00.000Z'}]
    */
-  array.overlappedConditionSortByProperty = function overlappedConditionSortByProperty(arrayHasObjects, sortConditions) {
+  array.overlappedConditionSortByProperty = function overlappedConditionSortByProperty(
+    arrayHasObjects,
+    sortConditions
+  ) {
     if (!aid.isArray(arrayHasObjects)) return null;
 
     var datas = _slice.call(arrayHasObjects);
@@ -3071,7 +3178,12 @@
     if (!ele) return false;
 
     var rect = ele.getBoundingClientRect();
-    return rect.top >= 0 && rect.left >= 0 && rect.bottom <= (global.innerHeight || document.documentElement.clientHeight) && rect.right <= (global.innerWidth || document.documentElement.clientWidth);
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (global.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (global.innerWidth || document.documentElement.clientWidth)
+    );
   };
 
   /**
@@ -3155,9 +3267,15 @@
   clipboard.copyText = function copyText(str, successCallback, errorCallback) {
     if (!aid.isString(str)) throw new TypeError('str parameter type of clipboard.copyText() must be String.');
 
-    if (aid.isDefined(successCallback) && !aid.isFunction(successCallback)) throw new TypeError('successCallback parameter type of clipboard.copyText() must be undefined or null or Function.');
+    if (aid.isDefined(successCallback) && !aid.isFunction(successCallback))
+      throw new TypeError(
+        'successCallback parameter type of clipboard.copyText() must be undefined or null or Function.'
+      );
 
-    if (aid.isDefined(errorCallback) && !aid.isFunction(errorCallback)) throw new TypeError('errorCallback parameter type of clipboard.copyText() must be undefined or null or Function.');
+    if (aid.isDefined(errorCallback) && !aid.isFunction(errorCallback))
+      throw new TypeError(
+        'errorCallback parameter type of clipboard.copyText() must be undefined or null or Function.'
+      );
 
     if (!navigator.clipboard) {
       // fallback. no support Clipboard API
@@ -3181,7 +3299,11 @@
           return;
         }
 
-        if (errorCallback) errorCallback.call(null, new Error('clipboard.copyText() cannot copy string with using document.execCommand("copy").'));
+        if (errorCallback)
+          errorCallback.call(
+            null,
+            new Error('clipboard.copyText() cannot copy string with using document.execCommand("copy").')
+          );
       } catch (error) {
         if (errorCallback) errorCallback.call(null, error);
       }
