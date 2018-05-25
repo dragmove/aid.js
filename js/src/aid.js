@@ -788,7 +788,7 @@
    * @method alt
    * @param {Function} func_a
    * @param {Function} func_b
-   * @returns {Object} return value
+   * @returns {Function} return function
    * @example
    * var alt = aid.alt(function(val) { return val; }, function(val) { return !val; });
    * console.log( alt(false) ); // true
@@ -805,6 +805,26 @@
       if (!aid.isDefined(result_a) || result_a === false) return func_b(value);
 
       return result_a;
+    };
+  };
+
+  /**
+   * seq combinator
+   *
+   * @static
+   * @method seq
+   * @param {Function} functions
+   * @returns {Function} return function
+   * @example
+   * TODO: write example
+   */
+  aid.seq = function seq(/* functions */) {
+    var funcs = _slice.call(arguments);
+
+    return function(value) {
+      funcs.forEach(function(func) {
+        func.call(null, value);
+      });
     };
   };
 

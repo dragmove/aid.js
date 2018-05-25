@@ -2048,6 +2048,10 @@ describe('aid.js', function() {
       });
     });
 
+    describe('.seq()', function() {
+      // TODO: write test spec
+    });
+
     describe('.createStack()', function() {
       var stack = aid.createStack();
 
