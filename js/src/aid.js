@@ -816,10 +816,15 @@
    * @param {Function} functions
    * @returns {Function} return function
    * @example
-   * TODO: write example
+   * var seq = aid.seq(function(val) { console.log(val); }, function(val) { console.log(val / -1) });
+   * seq(99); // 99, -99
    */
   aid.seq = function seq(/* functions */) {
     var funcs = _slice.call(arguments);
+
+    funcs.forEach(function(func) {
+      if (!aid.isFunction(func)) throw new TypeError('aid.seq() requires function parameters.');
+    });
 
     return function(value) {
       funcs.forEach(function(func) {

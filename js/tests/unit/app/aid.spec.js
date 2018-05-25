@@ -885,7 +885,7 @@ describe('aid.js', function() {
     });
 
     describe('.compose()', function() {
-      it('func_a parameter type is not function, throw Error', function() {
+      it('if func_a parameter type is not function, throw Error', function() {
         expect(function() {
           aid.compose(undefined, function() {});
         }).toThrowError();
@@ -923,7 +923,7 @@ describe('aid.js', function() {
         }).toThrowError();
       });
 
-      it('func_b parameter type is not function, throw Error', function() {
+      it('if func_b parameter type is not function, throw Error', function() {
         expect(function() {
           aid.compose(function() {}, undefined);
         }).toThrowError();
@@ -973,7 +973,7 @@ describe('aid.js', function() {
     });
 
     describe('.not()', function() {
-      it('func parameter type is not function, throw Error', function() {
+      it('if func parameter type is not function, throw Error', function() {
         expect(function() {
           aid.not(undefined);
         }).toThrowError();
@@ -1384,7 +1384,7 @@ describe('aid.js', function() {
       it('return function', function() {
         var getTitle = aid.plucker('title');
 
-        it('obj parameter type is not object or array or string, throw Error', function() {
+        it('wether obj parameter type is not object or array or string, throw Error', function() {
           expect(function() {
             getTitle(undefined);
           }).toThrowError();
@@ -1582,7 +1582,7 @@ describe('aid.js', function() {
     });
 
     describe('.curry2()', function() {
-      it('func parameter type is not function, throw Error', function() {
+      it('if func parameter type is not function, throw Error', function() {
         expect(function() {
           aid.curry2(undefined);
         }).toThrowError();
@@ -1632,7 +1632,7 @@ describe('aid.js', function() {
     });
 
     describe('.curryAll()', function() {
-      it('func parameter type is not function, throw Error', function() {
+      it('if func parameter type is not function, throw Error', function() {
         expect(function() {
           aid.curryAll(undefined);
         }).toThrowError();
@@ -1699,7 +1699,7 @@ describe('aid.js', function() {
         rest = [];
       });
 
-      it('func parameter type is not function, throw Error', function() {
+      it('if func parameter type is not function, throw Error', function() {
         expect(function() {
           aid.rest(undefined);
         }).toThrowError();
@@ -1781,7 +1781,7 @@ describe('aid.js', function() {
         expect(seed).toEqual(99);
       });
 
-      it('rest parameters type is not function, throw Error', function() {
+      it('if rest parameters type is not function, throw Error', function() {
         expect(function() {
           aid.pipeline(99, undefined);
         }).toThrowError();
@@ -1920,7 +1920,7 @@ describe('aid.js', function() {
     });
 
     describe('.alt()', function() {
-      it('func_a parameter type is not function, throw Error', function() {
+      it('if func_a parameter type is not function, throw Error', function() {
         expect(function() {
           aid.alt(undefined, function() {});
         }).toThrowError();
@@ -1966,7 +1966,7 @@ describe('aid.js', function() {
         }).toThrowError();
       });
 
-      it('func_b parameter type is not function, throw Error', function() {
+      it('if func_b parameter type is not function, throw Error', function() {
         expect(function() {
           aid.alt(function() {}, undefined);
         }).toThrowError();
@@ -2049,7 +2049,111 @@ describe('aid.js', function() {
     });
 
     describe('.seq()', function() {
-      // TODO: write test spec
+      it('if parameter type is not function, throw Error', function() {
+        expect(function() {
+          aid.seq(undefined);
+        }).toThrowError();
+
+        expect(function() {
+          aid.seq(null);
+        }).toThrowError();
+
+        expect(function() {
+          aid.seq(false);
+        }).toThrowError();
+
+        expect(function() {
+          aid.seq(true);
+        }).toThrowError();
+
+        expect(function() {
+          aid.seq(0);
+        }).toThrowError();
+
+        expect(function() {
+          aid.seq(NaN);
+        }).toThrowError();
+
+        expect(function() {
+          aid.seq('');
+        }).toThrowError();
+
+        expect(function() {
+          aid.seq([]);
+        }).toThrowError();
+
+        expect(function() {
+          aid.seq({});
+        }).toThrowError();
+
+        expect(function() {
+          aid.seq(function(_) {});
+        }).not.toThrowError();
+
+        expect(function() {
+          aid.seq(new RegExp('^aid'));
+        }).toThrowError();
+
+        expect(function() {
+          aid.seq(/^aid/);
+        }).toThrowError();
+      });
+
+      it('if type of parameters are not function, throw Error', function() {
+        expect(function() {
+          aid.seq(undefined, function(_) {});
+        }).toThrowError();
+
+        expect(function() {
+          aid.seq(null, function(_) {});
+        }).toThrowError();
+
+        expect(function() {
+          aid.seq(false, function(_) {});
+        }).toThrowError();
+
+        expect(function() {
+          aid.seq(true, function(_) {});
+        }).toThrowError();
+
+        expect(function() {
+          aid.seq(0, function(_) {});
+        }).toThrowError();
+
+        expect(function() {
+          aid.seq(NaN, function(_) {});
+        }).toThrowError();
+
+        expect(function() {
+          aid.seq('', function(_) {});
+        }).toThrowError();
+
+        expect(function() {
+          aid.seq([], function(_) {});
+        }).toThrowError();
+
+        expect(function() {
+          aid.seq({}, function(_) {});
+        }).toThrowError();
+
+        expect(function() {
+          aid.seq(function(_) {}, function(_) {});
+        }).not.toThrowError();
+
+        expect(function() {
+          aid.seq(new RegExp('^aid'), function(_) {});
+        }).toThrowError();
+
+        expect(function() {
+          aid.seq(/^aid/, function(_) {});
+        }).toThrowError();
+      });
+
+      it('return function', function() {
+        var seq = aid.seq(function(_) {}, function(_) {});
+
+        expect(aid.isFunction(seq)).toEqual(true);
+      });
     });
 
     describe('.createStack()', function() {
