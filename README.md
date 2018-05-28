@@ -74,6 +74,7 @@ aid.lazyChain
 aid.eq
 aid.alt
 aid.seq
+aid.fork
 ```
 
 * operator utils

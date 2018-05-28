@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.73
+ * aid.js 0.1.74
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -505,7 +505,7 @@
   };
 
   /**
-   * return function always return constant value
+   * identity combinator. return function always return constant value
    * http://underscorejs.org/#constant
    *
    * @static
@@ -837,6 +837,29 @@
       funcs.forEach(function(func) {
         func.call(null, value);
       });
+    };
+  };
+
+  /**
+   * fork(join) combinator
+   *
+   * @static
+   * @method fork
+   * @param {Function} join
+   * @param {Function} func_a
+   * @param {Function} func_b
+   * @returns {Function} return function
+   * @example
+   * var fork = aid.fork(function(val_a, val_b) { return [val_a, val_b]; }, function(val) { return val; }, function(val) { return !val; });
+   * console.log( fork(true) ); // [true, false]
+   */
+  aid.fork = function fork(join, func_a, func_b) {
+    if (!aid.isFunction(join) || !aid.isFunction(func_a) || !aid.isFunction(func_b)) {
+      throw new TypeError('join, func_a, func_b parameter type of aid.fork() must be Function.');
+    }
+
+    return function(value) {
+      return join.call(null, func_a.call(null, value), func_b.call(null, value));
     };
   };
 

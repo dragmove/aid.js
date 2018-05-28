@@ -2156,6 +2156,93 @@ describe('aid.js', function() {
       });
     });
 
+    describe('.fork()', function() {
+      it('if join, func_a, func_b parameter type is not function, throw Error', function() {
+        expect(function() {
+          aid.fork(undefined, function() {}, function() {});
+          aid.fork(function() {}, undefined, function() {});
+          aid.fork(function() {}, function() {}, undefined);
+        }).toThrowError();
+
+        expect(function() {
+          aid.fork(null, function() {}, function() {});
+          aid.fork(function() {}, null, function() {});
+          aid.fork(function() {}, function() {}, null);
+        }).toThrowError();
+
+        expect(function() {
+          aid.fork(false, function() {}, function() {});
+          aid.fork(function() {}, false, function() {});
+          aid.fork(function() {}, function() {}, false);
+        }).toThrowError();
+
+        expect(function() {
+          aid.fork(true, function() {}, function() {});
+          aid.fork(function() {}, true, function() {});
+          aid.fork(function() {}, function() {}, true);
+        }).toThrowError();
+
+        expect(function() {
+          aid.fork(0, function() {}, function() {});
+          aid.fork(function() {}, 0, function() {});
+          aid.fork(function() {}, function() {}, 0);
+        }).toThrowError();
+
+        expect(function() {
+          aid.fork(NaN, function() {}, function() {});
+          aid.fork(function() {}, NaN, function() {});
+          aid.fork(function() {}, function() {}, NaN);
+        }).toThrowError();
+
+        expect(function() {
+          aid.fork('', function() {}, function() {});
+          aid.fork(function() {}, '', function() {});
+          aid.fork(function() {}, function() {}, '');
+        }).toThrowError();
+
+        expect(function() {
+          aid.fork([], function() {}, function() {});
+          aid.fork(function() {}, [], function() {});
+          aid.fork(function() {}, function() {}, []);
+        }).toThrowError();
+
+        expect(function() {
+          aid.fork({}, function() {}, function() {});
+          aid.fork(function() {}, {}, function() {});
+          aid.fork(function() {}, function() {}, {});
+        }).toThrowError();
+
+        expect(function() {
+          aid.fork(new RegExp('^aid'), function() {}, function() {});
+          aid.fork(function() {}, new RegExp('^aid'), function() {});
+          aid.fork(function() {}, function() {}, new RegExp('^aid'));
+        }).toThrowError();
+
+        expect(function() {
+          aid.fork(/^aid/, function() {}, function() {});
+          aid.fork(function() {}, /^aid/, function() {});
+          aid.fork(function() {}, function() {}, /^aid/);
+        }).toThrowError();
+      });
+
+      it('return function use result from func_a and func_b', function() {
+        var join = function(val_a, val_b) {
+            return [val_a, val_b];
+          },
+          func_a = function(val) {
+            return val;
+          },
+          func_b = function(val) {
+            return !val;
+          };
+
+        var fork = aid.fork(join, func_a, func_b);
+
+        expect(aid.isFunction(fork)).toEqual(true);
+        expect(fork(true)).toEqual([true, false]);
+      });
+    });
+
     describe('.createStack()', function() {
       var stack = aid.createStack();
 
