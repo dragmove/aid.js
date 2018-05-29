@@ -23,7 +23,8 @@
     object = {},
     element = {},
     file = {},
-    clipboard = {};
+    clipboard = {},
+    monad = {}; // https://en.wikipedia.org/wiki/Monad_(functional_programming)
 
   /**
    * get object is null/undefined or other
@@ -3370,6 +3371,68 @@
     }
   };
 
+  /**
+   * Empty monad
+   *
+   * @static
+   * @method Empty
+   * @param {Object} value
+   * @example
+   * TODO:
+   */
+  var Empty = function() {};
+
+  Empty.prototype.map = function(func) {
+    return this;
+  };
+
+  Empty.prototype.flatmap = function(_) {
+    return new Empty();
+  };
+
+  Empty.prototype.toString = function() {
+    return 'Empty ()';
+  };
+
+  monad.Empty = Empty;
+
+  /**
+   * Wrapper monad
+   *
+   * @static
+   * @method Wrapper
+   * @param {Object} value
+   * @example
+   * TODO:
+   */
+  var Wrapper = function(value) {
+    this._value = value;
+  };
+
+  Wrapper.of = function(a) {
+    return new Wrapper(a);
+  };
+
+  Wrapper.prototype.map = function(func) {
+    return func(this._value);
+  };
+
+  Wrapper.prototype.join = function() {
+    if (!(this._value instanceof Wrapper)) return this;
+
+    return this._value.join();
+  };
+
+  Wrapper.prototype.get = function() {
+    return this._value;
+  };
+
+  Wrapper.prototype.toString = function() {
+    return 'Wrapper (' + this._value + ')';
+  };
+
+  monad.Wrapper = Wrapper;
+
   /*
    * export
    */
@@ -3384,6 +3447,7 @@
   aid.element = element;
   aid.file = file;
   aid.clipboard = clipboard;
+  aid.monad = monad;
 
   if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
