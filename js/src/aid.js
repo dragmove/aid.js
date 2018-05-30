@@ -3680,6 +3680,48 @@
 
   monad.Either = Either;
 
+  /**
+   * IO monad
+   *
+   * @static
+   * @method IO
+   * @example
+   * TODO:
+   */
+  var IO = function(effect) {
+    if (!aid.isFunction(effect)) throw new TypeError('effect parameter type of monad.IO() must be Function.');
+
+    this.effect = effect;
+  };
+
+  IO.of = function(a) {
+    return new IO(function() {
+      return a;
+    });
+  };
+
+  IO.from = function(func) {
+    return new IO(func);
+  };
+
+  IO.prototype.map = function(func) {
+    var self = this;
+
+    return new IO(function() {
+      return func(self.effect());
+    });
+  };
+
+  IO.prototype.chain = function(func) {
+    return func(this.effect());
+  };
+
+  IO.prototype.run = function() {
+    return this.effect();
+  };
+
+  monad.IO = IO;
+
   /*
    * export
    */

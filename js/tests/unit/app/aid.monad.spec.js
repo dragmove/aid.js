@@ -28,6 +28,22 @@ describe('aid.js', function() {
       // TODO:
     });
 
+    describe('.Left()', function() {
+      // TODO:
+    });
+
+    describe('.Right()', function() {
+      // TODO:
+    });
+
+    describe('.Either()', function() {
+      // TODO:
+    });
+
+    describe('.IO()', function() {
+      // TODO:
+    });
+
     /*
     // null check anti pattern
     function getCountry(student) {
