@@ -3517,7 +3517,7 @@
   };
 
   Just.prototype.filter = function(func) {
-    Just.fromNullable(func(this._value) ? this._value : null);
+    Maybe.fromNullable(func(this._value) ? this._value : null);
   };
 
   Just.prototype.chain = function(func) {
@@ -3557,6 +3557,128 @@
   };
 
   monad.Maybe = Maybe;
+
+  /**
+   * Left monad
+   *
+   * @static
+   * @method Left
+   * @example
+   * TODO:
+   */
+  var Left = function(value) {
+    this._value = value;
+  };
+
+  Left.prototype.map = function(_) {
+    return this;
+  };
+
+  Left.prototype.value = function() {
+    throw new TypeError('Cannot extract the value of a Left(value).');
+  };
+
+  Left.prototype.getOrElse = function(other) {
+    return other;
+  };
+
+  Left.prototype.orElse = function(func) {
+    return func.call(null, this._value);
+  };
+
+  Left.prototype.chain = function(func) {
+    return this;
+  };
+
+  Left.prototype.getOrElseThrow = function(a) {
+    throw new Error(a);
+  };
+
+  Left.prototype.filter = function(func) {
+    return this;
+  };
+
+  Left.prototype.toString = function() {
+    return 'Either.Left (' + this._value + ')';
+  };
+
+  monad.Left = Left;
+
+  /**
+   * Right monad
+   *
+   * @static
+   * @method Right
+   * @example
+   * TODO:
+   */
+  var Right = function(value) {
+    this._value = value;
+  };
+
+  Right.prototype.map = function(func) {
+    return Either.of(func(this._value));
+  };
+
+  Right.prototype.getOrElse = function(other) {
+    return this._value;
+  };
+
+  Right.prototype.orElse = function() {
+    return this;
+  };
+
+  Right.prototype.chain = function(func) {
+    return func(this._value);
+  };
+
+  Right.prototype.getOrElseThrow = function(_) {
+    return this._value;
+  };
+
+  Right.prototype.filter = function(func) {
+    return Either.fromNullable(func(this._value) ? this._value : null);
+  };
+
+  Right.prototype.toString = function() {
+    return 'Either.Right (' + this._value + ')';
+  };
+
+  monad.Right = Right;
+
+  /**
+   * Either monad
+   *
+   * @static
+   * @method Either
+   * @example
+   * TODO:
+   */
+  var Either = function(value) {
+    this._value = value;
+  };
+
+  Either.left = function(a) {
+    return new Left(a);
+  };
+
+  Either.right = function(a) {
+    return new Right(a);
+  };
+
+  Either.fromNullable = function(a) {
+    return a !== null && a !== undefined ? Either.right(a) : Either.left();
+  };
+
+  Either.of = function(a) {
+    return Either.right(a);
+  };
+
+  Either.prototype.value = function() {
+    return this._value;
+  };
+
+  monad.Either = Either;
 
   /*
    * export
