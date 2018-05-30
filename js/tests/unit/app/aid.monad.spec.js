@@ -25,7 +25,49 @@ describe('aid.js', function() {
     });
 
     describe('.Maybe()', function() {
-      // TODO:
+      var Maybe = monad.Maybe;
+
+      it('just static method return Just instance.', function() {
+        expect(Maybe.just(99) instanceof monad.Just).toEqual(true);
+      });
+
+      it('nothing static method return Nothing instance.', function() {
+        expect(Maybe.nothing() instanceof monad.Nothing).toEqual(true);
+      });
+
+      it('of static method return Just instance.', function() {
+        expect(Maybe.of(99) instanceof monad.Just).toEqual(true);
+      });
+
+      it('fromNullable static method return Just instance if value parameter is not undefined/null.', function() {
+        expect(Maybe.fromNullable(99) instanceof monad.Just).toEqual(true);
+      });
+
+      it('fromNullable static method return Nothing instance if value parameter is undefined or null.', function() {
+        expect(Maybe.fromNullable(undefined) instanceof monad.Nothing).toEqual(true);
+        expect(Maybe.fromNullable(null) instanceof monad.Nothing).toEqual(true);
+      });
+
+      /*
+      var url = 'http://www.google.com';
+      // var url = 'http://www.google.com?name=aid.js&language=javascript';
+
+      var safeParams = aid.curry(function(uri) { return monad.Maybe.fromNullable(aid.string.getUriParams(uri)); });
+      var safeName = safeParams(url).map(function(params) { return params.name; });
+
+      // throw error when access value of Nothing.
+      // console.log('safeName :', safeName.value());
+
+      var name = safeName.getOrElse('no_name'); // 'no_name'
+      console.log('name :', name);
+      */
+
+      /* 
+      // es6
+      var safeParams = aid.curry(uri => monad.Maybe.fromNullable(aid.string.getUriParams(uri)));
+      var name = safeParams(url).map(params => params.name).getOrElse('no_name');
+      console.log('name :', name); 
+      */
     });
 
     describe('.Left()', function() {

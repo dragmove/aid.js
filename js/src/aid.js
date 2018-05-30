@@ -3509,7 +3509,7 @@
   };
 
   Just.prototype.map = function(func) {
-    return Just.fromNullable(func(this._value));
+    return Maybe.fromNullable(func(this._value));
   };
 
   Just.prototype.getOrElse = function() {
@@ -3536,24 +3536,27 @@
    * @static
    * @method Maybe
    * @example
-   * TODO:
+   * var uri = 'http://www.google.com'; // this uri has no parameters
+   * var safeUriParams = aid.curry(function(uri) { return monad.Maybe.fromNullable(aid.string.getUriParams(uri)); });
+   * var safeName = safeUriParams(uri).map(function(params) { return params.name; });
+   * var name = safeName.getOrElse('no parameter'); // 'no parameter'
    */
   var Maybe = function() {};
 
-  Maybe.just = function(a) {
-    return new Just(a);
+  Maybe.just = function(value) {
+    return new Just(value);
   };
 
   Maybe.nothing = function() {
     return new Nothing();
   };
 
-  Maybe.of = function(a) {
-    return Maybe.just(a);
+  Maybe.of = function(value) {
+    return Maybe.just(value);
   };
 
-  Maybe.fromNullable = function(a) {
-    return a !== null ? Maybe.just(a) : Maybe.nothing();
+  Maybe.fromNullable = function(value) {
+    return aid.isDefined(value) ? Maybe.just(value) : Maybe.nothing();
   };
 
   monad.Maybe = Maybe;
