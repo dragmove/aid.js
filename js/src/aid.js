@@ -3372,11 +3372,33 @@
   };
 
   /**
+   * Identity monad
+   *
+   * @static
+   * @method Identity
+   * @param {Object} value
+   * @example
+   * TODO:
+   */
+  var Identity = function(value) {
+    this._value = value;
+  };
+
+  Identity.prototype.bind = function(func) {
+    return func.call(null, this._value);
+  };
+
+  Identity.prototype.toString = function() {
+    return 'Identity (' + this._value + ')';
+  };
+
+  monad.Identity = Identity;
+
+  /**
    * Empty monad
    *
    * @static
    * @method Empty
-   * @param {Object} value
    * @example
    * TODO:
    */
@@ -3432,6 +3454,109 @@
   };
 
   monad.Wrapper = Wrapper;
+
+  /**
+   * Nothing monad
+   *
+   * @static
+   * @method Nothing
+   * @example
+   * TODO:
+   */
+  var Nothing = function() {};
+
+  Nothing.prototype.value = function(value) {
+    throw new TypeError('Cannot extract the value of a Nothing.');
+  };
+
+  Nothing.prototype.map = function(func) {
+    return this;
+  };
+
+  Nothing.prototype.getOrElse = function(other) {
+    return other;
+  };
+
+  Nothing.prototype.filter = function(func) {
+    return this._value;
+  };
+
+  Nothing.prototype.chain = function(func) {
+    return this;
+  };
+
+  Nothing.prototype.toString = function() {
+    return 'Maybe.Nothing';
+  };
+
+  monad.Nothing = Nothing;
+
+  /**
+   * Just monad
+   *
+   * @static
+   * @method Just
+   * @param {Object} value
+   * @example
+   * TODO:
+   */
+  var Just = function(value) {
+    this._value = value;
+  };
+
+  Just.prototype.value = function(value) {
+    throw this._value;
+  };
+
+  Just.prototype.map = function(func) {
+    return Just.fromNullable(func(this._value));
+  };
+
+  Just.prototype.getOrElse = function() {
+    return this._value;
+  };
+
+  Just.prototype.filter = function(func) {
+    Just.fromNullable(func(this._value) ? this._value : null);
+  };
+
+  Just.prototype.chain = function(func) {
+    return func.call(null, this._value);
+  };
+
+  Just.prototype.toString = function() {
+    return 'Maybe.Just (' + this._value + ')';
+  };
+
+  monad.Just = Just;
+
+  /**
+   * Maybe monad
+   *
+   * @static
+   * @method Maybe
+   * @example
+   * TODO:
+   */
+  var Maybe = function() {};
+
+  Maybe.just = function(a) {
+    return new Just(a);
+  };
+
+  Maybe.nothing = function() {
+    return new Nothing();
+  };
+
+  Maybe.of = function(a) {
+    return Maybe.just(a);
+  };
+
+  Maybe.fromNullable = function(a) {
+    return a !== null ? Maybe.just(a) : Maybe.nothing();
+  };
+
+  monad.Maybe = Maybe;
 
   /*
    * export
