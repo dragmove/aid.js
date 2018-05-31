@@ -3537,7 +3537,7 @@
    * @method Maybe
    * @example
    * var uri = 'http://www.google.com'; // this uri has no parameters
-   * var safeUriParams = aid.curry(function(uri) { return monad.Maybe.fromNullable(aid.string.getUriParams(uri)); });
+   * var safeUriParams = aid.curry(function(uri) { return aid.monad.Maybe.fromNullable(aid.string.getUriParams(uri)); });
    * var safeName = safeUriParams(uri).map(function(params) { return params.name; });
    * var name = safeName.getOrElse('no parameter'); // 'no parameter'
    */
