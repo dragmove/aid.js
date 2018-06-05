@@ -499,7 +499,7 @@
   };
 
   /**
-   * identity combinator. return function always return constant value
+   * return function always return constant value
    * http://underscorejs.org/#constant
    *
    * @static
@@ -781,6 +781,19 @@
   aid.eq = aid.curry2(function(lhs, rhs) {
     return lhs === rhs;
   });
+
+  /**
+   * identity combinator. return value as it is.
+   *
+   * @static
+   * @method identity
+   * @param {Object} value
+   * @returns {Object} return value
+   * @example
+   */
+  aid.identity = function identity(value) {
+    return value;
+  };
 
   /**
    * alt combinator

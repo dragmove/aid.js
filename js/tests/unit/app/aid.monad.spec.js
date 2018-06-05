@@ -20,11 +20,31 @@ describe('aid.js', function() {
       });
 
       it('map method return result Wrapper instance.', function() {
-        var identity = function(value) {
-          return value;
-        };
+        expect(Wrapper.of('aid.js').map(aid.identity) instanceof Wrapper).toEqual(true);
+      });
 
-        expect(Wrapper.of('aid.js').map(identity) instanceof Wrapper).toEqual(true);
+      it('join method return Wrapper flattened.', function() {
+        expect(
+          Wrapper.of('aid.js')
+            .join()
+            .get()
+        ).toEqual('aid.js');
+
+        expect(
+          Wrapper.of(Wrapper.of('aid.js'))
+            .join()
+            .get()
+        ).toEqual('aid.js');
+
+        expect(
+          Wrapper.of(Wrapper.of(Wrapper.of('aid.js')))
+            .join()
+            .get()
+        ).toEqual('aid.js');
+      });
+
+      it('get method return Wrapped value.', function() {
+        expect(Wrapper.of('aid.js').get()).toEqual('aid.js');
       });
     });
 

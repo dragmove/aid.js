@@ -887,84 +887,141 @@ describe('aid.js', function() {
     describe('.compose()', function() {
       it('if func_a parameter type is not function, throw Error', function() {
         expect(function() {
-          aid.compose(undefined, function() {});
+          aid.compose(
+            undefined,
+            function() {}
+          );
         }).toThrowError();
 
         expect(function() {
-          aid.compose(null, function() {});
+          aid.compose(
+            null,
+            function() {}
+          );
         }).toThrowError();
 
         expect(function() {
-          aid.compose(false, function() {});
+          aid.compose(
+            false,
+            function() {}
+          );
         }).toThrowError();
 
         expect(function() {
-          aid.compose(true, function() {});
+          aid.compose(
+            true,
+            function() {}
+          );
         }).toThrowError();
 
         expect(function() {
-          aid.compose(0, function() {});
+          aid.compose(
+            0,
+            function() {}
+          );
         }).toThrowError();
 
         expect(function() {
-          aid.compose(NaN, function() {});
+          aid.compose(
+            NaN,
+            function() {}
+          );
         }).toThrowError();
 
         expect(function() {
-          aid.compose('', function() {});
+          aid.compose(
+            '',
+            function() {}
+          );
         }).toThrowError();
 
         expect(function() {
-          aid.compose([], function() {});
+          aid.compose(
+            [],
+            function() {}
+          );
         }).toThrowError();
 
         expect(function() {
-          aid.compose({}, function() {});
+          aid.compose(
+            {},
+            function() {}
+          );
         }).toThrowError();
       });
 
       it('if func_b parameter type is not function, throw Error', function() {
         expect(function() {
-          aid.compose(function() {}, undefined);
+          aid.compose(
+            function() {},
+            undefined
+          );
         }).toThrowError();
 
         expect(function() {
-          aid.compose(function() {}, null);
+          aid.compose(
+            function() {},
+            null
+          );
         }).toThrowError();
 
         expect(function() {
-          aid.compose(function() {}, false);
+          aid.compose(
+            function() {},
+            false
+          );
         }).toThrowError();
 
         expect(function() {
-          aid.compose(function() {}, true);
+          aid.compose(
+            function() {},
+            true
+          );
         }).toThrowError();
 
         expect(function() {
-          aid.compose(function() {}, 0);
+          aid.compose(
+            function() {},
+            0
+          );
         }).toThrowError();
 
         expect(function() {
-          aid.compose(function() {}, NaN);
+          aid.compose(
+            function() {},
+            NaN
+          );
         }).toThrowError();
 
         expect(function() {
-          aid.compose(function() {}, '');
+          aid.compose(
+            function() {},
+            ''
+          );
         }).toThrowError();
 
         expect(function() {
-          aid.compose(function() {}, []);
+          aid.compose(
+            function() {},
+            []
+          );
         }).toThrowError();
 
         expect(function() {
-          aid.compose(function() {}, {});
+          aid.compose(
+            function() {},
+            {}
+          );
         }).toThrowError();
       });
 
       it('return value type is function', function() {
-        var isNotNaN = aid.compose(function(object) {
-          return !object;
-        }, isNaN);
+        var isNotNaN = aid.compose(
+          function(object) {
+            return !object;
+          },
+          isNaN
+        );
 
         var isFunction = aid.isFunction(isNotNaN);
 
@@ -1916,6 +1973,17 @@ describe('aid.js', function() {
         expect(aid.eq(instance)(instance)).toEqual(true);
 
         // TODO: Test Map, Set, WeakMap, WeakSet
+      });
+    });
+
+    describe('.identity()', function() {
+      it('return value parameter as it is', function() {
+        expect(aid.identity(null)).toEqual(null);
+        expect(aid.identity(undefined)).toEqual(undefined);
+        expect(aid.identity(false)).toEqual(false);
+        expect(aid.identity(true)).toEqual(true);
+        expect(aid.identity(0)).toEqual(0);
+        expect(aid.identity('aid.js')).toEqual('aid.js');
       });
     });
 
