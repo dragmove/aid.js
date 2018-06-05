@@ -111,6 +111,8 @@ describe('aid.js', function() {
     });
 
     describe('.Either()', function() {
+      var Either = monad.Either;
+
       // TODO:
     });
 

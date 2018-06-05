@@ -3394,7 +3394,6 @@
    * TODO:
    */
   var Identity = function(value) {
-    console.log('Identity value :', value);
     this._value = value;
   };
 
@@ -3480,7 +3479,7 @@
   var Nothing = function() {};
 
   Nothing.prototype.value = function(value) {
-    throw new TypeError('Cannot extract the value of a Nothing.');
+    throw new TypeError('Cannot extract the value of monad.Nothing.');
   };
 
   Nothing.prototype.map = function(func) {
@@ -3535,7 +3534,7 @@
   };
 
   Just.prototype.chain = function(func) {
-    return func.call(null, this._value);
+    return func(this._value);
   };
 
   Just.prototype.toString = function() {
@@ -3592,7 +3591,7 @@
   };
 
   Left.prototype.value = function() {
-    throw new TypeError('Cannot extract the value of a Left(value).');
+    throw new TypeError('Cannot extract the value of monad.Left(value).');
   };
 
   Left.prototype.getOrElse = function(other) {
@@ -3600,7 +3599,7 @@
   };
 
   Left.prototype.orElse = function(func) {
-    return func.call(null, this._value);
+    return func(this._value);
   };
 
   Left.prototype.chain = function(func) {
