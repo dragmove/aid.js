@@ -2101,10 +2101,10 @@
     }
 
     var modifiedSizeW = fillWidth,
-      modifiedSizeH = Math.ceil(fillWidth / srcWidth * srcHeight);
+      modifiedSizeH = Math.ceil((fillWidth / srcWidth) * srcHeight);
 
     if (modifiedSizeH < fillHeight) {
-      modifiedSizeW = Math.ceil(fillHeight / srcHeight * srcWidth);
+      modifiedSizeW = Math.ceil((fillHeight / srcHeight) * srcWidth);
       modifiedSizeH = fillHeight;
     }
 
@@ -2162,7 +2162,7 @@
     }
 
     var modifiedSizeW = fitWidth,
-      modifiedSizeH = Math.ceil(fitWidth / srcWidth * srcHeight);
+      modifiedSizeH = Math.ceil((fitWidth / srcWidth) * srcHeight);
 
     return {
       width: modifiedSizeW,
@@ -2409,7 +2409,7 @@
   math.degreeToRadian = function degreeToRadian(degree) {
     if (!aid.isNumber(degree)) throw new TypeError('math.degreeToRadian() requires Number parameter.');
 
-    return degree * Math.PI / 180;
+    return (degree * Math.PI) / 180;
   };
 
   /**
@@ -2425,7 +2425,7 @@
   math.radianToDegree = function radianToDegree(radian) {
     if (!aid.isNumber(radian)) throw new TypeError('math.radianToDegree() requires Number parameter.');
 
-    return radian * 180 / Math.PI;
+    return (radian * 180) / Math.PI;
   };
 
   /**
@@ -3381,11 +3381,12 @@
    * TODO:
    */
   var Identity = function(value) {
+    console.log('Identity value :', value);
     this._value = value;
   };
 
   Identity.prototype.bind = function(func) {
-    return func.call(null, this._value);
+    return func(this._value);
   };
 
   Identity.prototype.toString = function() {
@@ -3436,7 +3437,7 @@
   };
 
   Wrapper.prototype.map = function(func) {
-    return func(this._value);
+    return Wrapper.of(func(this._value));
   };
 
   Wrapper.prototype.join = function() {

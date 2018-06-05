@@ -13,7 +13,19 @@ describe('aid.js', function() {
     });
 
     describe('.Wrapper()', function() {
-      // TODO:
+      var Wrapper = monad.Wrapper;
+
+      it('of static method return Wrapper instance.', function() {
+        expect(Wrapper.of('aid.js') instanceof Wrapper).toEqual(true);
+      });
+
+      it('map method return result Wrapper instance.', function() {
+        var identity = function(value) {
+          return value;
+        };
+
+        expect(Wrapper.of('aid.js').map(identity) instanceof Wrapper).toEqual(true);
+      });
     });
 
     describe('.Nothing()', function() {
@@ -63,7 +75,7 @@ describe('aid.js', function() {
       */
 
       /* 
-      // es6
+      // es2015
       var safeParams = aid.curry(uri => monad.Maybe.fromNullable(aid.string.getUriParams(uri)));
       var name = safeParams(url).map(params => params.name).getOrElse('no_name');
       console.log('name :', name); 
