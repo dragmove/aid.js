@@ -20,7 +20,9 @@ describe('aid.js', function() {
       });
 
       it('map method return result Wrapper instance.', function() {
-        expect(Wrapper.of('aid.js').map(aid.identity) instanceof Wrapper).toEqual(true);
+        expect(
+          Wrapper.of('aid.js').map(aid.identity) instanceof Wrapper
+        ).toEqual(true);
       });
 
       it('join method return Wrapper flattened.', function() {
@@ -76,7 +78,9 @@ describe('aid.js', function() {
       });
 
       it('fromNullable static method return Nothing instance if value parameter is undefined or null.', function() {
-        expect(Maybe.fromNullable(undefined) instanceof monad.Nothing).toEqual(true);
+        expect(Maybe.fromNullable(undefined) instanceof monad.Nothing).toEqual(
+          true
+        );
         expect(Maybe.fromNullable(null) instanceof monad.Nothing).toEqual(true);
       });
 
@@ -113,7 +117,27 @@ describe('aid.js', function() {
     describe('.Either()', function() {
       var Either = monad.Either;
 
-      // TODO:
+      it('left static method return Left instance.', function() {
+        expect(Either.left(99) instanceof monad.Left).toEqual(true);
+      });
+
+      it('right static method return Right instance.', function() {
+        expect(Either.right(99) instanceof monad.Right).toEqual(true);
+      });
+
+      it('fromNullable static method return Left instance when input undefined or null.', function() {
+        expect(Either.fromNullable(null) instanceof monad.Left).toEqual(true);
+      });
+
+      it('fromNullable static method return Right instance when input defined value.', function() {
+        expect(Either.fromNullable('aid.js') instanceof monad.Right).toEqual(
+          true
+        );
+      });
+
+      it('of static method return Right instance.', function() {
+        expect(Either.of(99) instanceof monad.Right).toEqual(true);
+      });
     });
 
     describe('.IO()', function() {

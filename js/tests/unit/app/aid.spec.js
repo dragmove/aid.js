@@ -1987,6 +1987,10 @@ describe('aid.js', function() {
       });
     });
 
+    describe('.tab()', function() {
+      // TODO:
+    });
+
     describe('.alt()', function() {
       it('if func_a parameter type is not function, throw Error', function() {
         expect(function() {
