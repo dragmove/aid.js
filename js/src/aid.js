@@ -3966,6 +3966,7 @@
    *
    * @static
    * @method Left
+   * @param {Object} value
    * @example
    * TODO:
    */
@@ -4012,6 +4013,7 @@
    *
    * @static
    * @method Right
+   * @param {Object} value
    * @example
    * TODO:
    */
@@ -4054,6 +4056,7 @@
    *
    * @static
    * @method Either
+   * @param {Object} value
    * @example
    * var decode = function(url) {
    *   try {
@@ -4116,6 +4119,7 @@
    *
    * @static
    * @method IO
+   * @param {Function} effect
    * @example
    * TODO:
    */
