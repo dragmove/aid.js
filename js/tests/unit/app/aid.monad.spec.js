@@ -20,9 +20,7 @@ describe('aid.js', function() {
       });
 
       it('map method return result Wrapper instance.', function() {
-        expect(
-          Wrapper.of('aid.js').map(aid.identity) instanceof Wrapper
-        ).toEqual(true);
+        expect(Wrapper.of('aid.js').map(aid.identity) instanceof Wrapper).toEqual(true);
       });
 
       it('join method return Wrapper flattened.', function() {
@@ -73,14 +71,12 @@ describe('aid.js', function() {
         expect(Maybe.of(99) instanceof monad.Just).toEqual(true);
       });
 
-      it('fromNullable static method return Just instance if value parameter is not undefined/null.', function() {
+      it('fromNullable static method return Just instance if value argument is not undefined/null.', function() {
         expect(Maybe.fromNullable(99) instanceof monad.Just).toEqual(true);
       });
 
-      it('fromNullable static method return Nothing instance if value parameter is undefined or null.', function() {
-        expect(Maybe.fromNullable(undefined) instanceof monad.Nothing).toEqual(
-          true
-        );
+      it('fromNullable static method return Nothing instance if value argument is undefined or null.', function() {
+        expect(Maybe.fromNullable(undefined) instanceof monad.Nothing).toEqual(true);
         expect(Maybe.fromNullable(null) instanceof monad.Nothing).toEqual(true);
       });
 
@@ -130,9 +126,7 @@ describe('aid.js', function() {
       });
 
       it('fromNullable static method return Right instance when input defined value.', function() {
-        expect(Either.fromNullable('aid.js') instanceof monad.Right).toEqual(
-          true
-        );
+        expect(Either.fromNullable('aid.js') instanceof monad.Right).toEqual(true);
       });
 
       it('of static method return Right instance.', function() {
@@ -141,7 +135,61 @@ describe('aid.js', function() {
     });
 
     describe('.IO()', function() {
-      // TODO:
+      var IO = monad.IO;
+
+      it('effect argument is not Function type, throw TypeError.', function() {
+        var ERROR_MSG = 'effect parameter type of monad.IO() must be Function.';
+
+        expect(function() {
+          IO(undefined);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          IO(null);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          IO(false);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          IO(true);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          IO(0);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          IO({});
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          IO([]);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          IO(function() {});
+        }).not.toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          IO(new RegExp('^aid'));
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          IO(/^aid/);
+        }).toThrowError(TypeError, ERROR_MSG);
+      });
+
+      it('of static method return IO instance.', function() {
+        expect(IO.of(99) instanceof monad.IO).toEqual(true);
+      });
+
+      it('from static method return IO instance.', function() {
+        expect(IO.from(function() {}) instanceof monad.IO).toEqual(true);
+      });
+
+      // TODO: map, chain, run methods
     });
 
     /*

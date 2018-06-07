@@ -732,6 +732,26 @@
   };
 
   /**
+   * partial application
+   *
+   * @static
+   * @method partial
+   * @param {Function} function
+   * @returns {Function} return function
+   * @example
+   * TODO:
+   */
+  aid.partial = function partial(func /*, args... */) {
+    var args = _slice.call(arguments, 1),
+      context = this;
+
+    return function() {
+      var rest = _slice.call(arguments);
+      return func.apply(context, args.concat(rest));
+    };
+  };
+
+  /**
    * rest
    * // refer to _.rest function of underscore.js - https://github.com/jashkenas/underscore/blob/master/underscore.js
    *
@@ -3775,7 +3795,7 @@
    * Identity monad
    *
    * @static
-   * @method Identity
+   * @class Identity
    * @param {Object} value
    * @example
    * TODO:
@@ -3797,18 +3817,17 @@
   /**
    * Empty monad
    *
-   * @static
-   * @method Empty
+   * @class Empty
    * @example
    * TODO:
    */
   var Empty = function() {};
 
-  Empty.prototype.map = function(func) {
+  Empty.prototype.map = function(/*func*/) {
     return this;
   };
 
-  Empty.prototype.flatmap = function(_) {
+  Empty.prototype.flatmap = function(/*_*/) {
     return new Empty();
   };
 
@@ -3821,8 +3840,7 @@
   /**
    * Wrapper monad
    *
-   * @static
-   * @method Wrapper
+   * @class Wrapper
    * @param {Object} value
    * @example
    * TODO:
@@ -3831,8 +3849,8 @@
     this._value = value;
   };
 
-  Wrapper.of = function(a) {
-    return new Wrapper(a);
+  Wrapper.of = function(value) {
+    return new Wrapper(value);
   };
 
   Wrapper.prototype.map = function(func) {
@@ -3858,18 +3876,17 @@
   /**
    * Nothing monad
    *
-   * @static
-   * @method Nothing
+   * @class Nothing
    * @example
    * TODO:
    */
   var Nothing = function() {};
 
-  Nothing.prototype.value = function(value) {
+  Nothing.prototype.value = function(/*value*/) {
     throw new TypeError('Cannot extract the value of monad.Nothing.');
   };
 
-  Nothing.prototype.map = function(func) {
+  Nothing.prototype.map = function(/*func*/) {
     return this;
   };
 
@@ -3877,11 +3894,11 @@
     return other;
   };
 
-  Nothing.prototype.filter = function(func) {
+  Nothing.prototype.filter = function(/*func*/) {
     return this._value;
   };
 
-  Nothing.prototype.chain = function(func) {
+  Nothing.prototype.chain = function(/*func*/) {
     return this;
   };
 
@@ -3894,8 +3911,7 @@
   /**
    * Just monad
    *
-   * @static
-   * @method Just
+   * @class Just
    * @param {Object} value
    * @example
    * TODO:
@@ -3904,7 +3920,7 @@
     this._value = value;
   };
 
-  Just.prototype.value = function(value) {
+  Just.prototype.value = function(/*value*/) {
     throw this._value;
   };
 
@@ -3964,8 +3980,7 @@
   /**
    * Left monad
    *
-   * @static
-   * @method Left
+   * @class Left
    * @param {Object} value
    * @example
    * TODO:
@@ -3974,7 +3989,7 @@
     this._value = value;
   };
 
-  Left.prototype.map = function(_) {
+  Left.prototype.map = function(/*_*/) {
     return this;
   };
 
@@ -3990,15 +4005,15 @@
     return func(this._value);
   };
 
-  Left.prototype.chain = function(func) {
+  Left.prototype.chain = function(/*func*/) {
     return this;
   };
 
-  Left.prototype.getOrElseThrow = function(a) {
-    throw new Error(a);
+  Left.prototype.getOrElseThrow = function(errorMessage) {
+    throw new Error(errorMessage);
   };
 
-  Left.prototype.filter = function(func) {
+  Left.prototype.filter = function(/*func*/) {
     return this;
   };
 
@@ -4011,8 +4026,7 @@
   /**
    * Right monad
    *
-   * @static
-   * @method Right
+   * @class Right
    * @param {Object} value
    * @example
    * TODO:
@@ -4025,7 +4039,7 @@
     return Either.of(func(this._value));
   };
 
-  Right.prototype.getOrElse = function(other) {
+  Right.prototype.getOrElse = function(/*other*/) {
     return this._value;
   };
 
@@ -4037,7 +4051,7 @@
     return func(this._value);
   };
 
-  Right.prototype.getOrElseThrow = function(_) {
+  Right.prototype.getOrElseThrow = function(/*_*/) {
     return this._value;
   };
 
@@ -4054,8 +4068,7 @@
   /**
    * Either monad
    *
-   * @static
-   * @method Either
+   * @class Either
    * @param {Object} value
    * @example
    * var decode = function(url) {
@@ -4101,7 +4114,6 @@
 
   Either.fromNullable = function(value) {
     return aid.isDefined(value) ? Either.right(value) : Either.left(value);
-    // return value !== null && value !== undefined ? Either.right(value) : Either.left(value);
   };
 
   Either.of = function(value) {
@@ -4117,11 +4129,26 @@
   /**
    * IO monad
    *
-   * @static
-   * @method IO
+   * @class IO
    * @param {Function} effect
    * @example
-   * TODO:
+   * var read = function(document, selector) {
+   *   return function() {
+   *     return 'aid.js'; // return document.querySelector(selector).innerHTML;
+   *   };
+   * };
+   * var write = function(document, selector) {
+   *   return function(value) {
+   *     console.log('write :', value); // document.querySelector(selector).innerHTML = value;
+   *     return value;
+   *   };
+   * };
+   * var uppercase = function(str) { return str.toUpperCase(); };
+   * var readDOM = aid.partial(read, document),
+   *   writeDOM = aid.partial(write, document);
+   *
+   * var readAndWriteUppercase = IO.from(readDOM('#dummy')).map(uppercase).map(writeDOM('#dummy'));
+   * readAndWriteUppercase.run();
    */
   var IO = function(effect) {
     if (!aid.isFunction(effect))
@@ -4132,9 +4159,9 @@
     this.effect = effect;
   };
 
-  IO.of = function(a) {
+  IO.of = function(value) {
     return new IO(function() {
-      return a;
+      return value;
     });
   };
 

@@ -58,9 +58,9 @@ aid.not
 aid.each
 aid.truthy
 aid.falsy
+aid.nth
 aid.allOf
 aid.anyOf
-aid.nth
 aid.constant
 aid.plucker
 aid.best
@@ -68,10 +68,13 @@ aid.iterateUntil
 aid.curry
 aid.curry2
 aid.curryAll
+aid.partial
 aid.rest
 aid.pipeline
 aid.lazyChain
 aid.eq
+aid.identity
+aid.tab
 aid.alt
 aid.seq
 aid.fork
@@ -214,6 +217,21 @@ aid.file.appendScriptFile
 
 ```javascript
 aid.clipboard.copyText
+```
+
+* monad utils
+
+```javascript
+aid.monad.Identity
+aid.monad.Empty
+aid.monad.Wrapper
+aid.monad.Nothing
+aid.monad.Just
+aid.monad.Maybe
+aid.monad.Left
+aid.monad.Right
+aid.monad.Either
+aid.monad.IO
 ```
 
 * data structure utils

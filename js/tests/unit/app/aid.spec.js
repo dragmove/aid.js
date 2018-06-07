@@ -1749,6 +1749,10 @@ describe('aid.js', function() {
       });
     });
 
+    describe('.partial()', function() {
+      // TODO:
+    });
+
     describe('.rest()', function() {
       var rest = [];
 
