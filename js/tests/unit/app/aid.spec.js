@@ -426,7 +426,8 @@ describe('aid.js', function() {
     });
 
     describe('.extend()', function() {
-      var ERROR_MSG = 'destination parameter type of aid.extend() must be instance of Object, and object type.';
+      var ERROR_MSG =
+        'destination parameter type of aid.extend() must be instance of Object, and object type.';
 
       it('whether destination parameter type is not object or instance of object, throw Error', function() {
         expect(function() {
@@ -459,7 +460,8 @@ describe('aid.js', function() {
       });
 
       it('if source parameter type is not object type, throw Error', function() {
-        var ERROR_MSG = 'source parameter type of aid.extend() must be object type.';
+        var ERROR_MSG =
+          'source parameter type of aid.extend() must be object type.';
 
         expect(function() {
           aid.extend({}, undefined);
@@ -575,7 +577,8 @@ describe('aid.js', function() {
 
     describe('.namespace()', function() {
       it('if namespace parameter type is not string, throw Error', function() {
-        var ERROR_MSG = 'namespace parameter type of aid.namespace() must be String.';
+        var ERROR_MSG =
+          'namespace parameter type of aid.namespace() must be String.';
 
         expect(function() {
           aid.namespace(undefined);
@@ -607,7 +610,8 @@ describe('aid.js', function() {
       });
 
       it('if parent parameter type is not object or null or undefined, throw Error', function() {
-        var ERROR_MSG = 'parent parameter type of aid.namespace() must be Object or null or undefined.';
+        var ERROR_MSG =
+          'parent parameter type of aid.namespace() must be Object or null or undefined.';
 
         expect(function() {
           var obj = {};
@@ -679,7 +683,8 @@ describe('aid.js', function() {
       });
 
       it('if borrower parameter is not Object type, throw TypeError', function() {
-        var ERROR_MSG = 'borrower, donor parameter type of aid.borrow() must be Object.';
+        var ERROR_MSG =
+          'borrower, donor parameter type of aid.borrow() must be Object.';
 
         expect(function() {
           aid.borrow(undefined, donor, 'say');
@@ -715,7 +720,8 @@ describe('aid.js', function() {
       });
 
       it('if donor parameter is not Object type, throw TypeError', function() {
-        var ERROR_MSG = 'borrower, donor parameter type of aid.borrow() must be Object.';
+        var ERROR_MSG =
+          'borrower, donor parameter type of aid.borrow() must be Object.';
 
         expect(function() {
           aid.borrow(borrower, undefined, 'say');
@@ -751,7 +757,8 @@ describe('aid.js', function() {
       });
 
       it('if functionName parameter is not String type, throw TypeError', function() {
-        var ERROR_MSG = 'functionName parameter type of aid.borrow() must be String.';
+        var ERROR_MSG =
+          'functionName parameter type of aid.borrow() must be String.';
 
         expect(function() {
           aid.borrow(borrower, donor, undefined);
@@ -787,7 +794,8 @@ describe('aid.js', function() {
       });
 
       it('if donor has not function with functionName, throw Error', function() {
-        var ERROR_MSG = 'donor object parameter of aid.borrow() has not function with functionName.';
+        var ERROR_MSG =
+          'donor object parameter of aid.borrow() has not function with functionName.';
 
         expect(function() {
           aid.borrow(borrower, donor, 'hello');
@@ -795,7 +803,8 @@ describe('aid.js', function() {
       });
 
       it('if borrower already has function with functionName, throw Error', function() {
-        var ERROR_MSG = 'borrower object parameter of aid.borrow() already has function with functionName.';
+        var ERROR_MSG =
+          'borrower object parameter of aid.borrow() already has function with functionName.';
 
         borrower = {
           say: function() {
@@ -1470,7 +1479,8 @@ describe('aid.js', function() {
         it('pluck field of object (if object has field)', function() {
           var obj = {
             title: 'aid.js',
-            description: 'A bundle of Javascript util Library for help developers. No dependency to other Libraries.'
+            description:
+              'A bundle of Javascript util Library for help developers. No dependency to other Libraries.'
           };
 
           expect(getTitle(obj)).toEqual('aid.js');
@@ -1478,7 +1488,8 @@ describe('aid.js', function() {
 
         it('pluck field of object (if object has not field)', function() {
           var obj = {
-            description: 'A bundle of Javascript util Library for help developers. No dependency to other Libraries.'
+            description:
+              'A bundle of Javascript util Library for help developers. No dependency to other Libraries.'
           };
 
           expect(getTitle(obj)).toEqual(undefined);
@@ -1532,7 +1543,8 @@ describe('aid.js', function() {
 
     describe('.best()', function() {
       it('if conditionFunc parameter type is not function, throw Error', function() {
-        var ERROR_MSG = 'conditionFunc parameter type of aid.best() must be Function.';
+        var ERROR_MSG =
+          'conditionFunc parameter type of aid.best() must be Function.';
 
         expect(function() {
           aid.best(undefined, []);
@@ -1750,7 +1762,72 @@ describe('aid.js', function() {
     });
 
     describe('.partial()', function() {
-      // TODO:
+      it('if func parameter type is not function, throw Error', function() {
+        var ERROR_MSG =
+          'func parameter type of aid.partial() must be Function.';
+
+        expect(function() {
+          aid.partial(undefined);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.partial(null);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.partial(false);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.partial(true);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.partial(0);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.partial('');
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.partial([]);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.partial(NaN);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.partial(function() {});
+        }).not.toThrowError(TypeError, ERROR_MSG);
+      });
+
+      it('return function regardless of rest arguments', function() {
+        expect(typeof aid.partial(function() {})).toEqual('function');
+        expect(typeof aid.partial(function() {}, 1)).toEqual('function');
+        expect(typeof aid.partial(function() {}, 1, 2)).toEqual('function');
+        expect(typeof aid.partial(function() {}, 1, 2, 3)).toEqual('function');
+      });
+
+      it('returned function concatenate previous rest arguments, and arguments when called', function() {
+        function sum(/* args... */) {
+          var args = Array.prototype.slice.call(arguments);
+          return args.reduce(function(acc, cur) {
+            return acc + cur;
+          }, 0);
+        }
+
+        expect(aid.partial(sum)()).toEqual(0);
+        expect(aid.partial(sum, 1)()).toEqual(1);
+        expect(aid.partial(sum, 1, 2)()).toEqual(3);
+        expect(aid.partial(sum, 1, 2, 3)()).toEqual(6);
+        expect(aid.partial(sum)(1)).toEqual(1);
+        expect(aid.partial(sum)(1, 2)).toEqual(3);
+        expect(aid.partial(sum)(1, 2, 3)).toEqual(6);
+        expect(aid.partial(sum, 1)(2)).toEqual(3);
+        expect(aid.partial(sum, 1)(2, 3)).toEqual(6);
+      });
     });
 
     describe('.rest()', function() {
@@ -1935,7 +2012,9 @@ describe('aid.js', function() {
             });
         }
 
-        expect(aid.pipeline([1, 2, 3], double, lazyReverseAndNegative).force()).toEqual([-6, -4, -2]);
+        expect(
+          aid.pipeline([1, 2, 3], double, lazyReverseAndNegative).force()
+        ).toEqual([-6, -4, -2]);
       });
     });
 

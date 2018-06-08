@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.75
+ * aid.js 0.1.76
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -746,15 +746,27 @@
    * @param {Function} function
    * @returns {Function} return function
    * @example
-   * TODO:
+   * function sum() {
+   *   var args = Array.prototype.slice.call(arguments);
+   *   return args.reduce(function(acc, cur) {
+   *     return acc + cur;
+   *   }, 0);
+   * }
+   * console.log( aid.partial(sum)() ); // 0
+   * console.log( aid.partial(sum, 1)() ); // 1
+   * console.log( aid.partial(sum, 1)(2) ); // 3
+   * console.log( aid.partial(sum)(1, 2, 3) ); // 6
    */
   aid.partial = function partial(func /*, args... */) {
-    var args = _slice.call(arguments, 1),
-      context = this;
+    if (!aid.isFunction(func))
+      throw new TypeError(
+        'func parameter type of aid.partial() must be Function.'
+      );
 
-    return function() {
-      var rest = _slice.call(arguments);
-      return func.apply(context, args.concat(rest));
+    var args = aid.rest(_slice.call(arguments));
+
+    return function(/* args... */) {
+      return func.apply(func, args.concat(_slice.call(arguments)));
     };
   };
 
