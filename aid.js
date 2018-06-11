@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.76
+ * aid.js 0.1.77
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -2921,6 +2921,38 @@
       somePointLineSlope * (orthogonalPoint.x - somePoint.x) + somePoint.y;
 
     return orthogonalPoint;
+  };
+
+  /**
+   * remap
+   *
+   * @static
+   * @method remap
+   * @param {Number} target
+   * @param {Number} min
+   * @param {Number} max
+   * @param {Number} remapedMin
+   * @param {Number} remapedMax
+   * @returns {Number} return Number
+   * @example
+   * console.log( aid.math.remap(0.5, 0, 1, 0, 100) ); // 50
+   */
+  math.remap = function remap(target, min, max, remapedMin, remapedMax) {
+    var isNumber = aid.isNumber;
+
+    if (
+      !isNumber(target) ||
+      !isNumber(min) ||
+      !isNumber(max) ||
+      !isNumber(remapedMin) ||
+      !isNumber(remapedMax)
+    ) {
+      throw new TypeError('math.remap() requires Number parameters.');
+    }
+
+    return (
+      ((target - min) / (max - min)) * (remapedMax - remapedMin) + remapedMin
+    );
   };
 
   /**

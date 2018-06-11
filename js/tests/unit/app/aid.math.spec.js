@@ -1304,7 +1304,56 @@ describe('aid.js', function() {
     });
 
     describe('.remap()', function() {
-      // TODO:
+      it('if func parameter type is not function, throw Error', function() {
+        var ERROR_MSG = 'math.remap() requires Number parameters.';
+
+        expect(function() {
+          math.remap(undefined, 0, 1, 0, 100);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.remap(0.5, null, 1, 0, 100);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.remap(0.5, false, 1, 0, 100);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.remap(0.5, true, 1, 0, 100);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.remap(0.5, 0, 1, 0, 100);
+        }).not.toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.remap(0.5, 0, 1, 'aid.js', 100);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.remap(0.5, 0, 1, 0, []);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.remap(0.5, 0, 1, 0, NaN);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.remap(0.5, 0, 1, 0, function() {});
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.remap(0.5, 0, 1, 0, /aid.js/);
+        }).toThrowError(TypeError, ERROR_MSG);
+      });
+
+      it('return remaped value', function() {
+        expect(math.remap(0, -1, 1, 0, 100)).toEqual(50);
+        expect(math.remap(0.5, 0, 1, 0, 100)).toEqual(50);
+        expect(math.remap(0, -100, 100, 0, 10)).toEqual(5);
+        expect(math.remap(50, 0, 100, 0, 10)).toEqual(5);
+      });
     });
 
     describe('.gt()', function() {

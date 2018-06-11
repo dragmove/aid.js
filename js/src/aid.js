@@ -2928,7 +2928,7 @@
    * @param {Number} remapedMax
    * @returns {Number} return Number
    * @example
-   * TODO:
+   * console.log( aid.math.remap(0.5, 0, 1, 0, 100) ); // 50
    */
   math.remap = function remap(target, min, max, remapedMin, remapedMax) {
     var isNumber = aid.isNumber;
