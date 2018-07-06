@@ -739,7 +739,7 @@ describe('aid.js', function() {
     });
 
     describe('.degreeToRadian()', function() {
-      it('if func parameter type is not number, throw Error.', function() {
+      it('if func parameter type is not Number, throw Error.', function() {
         expect(function() {
           math.degreeToRadian(undefined);
         }).toThrowError();
@@ -784,7 +784,7 @@ describe('aid.js', function() {
     });
 
     describe('.radianToDegree()', function() {
-      it('if func parameter type is not number, throw Error.', function() {
+      it('if func parameter type is not Number, throw Error.', function() {
         expect(function() {
           math.radianToDegree(undefined);
         }).toThrowError();
@@ -1307,6 +1307,116 @@ describe('aid.js', function() {
       it('return -1 or 1', function() {
         var val = math.getRandomPositiveNegative();
         expect(val === -1 || val === 1).toBeTruthy();
+      });
+    });
+
+    describe('.getRandomFloat()', function() {
+      it('input arguments are not Number type, throw TypeError.', function() {
+        var ERROR_MSG = 'math.getRandomFloat() requires Number parameters.';
+
+        expect(function() {
+          math.getRandomFloat(undefined, 99.999);
+          math.getRandomFloat(99.999, undefined);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.getRandomFloat(null, 99.999);
+          math.getRandomFloat(99.999, null);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.getRandomFloat(false, 99.999);
+          math.getRandomFloat(99.999, false);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.getRandomFloat('aid.js', 99.999);
+          math.getRandomFloat(99.999, 'aid.js');
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.getRandomFloat({}, 99.999);
+          math.getRandomFloat(99.999, {});
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.getRandomFloat([], 99.999);
+          math.getRandomFloat(99.999, []);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.getRandomFloat(new RegExp('^aid'), 99.999);
+          math.getRandomFloat(99.999, new RegExp('^aid'));
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.getRandomFloat(/^aid/, 99.999);
+          math.getRandomFloat(99.999, /^aid/);
+        }).toThrowError(TypeError, ERROR_MSG);
+      });
+
+      it('return random Float number.', function() {
+        var val = math.getRandomFloat(-99.999, 99.999);
+        expect(val >= -99.999 && val < 99.999).toBeTruthy();
+      });
+    });
+
+    describe('.getRandomInt()', function() {
+      it('input arguments are not Integer Number type, throw TypeError.', function() {
+        var ERROR_MSG =
+          'math.getRandomInt() requires Integer Number parameters.';
+
+        expect(function() {
+          math.getRandomInt(undefined, 99);
+          math.getRandomInt(99, undefined);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.getRandomInt(null, 99);
+          math.getRandomInt(99, null);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.getRandomInt(false, 99);
+          math.getRandomInt(99, false);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.getRandomInt('aid.js', 99);
+          math.getRandomInt(99, 'aid.js');
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.getRandomInt({}, 99);
+          math.getRandomInt(99, {});
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.getRandomInt([], 99);
+          math.getRandomInt(99, []);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.getRandomInt(new RegExp('^aid'), 99);
+          math.getRandomInt(99, new RegExp('^aid'));
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.getRandomInt(/^aid/, 99);
+          math.getRandomInt(99, /^aid/);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.getRandomInt(-99, 99.999);
+          math.getRandomInt(-99.999, 99);
+        }).toThrowError(TypeError, ERROR_MSG);
+      });
+
+      it('return random Int number.', function() {
+        var val = math.getRandomInt(-99, 99);
+
+        expect(aid.isInteger(val)).toBeTruthy();
+        expect(val >= -99 && val <= 99).toBeTruthy();
       });
     });
 

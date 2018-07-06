@@ -160,6 +160,8 @@ aid.math.getHeightOfRightTriangle
 aid.math.getDistanceBetweenTwoPoints
 aid.math.getOrthogonalPointBetweenLineAndSomePoint
 aid.math.getRandomPositiveNegative
+aid.math.getRandomFloat
+aid.math.getRandomInt
 aid.math.remap
 aid.math.gt
 aid.math.lt

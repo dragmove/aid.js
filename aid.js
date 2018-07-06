@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.78
+ * aid.js 0.1.79
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -2934,6 +2934,48 @@
    */
   math.getRandomPositiveNegative = function getRandomPositiveNegative() {
     return Math.round(Math.random()) > 0 ? 1 : -1;
+  };
+
+  /**
+   * getRandomFloat
+   *
+   * @static
+   * @method getRandomFloat
+   * @param {Number} min
+   * @param {Number} max
+   * @returns {Number} return Number
+   * @example
+   * console.log( aid.math.getRandomFloat(-99.999, 99.999) ); // -99.999 <= aid.math.getRandomFloat(-99.999, 99.999) < 99.999
+   */
+  math.getRandomFloat = function getRandomFloat(min, max) {
+    var isNumber = aid.isNumber;
+    if (!isNumber(min) || !isNumber(max)) {
+      throw new TypeError('math.getRandomFloat() requires Number parameters.');
+    }
+
+    return min + Math.random() * (max - min);
+  };
+
+  /**
+   * getRandomInt
+   *
+   * @static
+   * @method getRandomInt
+   * @param {Number} minInt
+   * @param {Number} maxInt
+   * @returns {Number} return Number
+   * @example
+   * console.log( aid.math.getRandomInt(-99, 99) ); // -99 ~ 99
+   */
+  math.getRandomInt = function getRandomInt(minInt, maxInt) {
+    var isInteger = aid.isInteger;
+    if (!isInteger(minInt) || !isInteger(maxInt)) {
+      throw new TypeError(
+        'math.getRandomInt() requires Integer Number parameters.'
+      );
+    }
+
+    return minInt + Math.floor(Math.random() * (maxInt - minInt + 1));
   };
 
   /**
