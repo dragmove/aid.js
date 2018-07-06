@@ -159,6 +159,7 @@ aid.math.radianToDegree
 aid.math.getHeightOfRightTriangle
 aid.math.getDistanceBetweenTwoPoints
 aid.math.getOrthogonalPointBetweenLineAndSomePoint
+aid.math.getRandomPositiveNegative
 aid.math.remap
 aid.math.gt
 aid.math.lt

@@ -1303,6 +1303,13 @@ describe('aid.js', function() {
       });
     });
 
+    describe('.getRandomPositiveNegative()', function() {
+      it('return -1 or 1', function() {
+        var val = math.getRandomPositiveNegative();
+        expect(val === -1 || val === 1).toBeTruthy();
+      });
+    });
+
     describe('.remap()', function() {
       it('if func parameter type is not function, throw Error', function() {
         var ERROR_MSG = 'math.remap() requires Number parameters.';

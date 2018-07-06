@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.77
+ * aid.js 0.1.78
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -2921,6 +2921,19 @@
       somePointLineSlope * (orthogonalPoint.x - somePoint.x) + somePoint.y;
 
     return orthogonalPoint;
+  };
+
+  /**
+   * getRandomPositiveNegative
+   *
+   * @static
+   * @method getRandomPositiveNegative
+   * @returns {Number} return Number
+   * @example
+   * console.log( aid.math.getRandomPositiveNegative() ); // -1 or 1
+   */
+  math.getRandomPositiveNegative = function getRandomPositiveNegative() {
+    return Math.round(Math.random()) > 0 ? 1 : -1;
   };
 
   /**

@@ -1,6 +1,6 @@
 {
   "name": "aid.js",
-  "version": "0.1.77",
+  "version": "0.1.78",
   "description": "A Bundle of Javascript util Library to help developers. No dependency to other Libraries.",
   "keywords": ["aid.js", "aidjs", "aid", "util", "javascript", "js", "functional", "monad", "dragmove"],
   "homepage": "https://www.npmjs.com/package/aid.js",

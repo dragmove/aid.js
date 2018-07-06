@@ -2917,6 +2917,19 @@
   };
 
   /**
+   * getRandomPositiveNegative
+   *
+   * @static
+   * @method getRandomPositiveNegative
+   * @returns {Number} return Number
+   * @example
+   * console.log( aid.math.getRandomPositiveNegative() ); // -1 or 1
+   */
+  math.getRandomPositiveNegative = function getRandomPositiveNegative() {
+    return Math.round(Math.random()) > 0 ? 1 : -1;
+  };
+
+  /**
    * remap
    *
    * @static
