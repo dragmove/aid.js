@@ -1830,6 +1830,14 @@ describe('aid.js', function() {
       });
     });
 
+    describe('.reverseArgs()', function() {
+      // TODO:
+    });
+
+    describe('.partialRight()', function() {
+      // TODO:
+    });
+
     describe('.rest()', function() {
       var rest = [];
 

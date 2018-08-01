@@ -764,6 +764,47 @@
   };
 
   /**
+   * reverse arguments
+   * refer to https://github.com/getify/Functional-Light-JS/blob/master/manuscript/ch3.md/#reversing-arguments
+   *
+   * @static
+   * @method reverseArgs
+   * @param {Function} function
+   * @returns {Function} return function
+   * @example
+   * TODO:
+   */
+  aid.reverseArgs = function reverseArgs(func) {
+    return function(/* args... */) {
+      var args = _slice.call(arguments);
+
+      return func(args.reverse());
+    };
+
+    // TODO: write test spec 'ㅅ')!
+    // TODO: write test spec 'ㅅ')!
+    // TODO: write test spec 'ㅅ')!
+    // TODO: write test spec 'ㅅ')!
+  };
+
+  /**
+   * partial application for the rightmost argument
+   *
+   * @static
+   * @method partialRight
+   * @param {Function} function
+   * @returns {Function} return function
+   * @example
+   * TODO:
+   */
+  // TODO:
+  aid.partialRight = function partialRight(func /*, args... */) {
+    // TODO: implement this 'ㅅ')!
+    // TODO: implement this 'ㅅ')!
+    // TODO: implement this 'ㅅ')!
+  };
+
+  /**
    * rest
    * // refer to _.rest function of underscore.js - https://github.com/jashkenas/underscore/blob/master/underscore.js
    *
