@@ -68,6 +68,7 @@ aid.iterateUntil
 aid.curry
 aid.curry2
 aid.curryAll
+aid.reverseArgs
 aid.partial
 aid.rest
 aid.pipeline

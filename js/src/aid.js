@@ -732,6 +732,31 @@
   };
 
   /**
+   * reverse arguments of function
+   * refer to https://github.com/getify/Functional-Light-JS/blob/master/manuscript/ch3.md/#reversing-arguments
+   *
+   * @static
+   * @method reverseArgs
+   * @param {Function} function
+   * @returns {Function} return function
+   * @example
+   * var getReverseArgs = aid.reverseArgs(function() { return Array.prototype.slice.call(arguments); });
+   * console.log( getReverseArgs(99, 'aid.js') ); // ['aid.js', 99]
+   */
+  aid.reverseArgs = function reverseArgs(func) {
+    if (!aid.isFunction(func))
+      throw new TypeError(
+        'func parameter type of aid.reverseArgs() must be Function.'
+      );
+
+    return function(/* args... */) {
+      var args = _slice.call(arguments);
+
+      return func.apply(null, args.reverse());
+    };
+  };
+
+  /**
    * partial application
    *
    * @static
@@ -761,30 +786,6 @@
     return function(/* args... */) {
       return func.apply(func, args.concat(_slice.call(arguments)));
     };
-  };
-
-  /**
-   * reverse arguments
-   * refer to https://github.com/getify/Functional-Light-JS/blob/master/manuscript/ch3.md/#reversing-arguments
-   *
-   * @static
-   * @method reverseArgs
-   * @param {Function} function
-   * @returns {Function} return function
-   * @example
-   * TODO:
-   */
-  aid.reverseArgs = function reverseArgs(func) {
-    return function(/* args... */) {
-      var args = _slice.call(arguments);
-
-      return func(args.reverse());
-    };
-
-    // TODO: write test spec 'ㅅ')!
-    // TODO: write test spec 'ㅅ')!
-    // TODO: write test spec 'ㅅ')!
-    // TODO: write test spec 'ㅅ')!
   };
 
   /**

@@ -1761,6 +1761,99 @@ describe('aid.js', function() {
       });
     });
 
+    describe('.reverseArgs()', function() {
+      it('if func parameter type is not function, throw Error', function() {
+        var ERROR_MSG =
+          'func parameter type of aid.reverseArgs() must be Function.';
+
+        expect(function() {
+          aid.reverseArgs(undefined);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.reverseArgs(null);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.reverseArgs(false);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.reverseArgs(true);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.reverseArgs(0);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.reverseArgs('');
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.reverseArgs([]);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.reverseArgs(NaN);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.reverseArgs(function() {});
+        }).not.toThrowError(TypeError, ERROR_MSG);
+      });
+
+      it('return function', function() {
+        var getReverseArgs = aid.reverseArgs(function() {});
+
+        expect(typeof getReverseArgs).toEqual('function');
+      });
+
+      it('returned function apply reversed arguments when called', function() {
+        var getReverseArgs = aid.reverseArgs(function(/* args... */) {
+          return Array.prototype.slice.call(arguments);
+        });
+
+        expect(getReverseArgs()).toEqual([]);
+
+        expect(getReverseArgs(99)).toEqual([99]);
+
+        expect(getReverseArgs(99, 'aid.js')).toEqual(['aid.js', 99]);
+        expect(getReverseArgs('aid.js', 99)).toEqual([99, 'aid.js']);
+
+        expect(getReverseArgs(99, 'aid.js', [null])).toEqual([
+          [null],
+          'aid.js',
+          99
+        ]);
+        expect(getReverseArgs(99, [null], 'aid.js')).toEqual([
+          'aid.js',
+          [null],
+          99
+        ]);
+        expect(getReverseArgs('aid.js', 99, [null])).toEqual([
+          [null],
+          99,
+          'aid.js'
+        ]);
+        expect(getReverseArgs('aid.js', [null], 99)).toEqual([
+          99,
+          [null],
+          'aid.js'
+        ]);
+        expect(getReverseArgs([null], 'aid.js', 99)).toEqual([
+          99,
+          'aid.js',
+          [null]
+        ]);
+        expect(getReverseArgs([null], 99, 'aid.js')).toEqual([
+          'aid.js',
+          99,
+          [null]
+        ]);
+      });
+    });
+
     describe('.partial()', function() {
       it('if func parameter type is not function, throw Error', function() {
         var ERROR_MSG =
@@ -1828,10 +1921,6 @@ describe('aid.js', function() {
         expect(aid.partial(sum, 1)(2)).toEqual(3);
         expect(aid.partial(sum, 1)(2, 3)).toEqual(6);
       });
-    });
-
-    describe('.reverseArgs()', function() {
-      // TODO:
     });
 
     describe('.partialRight()', function() {
