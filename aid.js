@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.77
+ * aid.js 0.1.80
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -739,6 +739,31 @@
   };
 
   /**
+   * reverse arguments of function
+   * refer to https://github.com/getify/Functional-Light-JS/blob/master/manuscript/ch3.md/#reversing-arguments
+   *
+   * @static
+   * @method reverseArgs
+   * @param {Function} function
+   * @returns {Function} return function
+   * @example
+   * var getReverseArgs = aid.reverseArgs(function() { return Array.prototype.slice.call(arguments); });
+   * console.log( getReverseArgs(99, 'aid.js') ); // ['aid.js', 99]
+   */
+  aid.reverseArgs = function reverseArgs(func) {
+    if (!aid.isFunction(func))
+      throw new TypeError(
+        'func parameter type of aid.reverseArgs() must be Function.'
+      );
+
+    return function(/* args... */) {
+      var args = _slice.call(arguments);
+
+      return func.apply(null, args.concat().reverse());
+    };
+  };
+
+  /**
    * partial application
    *
    * @static
@@ -767,6 +792,31 @@
 
     return function(/* args... */) {
       return func.apply(func, args.concat(_slice.call(arguments)));
+    };
+  };
+
+  /**
+   * partial application for the right arguments
+   *
+   * @static
+   * @method partialRight
+   * @param {Function} function
+   * @returns {Function} return function
+   * @example
+   * function three(str, num, arr) { return str + ' ' + num + ' ' + arr; }
+   * console.log( aid.partialRight(three, 99, [1, 2, 3])('aid.js') ); // 'aid.js 99 1,2,3'
+   * console.log( aid.partial( aid.partialRight(three, [1, 2, 3]), 'aid.js' )(99) ); // 'aid.js 99 1,2,3'
+   */
+  aid.partialRight = function partialRight(func /*, args... */) {
+    if (!aid.isFunction(func))
+      throw new TypeError(
+        'func parameter type of aid.partialRight() must be Function.'
+      );
+
+    var args = aid.rest(_slice.call(arguments));
+
+    return function(/* args... */) {
+      return func.apply(null, _slice.call(arguments).concat(args));
     };
   };
 
