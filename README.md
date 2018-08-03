@@ -68,7 +68,9 @@ aid.iterateUntil
 aid.curry
 aid.curry2
 aid.curryAll
+aid.reverseArgs
 aid.partial
+aid.partialRight
 aid.rest
 aid.pipeline
 aid.lazyChain

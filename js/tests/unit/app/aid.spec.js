@@ -1761,6 +1761,99 @@ describe('aid.js', function() {
       });
     });
 
+    describe('.reverseArgs()', function() {
+      it('if func parameter type is not function, throw Error', function() {
+        var ERROR_MSG =
+          'func parameter type of aid.reverseArgs() must be Function.';
+
+        expect(function() {
+          aid.reverseArgs(undefined);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.reverseArgs(null);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.reverseArgs(false);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.reverseArgs(true);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.reverseArgs(0);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.reverseArgs('');
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.reverseArgs([]);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.reverseArgs(NaN);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.reverseArgs(function() {});
+        }).not.toThrowError(TypeError, ERROR_MSG);
+      });
+
+      it('return function', function() {
+        var getReverseArgs = aid.reverseArgs(function() {});
+
+        expect(typeof getReverseArgs).toEqual('function');
+      });
+
+      it('returned function apply reversed arguments when called', function() {
+        var getReverseArgs = aid.reverseArgs(function(/* args... */) {
+          return Array.prototype.slice.call(arguments);
+        });
+
+        expect(getReverseArgs()).toEqual([]);
+
+        expect(getReverseArgs(99)).toEqual([99]);
+
+        expect(getReverseArgs(99, 'aid.js')).toEqual(['aid.js', 99]);
+        expect(getReverseArgs('aid.js', 99)).toEqual([99, 'aid.js']);
+
+        expect(getReverseArgs(99, 'aid.js', [null])).toEqual([
+          [null],
+          'aid.js',
+          99
+        ]);
+        expect(getReverseArgs(99, [null], 'aid.js')).toEqual([
+          'aid.js',
+          [null],
+          99
+        ]);
+        expect(getReverseArgs('aid.js', 99, [null])).toEqual([
+          [null],
+          99,
+          'aid.js'
+        ]);
+        expect(getReverseArgs('aid.js', [null], 99)).toEqual([
+          99,
+          [null],
+          'aid.js'
+        ]);
+        expect(getReverseArgs([null], 'aid.js', 99)).toEqual([
+          99,
+          'aid.js',
+          [null]
+        ]);
+        expect(getReverseArgs([null], 99, 'aid.js')).toEqual([
+          'aid.js',
+          99,
+          [null]
+        ]);
+      });
+    });
+
     describe('.partial()', function() {
       it('if func parameter type is not function, throw Error', function() {
         var ERROR_MSG =
@@ -1827,6 +1920,116 @@ describe('aid.js', function() {
         expect(aid.partial(sum)(1, 2, 3)).toEqual(6);
         expect(aid.partial(sum, 1)(2)).toEqual(3);
         expect(aid.partial(sum, 1)(2, 3)).toEqual(6);
+      });
+    });
+
+    describe('.partialRight()', function() {
+      it('if func parameter type is not function, throw Error', function() {
+        var ERROR_MSG =
+          'func parameter type of aid.partialRight() must be Function.';
+
+        expect(function() {
+          aid.partialRight(undefined);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.partialRight(null);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.partialRight(false);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.partialRight(true);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.partialRight(0);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.partialRight('');
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.partialRight([]);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.partialRight(NaN);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.partialRight(function() {});
+        }).not.toThrowError(TypeError, ERROR_MSG);
+      });
+
+      it('return function regardless of rest arguments', function() {
+        expect(typeof aid.partialRight(function() {})).toEqual('function');
+        expect(typeof aid.partialRight(function() {}, 1)).toEqual('function');
+        expect(typeof aid.partialRight(function() {}, 1, 2)).toEqual(
+          'function'
+        );
+        expect(typeof aid.partialRight(function() {}, 1, 2, 3)).toEqual(
+          'function'
+        );
+      });
+
+      it('returned function concatenate previous rest arguments, and arguments when called', function() {
+        function one(str) {
+          return str;
+        }
+
+        expect(aid.partialRight(one)()).toEqual(undefined);
+        expect(aid.partialRight(one)('aid.js')).toBe('aid.js');
+
+        function two(str, num) {
+          return str + ' ' + num;
+        }
+
+        expect(aid.partialRight(two)()).toEqual('undefined undefined');
+        expect(aid.partialRight(two, 99)()).toBe('99 undefined');
+        expect(aid.partialRight(two, 99)('aid.js')).toBe('aid.js 99');
+
+        function three(str, num, arr) {
+          return str + ' ' + num + ' ' + arr;
+        }
+
+        expect(aid.partialRight(three)()).toEqual(
+          'undefined undefined undefined'
+        );
+        expect(aid.partialRight(three, [1, 2, 3])()).toEqual(
+          '1,2,3 undefined undefined'
+        );
+        expect(aid.partialRight(three, [1, 2, 3])('aid.js')).toEqual(
+          'aid.js 1,2,3 undefined'
+        );
+        expect(aid.partialRight(three, [1, 2, 3])('aid.js', 99)).toEqual(
+          'aid.js 99 1,2,3'
+        );
+        expect(aid.partialRight(three, 99, [1, 2, 3])()).toEqual(
+          '99 1,2,3 undefined'
+        );
+        expect(aid.partialRight(three, 99, [1, 2, 3])('aid.js')).toEqual(
+          'aid.js 99 1,2,3'
+        );
+      });
+
+      it('can use with aid.parial', function() {
+        function three(str, num, arr) {
+          return str + ' ' + num + ' ' + arr;
+        }
+
+        var pr = aid.partialRight(three, [1, 2, 3]),
+          p = aid.partial(pr, 'aid.js');
+
+        expect(p()).toEqual('aid.js 1,2,3 undefined');
+        expect(p(99)).toEqual('aid.js 99 1,2,3');
+
+        expect(
+          aid.partial(aid.partialRight(three, [1, 2, 3]), 'aid.js')(99)
+        ).toEqual('aid.js 99 1,2,3');
       });
     });
 
