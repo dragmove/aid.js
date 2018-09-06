@@ -1950,7 +1950,8 @@
     if (str === '') return uri;
 
     var tmpArr = uri.split('#'),
-      hashStr = aid.isDefined(tmpArr[1]) ? '#' + tmpArr[1] : '';
+      hashStr =
+        aid.isDefined(tmpArr[1]) && tmpArr[1].length ? '#' + tmpArr[1] : '';
 
     uri = tmpArr[0];
     uri =

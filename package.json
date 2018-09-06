@@ -1,6 +1,6 @@
 {
   "name": "aid.js",
-  "version": "0.1.80",
+  "version": "0.1.81",
   "description": "A Bundle of Javascript util Library to help developers. No dependency to other Libraries.",
   "keywords": ["aid.js", "aidjs", "aid", "util", "javascript", "js", "functional", "monad", "dragmove"],
   "homepage": "https://www.npmjs.com/package/aid.js",
@@ -10,7 +10,6 @@
   },
   "main": "aid.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": {
     "name": "Hyun-Seok.Kim",
