@@ -55,5 +55,13 @@ describe('aid.js', function() {
         expect(object.isEmpty({ name: 'foo' })).toEqual(false);
       });
     });
+
+    describe('.keys()', function() {
+      // TODO:
+    });
+
+    describe('.shallowEqual()', function() {
+      // TODO:
+    });
   });
 });

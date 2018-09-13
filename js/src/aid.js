@@ -11,6 +11,7 @@
     {};
 
   var _slice = Array.prototype.slice;
+  var _hasOwnProperty = Object.prototype.hasOwnProperty;
 
   var aid = {},
     operator = {},
@@ -1640,6 +1641,23 @@
     }
 
     return false;
+  };
+
+  /**
+   * can use DOM
+   *
+   * @static
+   * @method canUseDOM
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.browser.canUseDOM() );
+   */
+  browser.canUseDOM = function canUseDOM() {
+    return aid.truthy(
+      typeof window !== 'undefined' &&
+        window.document &&
+        window.document.createElement
+    );
   };
 
   /**
@@ -3767,6 +3785,93 @@
   };
 
   /**
+   * Object.keys polyfill
+   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys#Polyfill
+   *
+   * @static
+   * @method keys
+   * @param {Object} obj
+   * @returns {Boolean} return boolean
+   * @example
+   * var obj = {name: 'foo', job: 'programmer', works: [{id: 1, year: 1999}]};
+   * console.log( aid.object.keys(obj) ); // ['name', 'job', 'works']
+   */
+  object.keys = function keys(obj) {
+    // var hasOwnProperty = Object.prototype.hasOwnProperty,
+    var hasDontEnumBug = !{ toString: null }.propertyIsEnumerable('toString'),
+      dontEnums = [
+        'toString',
+        'toLocaleString',
+        'valueOf',
+        'hasOwnProperty',
+        'isPrototypeOf',
+        'propertyIsEnumerable',
+        'constructor'
+      ],
+      dontEnumsLength = dontEnums.length;
+
+    if (
+      aid.not(aid.isFunction)(obj) &&
+      (aid.not(aid.isObject)(obj) || obj === null)
+    ) {
+      throw new TypeError('aid.object.keys called on non-object');
+    }
+
+    var result = [];
+
+    for (var prop in obj) {
+      if (_hasOwnProperty.call(obj, prop)) result.push(prop);
+    }
+
+    if (hasDontEnumBug) {
+      for (var i = 0; i < dontEnumsLength; i++) {
+        if (_hasOwnProperty.call(obj, dontEnums[i])) result.push(dontEnums[i]);
+      }
+    }
+
+    return result;
+  };
+
+  /**
+   * Object.shallowEqual
+   * https://developmentarc.gitbooks.io/react-indepth/content/life_cycle/update/using_should_component_update.html
+   *
+   * @static
+   * @method keys
+   * @param {Object} objA
+   * @param {Object} objB
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  object.shallowEqual = function shallowEqual(objA, objB) {
+    var not = aid.not,
+      eq = aid.eq,
+      isObject = aid.isObject,
+      isNotObject = not(isObject),
+      isNull = eq(null);
+
+    if (eq(objA)(objB)) return true;
+
+    if (isNotObject(objA) || isNull(objA) || isNotObject(objB) || isNull(objB))
+      return false;
+
+    var keysA = object.keys(objA),
+      keysB = object.keys(objB);
+
+    if (not(eq(keysA.length))(keysB.length)) return false;
+
+    // Test for A's keys different from B.
+    var bHasOwnProperty = _hasOwnProperty.bind(objB);
+
+    for (var i = 0, max = keysA.length; i < max; i++) {
+      if (!bHasOwnProperty(keysA[i]) || not(eq(objA[keysA[i]]))(objB[keysA[i]]))
+        return false;
+    }
+
+    return true;
+  };
+
+  /**
    * check element is in viewport entirely.
    *
    * @static
@@ -3781,6 +3886,23 @@
     if (!ele) return false;
 
     var rect = ele.getBoundingClientRect();
+
+    // if parent element is invisible, left, top, right, bottom, width, height, x, y properties are zero.
+    var eqZero = aid.eq(0);
+    if (
+      aid.allOf(
+        eqZero(rect.top),
+        eqZero(rect.left),
+        eqZero(rect.bottom),
+        eqZero(rect.right),
+        eqZero(rect.width),
+        eqZero(rect.height),
+        eqZero(rect.x),
+        eqZero(rect.y)
+      )
+    )
+      return false;
+
     return (
       rect.top >= 0 &&
       rect.left >= 0 &&
@@ -3804,8 +3926,25 @@
 
     if (!ele) return false;
 
-    var rect = ele.getBoundingClientRect(),
-      windowHeight =
+    var rect = ele.getBoundingClientRect();
+
+    // if parent element is invisible, left, top, right, bottom, width, height, x, y properties are zero.
+    var eqZero = aid.eq(0);
+    if (
+      aid.allOf(
+        eqZero(rect.top),
+        eqZero(rect.left),
+        eqZero(rect.bottom),
+        eqZero(rect.right),
+        eqZero(rect.width),
+        eqZero(rect.height),
+        eqZero(rect.x),
+        eqZero(rect.y)
+      )
+    )
+      return false;
+
+    var windowHeight =
         global.innerHeight || document.documentElement.clientHeight,
       windowWidth = global.innerWidth || document.documentElement.clientWidth;
 
