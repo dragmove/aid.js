@@ -57,7 +57,73 @@ describe('aid.js', function() {
     });
 
     describe('.keys()', function() {
-      // TODO:
+      it('input argument is not Object or Function type, throw TypeError.', function() {
+        expect(function() {
+          object.keys(undefined);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          object.keys(null);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          object.keys(false);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          object.keys(true);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          object.keys(0);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          object.keys('aid');
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          object.keys({});
+        }).not.toThrowError(TypeError);
+
+        expect(function() {
+          object.keys([]);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          object.keys(function() {});
+        }).not.toThrowError(TypeError);
+
+        expect(function() {
+          object.keys(new RegExp('^aid'));
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          object.keys(/^aid/);
+        }).toThrowError(TypeError);
+      });
+
+      it('input {}, return []', function() {
+        expect(object.keys({})).toEqual([]);
+      });
+
+      it('input {name: "foo", job: "programmer", works: [{id: 1, year: 1999}]}, return ["name", "job", "works"]', function() {
+        expect(
+          object.keys({
+            name: 'foo',
+            job: 'programmer',
+            works: [{ id: 1, year: 1999 }]
+          })
+        ).toEqual(['name', 'job', 'works']);
+      });
+
+      it('input function has "nick", "job" props, return ["nick", "job"]', function() {
+        var func = function() {};
+        func.nick = 'foo';
+        func.job = 'programmer';
+
+        expect(object.keys(func)).toEqual(['nick', 'job']);
+      });
     });
 
     describe('.shallowEqual()', function() {

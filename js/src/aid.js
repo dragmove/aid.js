@@ -3814,7 +3814,7 @@
       aid.not(aid.isFunction)(obj) &&
       (aid.not(aid.isObject)(obj) || obj === null)
     ) {
-      throw new TypeError('aid.object.keys called on non-object');
+      throw new TypeError('object.keys called on non-object');
     }
 
     var result = [];
