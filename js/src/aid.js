@@ -816,7 +816,7 @@
 
   /**
    * rest
-   * // refer to _.rest function of underscore.js - https://github.com/jashkenas/underscore/blob/master/underscore.js
+   * refer to _.rest function of underscore.js - https://github.com/jashkenas/underscore/blob/master/underscore.js
    *
    * @static
    * @method rest
@@ -1375,6 +1375,52 @@
    */
   browser.isSafari = function isSafari(userAgent) {
     return !/Chrome/i.test(userAgent) && /Safari/i.test(userAgent);
+  };
+
+  /**
+   * is Mobile Chrome browser
+   * https://developer.chrome.com/multidevice/user-agent
+   *
+   * @static
+   * @method isChromeMobile
+   * @param {String} userAgent
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.browser.isChromeMobile(window.navigator.userAgent) );
+   */
+  browser.isChromeMobile = function isChromeMobile(userAgent) {
+    if (isIOS(userAgent)) {
+      // iOS
+      // Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1
+      return isSafari(userAgent) && /CriOS/i.test(userAgent);
+    } else if (isAndroid(userAgent)) {
+      // Android
+      return isChrome(userAgent);
+    }
+
+    return false;
+  };
+
+  /**
+   * is Mobile Safari browser
+   * https://developer.chrome.com/multidevice/user-agent
+   * @static
+   * @method isSafariMobile
+   * @param {String} userAgent
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.browser.isSafariMobile(window.navigator.userAgent) );
+   */
+  browser.isSafariMobile = function isSafariMobile(userAgent) {
+    if (isIOS(userAgent)) {
+      // iOS
+      // Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/603.1.23 (KHTML, like Gecko) Version/10.0 Mobile/14E5239e Safari/602.1
+      return isSafari(userAgent) && !/CriOS/i.test(userAgent);
+    } else if (isAndroid(userAgent)) {
+      // Android doesn't have safari
+    }
+
+    return false;
   };
 
   /**

@@ -334,6 +334,14 @@ describe('aid.js', function() {
       });
     });
 
+    describe('.isChromeMobile()', function() {
+      // TODO - isChromeMobile
+    });
+
+    describe('.isSafariMobile()', function() {
+      // TODO - isSafariMobile
+    });
+
     describe('.getIEVersion()', function() {
       // TODO - getIEVersion
     });
