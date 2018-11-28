@@ -1378,7 +1378,33 @@
   };
 
   /**
-   * is Mobile Chrome browser
+   * is phone Chrome browser
+   *
+   * @static
+   * @method isChromePhone
+   * @param {String} userAgent
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  browser.isChromePhone = function isChromePhone(userAgent) {
+    // TODO:
+  };
+
+  /**
+   * is tablet Chrome browser
+   *
+   * @static
+   * @method isChromeTablet
+   * @param {String} userAgent
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  browser.isChromeTablet = function isChromeTablet(userAgent) {
+    // TODO:
+  };
+
+  /**
+   * is mobile Chrome browser
    * https://developer.chrome.com/multidevice/user-agent
    *
    * @static
@@ -1389,6 +1415,7 @@
    * console.log( aid.browser.isChromeMobile(window.navigator.userAgent) );
    */
   browser.isChromeMobile = function isChromeMobile(userAgent) {
+    // TODO: require recheck
     if (isIOS(userAgent)) {
       // iOS
       // Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1
@@ -1402,6 +1429,32 @@
   };
 
   /**
+   * is phone Safari browser
+   *
+   * @static
+   * @method isSafariPhone
+   * @param {String} userAgent
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  browser.isSafariPhone = function isSafariPhone(userAgent) {
+    // TODO:
+  };
+
+  /**
+   * is tablet Safari browser
+   *
+   * @static
+   * @method isSafariTablet
+   * @param {String} userAgent
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  browser.isSafariTablet = function isSafariTablet(userAgent) {
+    // TODO:
+  };
+
+  /**
    * is Mobile Safari browser
    * https://developer.chrome.com/multidevice/user-agent
    * @static
@@ -1412,6 +1465,7 @@
    * console.log( aid.browser.isSafariMobile(window.navigator.userAgent) );
    */
   browser.isSafariMobile = function isSafariMobile(userAgent) {
+    // TODO: require recheck
     if (isIOS(userAgent)) {
       // iOS
       // Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/603.1.23 (KHTML, like Gecko) Version/10.0 Mobile/14E5239e Safari/602.1

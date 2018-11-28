@@ -34,6 +34,14 @@ describe('aid.js', function() {
       IE11_COMPAT_UA =
         'mozilla/4.0 (compatible; msie 8.0; windows nt 6.1; win64; x64; trident/7.0; .net clr 2.0.50727; slcc2; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; .net4.0c; .net4.0e; infopath.3)';
 
+    // TODO:
+    var IOS_CHROME_PHONE_UA = '',
+      IOS_CHROME_TABLET_UA = '',
+      IOS_SAFARI_PHONE_UA = '',
+      IOS_SAFARI_TABLET_UA = '',
+      ANDROID_CHROME_PHONE_UA = '',
+      ANDROID_CHROME_TABLET_UA = '';
+
     describe('.isIE()', function() {
       it('at chrome browser, return false.', function() {
         expect(browser.isIE(CHROME_UA)).toEqual(false);
@@ -334,8 +342,24 @@ describe('aid.js', function() {
       });
     });
 
+    describe('.isChromePhone()', function() {
+      // TODO - isChromePhone
+    });
+
+    describe('.isChromeTablet()', function() {
+      // TODO - isChromeTablet
+    });
+
     describe('.isChromeMobile()', function() {
       // TODO - isChromeMobile
+    });
+
+    describe('.isSafariPhone()', function() {
+      // TODO - isSafariPhone
+    });
+
+    describe('.isSafariTablet()', function() {
+      // TODO - isSafariTablet
     });
 
     describe('.isSafariMobile()', function() {
