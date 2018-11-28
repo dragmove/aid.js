@@ -3779,6 +3779,54 @@
   };
 
   /**
+   * get index of object has property in array.
+   * this object is first matched element in array by value or regex.
+   *
+   * @static
+   * @method getIndexOfObjectHasProperty
+   * @param {Array} arrayHasObjects
+   * @param {String} propertyKey
+   * @param {Object} findPropertyValueOrRegex
+   * @returns {Object} return object
+   * @example
+   * TODO:
+   */
+  array.getIndexOfObjectHasProperty = function getIndexOfObjectHasProperty(
+    arrayHasObjects,
+    propertyKey,
+    findPropertyValueOrRegex
+  ) {
+    if (!aid.isArray(arrayHasObjects) || arrayHasObjects.length <= 0)
+      return null;
+
+    if (!aid.isString(propertyKey)) return null;
+
+    var obj,
+      result = null,
+      i = 0;
+    for (var max = arrayHasObjects.length; i < max; ++i) {
+      obj = arrayHasObjects[i];
+      if (!obj.hasOwnProperty(propertyKey)) continue;
+
+      if (aid.isRegExp(findPropertyValueOrRegex)) {
+        if (findPropertyValueOrRegex.test(obj[propertyKey])) {
+          result = obj;
+          break;
+        }
+      } else {
+        if (obj[propertyKey] === findPropertyValueOrRegex) {
+          result = obj;
+          break;
+        }
+      }
+    }
+
+    if (result) return i;
+
+    return -1;
+  };
+
+  /**
    * apply overlapped condition sort in array.
    *
    * @static
