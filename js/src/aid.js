@@ -198,7 +198,7 @@
    * @static
    * @method isError
    * @param {Object} obj
-   * @param {Constructor} errorType
+   * @param {Constructor} errorType (optional)
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.isError(new Error('msg')) ); // true
@@ -211,16 +211,23 @@
   aid.isError = function isError(obj, errorType) {
     if (!aid.isDefined(obj)) return false;
 
-    return !aid.isDefined(errorType)
-      ? obj.constructor === Error ||
-          obj.constructor === EvalError ||
-          obj.constructor === InternalError ||
-          obj.constructor === RangeError ||
-          obj.constructor === ReferenceError ||
-          obj.constructor === SyntaxError ||
-          obj.constructor === TypeError ||
-          obj.constructor === URIError
-      : obj.constructor === errorType;
+    if (!aid.isDefined(errorType)) {
+      // Non-standard - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError
+      if (window.InternalError && obj.constructor === window.InternalError)
+        return true;
+
+      return (
+        obj.constructor === Error ||
+        obj.constructor === EvalError ||
+        obj.constructor === RangeError ||
+        obj.constructor === ReferenceError ||
+        obj.constructor === SyntaxError ||
+        obj.constructor === TypeError ||
+        obj.constructor === URIError
+      );
+    }
+
+    return obj.constructor === errorType;
   };
 
   /**
@@ -1617,16 +1624,14 @@
    *
    * @static
    * @method getIECompatibility
-   * @param {String} optionUserAgent
+   * @param {String} userAgent (optional)
    * @returns {Object} return { isIE: Boolean, isCompatibilityMode: Boolean, compatibilityVersion: Number }
    * @example
    * console.log( aid.browser.getIECompatibility() );
    * console.log( aid.browser.getIECompatibility('mozilla/5.0 (windows nt 6.1; wow64) applewebkit/537.36 (khtml, like gecko) hrome/39.0.2171.65 safari/537.36') );
    */
-  browser.getIECompatibility = function getIECompatibility(optionUserAgent) {
-    var ua = optionUserAgent
-        ? optionUserAgent
-        : global.navigator.userAgent.toLowerCase(),
+  browser.getIECompatibility = function getIECompatibility(userAgent) {
+    var ua = userAgent ? userAgent : global.navigator.userAgent.toLowerCase(),
       regex_msie = /msie/i,
       regex_msie7 = /msie 7/i,
       regex_msie8 = /msie 8/i,
