@@ -192,6 +192,38 @@
   };
 
   /**
+   * check object type is Error (can check Error, EvalError, InternalError, RangeError, ReferenceError, SyntaxError, TypeError, URIError)
+   * // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
+   *
+   * @static
+   * @method isError
+   * @param {Object} obj
+   * @param {Constructor} errorType
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.isError(new Error('msg')) ); // true
+   * console.log( aid.isError(new TypeError('msg')) ); // true
+   * console.log( aid.isError(new RangeError('msg')) ); // true
+   * console.log( aid.isError(new TypeError('msg'), TypeError) ); // false
+   * console.log( aid.isError(new TypeError('msg'), Error) ); // false
+   * console.log( aid.isError(new TypeError('msg'), RangeError) ); // false
+   */
+  aid.isError = function isError(obj, errorType) {
+    if (!aid.isDefined(obj)) return false;
+
+    return !aid.isDefined(errorType)
+      ? obj.constructor === Error ||
+          obj.constructor === EvalError ||
+          obj.constructor === InternalError ||
+          obj.constructor === RangeError ||
+          obj.constructor === ReferenceError ||
+          obj.constructor === SyntaxError ||
+          obj.constructor === TypeError ||
+          obj.constructor === URIError
+      : obj.constructor === errorType;
+  };
+
+  /**
    * extend function
    *
    * @static
