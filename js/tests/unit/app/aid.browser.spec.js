@@ -6,8 +6,7 @@ describe('aid.js', function() {
 
     var EDGE_UA =
         'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136',
-      FIREFOX_UA =
-        'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0',
+      FIREFOX_UA = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0',
       OPERA_UA =
         'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36 OPR/43.0.2442.1144',
       CHROME_UA =
@@ -35,11 +34,14 @@ describe('aid.js', function() {
         'mozilla/4.0 (compatible; msie 8.0; windows nt 6.1; win64; x64; trident/7.0; .net clr 2.0.50727; slcc2; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; .net4.0c; .net4.0e; infopath.3)';
 
     // TODO:
-    var IOS_CHROME_PHONE_UA = '',
+    var IOS_CHROME_PHONE_UA =
+        'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1',
       IOS_CHROME_TABLET_UA = '',
-      IOS_SAFARI_PHONE_UA = '',
+      IOS_SAFARI_PHONE_UA =
+        'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/603.1.23 (KHTML, like Gecko) Version/10.0 Mobile/14E5239e Safari/602.1',
       IOS_SAFARI_TABLET_UA = '',
-      ANDROID_CHROME_PHONE_UA = '',
+      ANDROID_CHROME_PHONE_UA =
+        'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Mobile Safari/537.36',
       ANDROID_CHROME_TABLET_UA = '';
 
     describe('.isIE()', function() {
@@ -422,53 +424,35 @@ describe('aid.js', function() {
 
     describe('.getIECompatibility().isCompatibilityMode', function() {
       it('at ie7 browser, return false.', function() {
-        expect(browser.getIECompatibility(IE7_UA).isCompatibilityMode).toEqual(
-          false
-        );
+        expect(browser.getIECompatibility(IE7_UA).isCompatibilityMode).toEqual(false);
       });
 
       it('at ie8 browser, return false.', function() {
-        expect(browser.getIECompatibility(IE8_UA).isCompatibilityMode).toEqual(
-          false
-        );
+        expect(browser.getIECompatibility(IE8_UA).isCompatibilityMode).toEqual(false);
       });
       it('at ie8 browser compat view, return true.', function() {
-        expect(
-          browser.getIECompatibility(IE8_COMPAT_UA).isCompatibilityMode
-        ).toEqual(true);
+        expect(browser.getIECompatibility(IE8_COMPAT_UA).isCompatibilityMode).toEqual(true);
       });
 
       it('at ie9 browser, return false.', function() {
-        expect(browser.getIECompatibility(IE9_UA).isCompatibilityMode).toEqual(
-          false
-        );
+        expect(browser.getIECompatibility(IE9_UA).isCompatibilityMode).toEqual(false);
       });
       it('at ie9 browser compat view, return true.', function() {
-        expect(
-          browser.getIECompatibility(IE9_COMPAT_UA).isCompatibilityMode
-        ).toEqual(true);
+        expect(browser.getIECompatibility(IE9_COMPAT_UA).isCompatibilityMode).toEqual(true);
       });
 
       it('at ie10 browser, return false.', function() {
-        expect(browser.getIECompatibility(IE10_UA).isCompatibilityMode).toEqual(
-          false
-        );
+        expect(browser.getIECompatibility(IE10_UA).isCompatibilityMode).toEqual(false);
       });
       it('at ie10 browser compat view, return true.', function() {
-        expect(
-          browser.getIECompatibility(IE10_COMPAT_UA).isCompatibilityMode
-        ).toEqual(true);
+        expect(browser.getIECompatibility(IE10_COMPAT_UA).isCompatibilityMode).toEqual(true);
       });
 
       it('at ie11 browser, return false.', function() {
-        expect(browser.getIECompatibility(IE11_UA).isCompatibilityMode).toEqual(
-          false
-        );
+        expect(browser.getIECompatibility(IE11_UA).isCompatibilityMode).toEqual(false);
       });
       it('at ie11 browser compat view 8 mode, return true.', function() {
-        expect(
-          browser.getIECompatibility(IE11_COMPAT_UA).isCompatibilityMode
-        ).toEqual(true);
+        expect(browser.getIECompatibility(IE11_COMPAT_UA).isCompatibilityMode).toEqual(true);
       });
     });
 
