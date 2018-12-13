@@ -231,6 +231,26 @@
   };
 
   /**
+   * check object type is HTML element
+   * // https://developer.mozilla.org/en-US/docs/Web/API/Element
+   *
+   * @static
+   * @method isElement
+   * @param {Element} ele
+   * @returns {Boolean} return boolean
+   * @example
+   * TODO:
+   */
+  aid.isElement = function isElement(ele) {
+    return (
+      aid.isDefined(ele) &&
+      typeof ele === 'object' &&
+      ele.nodeType === 1 &&
+      ele instanceof Node
+    );
+  };
+
+  /**
    * extend function
    *
    * @static

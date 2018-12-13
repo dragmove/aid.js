@@ -429,6 +429,10 @@ describe('aid.js', function() {
       // TODO:
     });
 
+    describe('.isElement()', function() {
+      // TODO:
+    });
+
     describe('.extend()', function() {
       var ERROR_MSG =
         'destination parameter type of aid.extend() must be instance of Object, and object type.';
