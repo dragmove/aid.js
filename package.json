@@ -1,12 +1,13 @@
 {
   "name": "aid.js",
-  "version": "0.1.81",
+  "version": "0.1.82",
   "description": "A Bundle of Javascript util Library to help developers. No dependency to other Libraries.",
   "keywords": [
     "aid.js",
     "aidjs",
     "aid",
     "util",
+    "utils",
     "javascript",
     "js",
     "functional",
@@ -23,7 +24,7 @@
   "author": {
     "name": "Hyun-Seok.Kim",
     "email": "dragmove@gmail.com",
-    "url": "http://dragmove.com"
+    "url": "http://dragmove.xyz"
   },
   "license": "MIT",
   "repository": {

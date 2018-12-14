@@ -232,7 +232,7 @@
   };
 
   /**
-   * check object type is HTML element
+   * check type is HTML element
    * // https://developer.mozilla.org/en-US/docs/Web/API/Element
    *
    * @static
