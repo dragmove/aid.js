@@ -425,6 +425,189 @@ describe('aid.js', function() {
       });
     });
 
+    describe('.isError()', function() {
+      it('input undefined, return false', function() {
+        expect(aid.isError(undefined)).toEqual(false);
+      });
+
+      it('input "undefined", return false', function() {
+        expect(aid.isError('undefined')).toEqual(false);
+      });
+
+      it('input null, return false', function() {
+        expect(aid.isError(null)).toEqual(false);
+      });
+
+      it('input false, return false', function() {
+        expect(aid.isError(false)).toEqual(false);
+      });
+
+      it('input true, return false', function() {
+        expect(aid.isError(true)).toEqual(false);
+      });
+
+      it('input 0, return false', function() {
+        expect(aid.isError(0)).toEqual(false);
+      });
+
+      it('input "", return false', function() {
+        expect(aid.isError('')).toEqual(false);
+      });
+
+      it('input {}, return false', function() {
+        expect(aid.isError({})).toEqual(false);
+      });
+
+      it('input [], return false', function() {
+        expect(aid.isError([])).toEqual(false);
+      });
+
+      it('input function(){}, return false', function() {
+        expect(aid.isError(function() {})).toEqual(false);
+      });
+
+      it('input RegExp object, return false', function() {
+        expect(aid.isError(new RegExp('^aid'))).toEqual(false);
+      });
+
+      it('input RegExp literal, return false', function() {
+        expect(aid.isError(/^aid/)).toEqual(false);
+      });
+
+      it('input Error, return true', function() {
+        expect(aid.isError(new Error('error'))).toEqual(true);
+        expect(aid.isError(new EvalError('error'))).toEqual(true);
+        expect(aid.isError(new RangeError('error'))).toEqual(true);
+        expect(aid.isError(new ReferenceError('error'))).toEqual(true);
+        expect(aid.isError(new SyntaxError('error'))).toEqual(true);
+        expect(aid.isError(new TypeError('error'))).toEqual(true);
+        expect(aid.isError(new URIError('error'))).toEqual(true);
+      });
+
+      it('input Error and Error type, return true', function() {
+        expect(aid.isError(new Error('error'), Error)).toEqual(true);
+        expect(aid.isError(new Error('error'), EvalError)).toEqual(false);
+        expect(aid.isError(new Error('error'), RangeError)).toEqual(false);
+        expect(aid.isError(new Error('error'), ReferenceError)).toEqual(false);
+        expect(aid.isError(new Error('error'), SyntaxError)).toEqual(false);
+        expect(aid.isError(new Error('error'), TypeError)).toEqual(false);
+        expect(aid.isError(new Error('error'), URIError)).toEqual(false);
+
+        expect(aid.isError(new EvalError('error'), Error)).toEqual(false);
+        expect(aid.isError(new EvalError('error'), EvalError)).toEqual(true);
+        expect(aid.isError(new EvalError('error'), RangeError)).toEqual(false);
+        expect(aid.isError(new EvalError('error'), ReferenceError)).toEqual(false);
+        expect(aid.isError(new EvalError('error'), SyntaxError)).toEqual(false);
+        expect(aid.isError(new EvalError('error'), TypeError)).toEqual(false);
+        expect(aid.isError(new EvalError('error'), URIError)).toEqual(false);
+
+        expect(aid.isError(new RangeError('error'), Error)).toEqual(false);
+        expect(aid.isError(new RangeError('error'), EvalError)).toEqual(false);
+        expect(aid.isError(new RangeError('error'), RangeError)).toEqual(true);
+        expect(aid.isError(new RangeError('error'), ReferenceError)).toEqual(false);
+        expect(aid.isError(new RangeError('error'), SyntaxError)).toEqual(false);
+        expect(aid.isError(new RangeError('error'), TypeError)).toEqual(false);
+        expect(aid.isError(new RangeError('error'), URIError)).toEqual(false);
+
+        expect(aid.isError(new ReferenceError('error'), Error)).toEqual(false);
+        expect(aid.isError(new ReferenceError('error'), EvalError)).toEqual(false);
+        expect(aid.isError(new ReferenceError('error'), RangeError)).toEqual(false);
+        expect(aid.isError(new ReferenceError('error'), ReferenceError)).toEqual(true);
+        expect(aid.isError(new ReferenceError('error'), SyntaxError)).toEqual(false);
+        expect(aid.isError(new ReferenceError('error'), TypeError)).toEqual(false);
+        expect(aid.isError(new ReferenceError('error'), URIError)).toEqual(false);
+
+        expect(aid.isError(new SyntaxError('error'), Error)).toEqual(false);
+        expect(aid.isError(new SyntaxError('error'), EvalError)).toEqual(false);
+        expect(aid.isError(new SyntaxError('error'), RangeError)).toEqual(false);
+        expect(aid.isError(new SyntaxError('error'), ReferenceError)).toEqual(false);
+        expect(aid.isError(new SyntaxError('error'), SyntaxError)).toEqual(true);
+        expect(aid.isError(new SyntaxError('error'), TypeError)).toEqual(false);
+        expect(aid.isError(new SyntaxError('error'), URIError)).toEqual(false);
+
+        expect(aid.isError(new TypeError('error'), Error)).toEqual(false);
+        expect(aid.isError(new TypeError('error'), EvalError)).toEqual(false);
+        expect(aid.isError(new TypeError('error'), RangeError)).toEqual(false);
+        expect(aid.isError(new TypeError('error'), ReferenceError)).toEqual(false);
+        expect(aid.isError(new TypeError('error'), SyntaxError)).toEqual(false);
+        expect(aid.isError(new TypeError('error'), TypeError)).toEqual(true);
+        expect(aid.isError(new TypeError('error'), URIError)).toEqual(false);
+
+        expect(aid.isError(new URIError('error'), Error)).toEqual(false);
+        expect(aid.isError(new URIError('error'), EvalError)).toEqual(false);
+        expect(aid.isError(new URIError('error'), RangeError)).toEqual(false);
+        expect(aid.isError(new URIError('error'), ReferenceError)).toEqual(false);
+        expect(aid.isError(new URIError('error'), SyntaxError)).toEqual(false);
+        expect(aid.isError(new URIError('error'), TypeError)).toEqual(false);
+        expect(aid.isError(new URIError('error'), URIError)).toEqual(true);
+      });
+    });
+
+    describe('.isElement()', function() {
+      it('input undefined, return false', function() {
+        expect(aid.isElement(undefined)).toEqual(false);
+      });
+
+      it('input "undefined", return false', function() {
+        expect(aid.isElement('undefined')).toEqual(false);
+      });
+
+      it('input null, return false', function() {
+        expect(aid.isElement(null)).toEqual(false);
+      });
+
+      it('input false, return false', function() {
+        expect(aid.isElement(false)).toEqual(false);
+      });
+
+      it('input true, return false', function() {
+        expect(aid.isElement(true)).toEqual(false);
+      });
+
+      it('input 0, return false', function() {
+        expect(aid.isElement(0)).toEqual(false);
+      });
+
+      it('input "", return false', function() {
+        expect(aid.isElement('')).toEqual(false);
+      });
+
+      it('input {}, return false', function() {
+        expect(aid.isElement({})).toEqual(false);
+      });
+
+      it('input [], return false', function() {
+        expect(aid.isElement([])).toEqual(false);
+      });
+
+      it('input function(){}, return false', function() {
+        expect(aid.isElement(function() {})).toEqual(false);
+      });
+
+      it('input RegExp object, return false', function() {
+        expect(aid.isElement(new RegExp('^aid'))).toEqual(false);
+      });
+
+      it('input RegExp literal, return false', function() {
+        expect(aid.isElement(/^aid/)).toEqual(false);
+      });
+
+      it('input Error, return true', function() {
+        expect(aid.isElement(new Error('error'))).toEqual(false);
+        expect(aid.isElement(new EvalError('error'))).toEqual(false);
+        expect(aid.isElement(new RangeError('error'))).toEqual(false);
+        expect(aid.isElement(new ReferenceError('error'))).toEqual(false);
+        expect(aid.isElement(new SyntaxError('error'))).toEqual(false);
+        expect(aid.isElement(new TypeError('error'))).toEqual(false);
+        expect(aid.isElement(new URIError('error'))).toEqual(false);
+      });
+
+      it('input HTML Element, return true', function() {
+        expect(aid.isElement(document.createElement('div'))).toEqual(true);
+        expect(aid.isElement(document.createElement('p'))).toEqual(true);
+      });
+    });
+
     describe('.extend()', function() {
       var ERROR_MSG =
         'destination parameter type of aid.extend() must be instance of Object, and object type.';
