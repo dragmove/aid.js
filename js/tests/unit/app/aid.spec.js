@@ -426,16 +426,190 @@ describe('aid.js', function() {
     });
 
     describe('.isError()', function() {
-      // TODO:
+      it('input undefined, return false', function() {
+        expect(aid.isError(undefined)).toEqual(false);
+      });
+
+      it('input "undefined", return false', function() {
+        expect(aid.isError('undefined')).toEqual(false);
+      });
+
+      it('input null, return false', function() {
+        expect(aid.isError(null)).toEqual(false);
+      });
+
+      it('input false, return false', function() {
+        expect(aid.isError(false)).toEqual(false);
+      });
+
+      it('input true, return false', function() {
+        expect(aid.isError(true)).toEqual(false);
+      });
+
+      it('input 0, return false', function() {
+        expect(aid.isError(0)).toEqual(false);
+      });
+
+      it('input "", return false', function() {
+        expect(aid.isError('')).toEqual(false);
+      });
+
+      it('input {}, return false', function() {
+        expect(aid.isError({})).toEqual(false);
+      });
+
+      it('input [], return false', function() {
+        expect(aid.isError([])).toEqual(false);
+      });
+
+      it('input function(){}, return false', function() {
+        expect(aid.isError(function() {})).toEqual(false);
+      });
+
+      it('input RegExp object, return false', function() {
+        expect(aid.isError(new RegExp('^aid'))).toEqual(false);
+      });
+
+      it('input RegExp literal, return false', function() {
+        expect(aid.isError(/^aid/)).toEqual(false);
+      });
+
+      it('input Error, return true', function() {
+        expect(aid.isError(new Error('error'))).toEqual(true);
+        expect(aid.isError(new EvalError('error'))).toEqual(true);
+        expect(aid.isError(new RangeError('error'))).toEqual(true);
+        expect(aid.isError(new ReferenceError('error'))).toEqual(true);
+        expect(aid.isError(new SyntaxError('error'))).toEqual(true);
+        expect(aid.isError(new TypeError('error'))).toEqual(true);
+        expect(aid.isError(new URIError('error'))).toEqual(true);
+      });
+
+      it('input Error and Error type, return true', function() {
+        expect(aid.isError(new Error('error'), Error)).toEqual(true);
+        expect(aid.isError(new Error('error'), EvalError)).toEqual(false);
+        expect(aid.isError(new Error('error'), RangeError)).toEqual(false);
+        expect(aid.isError(new Error('error'), ReferenceError)).toEqual(false);
+        expect(aid.isError(new Error('error'), SyntaxError)).toEqual(false);
+        expect(aid.isError(new Error('error'), TypeError)).toEqual(false);
+        expect(aid.isError(new Error('error'), URIError)).toEqual(false);
+
+        expect(aid.isError(new EvalError('error'), Error)).toEqual(false);
+        expect(aid.isError(new EvalError('error'), EvalError)).toEqual(true);
+        expect(aid.isError(new EvalError('error'), RangeError)).toEqual(false);
+        expect(aid.isError(new EvalError('error'), ReferenceError)).toEqual(false);
+        expect(aid.isError(new EvalError('error'), SyntaxError)).toEqual(false);
+        expect(aid.isError(new EvalError('error'), TypeError)).toEqual(false);
+        expect(aid.isError(new EvalError('error'), URIError)).toEqual(false);
+
+        expect(aid.isError(new RangeError('error'), Error)).toEqual(false);
+        expect(aid.isError(new RangeError('error'), EvalError)).toEqual(false);
+        expect(aid.isError(new RangeError('error'), RangeError)).toEqual(true);
+        expect(aid.isError(new RangeError('error'), ReferenceError)).toEqual(false);
+        expect(aid.isError(new RangeError('error'), SyntaxError)).toEqual(false);
+        expect(aid.isError(new RangeError('error'), TypeError)).toEqual(false);
+        expect(aid.isError(new RangeError('error'), URIError)).toEqual(false);
+
+        expect(aid.isError(new ReferenceError('error'), Error)).toEqual(false);
+        expect(aid.isError(new ReferenceError('error'), EvalError)).toEqual(false);
+        expect(aid.isError(new ReferenceError('error'), RangeError)).toEqual(false);
+        expect(aid.isError(new ReferenceError('error'), ReferenceError)).toEqual(true);
+        expect(aid.isError(new ReferenceError('error'), SyntaxError)).toEqual(false);
+        expect(aid.isError(new ReferenceError('error'), TypeError)).toEqual(false);
+        expect(aid.isError(new ReferenceError('error'), URIError)).toEqual(false);
+
+        expect(aid.isError(new SyntaxError('error'), Error)).toEqual(false);
+        expect(aid.isError(new SyntaxError('error'), EvalError)).toEqual(false);
+        expect(aid.isError(new SyntaxError('error'), RangeError)).toEqual(false);
+        expect(aid.isError(new SyntaxError('error'), ReferenceError)).toEqual(false);
+        expect(aid.isError(new SyntaxError('error'), SyntaxError)).toEqual(true);
+        expect(aid.isError(new SyntaxError('error'), TypeError)).toEqual(false);
+        expect(aid.isError(new SyntaxError('error'), URIError)).toEqual(false);
+
+        expect(aid.isError(new TypeError('error'), Error)).toEqual(false);
+        expect(aid.isError(new TypeError('error'), EvalError)).toEqual(false);
+        expect(aid.isError(new TypeError('error'), RangeError)).toEqual(false);
+        expect(aid.isError(new TypeError('error'), ReferenceError)).toEqual(false);
+        expect(aid.isError(new TypeError('error'), SyntaxError)).toEqual(false);
+        expect(aid.isError(new TypeError('error'), TypeError)).toEqual(true);
+        expect(aid.isError(new TypeError('error'), URIError)).toEqual(false);
+
+        expect(aid.isError(new URIError('error'), Error)).toEqual(false);
+        expect(aid.isError(new URIError('error'), EvalError)).toEqual(false);
+        expect(aid.isError(new URIError('error'), RangeError)).toEqual(false);
+        expect(aid.isError(new URIError('error'), ReferenceError)).toEqual(false);
+        expect(aid.isError(new URIError('error'), SyntaxError)).toEqual(false);
+        expect(aid.isError(new URIError('error'), TypeError)).toEqual(false);
+        expect(aid.isError(new URIError('error'), URIError)).toEqual(true);
+      });
     });
 
     describe('.isElement()', function() {
-      // TODO:
+      it('input undefined, return false', function() {
+        expect(aid.isElement(undefined)).toEqual(false);
+      });
+
+      it('input "undefined", return false', function() {
+        expect(aid.isElement('undefined')).toEqual(false);
+      });
+
+      it('input null, return false', function() {
+        expect(aid.isElement(null)).toEqual(false);
+      });
+
+      it('input false, return false', function() {
+        expect(aid.isElement(false)).toEqual(false);
+      });
+
+      it('input true, return false', function() {
+        expect(aid.isElement(true)).toEqual(false);
+      });
+
+      it('input 0, return false', function() {
+        expect(aid.isElement(0)).toEqual(false);
+      });
+
+      it('input "", return false', function() {
+        expect(aid.isElement('')).toEqual(false);
+      });
+
+      it('input {}, return false', function() {
+        expect(aid.isElement({})).toEqual(false);
+      });
+
+      it('input [], return false', function() {
+        expect(aid.isElement([])).toEqual(false);
+      });
+
+      it('input function(){}, return false', function() {
+        expect(aid.isElement(function() {})).toEqual(false);
+      });
+
+      it('input RegExp object, return false', function() {
+        expect(aid.isElement(new RegExp('^aid'))).toEqual(false);
+      });
+
+      it('input RegExp literal, return false', function() {
+        expect(aid.isElement(/^aid/)).toEqual(false);
+      });
+
+      it('input Error, return true', function() {
+        expect(aid.isElement(new Error('error'))).toEqual(false);
+        expect(aid.isElement(new EvalError('error'))).toEqual(false);
+        expect(aid.isElement(new RangeError('error'))).toEqual(false);
+        expect(aid.isElement(new ReferenceError('error'))).toEqual(false);
+        expect(aid.isElement(new SyntaxError('error'))).toEqual(false);
+        expect(aid.isElement(new TypeError('error'))).toEqual(false);
+        expect(aid.isElement(new URIError('error'))).toEqual(false);
+      });
+
+      it('input HTML Element, return true', function() {
+        expect(aid.isElement(document.createElement('div'))).toEqual(true);
+        expect(aid.isElement(document.createElement('p'))).toEqual(true);
+      });
     });
 
     describe('.extend()', function() {
-      var ERROR_MSG =
-        'destination parameter type of aid.extend() must be instance of Object, and object type.';
+      var ERROR_MSG = 'destination parameter type of aid.extend() must be instance of Object, and object type.';
 
       it('whether destination parameter type is not object or instance of object, throw Error', function() {
         expect(function() {
@@ -468,8 +642,7 @@ describe('aid.js', function() {
       });
 
       it('if source parameter type is not object type, throw Error', function() {
-        var ERROR_MSG =
-          'source parameter type of aid.extend() must be object type.';
+        var ERROR_MSG = 'source parameter type of aid.extend() must be object type.';
 
         expect(function() {
           aid.extend({}, undefined);
@@ -585,8 +758,7 @@ describe('aid.js', function() {
 
     describe('.namespace()', function() {
       it('if namespace parameter type is not string, throw Error', function() {
-        var ERROR_MSG =
-          'namespace parameter type of aid.namespace() must be String.';
+        var ERROR_MSG = 'namespace parameter type of aid.namespace() must be String.';
 
         expect(function() {
           aid.namespace(undefined);
@@ -618,8 +790,7 @@ describe('aid.js', function() {
       });
 
       it('if parent parameter type is not object or null or undefined, throw Error', function() {
-        var ERROR_MSG =
-          'parent parameter type of aid.namespace() must be Object or null or undefined.';
+        var ERROR_MSG = 'parent parameter type of aid.namespace() must be Object or null or undefined.';
 
         expect(function() {
           var obj = {};
@@ -691,8 +862,7 @@ describe('aid.js', function() {
       });
 
       it('if borrower parameter is not Object type, throw TypeError', function() {
-        var ERROR_MSG =
-          'borrower, donor parameter type of aid.borrow() must be Object.';
+        var ERROR_MSG = 'borrower, donor parameter type of aid.borrow() must be Object.';
 
         expect(function() {
           aid.borrow(undefined, donor, 'say');
@@ -728,8 +898,7 @@ describe('aid.js', function() {
       });
 
       it('if donor parameter is not Object type, throw TypeError', function() {
-        var ERROR_MSG =
-          'borrower, donor parameter type of aid.borrow() must be Object.';
+        var ERROR_MSG = 'borrower, donor parameter type of aid.borrow() must be Object.';
 
         expect(function() {
           aid.borrow(borrower, undefined, 'say');
@@ -765,8 +934,7 @@ describe('aid.js', function() {
       });
 
       it('if functionName parameter is not String type, throw TypeError', function() {
-        var ERROR_MSG =
-          'functionName parameter type of aid.borrow() must be String.';
+        var ERROR_MSG = 'functionName parameter type of aid.borrow() must be String.';
 
         expect(function() {
           aid.borrow(borrower, donor, undefined);
@@ -802,8 +970,7 @@ describe('aid.js', function() {
       });
 
       it('if donor has not function with functionName, throw Error', function() {
-        var ERROR_MSG =
-          'donor object parameter of aid.borrow() has not function with functionName.';
+        var ERROR_MSG = 'donor object parameter of aid.borrow() has not function with functionName.';
 
         expect(function() {
           aid.borrow(borrower, donor, 'hello');
@@ -811,8 +978,7 @@ describe('aid.js', function() {
       });
 
       it('if borrower already has function with functionName, throw Error', function() {
-        var ERROR_MSG =
-          'borrower object parameter of aid.borrow() already has function with functionName.';
+        var ERROR_MSG = 'borrower object parameter of aid.borrow() already has function with functionName.';
 
         borrower = {
           say: function() {
@@ -1487,8 +1653,7 @@ describe('aid.js', function() {
         it('pluck field of object (if object has field)', function() {
           var obj = {
             title: 'aid.js',
-            description:
-              'A bundle of Javascript util Library for help developers. No dependency to other Libraries.'
+            description: 'A bundle of Javascript util Library for help developers. No dependency to other Libraries.'
           };
 
           expect(getTitle(obj)).toEqual('aid.js');
@@ -1496,8 +1661,7 @@ describe('aid.js', function() {
 
         it('pluck field of object (if object has not field)', function() {
           var obj = {
-            description:
-              'A bundle of Javascript util Library for help developers. No dependency to other Libraries.'
+            description: 'A bundle of Javascript util Library for help developers. No dependency to other Libraries.'
           };
 
           expect(getTitle(obj)).toEqual(undefined);
@@ -1551,8 +1715,7 @@ describe('aid.js', function() {
 
     describe('.best()', function() {
       it('if conditionFunc parameter type is not function, throw Error', function() {
-        var ERROR_MSG =
-          'conditionFunc parameter type of aid.best() must be Function.';
+        var ERROR_MSG = 'conditionFunc parameter type of aid.best() must be Function.';
 
         expect(function() {
           aid.best(undefined, []);
@@ -1771,8 +1934,7 @@ describe('aid.js', function() {
 
     describe('.reverseArgs()', function() {
       it('if func parameter type is not function, throw Error', function() {
-        var ERROR_MSG =
-          'func parameter type of aid.reverseArgs() must be Function.';
+        var ERROR_MSG = 'func parameter type of aid.reverseArgs() must be Function.';
 
         expect(function() {
           aid.reverseArgs(undefined);
@@ -1829,43 +1991,18 @@ describe('aid.js', function() {
         expect(getReverseArgs(99, 'aid.js')).toEqual(['aid.js', 99]);
         expect(getReverseArgs('aid.js', 99)).toEqual([99, 'aid.js']);
 
-        expect(getReverseArgs(99, 'aid.js', [null])).toEqual([
-          [null],
-          'aid.js',
-          99
-        ]);
-        expect(getReverseArgs(99, [null], 'aid.js')).toEqual([
-          'aid.js',
-          [null],
-          99
-        ]);
-        expect(getReverseArgs('aid.js', 99, [null])).toEqual([
-          [null],
-          99,
-          'aid.js'
-        ]);
-        expect(getReverseArgs('aid.js', [null], 99)).toEqual([
-          99,
-          [null],
-          'aid.js'
-        ]);
-        expect(getReverseArgs([null], 'aid.js', 99)).toEqual([
-          99,
-          'aid.js',
-          [null]
-        ]);
-        expect(getReverseArgs([null], 99, 'aid.js')).toEqual([
-          'aid.js',
-          99,
-          [null]
-        ]);
+        expect(getReverseArgs(99, 'aid.js', [null])).toEqual([[null], 'aid.js', 99]);
+        expect(getReverseArgs(99, [null], 'aid.js')).toEqual(['aid.js', [null], 99]);
+        expect(getReverseArgs('aid.js', 99, [null])).toEqual([[null], 99, 'aid.js']);
+        expect(getReverseArgs('aid.js', [null], 99)).toEqual([99, [null], 'aid.js']);
+        expect(getReverseArgs([null], 'aid.js', 99)).toEqual([99, 'aid.js', [null]]);
+        expect(getReverseArgs([null], 99, 'aid.js')).toEqual(['aid.js', 99, [null]]);
       });
     });
 
     describe('.partial()', function() {
       it('if func parameter type is not function, throw Error', function() {
-        var ERROR_MSG =
-          'func parameter type of aid.partial() must be Function.';
+        var ERROR_MSG = 'func parameter type of aid.partial() must be Function.';
 
         expect(function() {
           aid.partial(undefined);
@@ -1933,8 +2070,7 @@ describe('aid.js', function() {
 
     describe('.partialRight()', function() {
       it('if func parameter type is not function, throw Error', function() {
-        var ERROR_MSG =
-          'func parameter type of aid.partialRight() must be Function.';
+        var ERROR_MSG = 'func parameter type of aid.partialRight() must be Function.';
 
         expect(function() {
           aid.partialRight(undefined);
@@ -1976,12 +2112,8 @@ describe('aid.js', function() {
       it('return function regardless of rest arguments', function() {
         expect(typeof aid.partialRight(function() {})).toEqual('function');
         expect(typeof aid.partialRight(function() {}, 1)).toEqual('function');
-        expect(typeof aid.partialRight(function() {}, 1, 2)).toEqual(
-          'function'
-        );
-        expect(typeof aid.partialRight(function() {}, 1, 2, 3)).toEqual(
-          'function'
-        );
+        expect(typeof aid.partialRight(function() {}, 1, 2)).toEqual('function');
+        expect(typeof aid.partialRight(function() {}, 1, 2, 3)).toEqual('function');
       });
 
       it('returned function concatenate previous rest arguments, and arguments when called', function() {
@@ -2004,24 +2136,12 @@ describe('aid.js', function() {
           return str + ' ' + num + ' ' + arr;
         }
 
-        expect(aid.partialRight(three)()).toEqual(
-          'undefined undefined undefined'
-        );
-        expect(aid.partialRight(three, [1, 2, 3])()).toEqual(
-          '1,2,3 undefined undefined'
-        );
-        expect(aid.partialRight(three, [1, 2, 3])('aid.js')).toEqual(
-          'aid.js 1,2,3 undefined'
-        );
-        expect(aid.partialRight(three, [1, 2, 3])('aid.js', 99)).toEqual(
-          'aid.js 99 1,2,3'
-        );
-        expect(aid.partialRight(three, 99, [1, 2, 3])()).toEqual(
-          '99 1,2,3 undefined'
-        );
-        expect(aid.partialRight(three, 99, [1, 2, 3])('aid.js')).toEqual(
-          'aid.js 99 1,2,3'
-        );
+        expect(aid.partialRight(three)()).toEqual('undefined undefined undefined');
+        expect(aid.partialRight(three, [1, 2, 3])()).toEqual('1,2,3 undefined undefined');
+        expect(aid.partialRight(three, [1, 2, 3])('aid.js')).toEqual('aid.js 1,2,3 undefined');
+        expect(aid.partialRight(three, [1, 2, 3])('aid.js', 99)).toEqual('aid.js 99 1,2,3');
+        expect(aid.partialRight(three, 99, [1, 2, 3])()).toEqual('99 1,2,3 undefined');
+        expect(aid.partialRight(three, 99, [1, 2, 3])('aid.js')).toEqual('aid.js 99 1,2,3');
       });
 
       it('can use with aid.parial', function() {
@@ -2035,9 +2155,7 @@ describe('aid.js', function() {
         expect(p()).toEqual('aid.js 1,2,3 undefined');
         expect(p(99)).toEqual('aid.js 99 1,2,3');
 
-        expect(
-          aid.partial(aid.partialRight(three, [1, 2, 3]), 'aid.js')(99)
-        ).toEqual('aid.js 99 1,2,3');
+        expect(aid.partial(aid.partialRight(three, [1, 2, 3]), 'aid.js')(99)).toEqual('aid.js 99 1,2,3');
       });
     });
 
@@ -2223,9 +2341,7 @@ describe('aid.js', function() {
             });
         }
 
-        expect(
-          aid.pipeline([1, 2, 3], double, lazyReverseAndNegative).force()
-        ).toEqual([-6, -4, -2]);
+        expect(aid.pipeline([1, 2, 3], double, lazyReverseAndNegative).force()).toEqual([-6, -4, -2]);
       });
     });
 

@@ -28,176 +28,176 @@
     monad = {}; // https://en.wikipedia.org/wiki/Monad_(functional_programming)
 
   /**
-   * get object is null/undefined or other
+   * is null/undefined or other
    *
    * @static
    * @method existy
-   * @param {Object} obj
+   * @param {*} any
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.existy(undefined) ); // false
    * console.log( aid.existy(null) ); // false
    * console.log( aid.existy('') ); // true
    */
-  aid.existy = function existy(obj) {
-    return obj != null;
+  aid.existy = function existy(any) {
+    return any != null;
   };
 
   /**
-   * check object is defined
+   * check defined
    *
    * @static
    * @method isDefined
-   * @param {Object} obj
+   * @param {*} any
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.isDefined(undefined) ); // false
    * console.log( aid.isDefined(null) ); // false
    * console.log( aid.isDefined(0) ); // true
    */
-  aid.isDefined = function isDefined(obj) {
-    if (obj === null || typeof obj === 'undefined') return false;
+  aid.isDefined = function isDefined(any) {
+    if (any === null || typeof any === 'undefined') return false;
 
     return true;
   };
 
   /**
-   * check object type is Boolean
+   * check type is Boolean
    *
    * @static
    * @method isBoolean
-   * @param {Object} obj
+   * @param {*} any
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.isBoolean(false) ); // true
    */
-  aid.isBoolean = function isBoolean(obj) {
-    if (!aid.isDefined(obj)) return false;
+  aid.isBoolean = function isBoolean(any) {
+    if (!aid.isDefined(any)) return false;
 
-    return obj.constructor === Boolean;
+    return any.constructor === Boolean;
   };
 
   /**
-   * check object type is Number
+   * check type is Number
    *
    * @static
    * @method isNumber
-   * @param {Object} obj
+   * @param {*} any
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.isNumber(-1) ); // true
    */
-  aid.isNumber = function isNumber(obj) {
-    if (!aid.isDefined(obj)) return false;
+  aid.isNumber = function isNumber(any) {
+    if (!aid.isDefined(any)) return false;
 
-    return !isNaN(obj) && obj.constructor === Number;
+    return !isNaN(any) && any.constructor === Number;
   };
 
   /**
-   * check object type is Integer Number
+   * check type is Integer Number
    *
    * @static
    * @method isInteger
-   * @param {Object} obj
+   * @param {*} any
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.isInteger(-1) ); // true
    */
-  aid.isInteger = function isInteger(obj) {
-    if (!aid.isNumber(obj)) return false;
+  aid.isInteger = function isInteger(any) {
+    if (!aid.isNumber(any)) return false;
 
     // https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger
-    return isFinite(obj) && Math.floor(obj) === obj;
+    return isFinite(any) && Math.floor(any) === any;
   };
 
   /**
-   * check object type is String
+   * check type is String
    *
    * @static
    * @method isString
-   * @param {Object} obj
+   * @param {*} any
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.isString('') ); // true
    */
-  aid.isString = function isString(obj) {
-    if (!aid.isDefined(obj)) return false;
+  aid.isString = function isString(any) {
+    if (!aid.isDefined(any)) return false;
 
-    return obj.constructor === String;
+    return any.constructor === String;
   };
 
   /**
-   * check object type is Array
+   * check type is Array
    *
    * @static
    * @method isArray
-   * @param {Object} obj
+   * @param {*} any
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.isArray([]) ); // true
    */
-  aid.isArray = function isArray(obj) {
-    if (!aid.isDefined(obj)) return false;
+  aid.isArray = function isArray(any) {
+    if (!aid.isDefined(any)) return false;
 
-    return obj.constructor === Array;
+    return any.constructor === Array;
   };
 
   /**
-   * check object type is Object
+   * check type is Object
    *
    * @static
    * @method isObject
-   * @param {Object} obj
+   * @param {*} any
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.isObject({}) ); // true
    */
-  aid.isObject = function isObject(obj) {
-    if (!aid.isDefined(obj)) return false;
+  aid.isObject = function isObject(any) {
+    if (!aid.isDefined(any)) return false;
 
-    return obj.constructor === Object;
+    return any.constructor === Object;
   };
 
   /**
-   * check object type is Function
+   * check type is Function
    *
    * @static
    * @method isFunction
-   * @param {Object} obj
+   * @param {*} any
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.isFunction(function(){}) ); // true
    */
-  aid.isFunction = function isFunction(obj) {
-    if (!aid.isDefined(obj)) return false;
+  aid.isFunction = function isFunction(any) {
+    if (!aid.isDefined(any)) return false;
 
-    return obj.constructor === Function;
+    return any.constructor === Function;
   };
 
   /**
-   * check object type is RegExp
+   * check type is RegExp
    *
    * @static
    * @method isRegExp
-   * @param {Object} obj
+   * @param {*} any
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.isRegExp(new RegExp('^aid')) ); // true
    * console.log( aid.isRegExp(/^aid/) ); // true
    */
-  aid.isRegExp = function isRegExp(obj) {
-    if (!aid.isDefined(obj)) return false;
+  aid.isRegExp = function isRegExp(any) {
+    if (!aid.isDefined(any)) return false;
 
-    return obj.constructor === RegExp;
+    return any.constructor === RegExp;
   };
 
   /**
-   * check object type is Error (can check Error, EvalError, InternalError, RangeError, ReferenceError, SyntaxError, TypeError, URIError)
+   * check type is Error (can check Error, EvalError, InternalError, RangeError, ReferenceError, SyntaxError, TypeError, URIError)
    * // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
    *
    * @static
    * @method isError
-   * @param {Object} obj
+   * @param {*} any
    * @param {Constructor} errorType (optional)
    * @returns {Boolean} return boolean
    * @example
@@ -208,25 +208,27 @@
    * console.log( aid.isError(new TypeError('msg'), Error) ); // false
    * console.log( aid.isError(new TypeError('msg'), RangeError) ); // false
    */
-  aid.isError = function isError(obj, errorType) {
-    if (!aid.isDefined(obj)) return false;
+  aid.isError = function isError(any, errorType) {
+    if (!aid.isDefined(any)) return false;
+
+    var con = any.constructor;
 
     if (!aid.isDefined(errorType)) {
       // Non-standard - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError
-      if (window.InternalError && obj.constructor === window.InternalError) return true;
+      if (window.InternalError && con === window.InternalError) return true;
 
       return (
-        obj.constructor === Error ||
-        obj.constructor === EvalError ||
-        obj.constructor === RangeError ||
-        obj.constructor === ReferenceError ||
-        obj.constructor === SyntaxError ||
-        obj.constructor === TypeError ||
-        obj.constructor === URIError
+        con === Error ||
+        con === EvalError ||
+        con === RangeError ||
+        con === ReferenceError ||
+        con === SyntaxError ||
+        con === TypeError ||
+        con === URIError
       );
     }
 
-    return obj.constructor === errorType;
+    return con === errorType;
   };
 
   /**
@@ -235,18 +237,13 @@
    *
    * @static
    * @method isElement
-   * @param {Element} ele
+   * @param {*} any
    * @returns {Boolean} return boolean
    * @example
-   * TODO:
+   * console.log( aid.isElement(document.createElement('div')) ); // true
    */
-  aid.isElement = function isElement(ele) {
-    return (
-      aid.isDefined(ele) &&
-      typeof ele === 'object' &&
-      ele.nodeType === 1 &&
-      ele instanceof Node
-    );
+  aid.isElement = function isElement(any) {
+    return aid.isDefined(any) && typeof any === 'object' && any.nodeType === 1 && any instanceof Node;
   };
 
   /**
