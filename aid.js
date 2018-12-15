@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.82
+ * aid.js 0.1.83
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -18,6 +18,7 @@
     {};
 
   var _slice = Array.prototype.slice;
+  var _hasOwnProperty = Object.prototype.hasOwnProperty;
 
   var aid = {},
     operator = {},
@@ -3461,6 +3462,51 @@
   };
 
   /**
+   * Object.keys polyfill
+   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys#Polyfill
+   *
+   * @static
+   * @method keys
+   * @param {Object} obj
+   * @returns {Boolean} return boolean
+   * @example
+   * var obj = {name: 'foo', job: 'programmer', works: [{id: 1, year: 1999}]};
+   * console.log( aid.object.keys(obj) ); // ['name', 'job', 'works']
+   */
+  object.keys = function keys(obj) {
+    // var hasOwnProperty = Object.prototype.hasOwnProperty,
+    var hasDontEnumBug = !{ toString: null }.propertyIsEnumerable('toString'),
+      dontEnums = [
+        'toString',
+        'toLocaleString',
+        'valueOf',
+        'hasOwnProperty',
+        'isPrototypeOf',
+        'propertyIsEnumerable',
+        'constructor'
+      ],
+      dontEnumsLength = dontEnums.length;
+
+    if (aid.not(aid.isFunction)(obj) && (aid.not(aid.isObject)(obj) || obj === null)) {
+      throw new TypeError('object.keys called on non-object');
+    }
+
+    var result = [];
+
+    for (var prop in obj) {
+      if (_hasOwnProperty.call(obj, prop)) result.push(prop);
+    }
+
+    if (hasDontEnumBug) {
+      for (var i = 0; i < dontEnumsLength; i++) {
+        if (_hasOwnProperty.call(obj, dontEnums[i])) result.push(dontEnums[i]);
+      }
+    }
+
+    return result;
+  };
+
+  /**
    * check element is in viewport entirely.
    *
    * @static
@@ -3475,6 +3521,23 @@
     if (!ele) return false;
 
     var rect = ele.getBoundingClientRect();
+
+    // if parent element is invisible, left, top, right, bottom, width, height, x, y properties are zero.
+    var eqZero = aid.eq(0);
+    if (
+      aid.allOf(
+        eqZero(rect.top),
+        eqZero(rect.left),
+        eqZero(rect.bottom),
+        eqZero(rect.right),
+        eqZero(rect.width),
+        eqZero(rect.height),
+        eqZero(rect.x),
+        eqZero(rect.y)
+      )
+    )
+      return false;
+
     return (
       rect.top >= 0 &&
       rect.left >= 0 &&
