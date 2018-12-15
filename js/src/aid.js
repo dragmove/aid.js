@@ -11,6 +11,7 @@
     {};
 
   var _slice = Array.prototype.slice;
+  var _hasOwnProperty = Object.prototype.hasOwnProperty;
 
   var aid = {},
     operator = {},
@@ -3451,6 +3452,51 @@
     }
 
     return true;
+  };
+
+  /**
+   * Object.keys polyfill
+   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys#Polyfill
+   *
+   * @static
+   * @method keys
+   * @param {Object} obj
+   * @returns {Boolean} return boolean
+   * @example
+   * var obj = {name: 'foo', job: 'programmer', works: [{id: 1, year: 1999}]};
+   * console.log( aid.object.keys(obj) ); // ['name', 'job', 'works']
+   */
+  object.keys = function keys(obj) {
+    // var hasOwnProperty = Object.prototype.hasOwnProperty,
+    var hasDontEnumBug = !{ toString: null }.propertyIsEnumerable('toString'),
+      dontEnums = [
+        'toString',
+        'toLocaleString',
+        'valueOf',
+        'hasOwnProperty',
+        'isPrototypeOf',
+        'propertyIsEnumerable',
+        'constructor'
+      ],
+      dontEnumsLength = dontEnums.length;
+
+    if (aid.not(aid.isFunction)(obj) && (aid.not(aid.isObject)(obj) || obj === null)) {
+      throw new TypeError('object.keys called on non-object');
+    }
+
+    var result = [];
+
+    for (var prop in obj) {
+      if (_hasOwnProperty.call(obj, prop)) result.push(prop);
+    }
+
+    if (hasDontEnumBug) {
+      for (var i = 0; i < dontEnumsLength; i++) {
+        if (_hasOwnProperty.call(obj, dontEnums[i])) result.push(dontEnums[i]);
+      }
+    }
+
+    return result;
   };
 
   /**

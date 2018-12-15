@@ -206,6 +206,7 @@ aid.array.overlappedConditionSortByProperty
 
 ```javascript
 aid.object.isEmpty
+aid.object.keys
 ```
 
 * element utils
