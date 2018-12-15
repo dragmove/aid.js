@@ -3468,6 +3468,23 @@
     if (!ele) return false;
 
     var rect = ele.getBoundingClientRect();
+
+    // if parent element is invisible, left, top, right, bottom, width, height, x, y properties are zero.
+    var eqZero = aid.eq(0);
+    if (
+      aid.allOf(
+        eqZero(rect.top),
+        eqZero(rect.left),
+        eqZero(rect.bottom),
+        eqZero(rect.right),
+        eqZero(rect.width),
+        eqZero(rect.height),
+        eqZero(rect.x),
+        eqZero(rect.y)
+      )
+    )
+      return false;
+
     return (
       rect.top >= 0 &&
       rect.left >= 0 &&
