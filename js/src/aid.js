@@ -1243,6 +1243,22 @@
   };
 
   /**
+   * is iPhone
+   *
+   * @static
+   * @method isIPhone
+   * @param {string} userAgent
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.platform.isIPhone(window.navigator.userAgent) );
+   */
+  platform.isIPhone = function isIPhone(userAgent) {
+    if (!platform.isIOS(userAgent)) return false;
+
+    return /iPhone/.test(userAgent);
+  };
+
+  /**
    * is Android platform
    *
    * @static
@@ -1253,7 +1269,7 @@
    * console.log( aid.platform.isAndroid(window.navigator.userAgent) );
    */
   platform.isAndroid = function isAndroid(userAgent) {
-    return /android/i.test(userAgent);
+    return /Android/.test(userAgent);
   };
 
   /**
@@ -1267,7 +1283,7 @@
    * console.log( aid.browser.isIE(window.navigator.userAgent) );
    */
   browser.isIE = function isIE(userAgent) {
-    return /msie/i.test(userAgent) || /trident/i.test(userAgent);
+    return /msie/.test(userAgent) || /trident/.test(userAgent);
   };
 
   /**
@@ -1281,7 +1297,7 @@
    * console.log( aid.browser.isEdge(window.navigator.userAgent) );
    */
   browser.isEdge = function isEdge(userAgent) {
-    return /Gecko/i.test(userAgent) && /Edge/i.test(userAgent);
+    return /Gecko/.test(userAgent) && /Edge/.test(userAgent);
   };
 
   /**
@@ -1295,7 +1311,7 @@
    * console.log( aid.browser.isFF(window.navigator.userAgent) );
    */
   browser.isFF = function isFF(userAgent) {
-    return /Firefox/i.test(userAgent);
+    return /Firefox/.test(userAgent);
   };
 
   /**
@@ -1309,7 +1325,7 @@
    * console.log( aid.browser.isOpera(window.navigator.userAgent) );
    */
   browser.isOpera = function isOpera(userAgent) {
-    return /Opera/i.test(userAgent) || /OPR\//i.test(userAgent);
+    return /Opera/.test(userAgent) || /OPR\//.test(userAgent);
   };
 
   /**
@@ -1323,7 +1339,7 @@
    * console.log( aid.browser.isChrome(window.navigator.userAgent) );
    */
   browser.isChrome = function isChrome(userAgent) {
-    return !browser.isEdge(userAgent) && !browser.isOpera(userAgent) && /Chrome/i.test(userAgent);
+    return !browser.isEdge(userAgent) && !browser.isOpera(userAgent) && /Chrome/.test(userAgent);
   };
 
   /**
@@ -1337,7 +1353,7 @@
    * console.log( aid.browser.isSafari(window.navigator.userAgent) );
    */
   browser.isSafari = function isSafari(userAgent) {
-    return !/Chrome/i.test(userAgent) && /Safari/i.test(userAgent);
+    return !/Chrome/.test(userAgent) && /Safari/.test(userAgent) && !/CriOS/.test(userAgent);
   };
 
   /**
@@ -1351,10 +1367,16 @@
    * console.log( aid.browser.isChromePhone(window.navigator.userAgent) );
    */
   browser.isChromePhone = function isChromePhone(userAgent) {
-    // TODO: test
-    if (isIOS(userAgent)) return isSafari(userAgent) && /CriOS/.test(userAgent) && /Mobile/.test(userAgent);
+    if (platform.isIOS(userAgent))
+      return (
+        platform.isIPhone(userAgent) &&
+        !/Chrome/.test(userAgent) &&
+        /Safari/.test(userAgent) &&
+        /CriOS/.test(userAgent) &&
+        /Mobile/.test(userAgent)
+      );
 
-    if (isAndroid(userAgent)) return /Chrome\/[.0-9]* Mobile/.test(userAgent);
+    if (platform.isAndroid(userAgent)) return /Chrome\/[.0-9]* Mobile/.test(userAgent);
 
     return false;
   };
@@ -1386,24 +1408,6 @@
   };
 
   /**
-   * is mobile Chrome browser
-   * https://developer.chrome.com/multidevice/user-agent
-   *
-   * @static
-   * @method isChromeMobile
-   * @param {String} userAgent
-   * @returns {Boolean} return boolean
-   * @example
-   * console.log( aid.browser.isChromeMobile(window.navigator.userAgent) );
-   */
-  browser.isChromeMobile = function isChromeMobile(userAgent) {
-    // TODO: test
-    if (isChromePhone(userAgent) || isChromeTablet(userAgent)) return true;
-
-    return false;
-  };
-
-  /**
    * is phone Safari browser
    *
    * @static
@@ -1414,7 +1418,7 @@
    */
   browser.isSafariPhone = function isSafariPhone(userAgent) {
     // TODO: test
-    return isSafari(userAgent) && /Mobile/.test(userAgent);
+    return browser.isSafari(userAgent) && /Mobile/.test(userAgent);
   };
 
   /**
@@ -1429,23 +1433,6 @@
   browser.isSafariTablet = function isSafariTablet(userAgent) {
     // TODO: confirm
     // Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/603.1.23 (KHTML, like Gecko) Version/10.0 Mobile/14E5239e Safari/602.1
-
-    return false;
-  };
-
-  /**
-   * is Mobile Safari browser
-   * https://developer.chrome.com/multidevice/user-agent
-   * @static
-   * @method isSafariMobile
-   * @param {String} userAgent
-   * @returns {Boolean} return boolean
-   * @example
-   * console.log( aid.browser.isSafariMobile(window.navigator.userAgent) );
-   */
-  browser.isSafariMobile = function isSafariMobile(userAgent) {
-    // TODO: test
-    if (isSafariPhone(userAgent) || isSafariTablet(userAgent)) return true;
 
     return false;
   };
