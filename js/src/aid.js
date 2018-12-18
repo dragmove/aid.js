@@ -1368,6 +1368,22 @@
   };
 
   /**
+   * is iPod
+   *
+   * @static
+   * @method isIPod
+   * @param {string} userAgent
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.platform.isIPod(window.navigator.userAgent) );
+   */
+  platform.isIPod = function isIPod(userAgent) {
+    if (!platform.isIOS(userAgent)) return false;
+
+    return /iPod/.test(userAgent);
+  };
+
+  /**
    * is Android platform
    *
    * @static

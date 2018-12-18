@@ -314,6 +314,10 @@ describe('aid.js', function() {
       // TODO:
     });
 
+    describe('.isIPod()', function() {
+      // TODO:
+    });
+
     describe('.isAndroid()', function() {
       // windows
       it('at window chrome browser, return false.', function() {

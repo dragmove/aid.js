@@ -6,7 +6,8 @@ describe('aid.js', function() {
 
     var EDGE_UA =
         'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136',
-      FIREFOX_UA = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0',
+      FIREFOX_UA =
+        'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0',
       OPERA_UA =
         'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36 OPR/43.0.2442.1144',
       CHROME_UA =
@@ -38,7 +39,9 @@ describe('aid.js', function() {
       IOS_CHROME_TABLET_UA =
         'Mozilla/5.0 (iPad; CPU OS 12_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/70.0.3538.75 Mobile/15E148 Safari/604.1',
       ANDROID_CHROME_PHONE_UA =
-        'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Mobile Safari/537.36', // TODO: confirm on device
+        'Mozilla/5.0 (Linux; Android 8.0.0; SM-G930L) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Mobile Safari/537.36', // Galaxy S7
+      ANDROID_SAMSUNG_INTERNET_PHONE_UA =
+        'Mozilla/5.0 (Linux; Android 8.0.0; SAMSUNG SM-G930L Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/7.4 Chrome/59.0.3071.125 Mobile Safari/537.36', // Galaxy S7
       ANDROID_CHROME_TABLET_UA =
         'Mozilla/5.0 (Linux; Android 6.0.1; SM-T800 Build/MMB29K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.107 Safari/537.36', // TODO: confirm on device
       IOS_SAFARI_PHONE_UA =
