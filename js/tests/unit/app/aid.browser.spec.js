@@ -40,8 +40,10 @@ describe('aid.js', function() {
         'Mozilla/5.0 (iPad; CPU OS 12_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/70.0.3538.75 Mobile/15E148 Safari/604.1',
       ANDROID_CHROME_PHONE_UA =
         'Mozilla/5.0 (Linux; Android 8.0.0; SM-G930L) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Mobile Safari/537.36', // Galaxy S7
+      // 'Mozilla/5.0 (Linux; Android 8.0.0; SM-G950N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Mobile Safari/537.36', // Galaxy S8
       ANDROID_SAMSUNG_INTERNET_PHONE_UA =
         'Mozilla/5.0 (Linux; Android 8.0.0; SAMSUNG SM-G930L Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/7.4 Chrome/59.0.3071.125 Mobile Safari/537.36', // Galaxy S7
+      // 'Mozilla/5.0 (Linux; Android 8.0.0; SAMSUNG SM-G950N Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/7.4 Chrome/59.0.3071.125 Mobile Safari/537.36', // Galaxy S8
       ANDROID_CHROME_TABLET_UA =
         'Mozilla/5.0 (Linux; Android 6.0.1; SM-T800 Build/MMB29K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.107 Safari/537.36', // TODO: confirm on device
       IOS_SAFARI_PHONE_UA =
