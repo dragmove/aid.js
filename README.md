@@ -98,6 +98,8 @@ aid.operator['!']
 aid.platform.isWindow
 aid.platform.isMac
 aid.platform.isIOS
+aid.platform.isIPhone
+aid.platform.isIPad
 aid.platform.isAndroid
 ```
 
@@ -109,7 +111,11 @@ aid.browser.isEdge
 aid.browser.isFF
 aid.browser.isOpera
 aid.browser.isChrome
+aid.browser.isChromePhone
+aid.browser.isChromeTablet
 aid.browser.isSafari
+aid.browser.isSafariPhone
+aid.browser.isSafariTablet
 aid.browser.getIEVersion
 aid.browser.getFFVersion
 aid.browser.getOperaVersion
