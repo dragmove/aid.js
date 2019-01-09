@@ -1,9 +1,9 @@
 /*
- * aid.js 0.1.84
+ * aid.js 0.1.85
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
- * Copyright (c) 2016-2018 Hyun-Seok.Kim, dragmove@gmail.com
+ * Copyright (c) 2016-2019 Hyun-Seok.Kim, dragmove@gmail.com
  */
 (function() {
   'use strict';
