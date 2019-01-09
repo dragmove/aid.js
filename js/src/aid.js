@@ -1693,8 +1693,10 @@
    * console.log( aid.browser.getIECompatibility() );
    * console.log( aid.browser.getIECompatibility('mozilla/5.0 (windows nt 6.1; wow64) applewebkit/537.36 (khtml, like gecko) hrome/39.0.2171.65 safari/537.36') );
    */
-  browser.getIECompatibility = function getIECompatibility(userAgent) {
-    var ua = userAgent ? userAgent : global.navigator.userAgent.toLowerCase(),
+  browser.getIECompatibility = function getIECompatibility(optionUserAgent) {
+    var ua = optionUserAgent
+        ? optionUserAgent
+        : global.navigator.userAgent.toLowerCase(),
       regex_msie = /msie/i,
       regex_msie7 = /msie 7/i,
       regex_msie8 = /msie 8/i,
