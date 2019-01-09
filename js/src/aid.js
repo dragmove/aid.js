@@ -4082,7 +4082,7 @@
 
   /**
    * Object.shallowEqual
-   * https://developmentarc.gitbooks.io/react-indepth/content/life_cycle/update/using_should_component_update.html
+   * // https://developmentarc.gitbooks.io/react-indepth/content/life_cycle/update/using_should_component_update.html
    *
    * @static
    * @method keys
