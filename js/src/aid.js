@@ -4018,6 +4018,45 @@
   };
 
   /**
+   * Object.shallowEqual
+   * // https://developmentarc.gitbooks.io/react-indepth/content/life_cycle/update/using_should_component_update.html
+   *
+   * @static
+   * @method keys
+   * @param {Object} objA
+   * @param {Object} objB
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  object.shallowEqual = function shallowEqual(objA, objB) {
+    var not = aid.not,
+      eq = aid.eq,
+      isObject = aid.isObject,
+      isNotObject = not(isObject),
+      isNull = eq(null);
+
+    if (eq(objA)(objB)) return true;
+
+    if (isNotObject(objA) || isNull(objA) || isNotObject(objB) || isNull(objB))
+      return false;
+
+    var keysA = object.keys(objA),
+      keysB = object.keys(objB);
+
+    if (not(eq(keysA.length))(keysB.length)) return false;
+
+    // Test for A's keys different from B.
+    var bHasOwnProperty = _hasOwnProperty.bind(objB);
+
+    for (var i = 0, max = keysA.length; i < max; i++) {
+      if (!bHasOwnProperty(keysA[i]) || not(eq(objA[keysA[i]]))(objB[keysA[i]]))
+        return false;
+    }
+
+    return true;
+  };
+
+  /**
    * check element is in viewport entirely.
    *
    * @static

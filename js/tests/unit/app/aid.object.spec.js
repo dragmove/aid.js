@@ -125,5 +125,78 @@ describe('aid.js', function() {
         expect(object.keys(func)).toEqual(['nick', 'job']);
       });
     });
+
+    describe('.shallowEqual()', function() {
+      var array = [],
+        func = function() {},
+        regex = new RegExp('^aid'),
+        regexLiteral = /^aid/;
+
+      it('input equal arguments, return true', function() {
+        // compare primitive values
+        expect(object.shallowEqual(undefined, undefined)).toEqual(true);
+
+        expect(object.shallowEqual(null, null)).toEqual(true);
+
+        expect(object.shallowEqual(false, false)).toEqual(true);
+
+        expect(object.shallowEqual(true, true)).toEqual(true);
+
+        expect(object.shallowEqual(0, 0)).toEqual(true);
+
+        expect(object.shallowEqual('aid', 'aid')).toEqual(true);
+
+        // compare objects
+        expect(object.shallowEqual({}, {})).toEqual(true);
+
+        // compare equality of non-primitive values
+        expect(object.shallowEqual(array, array)).toEqual(true);
+
+        expect(object.shallowEqual(func, func)).toEqual(true);
+
+        expect(object.shallowEqual(regex, regex)).toEqual(true);
+
+        expect(object.shallowEqual(regexLiteral, regexLiteral)).toEqual(true);
+
+        // compare neither primitive values nor object
+        expect(object.shallowEqual([], [])).toEqual(false);
+
+        expect(object.shallowEqual(function() {}, function() {})).toEqual(
+          false
+        );
+
+        expect(
+          object.shallowEqual(new RegExp('^aid'), new RegExp('^aid'))
+        ).toEqual(false);
+
+        expect(object.shallowEqual(/^aid/, /^aid/)).toEqual(false);
+      });
+
+      it('compare {id: 99, name: "foo", job: undefined, issue: null, hasMoney: false} objects, return true', function() {
+        var objA = {
+            id: 99,
+            name: 'foo',
+            job: undefined,
+            issue: null,
+            hasMoney: false
+          },
+          objB = {
+            id: 99,
+            name: 'foo',
+            job: undefined,
+            issue: null,
+            hasMoney: false
+          };
+
+        expect(object.shallowEqual(objA, objB)).toEqual(true);
+      });
+
+      it('compare {datas: []} objects, return false', function() {
+        var objA = { datas: [] },
+          objB = { datas: [] };
+
+        expect(object.shallowEqual(objA, objB)).toEqual(false);
+      });
+    });
   });
 });
