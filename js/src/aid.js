@@ -2164,7 +2164,8 @@
 
     var str = '';
     for (var key in parameters) {
-      str += '&' + key + '=' + String(parameters[key]);
+      if (_hasOwnProperty.call(parameters, key))
+        str += '&' + key + '=' + String(parameters[key]);
     }
 
     if (str === '') return uri;
