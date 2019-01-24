@@ -1,6 +1,6 @@
 {
   "name": "aid.js",
-  "version": "0.1.85",
+  "version": "0.1.86",
   "description": "A Bundle of Javascript util Library to help developers. No dependency to other Libraries.",
   "keywords": [
     "aid.js",
@@ -32,14 +32,14 @@
     "url": "https://github.com/dragmove/aid.js"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
+    "eslint": "^5.12.1",
     "eslint-plugin-jasmine": "^2.10.1",
-    "gulp": "^3.9.1",
-    "gulp-eslint": "^4.0.2",
-    "gulp-header": "^1.8.8",
-    "gulp-rename": "^1.2.2",
-    "gulp-sourcemaps": "^2.4.1",
-    "gulp-uglify": "^3.0.0",
+    "gulp": "^4.0.0",
+    "gulp-eslint": "^5.0.0",
+    "gulp-header": "^2.0.7",
+    "gulp-rename": "^1.4.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.1",
     "jasmine-core": "^2.6.4",
     "karma": "^1.7.0",
     "karma-chrome-launcher": "^2.0.0",
