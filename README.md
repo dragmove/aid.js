@@ -150,6 +150,7 @@ aid.string.absentToEmpty
 aid.string.numberWithCommas
 aid.string.getPositionFromTranslateStr
 aid.string.isPalindrome
+aid.string.isDecoded
 ```
 
 * math utils

@@ -1452,5 +1452,119 @@ describe('aid.js', function() {
         expect(string.isPalindrome('motor')).toEqual(false);
       });
     });
+
+    describe('.isDecoded()', function() {
+      it('1st argument is not String type, throw TypeError.', function() {
+        expect(function() {
+          string.isDecoded(undefined);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.isDecoded(null);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.isDecoded(false);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.isDecoded(true);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.isDecoded(0);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.isDecoded('aid.js');
+        }).not.toThrowError(TypeError);
+
+        expect(function() {
+          string.isDecoded({});
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.isDecoded([]);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.isDecoded(function() {});
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.isDecoded(new RegExp('^aid'));
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.isDecoded(/^aid/);
+        }).toThrowError(TypeError);
+      });
+
+      it('optional 2nd argument is not Function type, throw TypeError.', function() {
+        expect(function() {
+          string.isDecoded('aid.js', undefined);
+        }).not.toThrowError(TypeError);
+
+        expect(function() {
+          string.isDecoded('aid.js', null);
+        }).not.toThrowError(TypeError);
+
+        expect(function() {
+          string.isDecoded('aid.js', false);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.isDecoded('aid.js', true);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.isDecoded('aid.js', 0);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.isDecoded('aid.js', 'aid.js');
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.isDecoded('aid.js', {});
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.isDecoded('aid.js', []);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.isDecoded('aid.js', function() {});
+        }).not.toThrowError(TypeError);
+
+        expect(function() {
+          string.isDecoded('aid.js', new RegExp('^aid'));
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.isDecoded(/^aid/);
+        }).toThrowError(TypeError);
+      });
+
+      it('return URIError, when input string that can not encode.', function() {
+        expect(string.isDecoded('%%%%%%%%%')).toEqual(jasmine.any(URIError));
+      });
+
+      it('return true, when input decoded string.', function() {
+        expect(string.isDecoded('에이드')).toEqual(true);
+        expect(string.isDecoded('エイド')).toEqual(true);
+        expect(string.isDecoded('援助')).toEqual(true);
+        expect(string.isDecoded('viện trợ')).toEqual(true);
+        expect(string.isDecoded('vпомощь')).toEqual(true);
+      });
+
+      it('return false, when input encoded string.', function() {
+        expect(string.isDecoded(encodeURIComponent('에이드'))).toEqual(false);
+        expect(string.isDecoded(encodeURIComponent('エイド'))).toEqual(false);
+        expect(string.isDecoded(encodeURIComponent('援助'))).toEqual(false);
+        expect(string.isDecoded(encodeURIComponent('viện trợ'))).toEqual(false);
+        expect(string.isDecoded(encodeURIComponent('vпомощь'))).toEqual(false);
+      });
+    });
   });
 });

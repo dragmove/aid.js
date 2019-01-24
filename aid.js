@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.85
+ * aid.js 0.1.86
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -2581,6 +2581,58 @@
     if (str.slice(0, 1) !== str.slice(-1)) return false;
 
     return aid.string.isPalindrome(str.slice(-1, 1));
+  };
+
+  /**
+   * get flag string is decoded
+   *
+   * @static
+   * @method isDecoded
+   * @param {String} str
+   * @param {Function} decodeFunc (optional)
+   * @returns {(Boolean|Error)} return boolean
+   * @example
+   * console.log( aid.isError(aid.string.isDecoded('%%%%%%%%%')) ); // true
+   * console.log( aid.string.isDecoded('エイド') ); // true
+   * console.log( aid.string.isDecoded(encodeURIComponent('エイド')) ); // false
+   */
+  string.isDecoded = function isDecoded(str, decodeFunc) {
+    var decodeFn = global.decodeURIComponent;
+
+    if (!aid.isString(str)) {
+      throw new TypeError(
+        '[aid.string.isDecoded] str parameter type of aid.string.isDecoded() must be String.'
+      );
+    }
+
+    if (aid.isDefined(decodeFunc)) {
+      // decodeFunc parameter is defined
+      if (!aid.isFunction(decodeFunc)) {
+        throw new TypeError(
+          '[aid.string.isDecoded] decodeFunc parameter type must be Function.'
+        );
+      }
+
+      decodeFn = decodeFunc;
+    } else {
+      if (!aid.isFunction(decodeFn)) {
+        // no decodeURIComponent function and no decodeFunc parameter
+        throw new TypeError(
+          '[aid.string.isDecoded] decodeFunc parameter must be defined.'
+        );
+      }
+    }
+
+    var decodedStr = '';
+    try {
+      decodedStr = decodeFn.call(null, str);
+    } catch (error) {
+      return error;
+    }
+
+    if (decodedStr === str) return true;
+
+    return false;
   };
 
   /**
