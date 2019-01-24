@@ -652,11 +652,11 @@
   };
 
   /**
-   * return best(optimized by condition function) value.
+   * return best(optimized by condition function) value
    *
    * @static
    * @method best
-   * @param {Function} condition function to find best value.
+   * @param {Function} condition function to find best value
    * @param {Array} array
    * @example
    * console.log( aid.best(function(x, y) { return x > y; }, [2, 4, 1, 5, 3]) ); // 5
@@ -685,7 +685,7 @@
    * @param {Function} function return value
    * @param {Function} function has condition
    * @param {Object} initial value
-   * @returns {Array} return array has values filtered.
+   * @returns {Array} return array has values filtered
    * @example
    * console.log( aid.iterateUntil(function(n) { return n + n; }, function(n) { return n <= 1042 }, 1) ); // [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]
    */
@@ -760,7 +760,7 @@
   };
 
   /**
-   * curry function for variadic functions.
+   * curry function for variadic functions
    *
    * @static
    * @method curryAll
@@ -1683,7 +1683,7 @@
   };
 
   /**
-   * get IE browser Compatibility info object.
+   * get IE browser Compatibility info object
    *
    * @static
    * @method getIECompatibility
@@ -1773,7 +1773,7 @@
   };
 
   /**
-   * is browser support draggable attribute of element.
+   * is browser support draggable attribute of element
    *
    * @static
    * @method isSupportDraggable
@@ -1788,7 +1788,7 @@
   };
 
   /**
-   * is browser support element methods related drag(ondragstart, ondrop, etc...).
+   * is browser support element methods related drag(ondragstart, ondrop, etc...)
    *
    * @static
    * @method isSupportDragAndDrop
@@ -1803,7 +1803,7 @@
   };
 
   /**
-   * is browser support html5 File API.
+   * is browser support html5 File API
    *
    * @static
    * @method isSupportFileApi
@@ -1821,7 +1821,7 @@
   };
 
   /**
-   * is chrome extension.
+   * is chrome extension
    *
    * @static
    * @method isChromeExtension
@@ -1975,7 +1975,7 @@
   };
 
   /**
-   * get extension(png, jpg ...) string.
+   * get extension(png, jpg ...) string
    *
    * @static
    * @method getFileExtension
@@ -1999,7 +1999,7 @@
   };
 
   /**
-   * check email string.
+   * check email string
    *
    * @static
    * @method isEmail
@@ -2020,7 +2020,7 @@
   };
 
   /**
-   * check iframe string.
+   * check iframe string
    *
    * @static
    * @method isIFrame
@@ -2037,7 +2037,7 @@
   };
 
   /**
-   * get param value from uri.
+   * get param value from uri
    *
    * @static
    * @method getUriParam
@@ -2086,7 +2086,7 @@
   };
 
   /**
-   * get param values from uri.
+   * get param values from uri
    *
    * @static
    * @method getUriParams
@@ -2182,7 +2182,7 @@
   };
 
   /**
-   * check youtube video id.
+   * check youtube video id
    *
    * @static
    * @method isValidYoutubeVideoId
@@ -2202,7 +2202,7 @@
   };
 
   /**
-   * check youtube uri is valid.
+   * check youtube uri is valid
    *
    * @static
    * @method getObjCheckYoutubeURI
@@ -2275,7 +2275,7 @@
   };
 
   /**
-   * check twitch uri is valid.
+   * check twitch uri is valid
    *
    * @static
    * @method getObjCheckTwitchURI
@@ -2507,7 +2507,7 @@
   };
 
   /**
-   * convert number to string type with commas.
+   * convert number to string type with commas
    * http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
    *
    * @static
@@ -2527,7 +2527,7 @@
   };
 
   /**
-   * convert 'translate(0px, 0px)' or 'translateX(0px)' or 'translateY(0px)' format string to { x: 0, y: 0 }.
+   * convert 'translate(0px, 0px)' or 'translateX(0px)' or 'translateY(0px)' format string to { x: 0, y: 0 }
    *
    * @static
    * @method getPositionFromTranslateStr
@@ -2573,7 +2573,7 @@
   };
 
   /**
-   * get flag string is palindrome.
+   * get flag string is palindrome
    *
    * @static
    * @method isPalindrome
@@ -2592,6 +2592,58 @@
     if (str.slice(0, 1) !== str.slice(-1)) return false;
 
     return aid.string.isPalindrome(str.slice(-1, 1));
+  };
+
+  /**
+   * get flag string is decoded
+   *
+   * @static
+   * @method isDecoded
+   * @param {String} str
+   * @param {Function} decodeFunc (optional)
+   * @returns {(Boolean|Error)} return boolean
+   * @example
+   * console.log( aid.isError(aid.string.isDecoded('%%%%%%%%%')) ); // true
+   * console.log( aid.string.isDecoded('エイド') ); // true
+   * console.log( aid.string.isDecoded(encodeURIComponent('エイド')) ); // false
+   */
+  string.isDecoded = function isDecoded(str, decodeFunc) {
+    var decodeFn = global.decodeURIComponent;
+
+    if (!aid.isString(str)) {
+      throw new TypeError(
+        '[aid.string.isDecoded] str parameter type of aid.string.isDecoded() must be String.'
+      );
+    }
+
+    if (aid.isDefined(decodeFunc)) {
+      // decodeFunc parameter is defined
+      if (!aid.isFunction(decodeFunc)) {
+        throw new TypeError(
+          '[aid.string.isDecoded] decodeFunc parameter type must be Function.'
+        );
+      }
+
+      decodeFn = decodeFunc;
+    } else {
+      if (!aid.isFunction(decodeFn)) {
+        // no decodeURIComponent function and no decodeFunc parameter
+        throw new TypeError(
+          '[aid.string.isDecoded] decodeFunc parameter must be defined.'
+        );
+      }
+    }
+
+    var decodedStr = '';
+    try {
+      decodedStr = decodeFn.call(null, str);
+    } catch (error) {
+      return error;
+    }
+
+    if (decodedStr === str) return true;
+
+    return false;
   };
 
   /**
@@ -2926,7 +2978,7 @@
   };
 
   /**
-   * get board pagination info object.
+   * get board pagination info object
    *
    * @static
    * @method getObjForPagination
@@ -3000,7 +3052,7 @@
   };
 
   /**
-   * convert degree to radian.
+   * convert degree to radian
    *
    * @static
    * @method degreeToRadian
@@ -3017,7 +3069,7 @@
   };
 
   /**
-   * convert radian to radian.
+   * convert radian to radian
    *
    * @static
    * @method radianToDegree
@@ -3445,7 +3497,7 @@
   };
 
   /**
-   * get index of minimum number in Array.
+   * get index of minimum number in Array
    *
    * @static
    * @method indexOfMin
@@ -3482,7 +3534,7 @@
   };
 
   /**
-   * swap two elements in Array.
+   * swap two elements in Array
    *
    * @static
    * @method swap
@@ -3520,7 +3572,7 @@
   };
 
   /**
-   * apply selection sort in Array.
+   * apply selection sort in Array
    *
    * @static
    * @method selectionSort
@@ -3543,7 +3595,7 @@
   };
 
   /**
-   * apply insertion sort in Array.
+   * apply insertion sort in Array
    * https://ko.khanacademy.org/computing/computer-science/algorithms/insertion-sort/a/insertion-sort
    *
    * @static
@@ -3625,7 +3677,7 @@
   };
 
   /**
-   * apply merge sort in Array.
+   * apply merge sort in Array
    * https://ko.khanacademy.org/computing/computer-science/algorithms/merge-sort/a/analysis-of-merge-sort
    *
    * @static
@@ -3702,7 +3754,7 @@
   };
 
   /**
-   * apply quick sort in Array.
+   * apply quick sort in Array
    * https://ko.khanacademy.org/computing/computer-science/algorithms/quick-sort/a/overview-of-quicksort
    *
    * @static
@@ -3735,7 +3787,7 @@
   };
 
   /**
-   * remove element in Array, and return cloned Array.
+   * remove element in Array, and return cloned Array
    *
    * @static
    * @method remove
@@ -3930,7 +3982,7 @@
   };
 
   /**
-   * apply overlapped condition sort in array.
+   * apply overlapped condition sort in array
    *
    * @static
    * @method overlappedConditionSortByProperty
@@ -4014,7 +4066,7 @@
   };
 
   /**
-   * check object has properties.
+   * check object has properties
    *
    * @static
    * @method isEmpty
@@ -4123,7 +4175,7 @@
   };
 
   /**
-   * check element is in viewport entirely.
+   * check element is in viewport entirely
    *
    * @static
    * @method isEntirelyInViewport
@@ -4164,7 +4216,7 @@
   };
 
   /**
-   * check element is in viewport partially.
+   * check element is in viewport partially
    *
    * @static
    * @method isPartiallyInViewport
@@ -4209,7 +4261,7 @@
   };
 
   /**
-   * create script file, and append to target element.
+   * create script file, and append to target element
    *
    * @static
    * @method appendScriptFile
@@ -4258,7 +4310,7 @@
   };
 
   /**
-   * writes text to the system clipboard.
+   * writes text to the system clipboard
    *
    * @static
    * @method copyText
