@@ -483,7 +483,7 @@
   aid.each = function each(iterable, func, context) {
     if (!(aid.isArray(iterable) || aid.isString(iterable))) {
       throw new TypeError(
-        '[aid.each] Type of iterable parameter type must be Array or String.'
+        '[aid.each] Type of iterable parameter must be Array or String.'
       );
     }
 
@@ -640,7 +640,7 @@
     return function(obj) {
       if (!(aid.isObject(obj) || aid.isArray(obj) || aid.isString(obj))) {
         throw new TypeError(
-          '[aid.plucker] Type of obj parameter type must be Object or Array or String.'
+          '[aid.plucker] Type of obj parameter must be Object or Array or String.'
         );
       }
 
@@ -661,11 +661,11 @@
   aid.best = function best(conditionFunc, array) {
     if (!aid.isFunction(conditionFunc))
       throw new TypeError(
-        'conditionFunc parameter type of aid.best() must be Function.'
+        '[aid.best] Type of conditionFunc parameter must be Function.'
       );
 
     if (!aid.isArray(array))
-      throw new TypeError('array parameter type of aid.best() must be Array.');
+      throw new TypeError('[aid.best] Type of array parameter must be Array.');
 
     return array.reduce(function(previousValue, currentValue) {
       return conditionFunc(previousValue, currentValue)
@@ -693,12 +693,12 @@
   ) {
     if (!aid.isFunction(calculateFunc))
       throw new TypeError(
-        'calculateFunc parameter type of aid.iterateUntil() must be Function.'
+        '[aid.iterateUntil] Type of calculateFunc parameter must be Function.'
       );
 
     if (!aid.isFunction(conditionFunc))
       throw new TypeError(
-        'conditionFunc parameter type of aid.iterateUntil() must be Function.'
+        '[aid.iterateUntil] Type of conditionFunc parameter must be Function.'
       );
 
     var array = [],
@@ -724,7 +724,7 @@
   aid.curry = function curry(func) {
     if (!aid.isFunction(func))
       throw new TypeError(
-        'func parameter type of aid.curry() must be Function.'
+        '[aid.curry] Type of func parameter must be Function.'
       );
 
     return function(arg) {
@@ -746,7 +746,7 @@
   aid.curry2 = function curry2(func) {
     if (!aid.isFunction(func))
       throw new TypeError(
-        'func parameter type of aid.curry2() must be Function.'
+        '[aid.curry2] Type of func parameter must be Function.'
       );
 
     return function(secondArg) {
@@ -771,7 +771,7 @@
   aid.curryAll = function curryAll(func, curryArgsNum) {
     if (!aid.isFunction(func))
       throw new TypeError(
-        'func parameter type of aid.curryAll() must be Function.'
+        '[aid.curryAll] Type of func parameter must be Function.'
       );
 
     var arity = curryArgsNum || func.length;
@@ -804,7 +804,7 @@
   aid.reverseArgs = function reverseArgs(func) {
     if (!aid.isFunction(func))
       throw new TypeError(
-        'func parameter type of aid.reverseArgs() must be Function.'
+        '[aid.reverseArgs] Type of func parameter must be Function.'
       );
 
     return function(/* args... */) {
@@ -836,7 +836,7 @@
   aid.partial = function partial(func /*, args... */) {
     if (!aid.isFunction(func))
       throw new TypeError(
-        'func parameter type of aid.partial() must be Function.'
+        '[aid.partial] Type of func parameter must be Function.'
       );
 
     var args = aid.rest(_slice.call(arguments));
@@ -861,7 +861,7 @@
   aid.partialRight = function partialRight(func /*, args... */) {
     if (!aid.isFunction(func))
       throw new TypeError(
-        'func parameter type of aid.partialRight() must be Function.'
+        '[aid.partialRight] Type of func parameter must be Function.'
       );
 
     var args = aid.rest(_slice.call(arguments));
@@ -887,7 +887,7 @@
    */
   aid.rest = function rest(array, beginIndex) {
     if (!aid.isArray(array))
-      throw new TypeError('array parameter type of aid.rest() must be Array.');
+      throw new TypeError('[aid.rest] Type of array parameter must be Array.');
 
     var begin = !aid.existy(beginIndex) ? 1 : beginIndex;
 
@@ -916,7 +916,7 @@
       function(value) {
         if (!aid.isFunction(value))
           throw new TypeError(
-            'rest parameters type of aid.pipeline() must be Function.'
+            '[aid.pipeline] Type of rest parameters must be Function.'
           );
       },
       null
@@ -1014,7 +1014,7 @@
    */
   aid.tab = function tab(func) {
     if (!aid.isFunction(func)) {
-      throw new TypeError('func parameter type of aid.tab() must be Function.');
+      throw new TypeError('[aid.tab] Type of func parameter must be Function.');
     }
 
     return function(value) {
@@ -1039,7 +1039,7 @@
   aid.alt = function alt(func_a, func_b) {
     if (!aid.isFunction(func_a) || !aid.isFunction(func_b)) {
       throw new TypeError(
-        'func_a, func_b parameter type of aid.alt() must be Function.'
+        '[aid.alt] Type of func_a, func_b parameters must be Function.'
       );
     }
 
@@ -1069,7 +1069,7 @@
 
     funcs.forEach(function(func) {
       if (!aid.isFunction(func))
-        throw new TypeError('aid.seq() requires function parameters.');
+        throw new TypeError('[aid.seq] requires function parameters.');
     });
 
     return function(value) {
@@ -1099,7 +1099,7 @@
       !aid.isFunction(func_b)
     ) {
       throw new TypeError(
-        'join, func_a, func_b parameter type of aid.fork() must be Function.'
+        '[aid.fork] Type of join, func_a, func_b parameters must be Function.'
       );
     }
 
@@ -1938,7 +1938,9 @@
    */
   string.trim = function trim(str) {
     if (!aid.isString(str))
-      throw new TypeError('string.trim() requires String parameter.');
+      throw new TypeError(
+        '[aid.string.trim] Type of str parameter must be String.'
+      );
 
     return str.replace(/^\s+/, '').replace(/\s+$/, '');
   };
@@ -1955,7 +1957,9 @@
    */
   string.hasUniqueChars = function hasUniqueChars(str) {
     if (!aid.isString(str))
-      throw new TypeError('string.hasUniqueChars() requires String parameter.');
+      throw new TypeError(
+        '[aid.string.hasUniqueChars] Type of str parameter must be String.'
+      );
 
     if (!str.length) return true;
 
@@ -1984,7 +1988,7 @@
   string.getFileExtension = function getFileExtension(fileName) {
     if (!aid.isString(fileName))
       throw new TypeError(
-        'string.getFileExtension() requires String parameter.'
+        '[aid.string.getFileExtension] Type of fileName parameter must be String.'
       );
 
     if (fileName.length <= 0) return '';
@@ -2000,20 +2004,22 @@
    *
    * @static
    * @method isEmail
-   * @param {String} emailStr
+   * @param {String} email
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.string.isEmail('dragmove@gmail.com') ); // true
    */
-  string.isEmail = function isEmail(emailStr) {
-    if (!aid.isString(emailStr))
-      throw new TypeError('string.isEmail() requires String parameter.');
+  string.isEmail = function isEmail(email) {
+    if (!aid.isString(email))
+      throw new TypeError(
+        '[aid.string.isEmail] Type of email parameter must be String.'
+      );
 
     // html5 form email check regex - https://www.w3.org/TR/html5/forms.html#e-mail-state-(type=email)
     var emailRegex = new RegExp(
       "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
     );
-    return emailRegex.exec(emailStr) ? true : false;
+    return emailRegex.exec(email) ? true : false;
   };
 
   /**
@@ -2021,16 +2027,18 @@
    *
    * @static
    * @method isIFrame
-   * @param {String} iframeStr
+   * @param {String} iframeHtml
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.string.isIFrame('<iframe src=""></iframe>') ); // true
    */
-  string.isIFrame = function isIFrame(iframeStr) {
-    if (!aid.isString(iframeStr))
-      throw new TypeError('string.isIFrame() requires String parameter.');
+  string.isIFrame = function isIFrame(iframeHtml) {
+    if (!aid.isString(iframeHtml))
+      throw new TypeError(
+        '[aid.string.isIFrame] Type of iframeHtml parameter must be String.'
+      );
 
-    return /^(<iframe).*(<\/iframe>|\/>)$/.test(iframeStr);
+    return /^(<iframe).*(<\/iframe>|\/>)$/.test(iframeHtml);
   };
 
   /**
@@ -2046,7 +2054,9 @@
    */
   string.getUriParam = function getUriParam(uri, parameterName) {
     if (!aid.isString(uri) || !aid.isString(parameterName)) {
-      throw new TypeError('string.getUriParam() requires String parameters.');
+      throw new TypeError(
+        '[aid.string.getUriParam] Type of uri, parameterName parameters must be String.'
+      );
     }
 
     if (uri.length < 1) return '';
@@ -2094,7 +2104,9 @@
    */
   string.getUriParams = function getUriParams(uri) {
     if (!aid.isString(uri))
-      throw new TypeError('string.getUriParams() requires String parameter.');
+      throw new TypeError(
+        '[aid.string.getUriParam] Type of uri parameter must be String.'
+      );
 
     if (uri.length < 1) return null;
     uri = uri.split('#')[0];
@@ -2148,12 +2160,12 @@
   string.getUriCombinedParams = function getUriCombinedParams(uri, parameters) {
     if (!aid.isString(uri))
       throw new TypeError(
-        'uri parameter type of string.getUriCombinedParams() must be String.'
+        '[aid.string.getUriCombinedParams] Type of uri parameter must be String.'
       );
 
     if (!aid.isObject(parameters))
       throw new TypeError(
-        'parameters parameter type of string.getUriCombinedParams() must be Object.'
+        '[aid.string.getUriCombinedParams] Type of parameters parameter must be Object.'
       );
 
     if (!uri) return '';
@@ -2191,7 +2203,7 @@
   string.isValidYoutubeVideoId = function isValidYoutubeVideoId(youtubeId) {
     if (!aid.isString(youtubeId))
       throw new TypeError(
-        'youtubeId parameter type of string.isValidYoutubeVideoId() must be String.'
+        '[aid.string.isValidYoutubeVideoId] Type of youtubeId parameter must be String.'
       );
 
     var regex = /^(\w|-|_){11}$/;
@@ -2213,7 +2225,7 @@
   string.getObjCheckYoutubeURI = function getObjCheckYoutubeURI(uri) {
     if (!aid.isString(uri))
       throw new TypeError(
-        'uri parameter type of string.getObjCheckYoutubeURI() must be String.'
+        '[aid.string.getObjCheckYoutubeURI] Type of uri parameter must be String.'
       );
 
     var YOUTUBE_REGEXES = {
@@ -2318,7 +2330,7 @@
 
     if (!aid.isString(uri))
       throw new TypeError(
-        'uri parameter type of string.getObjCheckTwitchURI() must be String.'
+        '[aid.string.getObjCheckTwitchURI] Type of uri parameter must be String.'
       );
 
     var TWITCH_REGEXES = {
@@ -2414,12 +2426,12 @@
   ) {
     if (!aid.isString(propertyName))
       throw new TypeError(
-        'propertyName parameter type of string.getDocumentPrefixedProperty() must be String.'
+        '[aid.string.getDocumentPrefixedProperty] Type of propertyName parameter must be String.'
       );
 
     if (!aid.isBoolean(isPropertyFirstCharToUpperCase))
       throw new TypeError(
-        'isPropertyFirstCharToUpperCase parameter type of string.getDocumentPrefixedProperty() must be Boolean.'
+        '[aid.string.getDocumentPrefixedProperty] Type of isPropertyFirstCharToUpperCase parameter must be Boolean.'
       );
 
     if (propertyName in global.document) return propertyName;
@@ -2457,12 +2469,12 @@
   ) {
     if (!aid.isString(propertyName))
       throw new TypeError(
-        'propertyName parameter type of string.getElementPrefixedStyle() must be String.'
+        '[aid.string.getElementPrefixedStyle] Type of propertyName parameter must be String.'
       );
 
     if (!aid.isBoolean(isPropertyFirstCharToUpperCase))
       throw new TypeError(
-        'isPropertyFirstCharToUpperCase parameter type of string.getElementPrefixedStyle() must be Boolean.'
+        '[aid.string.isPropertyFirstCharToUpperCase] Type of isPropertyFirstCharToUpperCase parameter must be Boolean.'
       );
 
     var style = global.document.createElement('div').style;
@@ -2517,7 +2529,7 @@
   string.numberWithCommas = function numberWithCommas(number) {
     if (!aid.isInteger(number))
       throw new TypeError(
-        'string.numberWithCommas() requires Integer Number parameter.'
+        '[aid.string.numberWithCommas] Type of number parameter must be Integer Number.'
       );
 
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -2541,7 +2553,7 @@
   ) {
     if (!aid.isString(str))
       throw new TypeError(
-        'string.getPositionFromTranslateStr() requires String parameter.'
+        '[aid.string.getPositionFromTranslateStr] Type of str parameter must be String.'
       );
 
     var obj = {
@@ -2582,7 +2594,9 @@
    */
   string.isPalindrome = function isPalindrome(str) {
     if (!aid.isString(str))
-      throw new TypeError('string.isPalindrome() requires String parameter.');
+      throw new TypeError(
+        '[aid.string.isPalindrome] Type of str parameter must be String.'
+      );
 
     if (str.length <= 1) return true;
 
@@ -2609,7 +2623,7 @@
 
     if (!aid.isString(str)) {
       throw new TypeError(
-        '[aid.string.isDecoded] str parameter type of aid.string.isDecoded() must be String.'
+        '[aid.string.isDecoded] Type of str parameter must be String.'
       );
     }
 
@@ -2617,7 +2631,7 @@
       // decodeFunc parameter is defined
       if (!aid.isFunction(decodeFunc)) {
         throw new TypeError(
-          '[aid.string.isDecoded] decodeFunc parameter type must be Function.'
+          '[aid.string.isDecoded] Type of decodeFunc parameter must be Function.'
         );
       }
 
@@ -2626,7 +2640,7 @@
       if (!aid.isFunction(decodeFn)) {
         // no decodeURIComponent function and no decodeFunc parameter
         throw new TypeError(
-          '[aid.string.isDecoded] decodeFunc parameter must be defined.'
+          '[aid.string.isDecoded] Type of decodeFunc parameter must be defined.'
         );
       }
     }

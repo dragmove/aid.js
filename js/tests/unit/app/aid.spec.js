@@ -1754,7 +1754,7 @@ describe('aid.js', function() {
     describe('.best()', function() {
       it('if conditionFunc parameter type is not function, throw Error', function() {
         var ERROR_MSG =
-          'conditionFunc parameter type of aid.best() must be Function.';
+          '[aid.best] Type of conditionFunc parameter must be Function.';
 
         expect(function() {
           aid.best(undefined, []);
@@ -1794,7 +1794,7 @@ describe('aid.js', function() {
       });
 
       it('if array parameter type is not array, throw Error', function() {
-        var ERROR_MSG = 'array parameter type of aid.best() must be Array.';
+        var ERROR_MSG = '[aid.best] Type of array parameter must be Array.';
 
         expect(function() {
           aid.best(function() {}, undefined);
@@ -1974,7 +1974,7 @@ describe('aid.js', function() {
     describe('.reverseArgs()', function() {
       it('if func parameter type is not function, throw Error', function() {
         var ERROR_MSG =
-          'func parameter type of aid.reverseArgs() must be Function.';
+          '[aid.reverseArgs] Type of func parameter must be Function.';
 
         expect(function() {
           aid.reverseArgs(undefined);
@@ -2067,7 +2067,7 @@ describe('aid.js', function() {
     describe('.partial()', function() {
       it('if func parameter type is not function, throw Error', function() {
         var ERROR_MSG =
-          'func parameter type of aid.partial() must be Function.';
+          '[aid.partial] Type of func parameter must be Function.';
 
         expect(function() {
           aid.partial(undefined);
@@ -2136,7 +2136,7 @@ describe('aid.js', function() {
     describe('.partialRight()', function() {
       it('if func parameter type is not function, throw Error', function() {
         var ERROR_MSG =
-          'func parameter type of aid.partialRight() must be Function.';
+          '[aid.partialRight] Type of func parameter must be Function.';
 
         expect(function() {
           aid.partialRight(undefined);
