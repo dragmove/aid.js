@@ -1667,6 +1667,7 @@ describe('aid.js', function() {
       });
 
       it('return decoded string, when input encoded string.', function() {
+<<<<<<< HEAD
         expect(string.decodeRecursively('%EC%97%90%EC%9D%B4%EB%93%9C')).toEqual(
           '에이드'
         );
@@ -1679,6 +1680,36 @@ describe('aid.js', function() {
         );
         expect(
           string.decodeRecursively('v%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C')
+=======
+        expect(
+          string.decodeRecursively(
+            encodeURIComponent(encodeURIComponent('에이드'))
+          )
+        ).toEqual('에이드');
+
+        expect(
+          string.decodeRecursively(
+            encodeURIComponent(encodeURIComponent('エイド'))
+          )
+        ).toEqual('エイド');
+
+        expect(
+          string.decodeRecursively(
+            encodeURIComponent(encodeURIComponent('援助'))
+          )
+        ).toEqual('援助');
+
+        expect(
+          string.decodeRecursively(
+            encodeURIComponent(encodeURIComponent('viện trợ'))
+          )
+        ).toEqual('viện trợ');
+
+        expect(
+          string.decodeRecursively(
+            encodeURIComponent(encodeURIComponent('vпомощь'))
+          )
+>>>>>>> master
         ).toEqual('vпомощь');
       });
     });
