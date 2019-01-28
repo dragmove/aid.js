@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.86
+ * aid.js 0.1.87
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -211,7 +211,7 @@
    * console.log( aid.isError(new Error('msg')) ); // true
    * console.log( aid.isError(new TypeError('msg')) ); // true
    * console.log( aid.isError(new RangeError('msg')) ); // true
-   * console.log( aid.isError(new TypeError('msg'), TypeError) ); // false
+   * console.log( aid.isError(new TypeError('msg'), TypeError) ); // true
    * console.log( aid.isError(new TypeError('msg'), Error) ); // false
    * console.log( aid.isError(new TypeError('msg'), RangeError) ); // false
    */
@@ -288,13 +288,13 @@
       !(typeof destination === 'object')
     ) {
       throw new TypeError(
-        'destination parameter type of aid.extend() must be instance of Object, and object type.'
+        '[aid.extend] Type of destination parameter must be instance of Object, and object.'
       );
     }
 
     if (!(typeof source === 'object'))
       throw new TypeError(
-        'source parameter type of aid.extend() must be object type.'
+        '[aid.extend] Type of source parameter must be object.'
       );
 
     for (var key in source) {
@@ -342,24 +342,23 @@
   aid.namespace = function(namespace, parent) {
     if (!aid.isString(namespace))
       throw new TypeError(
-        'namespace parameter type of aid.namespace() must be String.'
+        '[aid.namespace] Type of namespace parameter must be String.'
       );
 
     if (!(aid.isObject(parent) || !aid.isDefined(parent))) {
       throw new TypeError(
-        'parent parameter type of aid.namespace() must be Object or null or undefined.'
+        '[aid.namespace] Type of parent parameter must be Object or null or undefined.'
       );
     }
 
     var ns = parent || global;
-
     if (namespace) {
       var parts = namespace.split('.');
 
-      for (var i = 0, max = parts.length; i < max; i++) {
-        if (!ns[parts[i]]) ns[parts[i]] = {};
-        ns = ns[parts[i]];
-      }
+      parts.forEach(function(part) {
+        if (!ns[part]) ns[part] = {};
+        ns = ns[part];
+      });
     }
 
     return ns;
@@ -372,36 +371,36 @@
    * @method borrow
    * @param {Object} borrower
    * @param {Object} donor
-   * @param {String} functionName
+   * @param {String} funcName
    * @example
    * var borrower = {}, donor = { say: function() { return 'hello, world'; } };
    * aid.borrow(borrower, donor, 'say');
    * console.log( borrower.say() ); // 'hello, world'
    */
-  aid.borrow = function borrow(borrower, donor, functionName) {
+  aid.borrow = function borrow(borrower, donor, funcName) {
     if (!aid.isObject(borrower) || !aid.isObject(donor))
       throw new TypeError(
-        'borrower, donor parameter type of aid.borrow() must be Object.'
+        '[aid.borrow] Type of borrower, donor parameter must be Object.'
       );
 
-    if (!aid.isString(functionName))
+    if (!aid.isString(funcName))
       throw new TypeError(
-        'functionName parameter type of aid.borrow() must be String.'
+        '[aid.borrow] Type of funcName parameter must be String.'
       );
 
-    if (!aid.isDefined(donor[functionName]))
+    if (!aid.isDefined(donor[funcName]))
       throw new Error(
-        'donor object parameter of aid.borrow() has not function with functionName.'
+        '[aid.borrow] donor object parameter has not function with funcName parameter.'
       );
 
-    if (aid.isDefined(borrower[functionName]))
+    if (aid.isDefined(borrower[funcName]))
       throw new Error(
-        'borrower object parameter of aid.borrow() already has function with functionName.'
+        '[aid.borrow] borrower object parameter already has function with funcName parameter.'
       );
 
-    borrower[functionName] = function() {
+    borrower[funcName] = function() {
       var args = _slice.call(arguments);
-      return donor[functionName].apply(this, args);
+      return donor[funcName].apply(this, args);
     };
   };
 
@@ -423,7 +422,7 @@
   aid.bind = function bind(func, context) {
     if (!aid.isFunction(func))
       throw new TypeError(
-        'func parameter type of aid.bind() must be Function.'
+        '[aid.bind] Type of func parameter must be Function.'
       );
 
     return function() {
@@ -446,7 +445,7 @@
   aid.compose = function compose(func_a, func_b) {
     if (!aid.isFunction(func_a) || !aid.isFunction(func_b)) {
       throw new TypeError(
-        'func_a, func_b parameter type of aid.compose() must be Function.'
+        '[aid.compose] Type of func_a, func_b parameters must be Function.'
       );
     }
 
@@ -468,7 +467,7 @@
    */
   aid.not = function not(func) {
     if (!aid.isFunction(func))
-      throw new TypeError('func parameter type of aid.not() must be Function.');
+      throw new TypeError('[aid.not] Type of func parameter must be Function.');
 
     return function() {
       return !func.apply(null, arguments);
@@ -480,7 +479,7 @@
    *
    * @static
    * @method each
-   * @param {Array or String} dataCanLoop
+   * @param {(Array|String)} iterable
    * @param {Function} func
    * @param {Object} context
    * @example
@@ -488,17 +487,17 @@
    * aid.each('aid.js', function(v) { result.push(v); }, null);
    * console.log( result.join('') ); // 'aid.js'
    */
-  aid.each = function each(dataCanLoop, func, context) {
-    if (!(aid.isArray(dataCanLoop) || aid.isString(dataCanLoop))) {
+  aid.each = function each(iterable, func, context) {
+    if (!(aid.isArray(iterable) || aid.isString(iterable))) {
       throw new TypeError(
-        'dataCanLoop parameter type of aid.each() must be Array or String.'
+        '[aid.each] Type of iterable parameter must be Array or String.'
       );
     }
 
     var _context = aid.existy(context) ? context : null;
 
-    for (var i = 0, max = dataCanLoop.length; i < max; i++) {
-      func.call(_context, dataCanLoop[i]);
+    for (var i = 0, max = iterable.length; i < max; i++) {
+      func.call(_context, iterable[i]);
     }
   };
 
@@ -541,7 +540,7 @@
    *
    * @static
    * @method nth
-   * @param {Array or String} dataCanLoop
+   * @param {Array|String} iterable
    * @param {Number} index
    * @example
    * console.log( aid.nth('string', 1) ); // 't'
@@ -549,21 +548,19 @@
    * console.log( aid.nth([0, 'str', true], 2) ); // true
    * console.log( aid.nth([0, 'str', true], 99) ); // null
    */
-  aid.nth = function nth(dataCanLoop, index) {
-    if (!(aid.isArray(dataCanLoop) || aid.isString(dataCanLoop))) {
+  aid.nth = function nth(iterable, index) {
+    if (!(aid.isArray(iterable) || aid.isString(iterable))) {
       throw new TypeError(
-        'dataCanLoop parameter type of aid.nth() must be Array or String.'
+        '[aid.nth] Type of iterable parameter must be Array or String.'
       );
     }
 
     if (!aid.isInteger(index))
       throw new TypeError(
-        'index parameter type of aid.nth() must be Integer Number.'
+        '[aid.nth] Type of index parameter must be Integer Number.'
       );
 
-    return index < 0 || index > dataCanLoop.length - 1
-      ? null
-      : dataCanLoop[index];
+    return index < 0 || index > iterable.length - 1 ? null : iterable[index];
   };
 
   /**
@@ -625,7 +622,7 @@
    *
    * @static
    * @method plucker
-   * @param {String or Number} field of object, array, string
+   * @param {(String|Number)} field of object, array, string
    * @returns {Function} return function
    * @example
    * var getTitle = aid.plucker('title');
@@ -643,14 +640,14 @@
   aid.plucker = function plucker(field) {
     if (!(aid.isString(field) || aid.isNumber(field))) {
       throw new TypeError(
-        'field parameter type of aid.plucker() must be String or Number.'
+        '[aid.plucker] Type of field parameter must be String or Number.'
       );
     }
 
     return function(obj) {
       if (!(aid.isObject(obj) || aid.isArray(obj) || aid.isString(obj))) {
         throw new TypeError(
-          'obj parameter type of function (get from aid.plucker()) must be Object or Array or String.'
+          '[aid.plucker] Type of obj parameter must be Object or Array or String.'
         );
       }
 
@@ -659,11 +656,11 @@
   };
 
   /**
-   * return best(optimized by condition function) value.
+   * return best(optimized by condition function) value
    *
    * @static
    * @method best
-   * @param {Function} condition function to find best value.
+   * @param {Function} condition function to find best value
    * @param {Array} array
    * @example
    * console.log( aid.best(function(x, y) { return x > y; }, [2, 4, 1, 5, 3]) ); // 5
@@ -671,11 +668,11 @@
   aid.best = function best(conditionFunc, array) {
     if (!aid.isFunction(conditionFunc))
       throw new TypeError(
-        'conditionFunc parameter type of aid.best() must be Function.'
+        '[aid.best] Type of conditionFunc parameter must be Function.'
       );
 
     if (!aid.isArray(array))
-      throw new TypeError('array parameter type of aid.best() must be Array.');
+      throw new TypeError('[aid.best] Type of array parameter must be Array.');
 
     return array.reduce(function(previousValue, currentValue) {
       return conditionFunc(previousValue, currentValue)
@@ -692,7 +689,7 @@
    * @param {Function} function return value
    * @param {Function} function has condition
    * @param {Object} initial value
-   * @returns {Array} return array has values filtered.
+   * @returns {Array} return array has values filtered
    * @example
    * console.log( aid.iterateUntil(function(n) { return n + n; }, function(n) { return n <= 1042 }, 1) ); // [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]
    */
@@ -703,12 +700,12 @@
   ) {
     if (!aid.isFunction(calculateFunc))
       throw new TypeError(
-        'calculateFunc parameter type of aid.iterateUntil() must be Function.'
+        '[aid.iterateUntil] Type of calculateFunc parameter must be Function.'
       );
 
     if (!aid.isFunction(conditionFunc))
       throw new TypeError(
-        'conditionFunc parameter type of aid.iterateUntil() must be Function.'
+        '[aid.iterateUntil] Type of conditionFunc parameter must be Function.'
       );
 
     var array = [],
@@ -734,7 +731,7 @@
   aid.curry = function curry(func) {
     if (!aid.isFunction(func))
       throw new TypeError(
-        'func parameter type of aid.curry() must be Function.'
+        '[aid.curry] Type of func parameter must be Function.'
       );
 
     return function(arg) {
@@ -756,7 +753,7 @@
   aid.curry2 = function curry2(func) {
     if (!aid.isFunction(func))
       throw new TypeError(
-        'func parameter type of aid.curry2() must be Function.'
+        '[aid.curry2] Type of func parameter must be Function.'
       );
 
     return function(secondArg) {
@@ -767,7 +764,7 @@
   };
 
   /**
-   * curry function for variadic functions.
+   * curry function for variadic functions
    *
    * @static
    * @method curryAll
@@ -781,7 +778,7 @@
   aid.curryAll = function curryAll(func, curryArgsNum) {
     if (!aid.isFunction(func))
       throw new TypeError(
-        'func parameter type of aid.curryAll() must be Function.'
+        '[aid.curryAll] Type of func parameter must be Function.'
       );
 
     var arity = curryArgsNum || func.length;
@@ -814,7 +811,7 @@
   aid.reverseArgs = function reverseArgs(func) {
     if (!aid.isFunction(func))
       throw new TypeError(
-        'func parameter type of aid.reverseArgs() must be Function.'
+        '[aid.reverseArgs] Type of func parameter must be Function.'
       );
 
     return function(/* args... */) {
@@ -846,7 +843,7 @@
   aid.partial = function partial(func /*, args... */) {
     if (!aid.isFunction(func))
       throw new TypeError(
-        'func parameter type of aid.partial() must be Function.'
+        '[aid.partial] Type of func parameter must be Function.'
       );
 
     var args = aid.rest(_slice.call(arguments));
@@ -871,7 +868,7 @@
   aid.partialRight = function partialRight(func /*, args... */) {
     if (!aid.isFunction(func))
       throw new TypeError(
-        'func parameter type of aid.partialRight() must be Function.'
+        '[aid.partialRight] Type of func parameter must be Function.'
       );
 
     var args = aid.rest(_slice.call(arguments));
@@ -883,7 +880,7 @@
 
   /**
    * rest
-   * // refer to _.rest function of underscore.js - https://github.com/jashkenas/underscore/blob/master/underscore.js
+   * refer to _.rest function of underscore.js - https://github.com/jashkenas/underscore/blob/master/underscore.js
    *
    * @static
    * @method rest
@@ -897,7 +894,7 @@
    */
   aid.rest = function rest(array, beginIndex) {
     if (!aid.isArray(array))
-      throw new TypeError('array parameter type of aid.rest() must be Array.');
+      throw new TypeError('[aid.rest] Type of array parameter must be Array.');
 
     var begin = !aid.existy(beginIndex) ? 1 : beginIndex;
 
@@ -926,7 +923,7 @@
       function(value) {
         if (!aid.isFunction(value))
           throw new TypeError(
-            'rest parameters type of aid.pipeline() must be Function.'
+            '[aid.pipeline] Type of rest parameters must be Function.'
           );
       },
       null
@@ -1024,7 +1021,7 @@
    */
   aid.tab = function tab(func) {
     if (!aid.isFunction(func)) {
-      throw new TypeError('func parameter type of aid.tab() must be Function.');
+      throw new TypeError('[aid.tab] Type of func parameter must be Function.');
     }
 
     return function(value) {
@@ -1049,7 +1046,7 @@
   aid.alt = function alt(func_a, func_b) {
     if (!aid.isFunction(func_a) || !aid.isFunction(func_b)) {
       throw new TypeError(
-        'func_a, func_b parameter type of aid.alt() must be Function.'
+        '[aid.alt] Type of func_a, func_b parameters must be Function.'
       );
     }
 
@@ -1079,7 +1076,7 @@
 
     funcs.forEach(function(func) {
       if (!aid.isFunction(func))
-        throw new TypeError('aid.seq() requires function parameters.');
+        throw new TypeError('[aid.seq] requires function parameters.');
     });
 
     return function(value) {
@@ -1109,7 +1106,7 @@
       !aid.isFunction(func_b)
     ) {
       throw new TypeError(
-        'join, func_a, func_b parameter type of aid.fork() must be Function.'
+        '[aid.fork] Type of join, func_a, func_b parameters must be Function.'
       );
     }
 
@@ -1295,7 +1292,7 @@
    * var isNotNaN = aid.compose(aid.operator['!'], isNaN);
    * console.log( isNotNaN(0) ); // true
    */
-  operator['!'] = function not(obj) {
+  operator['!'] = function(obj) {
     return !obj;
   };
 
@@ -1690,11 +1687,11 @@
   };
 
   /**
-   * get IE browser Compatibility info object.
+   * get IE browser Compatibility info object
    *
    * @static
    * @method getIECompatibility
-   * @param {String} optionUserAgent
+   * @param {String} userAgent (optional)
    * @returns {Object} return { isIE: Boolean, isCompatibilityMode: Boolean, compatibilityVersion: Number }
    * @example
    * console.log( aid.browser.getIECompatibility() );
@@ -1780,7 +1777,7 @@
   };
 
   /**
-   * is browser support draggable attribute of element.
+   * is browser support draggable attribute of element
    *
    * @static
    * @method isSupportDraggable
@@ -1795,7 +1792,7 @@
   };
 
   /**
-   * is browser support element methods related drag(ondragstart, ondrop, etc...).
+   * is browser support element methods related drag(ondragstart, ondrop, etc...)
    *
    * @static
    * @method isSupportDragAndDrop
@@ -1810,7 +1807,7 @@
   };
 
   /**
-   * is browser support html5 File API.
+   * is browser support html5 File API
    *
    * @static
    * @method isSupportFileApi
@@ -1828,7 +1825,7 @@
   };
 
   /**
-   * is chrome extension.
+   * is chrome extension
    *
    * @static
    * @method isChromeExtension
@@ -1850,6 +1847,23 @@
     }
 
     return false;
+  };
+
+  /**
+   * can use DOM
+   *
+   * @static
+   * @method canUseDOM
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.browser.canUseDOM() );
+   */
+  browser.canUseDOM = function canUseDOM() {
+    return aid.truthy(
+      typeof window !== 'undefined' &&
+        window.document &&
+        window.document.createElement
+    );
   };
 
   /**
@@ -1931,7 +1945,9 @@
    */
   string.trim = function trim(str) {
     if (!aid.isString(str))
-      throw new TypeError('string.trim() requires String parameter.');
+      throw new TypeError(
+        '[aid.string.trim] Type of str parameter must be String.'
+      );
 
     return str.replace(/^\s+/, '').replace(/\s+$/, '');
   };
@@ -1948,7 +1964,9 @@
    */
   string.hasUniqueChars = function hasUniqueChars(str) {
     if (!aid.isString(str))
-      throw new TypeError('string.hasUniqueChars() requires String parameter.');
+      throw new TypeError(
+        '[aid.string.hasUniqueChars] Type of str parameter must be String.'
+      );
 
     if (!str.length) return true;
 
@@ -1965,7 +1983,7 @@
   };
 
   /**
-   * get extension(png, jpg ...) string.
+   * get extension(png, jpg ...) string
    *
    * @static
    * @method getFileExtension
@@ -1977,7 +1995,7 @@
   string.getFileExtension = function getFileExtension(fileName) {
     if (!aid.isString(fileName))
       throw new TypeError(
-        'string.getFileExtension() requires String parameter.'
+        '[aid.string.getFileExtension] Type of fileName parameter must be String.'
       );
 
     if (fileName.length <= 0) return '';
@@ -1989,45 +2007,49 @@
   };
 
   /**
-   * check email string.
+   * check email string
    *
    * @static
    * @method isEmail
-   * @param {String} emailStr
+   * @param {String} email
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.string.isEmail('dragmove@gmail.com') ); // true
    */
-  string.isEmail = function isEmail(emailStr) {
-    if (!aid.isString(emailStr))
-      throw new TypeError('string.isEmail() requires String parameter.');
+  string.isEmail = function isEmail(email) {
+    if (!aid.isString(email))
+      throw new TypeError(
+        '[aid.string.isEmail] Type of email parameter must be String.'
+      );
 
     // html5 form email check regex - https://www.w3.org/TR/html5/forms.html#e-mail-state-(type=email)
     var emailRegex = new RegExp(
       "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
     );
-    return emailRegex.exec(emailStr) ? true : false;
+    return emailRegex.exec(email) ? true : false;
   };
 
   /**
-   * check iframe string.
+   * check iframe string
    *
    * @static
    * @method isIFrame
-   * @param {String} iframeStr
+   * @param {String} iframeHtml
    * @returns {Boolean} return boolean
    * @example
    * console.log( aid.string.isIFrame('<iframe src=""></iframe>') ); // true
    */
-  string.isIFrame = function isIFrame(iframeStr) {
-    if (!aid.isString(iframeStr))
-      throw new TypeError('string.isIFrame() requires String parameter.');
+  string.isIFrame = function isIFrame(iframeHtml) {
+    if (!aid.isString(iframeHtml))
+      throw new TypeError(
+        '[aid.string.isIFrame] Type of iframeHtml parameter must be String.'
+      );
 
-    return /^(<iframe).*(<\/iframe>|\/>)$/.test(iframeStr);
+    return /^(<iframe).*(<\/iframe>|\/>)$/.test(iframeHtml);
   };
 
   /**
-   * get param value from uri.
+   * get param value from uri
    *
    * @static
    * @method getUriParam
@@ -2039,7 +2061,9 @@
    */
   string.getUriParam = function getUriParam(uri, parameterName) {
     if (!aid.isString(uri) || !aid.isString(parameterName)) {
-      throw new TypeError('string.getUriParam() requires String parameters.');
+      throw new TypeError(
+        '[aid.string.getUriParam] Type of uri, parameterName parameters must be String.'
+      );
     }
 
     if (uri.length < 1) return '';
@@ -2076,7 +2100,7 @@
   };
 
   /**
-   * get param values from uri.
+   * get param values from uri
    *
    * @static
    * @method getUriParams
@@ -2087,7 +2111,9 @@
    */
   string.getUriParams = function getUriParams(uri) {
     if (!aid.isString(uri))
-      throw new TypeError('string.getUriParams() requires String parameter.');
+      throw new TypeError(
+        '[aid.string.getUriParam] Type of uri parameter must be String.'
+      );
 
     if (uri.length < 1) return null;
     uri = uri.split('#')[0];
@@ -2141,12 +2167,12 @@
   string.getUriCombinedParams = function getUriCombinedParams(uri, parameters) {
     if (!aid.isString(uri))
       throw new TypeError(
-        'uri parameter type of string.getUriCombinedParams() must be String.'
+        '[aid.string.getUriCombinedParams] Type of uri parameter must be String.'
       );
 
     if (!aid.isObject(parameters))
       throw new TypeError(
-        'parameters parameter type of string.getUriCombinedParams() must be Object.'
+        '[aid.string.getUriCombinedParams] Type of parameters parameter must be Object.'
       );
 
     if (!uri) return '';
@@ -2154,7 +2180,8 @@
 
     var str = '';
     for (var key in parameters) {
-      str += '&' + key + '=' + String(parameters[key]);
+      if (_hasOwnProperty.call(parameters, key))
+        str += '&' + key + '=' + String(parameters[key]);
     }
 
     if (str === '') return uri;
@@ -2171,7 +2198,7 @@
   };
 
   /**
-   * check youtube video id.
+   * check youtube video id
    *
    * @static
    * @method isValidYoutubeVideoId
@@ -2183,7 +2210,7 @@
   string.isValidYoutubeVideoId = function isValidYoutubeVideoId(youtubeId) {
     if (!aid.isString(youtubeId))
       throw new TypeError(
-        'youtubeId parameter type of string.isValidYoutubeVideoId() must be String.'
+        '[aid.string.isValidYoutubeVideoId] Type of youtubeId parameter must be String.'
       );
 
     var regex = /^(\w|-|_){11}$/;
@@ -2191,7 +2218,7 @@
   };
 
   /**
-   * check youtube uri is valid.
+   * check youtube uri is valid
    *
    * @static
    * @method getObjCheckYoutubeURI
@@ -2205,7 +2232,7 @@
   string.getObjCheckYoutubeURI = function getObjCheckYoutubeURI(uri) {
     if (!aid.isString(uri))
       throw new TypeError(
-        'uri parameter type of string.getObjCheckYoutubeURI() must be String.'
+        '[aid.string.getObjCheckYoutubeURI] Type of uri parameter must be String.'
       );
 
     var YOUTUBE_REGEXES = {
@@ -2264,7 +2291,7 @@
   };
 
   /**
-   * check twitch uri is valid.
+   * check twitch uri is valid
    *
    * @static
    * @method getObjCheckTwitchURI
@@ -2288,29 +2315,24 @@
      https://www.twitch.tv/surrenderhs // channel link
      https://player.twitch.tv/?channel=surrenderhs // iframe, Flash player
      https://www.twitch.tv/surrenderhs/chat?popout= // iframe chatting
-
      + Past Video
      https://www.twitch.tv/surrenderhs/v/56097351 // channel link
      https://player.twitch.tv/?video=v56097351 // iframe, Flash player
-
      + URI TEST
      https://www.twitch.tv/surrenderhs
      www.twitch.tv/surrenderhs
      twitch.tv/surrenderhs
-
      https://player.twitch.tv/?channel=surrenderhs
      player.twitch.tv/?channel=surrenderhs
-
      https://www.twitch.tv/surrenderhs/v/56097351
      www.twitch.tv/surrenderhs/v/56097351
-
      https://player.twitch.tv/?video=v56097351
      player.twitch.tv/?video=v56097351
      */
 
     if (!aid.isString(uri))
       throw new TypeError(
-        'uri parameter type of string.getObjCheckTwitchURI() must be String.'
+        '[aid.string.getObjCheckTwitchURI] Type of uri parameter must be String.'
       );
 
     var TWITCH_REGEXES = {
@@ -2406,12 +2428,12 @@
   ) {
     if (!aid.isString(propertyName))
       throw new TypeError(
-        'propertyName parameter type of string.getDocumentPrefixedProperty() must be String.'
+        '[aid.string.getDocumentPrefixedProperty] Type of propertyName parameter must be String.'
       );
 
     if (!aid.isBoolean(isPropertyFirstCharToUpperCase))
       throw new TypeError(
-        'isPropertyFirstCharToUpperCase parameter type of string.getDocumentPrefixedProperty() must be Boolean.'
+        '[aid.string.getDocumentPrefixedProperty] Type of isPropertyFirstCharToUpperCase parameter must be Boolean.'
       );
 
     if (propertyName in global.document) return propertyName;
@@ -2449,12 +2471,12 @@
   ) {
     if (!aid.isString(propertyName))
       throw new TypeError(
-        'propertyName parameter type of string.getElementPrefixedStyle() must be String.'
+        '[aid.string.getElementPrefixedStyle] Type of propertyName parameter must be String.'
       );
 
     if (!aid.isBoolean(isPropertyFirstCharToUpperCase))
       throw new TypeError(
-        'isPropertyFirstCharToUpperCase parameter type of string.getElementPrefixedStyle() must be Boolean.'
+        '[aid.string.isPropertyFirstCharToUpperCase] Type of isPropertyFirstCharToUpperCase parameter must be Boolean.'
       );
 
     var style = global.document.createElement('div').style;
@@ -2496,7 +2518,7 @@
   };
 
   /**
-   * convert number to string type with commas.
+   * convert number to string type with commas
    * http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
    *
    * @static
@@ -2509,14 +2531,14 @@
   string.numberWithCommas = function numberWithCommas(number) {
     if (!aid.isInteger(number))
       throw new TypeError(
-        'string.numberWithCommas() requires Integer Number parameter.'
+        '[aid.string.numberWithCommas] Type of number parameter must be Integer Number.'
       );
 
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
 
   /**
-   * convert 'translate(0px, 0px)' or 'translateX(0px)' or 'translateY(0px)' format string to { x: 0, y: 0 }.
+   * convert 'translate(0px, 0px)' or 'translateX(0px)' or 'translateY(0px)' format string to { x: 0, y: 0 }
    *
    * @static
    * @method getPositionFromTranslateStr
@@ -2533,7 +2555,7 @@
   ) {
     if (!aid.isString(str))
       throw new TypeError(
-        'string.getPositionFromTranslateStr() requires String parameter.'
+        '[aid.string.getPositionFromTranslateStr] Type of str parameter must be String.'
       );
 
     var obj = {
@@ -2562,7 +2584,7 @@
   };
 
   /**
-   * get flag string is palindrome.
+   * get flag string is palindrome
    *
    * @static
    * @method isPalindrome
@@ -2574,7 +2596,9 @@
    */
   string.isPalindrome = function isPalindrome(str) {
     if (!aid.isString(str))
-      throw new TypeError('string.isPalindrome() requires String parameter.');
+      throw new TypeError(
+        '[aid.string.isPalindrome] Type of str parameter must be String.'
+      );
 
     if (str.length <= 1) return true;
 
@@ -2601,7 +2625,7 @@
 
     if (!aid.isString(str)) {
       throw new TypeError(
-        '[aid.string.isDecoded] str parameter type of aid.string.isDecoded() must be String.'
+        '[aid.string.isDecoded] Type of str parameter must be String.'
       );
     }
 
@@ -2609,7 +2633,7 @@
       // decodeFunc parameter is defined
       if (!aid.isFunction(decodeFunc)) {
         throw new TypeError(
-          '[aid.string.isDecoded] decodeFunc parameter type must be Function.'
+          '[aid.string.isDecoded] Type of decodeFunc parameter must be Function.'
         );
       }
 
@@ -2618,7 +2642,7 @@
       if (!aid.isFunction(decodeFn)) {
         // no decodeURIComponent function and no decodeFunc parameter
         throw new TypeError(
-          '[aid.string.isDecoded] decodeFunc parameter must be defined.'
+          '[aid.string.isDecoded] Type of decodeFunc parameter must be defined.'
         );
       }
     }
@@ -2633,6 +2657,58 @@
     if (decodedStr === str) return true;
 
     return false;
+  };
+
+  /**
+   * get decoded string
+   *
+   * @static
+   * @method decodeRecursively
+   * @param {String} str
+   * @param {Function} decodeFunc (optional)
+   * @returns {(String|Error)} return string
+   * @example
+   * console.log( aid.string.decodeRecursively(encodeURIComponent(encodeURIComponent('エイド'))) ); // 'エイド'
+   */
+  string.decodeRecursively = function decodeRecursively(str, decodeFunc) {
+    var decodeFn = global.decodeURIComponent;
+
+    if (!aid.isString(str)) {
+      throw new TypeError(
+        '[aid.string.decodeRecursively] Type of str parameter must be String.'
+      );
+    }
+
+    if (aid.isDefined(decodeFunc)) {
+      // decodeFunc parameter is defined
+      if (!aid.isFunction(decodeFunc)) {
+        throw new TypeError(
+          '[aid.string.decodeRecursively] Type of decodeFunc parameter must be Function.'
+        );
+      }
+
+      decodeFn = decodeFunc;
+    } else {
+      if (!aid.isFunction(decodeFn)) {
+        // no decodeURIComponent function and no decodeFunc parameter
+        throw new TypeError(
+          '[aid.string.decodeRecursively] Type of decodeFunc parameter must be defined.'
+        );
+      }
+    }
+
+    var decodedStr = '';
+    try {
+      decodedStr = decodeFn.call(null, str);
+    } catch (error) {
+      return error;
+    }
+
+    if (decodedStr !== str) {
+      return decodeRecursively(decodedStr, decodeFn);
+    }
+
+    return decodedStr;
   };
 
   /**

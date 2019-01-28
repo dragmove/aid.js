@@ -126,6 +126,7 @@ aid.browser.isSupportDraggable
 aid.browser.isSupportDragAndDrop
 aid.browser.isSupportFileApi
 aid.browser.isChromeExtension
+aid.browser.canUseDOM
 aid.browser.getCookie
 aid.browser.setCookie
 ```
@@ -151,6 +152,7 @@ aid.string.numberWithCommas
 aid.string.getPositionFromTranslateStr
 aid.string.isPalindrome
 aid.string.isDecoded
+aid.string.decodeRecursively
 ```
 
 * math utils

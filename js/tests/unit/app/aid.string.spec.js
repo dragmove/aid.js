@@ -1566,5 +1566,137 @@ describe('aid.js', function() {
         expect(string.isDecoded(encodeURIComponent('vпомощь'))).toEqual(false);
       });
     });
+
+    describe('.decodeRecursively()', function() {
+      it('1st argument is not String type, throw TypeError.', function() {
+        expect(function() {
+          string.decodeRecursively(undefined);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.decodeRecursively(null);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.decodeRecursively(false);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.decodeRecursively(true);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.decodeRecursively(0);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.decodeRecursively('aid.js');
+        }).not.toThrowError(TypeError);
+
+        expect(function() {
+          string.decodeRecursively({});
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.decodeRecursively([]);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.decodeRecursively(function() {});
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.decodeRecursively(new RegExp('^aid'));
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.decodeRecursively(/^aid/);
+        }).toThrowError(TypeError);
+      });
+
+      it('optional 2nd argument is not Function type, throw TypeError.', function() {
+        expect(function() {
+          string.decodeRecursively('aid.js', undefined);
+        }).not.toThrowError(TypeError);
+
+        expect(function() {
+          string.decodeRecursively('aid.js', null);
+        }).not.toThrowError(TypeError);
+
+        expect(function() {
+          string.decodeRecursively('aid.js', false);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.decodeRecursively('aid.js', true);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.decodeRecursively('aid.js', 0);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.decodeRecursively('aid.js', 'aid.js');
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.decodeRecursively('aid.js', {});
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.decodeRecursively('aid.js', []);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.decodeRecursively('aid.js', window.decodeURIComponent);
+        }).not.toThrowError(TypeError);
+
+        expect(function() {
+          string.decodeRecursively('aid.js', new RegExp('^aid'));
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.decodeRecursively(/^aid/);
+        }).toThrowError(TypeError);
+      });
+
+      it('return URIError, when input string that can not encode.', function() {
+        expect(string.decodeRecursively('%%%%%%%%%')).toEqual(
+          jasmine.any(URIError)
+        );
+      });
+
+      it('return decoded string, when input encoded string.', function() {
+        expect(
+          string.decodeRecursively(
+            encodeURIComponent(encodeURIComponent('에이드'))
+          )
+        ).toEqual('에이드');
+
+        expect(
+          string.decodeRecursively(
+            encodeURIComponent(encodeURIComponent('エイド'))
+          )
+        ).toEqual('エイド');
+
+        expect(
+          string.decodeRecursively(
+            encodeURIComponent(encodeURIComponent('援助'))
+          )
+        ).toEqual('援助');
+
+        expect(
+          string.decodeRecursively(
+            encodeURIComponent(encodeURIComponent('viện trợ'))
+          )
+        ).toEqual('viện trợ');
+
+        expect(
+          string.decodeRecursively(
+            encodeURIComponent(encodeURIComponent('vпомощь'))
+          )
+        ).toEqual('vпомощь');
+      });
+    });
   });
 });

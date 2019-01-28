@@ -20,7 +20,9 @@ describe('aid.js', function() {
       });
 
       it('map method return result Wrapper instance.', function() {
-        expect(Wrapper.of('aid.js').map(aid.identity) instanceof Wrapper).toEqual(true);
+        expect(
+          Wrapper.of('aid.js').map(aid.identity) instanceof Wrapper
+        ).toEqual(true);
       });
 
       it('join method return Wrapper flattened.', function() {
@@ -76,7 +78,9 @@ describe('aid.js', function() {
       });
 
       it('fromNullable static method return Nothing instance if value argument is undefined or null.', function() {
-        expect(Maybe.fromNullable(undefined) instanceof monad.Nothing).toEqual(true);
+        expect(Maybe.fromNullable(undefined) instanceof monad.Nothing).toEqual(
+          true
+        );
         expect(Maybe.fromNullable(null) instanceof monad.Nothing).toEqual(true);
       });
 
@@ -126,7 +130,9 @@ describe('aid.js', function() {
       });
 
       it('fromNullable static method return Right instance when input defined value.', function() {
-        expect(Either.fromNullable('aid.js') instanceof monad.Right).toEqual(true);
+        expect(Either.fromNullable('aid.js') instanceof monad.Right).toEqual(
+          true
+        );
       });
 
       it('of static method return Right instance.', function() {
