@@ -2731,7 +2731,7 @@
       !isNumber(fillHeight)
     ) {
       throw new TypeError(
-        'math.getSizeAspectFill() requires Number parameters.'
+        '[aid.math.getSizeAspectFill] Type of parameters must be Number.'
       );
     }
 
@@ -2776,7 +2776,7 @@
       !isNumber(fitHeight)
     ) {
       throw new TypeError(
-        'math.getSizeAspectFit() requires Number parameters.'
+        '[aid.math.getSizeAspectFit] Type of parameters must be Number.'
       );
     }
 
@@ -2809,7 +2809,9 @@
   ) {
     var isNumber = aid.isNumber;
     if (!isNumber(srcWidth) || !isNumber(srcHeight) || !isNumber(fitWidth)) {
-      throw new TypeError('math.getSizeWidthFit() requires Number parameters.');
+      throw new TypeError(
+        '[aid.math.getSizeWidthFit] Type of parameters must be Number.'
+      );
     }
 
     var modifiedSizeW = fitWidth,
@@ -2834,7 +2836,9 @@
    */
   math.isEpsilonEqual = function isEpsilonEqual(number_a, number_b) {
     if (!aid.isNumber(number_a) || !aid.isNumber(number_b)) {
-      throw new TypeError('math.isEpsilonEqual() requires Number parameters.');
+      throw new TypeError(
+        '[aid.math.isEpsilonEqual] Type of parameters must be Number.'
+      );
     }
 
     var epsilon = aid.isDefined(Number.EPSILON)
@@ -2869,7 +2873,7 @@
     searchIndex
   ) {
     if (arguments.length < 4)
-      throw new Error('math.isIndexInLoop() requires 4 parameters.');
+      throw new Error('[aid.math.isIndexInLoop] Requires 4 parameters.');
 
     var isInteger = aid.isInteger;
     if (
@@ -2879,19 +2883,19 @@
       !isInteger(searchIndex)
     ) {
       throw new TypeError(
-        'math.isIndexInLoop() requires Integer Number parameters.'
+        '[aid.math.isIndexInLoop] Type of parameters must be Number.'
       );
     }
 
     if (totalLength < 1 || firstIndex < 1) {
       throw new Error(
-        'totalLength, firstIndex parameter of math.isIndexInLoop() cannot smaller than 1.'
+        '[aid.math.isIndexInLoop] totalLength, firstIndex parameter cannot smaller than 1.'
       );
     }
 
     if (loopGap > totalLength) {
       throw new Error(
-        'loopGap parameter of math.isIndexInLoop() cannot bigger than totalLength parameter.'
+        '[aid.math.isIndexInLoop] loopGap parameter cannot bigger than totalLength parameter.'
       );
     }
 

@@ -6,7 +6,7 @@ describe('aid.js', function() {
 
     describe('.getSizeAspectFill()', function() {
       it('input arguments are not Number type, throw TypeError.', function() {
-        var ERROR_MSG = 'math.getSizeAspectFill() requires Number parameters.';
+        var ERROR_MSG = '[aid.math.getSizeAspectFill] Type of parameters must be Number.';
 
         expect(function() {
           math.getSizeAspectFill(undefined, 1, 1, 1);
@@ -97,7 +97,7 @@ describe('aid.js', function() {
 
     describe('.getSizeAspectFit()', function() {
       it('input arguments are not Number type, throw TypeError.', function() {
-        var ERROR_MSG = 'math.getSizeAspectFit() requires Number parameters.';
+        var ERROR_MSG = '[aid.math.getSizeAspectFit] Type of parameters must be Number.';
 
         expect(function() {
           math.getSizeAspectFit(undefined, 1, 1, 1);
@@ -188,7 +188,7 @@ describe('aid.js', function() {
 
     describe('.getSizeWidthFit()', function() {
       it('input arguments are not Number type, throw TypeError.', function() {
-        var ERROR_MSG = 'math.getSizeWidthFit() requires Number parameters.';
+        var ERROR_MSG = '[aid.math.getSizeWidthFit] Type of parameters must be Number.';
 
         expect(function() {
           math.getSizeWidthFit(undefined, 1, 1, 1);
