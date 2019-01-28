@@ -211,7 +211,7 @@
    * console.log( aid.isError(new Error('msg')) ); // true
    * console.log( aid.isError(new TypeError('msg')) ); // true
    * console.log( aid.isError(new RangeError('msg')) ); // true
-   * console.log( aid.isError(new TypeError('msg'), TypeError) ); // false
+   * console.log( aid.isError(new TypeError('msg'), TypeError) ); // true
    * console.log( aid.isError(new TypeError('msg'), Error) ); // false
    * console.log( aid.isError(new TypeError('msg'), RangeError) ); // false
    */
@@ -288,13 +288,13 @@
       !(typeof destination === 'object')
     ) {
       throw new TypeError(
-        'destination parameter type of aid.extend() must be instance of Object, and object type.'
+        '[aid.extend] Type of destination parameter must be instance of Object, and object.'
       );
     }
 
     if (!(typeof source === 'object'))
       throw new TypeError(
-        'source parameter type of aid.extend() must be object type.'
+        '[aid.extend] Type of source parameter must be object.'
       );
 
     for (var key in source) {
@@ -342,12 +342,12 @@
   aid.namespace = function(namespace, parent) {
     if (!aid.isString(namespace))
       throw new TypeError(
-        'namespace parameter type of aid.namespace() must be String.'
+        '[aid.namespace] Type of namespace parameter must be String.'
       );
 
     if (!(aid.isObject(parent) || !aid.isDefined(parent))) {
       throw new TypeError(
-        'parent parameter type of aid.namespace() must be Object or null or undefined.'
+        '[aid.namespace] Type of parent parameter must be Object or null or undefined.'
       );
     }
 
@@ -381,12 +381,12 @@
   aid.borrow = function borrow(borrower, donor, functionName) {
     if (!aid.isObject(borrower) || !aid.isObject(donor))
       throw new TypeError(
-        'borrower, donor parameter type of aid.borrow() must be Object.'
+        '[aid.borrow] Type of borrower, donor parameter must be Object.'
       );
 
     if (!aid.isString(functionName))
       throw new TypeError(
-        'functionName parameter type of aid.borrow() must be String.'
+        '[aid.borrow] Type of funcName parameter must be String.'
       );
 
     if (!aid.isDefined(donor[functionName]))
@@ -423,7 +423,7 @@
   aid.bind = function bind(func, context) {
     if (!aid.isFunction(func))
       throw new TypeError(
-        'func parameter type of aid.bind() must be Function.'
+        '[aid.bind] Type of func parameter must be Function.'
       );
 
     return function() {
@@ -446,7 +446,7 @@
   aid.compose = function compose(func_a, func_b) {
     if (!aid.isFunction(func_a) || !aid.isFunction(func_b)) {
       throw new TypeError(
-        'func_a, func_b parameter type of aid.compose() must be Function.'
+        '[aid.compose] Type of func_a, func_b parameters must be Function.'
       );
     }
 
@@ -468,7 +468,7 @@
    */
   aid.not = function not(func) {
     if (!aid.isFunction(func))
-      throw new TypeError('func parameter type of aid.not() must be Function.');
+      throw new TypeError('[aid.not] Type of func parameter must be Function.');
 
     return function() {
       return !func.apply(null, arguments);
@@ -491,7 +491,7 @@
   aid.each = function each(dataCanLoop, func, context) {
     if (!(aid.isArray(dataCanLoop) || aid.isString(dataCanLoop))) {
       throw new TypeError(
-        'dataCanLoop parameter type of aid.each() must be Array or String.'
+        '[aid.each] Type of iterable parameter type must be Array or String.'
       );
     }
 
@@ -552,13 +552,13 @@
   aid.nth = function nth(dataCanLoop, index) {
     if (!(aid.isArray(dataCanLoop) || aid.isString(dataCanLoop))) {
       throw new TypeError(
-        'dataCanLoop parameter type of aid.nth() must be Array or String.'
+        '[aid.nth] Type of iterable parameter must be Array or String.'
       );
     }
 
     if (!aid.isInteger(index))
       throw new TypeError(
-        'index parameter type of aid.nth() must be Integer Number.'
+        '[aid.nth] Type of index parameter must be Integer Number.'
       );
 
     return index < 0 || index > dataCanLoop.length - 1
@@ -643,14 +643,14 @@
   aid.plucker = function plucker(field) {
     if (!(aid.isString(field) || aid.isNumber(field))) {
       throw new TypeError(
-        'field parameter type of aid.plucker() must be String or Number.'
+        '[aid.plucker] Type of field parameter must be String or Number.'
       );
     }
 
     return function(obj) {
       if (!(aid.isObject(obj) || aid.isArray(obj) || aid.isString(obj))) {
         throw new TypeError(
-          'obj parameter type of function (get from aid.plucker()) must be Object or Array or String.'
+          '[aid.plucker] Type of obj parameter type must be Object or Array or String.'
         );
       }
 
