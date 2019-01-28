@@ -472,7 +472,7 @@
    *
    * @static
    * @method each
-   * @param {Array|String} iterable
+   * @param {(Array|String)} iterable
    * @param {Function} func
    * @param {Object} context
    * @example
@@ -615,7 +615,7 @@
    *
    * @static
    * @method plucker
-   * @param {String|Number} field of object, array, string
+   * @param {(String|Number)} field of object, array, string
    * @returns {Function} return function
    * @example
    * var getTitle = aid.plucker('title');
@@ -2655,6 +2655,57 @@
     if (decodedStr === str) return true;
 
     return false;
+  };
+
+  /**
+   * get decoded string
+   *
+   * @static
+   * @method decodeRecursively
+   * @param {String} str
+   * @param {Function} decodeFunc (optional)
+   * @returns {(String|Error)} return string
+   * @example
+   */
+  string.decodeRecursively = function decodeRecursively(str, decodeFunc) {
+    var decodeFn = global.decodeURIComponent;
+
+    if (!aid.isString(str)) {
+      throw new TypeError(
+        '[aid.string.decodeRecursively] Type of str parameter must be String.'
+      );
+    }
+
+    if (aid.isDefined(decodeFunc)) {
+      // decodeFunc parameter is defined
+      if (!aid.isFunction(decodeFunc)) {
+        throw new TypeError(
+          '[aid.string.decodeRecursively] Type of decodeFunc parameter must be Function.'
+        );
+      }
+
+      decodeFn = decodeFunc;
+    } else {
+      if (!aid.isFunction(decodeFn)) {
+        // no decodeURIComponent function and no decodeFunc parameter
+        throw new TypeError(
+          '[aid.string.decodeRecursively] Type of decodeFunc parameter must be defined.'
+        );
+      }
+    }
+
+    var decodedStr = '';
+    try {
+      decodedStr = decodeFn.call(null, str);
+    } catch (error) {
+      return error;
+    }
+
+    if (decodedStr !== str) {
+      return decodeRecursively(decodedStr, decodeFn);
+    }
+
+    return decodedStr;
   };
 
   /**
