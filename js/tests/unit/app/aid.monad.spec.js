@@ -144,7 +144,7 @@ describe('aid.js', function() {
       var IO = monad.IO;
 
       it('effect argument is not Function type, throw TypeError.', function() {
-        var ERROR_MSG = 'effect parameter type of monad.IO() must be Function.';
+        var ERROR_MSG = '[aid.monad.IO] Type of effect parameter must be Function.';
 
         expect(function() {
           IO(undefined);

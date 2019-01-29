@@ -831,7 +831,7 @@ describe('aid.js', function() {
     describe('.getHeightOfRightTriangle()', function() {
       it('input arguments are not Object type, throw TypeError.', function() {
         var ERROR_MSG =
-          'math.getHeightOfRightTriangle() requires Number parameters.';
+          '[aid.math.getHeightOfRightTriangle] Type of parameters must be Number.';
 
         expect(function() {
           math.getHeightOfRightTriangle(undefined, 30);
@@ -885,7 +885,7 @@ describe('aid.js', function() {
 
       it('acuteAngleDegree parameter is greater than or equal to 90, throw Error.', function() {
         var ERROR_MSG =
-          'acuteAngleDegree parameter of math.getHeightOfRightTriangle() cannot greater than or equal to 90.';
+          '[aid.math.getHeightOfRightTriangle] acuteAngleDegree parameter cannot greater than or equal to 90.';
 
         expect(function() {
           math.getHeightOfRightTriangle(100, 90);
@@ -915,7 +915,7 @@ describe('aid.js', function() {
 
       it('input arguments are not Object type, throw TypeError.', function() {
         var ERROR_MSG =
-          'math.getDistanceBetweenTwoPoints() requires Object parameters.';
+          '[aid.math.getDistanceBetweenTwoPoints] Type of parameters must be Object.';
 
         expect(function() {
           math.getDistanceBetweenTwoPoints(undefined, point2);
@@ -970,7 +970,7 @@ describe('aid.js', function() {
 
       it('input arguments are not object has x, y property of Number type, throw Error.', function() {
         var ERROR_MSG =
-          'math.getDistanceBetweenTwoPoints() requires object parameters have x, y property.';
+          '[aid.math.getDistanceBetweenTwoPoints] Type of parameters must be Object that has x, y properties.';
 
         expect(function() {
           math.getDistanceBetweenTwoPoints({}, point2);
@@ -1048,7 +1048,7 @@ describe('aid.js', function() {
 
       it('input arguments are not Object type, throw TypeError.', function() {
         var ERROR_MSG =
-          'math.getOrthogonalPointBetweenLineAndSomePoint() requires Object parameters.';
+          '[aid.math.getOrthogonalPointBetweenLineAndSomePoint] Type of parameters must be Object.';
 
         expect(function() {
           math.getOrthogonalPointBetweenLineAndSomePoint(
@@ -1185,7 +1185,7 @@ describe('aid.js', function() {
 
       it('input arguments are not object has x, y property of Number type, throw Error.', function() {
         var ERROR_MSG =
-          'math.getOrthogonalPointBetweenLineAndSomePoint() requires object parameters have x, y property.';
+          '[aid.math.getOrthogonalPointBetweenLineAndSomePoint] Type of parameters must be Object that has x, y properties.';
 
         expect(function() {
           math.getOrthogonalPointBetweenLineAndSomePoint({}, point2, somePoint);
@@ -1312,7 +1312,7 @@ describe('aid.js', function() {
 
     describe('.getRandomFloat()', function() {
       it('input arguments are not Number type, throw TypeError.', function() {
-        var ERROR_MSG = 'math.getRandomFloat() requires Number parameters.';
+        var ERROR_MSG = '[aid.math.getRandomFloat] Type of parameters must be Number.';
 
         expect(function() {
           math.getRandomFloat(undefined, 99.999);
@@ -1364,7 +1364,7 @@ describe('aid.js', function() {
     describe('.getRandomInt()', function() {
       it('input arguments are not Integer Number type, throw TypeError.', function() {
         var ERROR_MSG =
-          'math.getRandomInt() requires Integer Number parameters.';
+          '[aid.math.getRandomInt] Type of parameters must be Integer Number.';
 
         expect(function() {
           math.getRandomInt(undefined, 99);
@@ -1422,7 +1422,7 @@ describe('aid.js', function() {
 
     describe('.remap()', function() {
       it('if func parameter type is not function, throw Error', function() {
-        var ERROR_MSG = 'math.remap() requires Number parameters.';
+        var ERROR_MSG = '[aid.math.remap] Type of parameters must be Number.';
 
         expect(function() {
           math.remap(undefined, 0, 1, 0, 100);

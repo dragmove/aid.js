@@ -7,7 +7,7 @@ describe('aid.js', function() {
     describe('.copyText()', function() {
       it('if 1st argument is not String type, throw TypeError', function() {
         var ERROR_MSG =
-          'str parameter type of clipboard.copyText() must be String.';
+          '[aid.clipboard.copyText] Type of str parameter must be String.';
 
         expect(function() {
           clipboard.copyText(undefined);
@@ -29,7 +29,7 @@ describe('aid.js', function() {
 
       it('if successCallback argument is defined, but is not Function type, throw TypeError', function() {
         var ERROR_MSG =
-          'successCallback parameter type of clipboard.copyText() must be undefined or null or Function.';
+          '[aid.clipboard.copyText] Type of successCallback parameter must be undefined or null or Function.';
 
         expect(function() {
           clipboard.copyText('aid.js', false);
@@ -48,7 +48,7 @@ describe('aid.js', function() {
 
       it('if errorCallback argument is defined, but is not Function type, throw TypeError', function() {
         var ERROR_MSG =
-          'errorCallback parameter type of clipboard.copyText() must be undefined or null or Function.';
+          '[aid.clipboard.copyText] Type of errorCallback parameter must be undefined or null or Function.';
 
         expect(function() {
           clipboard.copyText('aid.js', null, false);

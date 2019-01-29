@@ -294,7 +294,7 @@
 
     if (!(typeof source === 'object'))
       throw new TypeError(
-        '[aid.extend] Type of source parameter must be object.'
+        '[aid.extend] Type of source parameter must be Object.'
       );
 
     for (var key in source) {
@@ -380,7 +380,7 @@
   aid.borrow = function borrow(borrower, donor, funcName) {
     if (!aid.isObject(borrower) || !aid.isObject(donor))
       throw new TypeError(
-        '[aid.borrow] Type of borrower, donor parameter must be Object.'
+        '[aid.borrow] Type of borrower, donor parameters must be Object.'
       );
 
     if (!aid.isString(funcName))
@@ -962,7 +962,11 @@
 
           if (!aid.isDefined(method)) {
             throw Error(
-              target.constructor.name + ' has not ' + methodName + ' method.'
+              '[aid.lazyChain] ' +
+                target.constructor.name +
+                ' has not ' +
+                methodName +
+                ' method.'
             );
           }
 
@@ -1076,7 +1080,7 @@
 
     funcs.forEach(function(func) {
       if (!aid.isFunction(func))
-        throw new TypeError('[aid.seq] requires function parameters.');
+        throw new TypeError('[aid.seq] Requires function parameters.');
     });
 
     return function(value) {
@@ -2315,9 +2319,11 @@
      https://www.twitch.tv/surrenderhs // channel link
      https://player.twitch.tv/?channel=surrenderhs // iframe, Flash player
      https://www.twitch.tv/surrenderhs/chat?popout= // iframe chatting
+
      + Past Video
      https://www.twitch.tv/surrenderhs/v/56097351 // channel link
      https://player.twitch.tv/?video=v56097351 // iframe, Flash player
+
      + URI TEST
      https://www.twitch.tv/surrenderhs
      www.twitch.tv/surrenderhs
@@ -2476,7 +2482,7 @@
 
     if (!aid.isBoolean(isPropertyFirstCharToUpperCase))
       throw new TypeError(
-        '[aid.string.isPropertyFirstCharToUpperCase] Type of isPropertyFirstCharToUpperCase parameter must be Boolean.'
+        '[aid.string.getElementPrefixedStyle] Type of isPropertyFirstCharToUpperCase parameter must be Boolean.'
       );
 
     var style = global.document.createElement('div').style;
@@ -2896,7 +2902,7 @@
 
     if (totalLength < 1 || firstIndex < 1) {
       throw new Error(
-        '[aid.math.isIndexInLoop] totalLength, firstIndex parameter cannot smaller than 1.'
+        '[aid.math.isIndexInLoop] totalLength, firstIndex parameters cannot smaller than 1.'
       );
     }
 
@@ -2936,7 +2942,7 @@
     firstIndex
   ) {
     if (arguments.length < 3)
-      throw new Error('math.getLoopedLastIndex() requires 3 parameters.');
+      throw new Error('[aid.math.getLoopedLastIndex] Requires 3 parameters.');
 
     var isInteger = aid.isInteger;
     if (
@@ -2945,19 +2951,19 @@
       !isInteger(firstIndex)
     ) {
       throw new TypeError(
-        'math.getLoopedLastIndex() requires Integer Number parameters.'
+        '[aid.math.getLoopedLastIndex] Type of parameters must be Integer Number.'
       );
     }
 
     if (totalLength < 1 || firstIndex < 1) {
       throw new Error(
-        'totalLength, firstIndex parameter of math.getLoopedLastIndex() cannot smaller than 1.'
+        '[aid.math.getLoopedLastIndex] totalLength, firstIndex parameters cannot smaller than 1.'
       );
     }
 
     if (loopGap > totalLength || firstIndex > totalLength) {
       throw new Error(
-        'loopGap, firstIndex parameter of math.getLoopedLastIndex() cannot bigger than totalLength parameter.'
+        '[aid.math.getLoopedLastIndex] loopGap, firstIndex parameters cannot bigger than totalLength parameter.'
       );
     }
 
@@ -2991,7 +2997,7 @@
   ) {
     if (arguments.length < 3)
       throw new Error(
-        'math.getReverseLoopedFirstIndex() requires 3 parameters.'
+        '[aid.math.getReverseLoopedFirstIndex] Requires 3 parameters.'
       );
 
     var isInteger = aid.isInteger;
@@ -3001,19 +3007,19 @@
       !isInteger(lastIndex)
     ) {
       throw new TypeError(
-        'math.getReverseLoopedFirstIndex() requires Integer Number parameters.'
+        '[aid.math.getReverseLoopedFirstIndex] Type of parameters must be Integer Number.'
       );
     }
 
     if (totalLength < 1 || lastIndex < 1) {
       throw new Error(
-        'totalLength, lastIndex parameter of math.getReverseLoopedFirstIndex() cannot smaller than 1.'
+        '[aid.math.getReverseLoopedFirstIndex] totalLength, lastIndex parameters cannot smaller than 1.'
       );
     }
 
     if (loopGap > totalLength || lastIndex > totalLength) {
       throw new Error(
-        'loopGap, lastIndex parameter of math.getReverseLoopedFirstIndex() cannot bigger than totalLength parameter.'
+        '[aid.math.getReverseLoopedFirstIndex] loopGap, lastIndex parameters cannot bigger than totalLength parameter.'
       );
     }
 
@@ -3039,7 +3045,7 @@
   math.factorial = function factorial(number) {
     if (!aid.isInteger(number))
       throw new TypeError(
-        'math.factorial() requires Integer Number parameter.'
+        '[aid.math.factorial] Type of parameters must be Integer Number.'
       );
 
     if (number < 1) return 1;
@@ -3066,7 +3072,7 @@
     pageIndex
   ) {
     if (arguments.length < 4)
-      throw new Error('math.getObjForPagination() requires 4 parameters.');
+      throw new Error('[aid.math.getObjForPagination] Requires 4 parameters.');
 
     var isInteger = aid.isInteger;
     if (
@@ -3076,7 +3082,7 @@
       !isInteger(pageIndex)
     ) {
       throw new TypeError(
-        'math.getObjForPagination() requires Integer Number parameters.'
+        '[aid.math.getObjForPagination] Type of parameters must be Integer Number.'
       );
     }
 
@@ -3087,7 +3093,7 @@
       pageIndex <= 0
     ) {
       throw new TypeError(
-        'math.getObjForPagination() requires positive Integer Number parameters.'
+        '[aid.math.getObjForPagination] Type of parameters must be positive Integer Number.'
       );
     }
 
@@ -3132,7 +3138,9 @@
    */
   math.degreeToRadian = function degreeToRadian(degree) {
     if (!aid.isNumber(degree))
-      throw new TypeError('math.degreeToRadian() requires Number parameter.');
+      throw new TypeError(
+        '[aid.math.degreeToRadian] Type of degree parameter must be Number.'
+      );
 
     return (degree * Math.PI) / 180;
   };
@@ -3149,7 +3157,9 @@
    */
   math.radianToDegree = function radianToDegree(radian) {
     if (!aid.isNumber(radian))
-      throw new TypeError('math.radianToDegree() requires Number parameter.');
+      throw new TypeError(
+        '[aid.math.radianToDegree] Type of degree parameter must be Number.'
+      );
 
     return (radian * 180) / Math.PI;
   };
@@ -3171,13 +3181,13 @@
   ) {
     if (!aid.isNumber(baseLineWidth) || !aid.isNumber(acuteAngleDegree)) {
       throw new TypeError(
-        'math.getHeightOfRightTriangle() requires Number parameters.'
+        '[aid.math.getHeightOfRightTriangle] Type of parameters must be Number.'
       );
     }
 
     if (acuteAngleDegree >= 90)
       throw new Error(
-        'acuteAngleDegree parameter of math.getHeightOfRightTriangle() cannot greater than or equal to 90.'
+        '[aid.math.getHeightOfRightTriangle] acuteAngleDegree parameter cannot greater than or equal to 90.'
       );
 
     return baseLineWidth * Math.tan(math.degreeToRadian(acuteAngleDegree));
@@ -3202,7 +3212,7 @@
   ) {
     if (!aid.isObject(point1) || !aid.isObject(point2)) {
       throw new TypeError(
-        'math.getDistanceBetweenTwoPoints() requires Object parameters.'
+        '[aid.math.getDistanceBetweenTwoPoints] Type of parameters must be Object.'
       );
     }
 
@@ -3214,7 +3224,7 @@
       !isNumber(point2.y)
     ) {
       throw new TypeError(
-        'math.getDistanceBetweenTwoPoints() requires object parameters have x, y property.'
+        '[aid.math.getDistanceBetweenTwoPoints] Type of parameters must be Object that has x, y properties.'
       );
     }
 
@@ -3252,7 +3262,7 @@
       !isObject(somePoint)
     ) {
       throw new TypeError(
-        'math.getOrthogonalPointBetweenLineAndSomePoint() requires Object parameters.'
+        '[aid.math.getOrthogonalPointBetweenLineAndSomePoint] Type of parameters must be Object.'
       );
     }
 
@@ -3266,7 +3276,7 @@
       !isNumber(somePoint.y)
     ) {
       throw new TypeError(
-        'math.getOrthogonalPointBetweenLineAndSomePoint() requires object parameters have x, y property.'
+        '[aid.math.getOrthogonalPointBetweenLineAndSomePoint] Type of parameters must be Object that has x, y properties.'
       );
     }
 
@@ -3336,7 +3346,9 @@
   math.getRandomFloat = function getRandomFloat(min, max) {
     var isNumber = aid.isNumber;
     if (!isNumber(min) || !isNumber(max)) {
-      throw new TypeError('math.getRandomFloat() requires Number parameters.');
+      throw new TypeError(
+        '[aid.math.getRandomFloat] Type of parameters must be Number.'
+      );
     }
 
     return min + Math.random() * (max - min);
@@ -3357,7 +3369,7 @@
     var isInteger = aid.isInteger;
     if (!isInteger(minInt) || !isInteger(maxInt)) {
       throw new TypeError(
-        'math.getRandomInt() requires Integer Number parameters.'
+        '[aid.math.getRandomInt] Type of parameters must be Integer Number.'
       );
     }
 
@@ -3388,7 +3400,9 @@
       !isNumber(remapedMin) ||
       !isNumber(remapedMax)
     ) {
-      throw new TypeError('math.remap() requires Number parameters.');
+      throw new TypeError(
+        '[aid.math.remap] Type of parameters must be Number.'
+      );
     }
 
     return (
@@ -3409,7 +3423,7 @@
    */
   math.gt = aid.curry2(function(lhs, rhs) {
     if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs)))
-      throw new TypeError('math.gt requires Number parameters');
+      throw new TypeError('[aid.math.gt] Type of parameters must be Number.');
 
     return lhs > rhs;
   });
@@ -3427,7 +3441,7 @@
    */
   math.lt = aid.curry2(function(lhs, rhs) {
     if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs)))
-      throw new TypeError('math.lt requires Number parameters');
+      throw new TypeError('[aid.math.lt] Type of parameters must be Number.');
 
     return lhs < rhs;
   });
@@ -3446,7 +3460,7 @@
    */
   math.gte = aid.curry2(function(lhs, rhs) {
     if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs)))
-      throw new TypeError('math.gte requires Number parameters');
+      throw new TypeError('[aid.math.gte] Type of parameters must be Number.');
 
     return lhs >= rhs;
   });
@@ -3465,7 +3479,7 @@
    */
   math.lte = aid.curry2(function(lhs, rhs) {
     if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs)))
-      throw new TypeError('math.lte requires Number parameters');
+      throw new TypeError('[aid.math.lte] Type of parameters must be Number.');
 
     return lhs <= rhs;
   });
@@ -3556,7 +3570,9 @@
    */
   array.indexOf = function indexOf(arr, target) {
     if (!aid.isArray(arr))
-      throw new TypeError('array.indexOf() requires Number parameter.');
+      throw new TypeError(
+        '[aid.math.indexOf] Type of arr parameters must be Array.'
+      );
 
     for (var i = 0, max = arr.length; i < max; ++i) {
       if (arr[i] === target) return i;
@@ -3870,7 +3886,7 @@
   array.remove = function remove(arr, target) {
     if (!aid.isArray(arr))
       throw new TypeError(
-        'arr parameter type of array.remove() must be Array.'
+        '[aid.array.remove] Type of arr parameter must be Array.'
       );
 
     var clonedArr = arr.slice(0),
@@ -3895,12 +3911,12 @@
   array.getMatrixArr = function getMatrixArr(rowNum, columnNum, initialVal) {
     if (!aid.isInteger(rowNum) || !aid.isInteger(columnNum)) {
       throw new TypeError(
-        'rowNum, columnNum parameter of array.getMatrixArr() must be Integer Number.'
+        '[aid.array.getMatrixArr] Type of rowNum, columnNum parameters must be Integer Number.'
       );
     }
 
     if (arguments.length !== 3)
-      throw Error('array.getMatrixArr() requires 3 parameters.');
+      throw Error('[aid.array.getMatrixArr] Requires 3 parameters.');
 
     var arr = [],
       columns = [];
@@ -4146,7 +4162,7 @@
   object.isEmpty = function isEmpty(obj) {
     if (!aid.isObject(obj))
       throw new TypeError(
-        'obj parameter type of object.isEmpty() must be Object.'
+        '[aid.object.isEmpty] Type of obj parameter must be Object.'
       );
 
     for (var key in obj) {
@@ -4186,7 +4202,7 @@
       aid.not(aid.isFunction)(obj) &&
       (aid.not(aid.isObject)(obj) || obj === null)
     ) {
-      throw new TypeError('object.keys called on non-object');
+      throw new TypeError('[aid.object.keys] Called on non-object.');
     }
 
     var result = [];
@@ -4392,17 +4408,17 @@
   clipboard.copyText = function copyText(str, successCallback, errorCallback) {
     if (!aid.isString(str))
       throw new TypeError(
-        'str parameter type of clipboard.copyText() must be String.'
+        '[aid.clipboard.copyText] Type of str parameter must be String.'
       );
 
     if (aid.isDefined(successCallback) && !aid.isFunction(successCallback))
       throw new TypeError(
-        'successCallback parameter type of clipboard.copyText() must be undefined or null or Function.'
+        '[aid.clipboard.copyText] Type of successCallback parameter must be undefined or null or Function.'
       );
 
     if (aid.isDefined(errorCallback) && !aid.isFunction(errorCallback))
       throw new TypeError(
-        'errorCallback parameter type of clipboard.copyText() must be undefined or null or Function.'
+        '[aid.clipboard.copyText] Type of errorCallback parameter must be undefined or null or Function.'
       );
 
     if (!navigator.clipboard) {
@@ -4431,7 +4447,7 @@
           errorCallback.call(
             null,
             new Error(
-              'clipboard.copyText() cannot copy string with using document.execCommand("copy").'
+              '[aid.clipboard.copyText] Cannot copy string with using document.execCommand("copy").'
             )
           );
       } catch (error) {
@@ -4544,7 +4560,7 @@
   var Nothing = function() {};
 
   Nothing.prototype.value = function(/*value*/) {
-    throw new TypeError('Cannot extract the value of monad.Nothing.');
+    throw new TypeError('[aid.monad.Nothing] Cannot extract the value.');
   };
 
   Nothing.prototype.map = function(/*func*/) {
@@ -4655,7 +4671,7 @@
   };
 
   Left.prototype.value = function() {
-    throw new TypeError('Cannot extract the value of monad.Left(value).');
+    throw new TypeError('[aid.monad.Left] Cannot extract the value.');
   };
 
   Left.prototype.getOrElse = function(other) {
@@ -4814,7 +4830,7 @@
   var IO = function(effect) {
     if (!aid.isFunction(effect))
       throw new TypeError(
-        'effect parameter type of monad.IO() must be Function.'
+        '[aid.monad.IO] Type of effect parameter must be Function.'
       );
 
     this.effect = effect;

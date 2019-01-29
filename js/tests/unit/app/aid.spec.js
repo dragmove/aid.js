@@ -671,7 +671,7 @@ describe('aid.js', function() {
       });
 
       it('if source parameter type is not object type, throw Error', function() {
-        var ERROR_MSG = '[aid.extend] Type of source parameter must be object.';
+        var ERROR_MSG = '[aid.extend] Type of source parameter must be Object.';
 
         expect(function() {
           aid.extend({}, undefined);
@@ -894,7 +894,7 @@ describe('aid.js', function() {
 
       it('if borrower parameter is not Object type, throw TypeError', function() {
         var ERROR_MSG =
-          '[aid.borrow] Type of borrower, donor parameter must be Object.';
+          '[aid.borrow] Type of borrower, donor parameters must be Object.';
 
         expect(function() {
           aid.borrow(undefined, donor, 'say');
@@ -931,7 +931,7 @@ describe('aid.js', function() {
 
       it('if donor parameter is not Object type, throw TypeError', function() {
         var ERROR_MSG =
-          '[aid.borrow] Type of borrower, donor parameter must be Object.';
+          '[aid.borrow] Type of borrower, donor parameters must be Object.';
 
         expect(function() {
           aid.borrow(borrower, undefined, 'say');
