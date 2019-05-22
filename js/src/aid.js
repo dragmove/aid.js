@@ -25,7 +25,8 @@
     element = {},
     file = {},
     clipboard = {},
-    monad = {}; // https://en.wikipedia.org/wiki/Monad_(functional_programming)
+    monad = {}, // https://en.wikipedia.org/wiki/Monad_(functional_programming)
+    regex = {};
 
   /**
    * is null/undefined or other
@@ -4402,6 +4403,28 @@
 
   monad.IO = IO;
 
+  /**
+   * new line regex
+   *
+   * @static
+   * @property regex.LINE_BREAK
+   * @returns {RegExp} return Regular expression
+   * @example
+   * // TODO:
+   */
+  regex.LINE_BREAK = /(\r\n|\n|\r)/;
+
+  /**
+   * tag has no content regex
+   *
+   * @static
+   * @property regex.TAG_HAS_NO_CONTENT
+   * @returns {RegExp} return Regular expression
+   * @example
+   * // TODO:
+   */
+  regex.TAG_HAS_NO_CONTENT = /<([^>]+)><\/\1>/;
+
   /*
    * export
    */
@@ -4417,6 +4440,7 @@
   aid.file = file;
   aid.clipboard = clipboard;
   aid.monad = monad;
+  aid.regex = regex;
 
   if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
