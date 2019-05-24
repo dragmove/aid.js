@@ -457,13 +457,13 @@ describe('aid.js', function() {
 
       it('get parameters from "http://www.google.com?name=", return {name: ""}', function() {
         expect(string.getUriParams('http://www.google.com?name=')).toEqual({
-          name: ''
+          name: '',
         });
       });
 
       it('get parameters from "http://www.google.com?name=foo", return {name:"foo"}', function() {
         expect(string.getUriParams('http://www.google.com?name=foo')).toEqual({
-          name: 'foo'
+          name: 'foo',
         });
       });
 
@@ -472,7 +472,7 @@ describe('aid.js', function() {
         expect(string.getUriParams(uri)).toEqual({
           name: 'foo',
           age: '99',
-          address: 'seoul'
+          address: 'seoul',
         });
       });
 
@@ -481,14 +481,14 @@ describe('aid.js', function() {
         expect(string.getUriParams(uri)).toEqual({
           name: 'foo',
           age: '99',
-          address: 'seoul'
+          address: 'seoul',
         });
       });
 
       it('get parameters from "http://www.google.com?name=foo&age", return {name: "foo"}', function() {
         var uri = 'http://www.google.com?name=foo&age';
         expect(string.getUriParams(uri)).toEqual({
-          name: 'foo'
+          name: 'foo',
         });
       });
 
@@ -496,7 +496,7 @@ describe('aid.js', function() {
         var uri = 'http://www.google.com?name=foo&age=';
         expect(string.getUriParams(uri)).toEqual({
           name: 'foo',
-          age: ''
+          age: '',
         });
       });
 
@@ -504,7 +504,7 @@ describe('aid.js', function() {
         var uri = 'http://www.google.com?name=foo&age===';
         expect(string.getUriParams(uri)).toEqual({
           name: 'foo',
-          age: '=='
+          age: '==',
         });
       });
     });
@@ -638,7 +638,7 @@ describe('aid.js', function() {
         var params = {
           name: 'foo',
           age: 99,
-          address: 'seoul'
+          address: 'seoul',
         };
         expect(string.getUriCombinedParams('http://www.google.com', params)).toEqual(
           'http://www.google.com?name=foo&age=99&address=seoul'
@@ -651,7 +651,7 @@ describe('aid.js', function() {
         var params = {
           name: 'foo',
           age: 99,
-          address: 'seoul'
+          address: 'seoul',
         };
 
         expect(string.getUriCombinedParams(uri, params)).toEqual(
@@ -775,7 +775,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: '',
           youtubeId: '',
-          isValidURI: false
+          isValidURI: false,
         });
 
         obj = string.getObjCheckYoutubeURI('aid.js');
@@ -783,7 +783,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'aid.js',
           youtubeId: '',
-          isValidURI: false
+          isValidURI: false,
         });
 
         obj = string.getObjCheckYoutubeURI('https://www.facebook.com/');
@@ -791,7 +791,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'https://www.facebook.com/',
           youtubeId: '',
-          isValidURI: false
+          isValidURI: false,
         });
       });
 
@@ -801,7 +801,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'youtube.com/watch?v=ZeGm7MDq2fo',
           youtubeId: 'ZeGm7MDq2fo',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('//youtube.com/watch?v=ZeGm7MDq2fo');
@@ -809,7 +809,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: '//youtube.com/watch?v=ZeGm7MDq2fo',
           youtubeId: 'ZeGm7MDq2fo',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('www.youtube.com/watch?v=ZeGm7MDq2fo');
@@ -817,7 +817,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'www.youtube.com/watch?v=ZeGm7MDq2fo',
           youtubeId: 'ZeGm7MDq2fo',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('//www.youtube.com/watch?v=ZeGm7MDq2fo');
@@ -825,7 +825,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: '//www.youtube.com/watch?v=ZeGm7MDq2fo',
           youtubeId: 'ZeGm7MDq2fo',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('http://www.youtube.com/watch?v=ZeGm7MDq2fo');
@@ -833,7 +833,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'http://www.youtube.com/watch?v=ZeGm7MDq2fo',
           youtubeId: 'ZeGm7MDq2fo',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('https://www.youtube.com/watch?v=ZeGm7MDq2fo');
@@ -841,7 +841,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'https://www.youtube.com/watch?v=ZeGm7MDq2fo',
           youtubeId: 'ZeGm7MDq2fo',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('http://www.youtube.com/watch?v=yVpbFMhOAwE');
@@ -849,7 +849,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'http://www.youtube.com/watch?v=yVpbFMhOAwE',
           youtubeId: 'yVpbFMhOAwE',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('http://www.youtube.com/watch?v=yVpbFMhOAwE&feature=g-vrec');
@@ -857,7 +857,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'http://www.youtube.com/watch?v=yVpbFMhOAwE&feature=g-vrec',
           youtubeId: 'yVpbFMhOAwE',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('http://www.youtube.com/watch?v=yVpbFMhOAwE&feature=player_embedded');
@@ -865,7 +865,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'http://www.youtube.com/watch?v=yVpbFMhOAwE&feature=player_embedded',
           youtubeId: 'yVpbFMhOAwE',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('http://www.youtube.com/watch?NR=1&feature=endscreen&v=yVpbFMhOAwE');
@@ -873,7 +873,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'http://www.youtube.com/watch?NR=1&feature=endscreen&v=yVpbFMhOAwE',
           youtubeId: 'yVpbFMhOAwE',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('https://www.youtube.com/watch?v=FZu097wb8wU&list=RDFZu097wb8wU');
@@ -881,7 +881,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'https://www.youtube.com/watch?v=FZu097wb8wU&list=RDFZu097wb8wU',
           youtubeId: 'FZu097wb8wU',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('http://www.youtube.com/watch?feature=g-vrec&v=yVpbFMhOAwE');
@@ -889,7 +889,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'http://www.youtube.com/watch?feature=g-vrec&v=yVpbFMhOAwE',
           youtubeId: 'yVpbFMhOAwE',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('http://www.youtube.com/watch?feature=player_embedded&v=yVpbFMhOAwE');
@@ -897,7 +897,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'http://www.youtube.com/watch?feature=player_embedded&v=yVpbFMhOAwE',
           youtubeId: 'yVpbFMhOAwE',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('https://www.youtube.com/watch?list=RDFZu097wb8wU&v=FZu097wb8wU');
@@ -905,7 +905,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'https://www.youtube.com/watch?list=RDFZu097wb8wU&v=FZu097wb8wU',
           youtubeId: 'FZu097wb8wU',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('https://www.youtube.com/watch?v=YgZpL-3IVoI');
@@ -913,7 +913,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'https://www.youtube.com/watch?v=YgZpL-3IVoI',
           youtubeId: 'YgZpL-3IVoI',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('youtube.com/embed/ZeGm7MDq2fo');
@@ -921,7 +921,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'youtube.com/embed/ZeGm7MDq2fo',
           youtubeId: 'ZeGm7MDq2fo',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('//youtube.com/embed/ZeGm7MDq2fo');
@@ -929,7 +929,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: '//youtube.com/embed/ZeGm7MDq2fo',
           youtubeId: 'ZeGm7MDq2fo',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('www.youtube.com/embed/ZeGm7MDq2fo');
@@ -937,7 +937,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'www.youtube.com/embed/ZeGm7MDq2fo',
           youtubeId: 'ZeGm7MDq2fo',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('//www.youtube.com/embed/ZeGm7MDq2fo');
@@ -945,7 +945,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: '//www.youtube.com/embed/ZeGm7MDq2fo',
           youtubeId: 'ZeGm7MDq2fo',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('http://www.youtube.com/embed/ZeGm7MDq2fo');
@@ -953,7 +953,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'http://www.youtube.com/embed/ZeGm7MDq2fo',
           youtubeId: 'ZeGm7MDq2fo',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('https://www.youtube.com/embed/ZeGm7MDq2fo');
@@ -961,7 +961,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'https://www.youtube.com/embed/ZeGm7MDq2fo',
           youtubeId: 'ZeGm7MDq2fo',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('youtube.com/embed/YgZpL-3IVoI');
@@ -969,7 +969,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'youtube.com/embed/YgZpL-3IVoI',
           youtubeId: 'YgZpL-3IVoI',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('http://www.youtube.com/v/yVpbFMhOAwE?fs=1&hl=en_US');
@@ -977,7 +977,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'http://www.youtube.com/v/yVpbFMhOAwE?fs=1&hl=en_US',
           youtubeId: 'yVpbFMhOAwE',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('http://www.youtube.com/v/yVpbFMhOAwE?fs=1&hl=en_US');
@@ -985,7 +985,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'http://www.youtube.com/v/yVpbFMhOAwE?fs=1&hl=en_US',
           youtubeId: 'yVpbFMhOAwE',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('http://www.youtube.com/v/YgZpL-3IVoI?fs=1&hl=en_US');
@@ -993,7 +993,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'http://www.youtube.com/v/YgZpL-3IVoI?fs=1&hl=en_US',
           youtubeId: 'YgZpL-3IVoI',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('youtu.be/ZeGm7MDq2fo');
@@ -1001,7 +1001,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'youtu.be/ZeGm7MDq2fo',
           youtubeId: 'ZeGm7MDq2fo',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('//youtu.be/ZeGm7MDq2fo');
@@ -1009,7 +1009,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: '//youtu.be/ZeGm7MDq2fo',
           youtubeId: 'ZeGm7MDq2fo',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('http://youtu.be/ZeGm7MDq2fo');
@@ -1017,7 +1017,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'http://youtu.be/ZeGm7MDq2fo',
           youtubeId: 'ZeGm7MDq2fo',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('https://youtu.be/ZeGm7MDq2fo');
@@ -1025,7 +1025,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'https://youtu.be/ZeGm7MDq2fo',
           youtubeId: 'ZeGm7MDq2fo',
-          isValidURI: true
+          isValidURI: true,
         });
 
         obj = string.getObjCheckYoutubeURI('https://youtu.be/YgZpL-3IVoI');
@@ -1033,7 +1033,7 @@ describe('aid.js', function() {
           type: 'youtube',
           uri: 'https://youtu.be/YgZpL-3IVoI',
           youtubeId: 'YgZpL-3IVoI',
-          isValidURI: true
+          isValidURI: true,
         });
       });
     });
@@ -1141,7 +1141,7 @@ describe('aid.js', function() {
         }).toThrowError(TypeError);
       });
 
-      it('ignoreWhitespaceContent argument is not Boolean type, throw TypeError when ignoreWhitespaceContent argument is defined.', function() {
+      it('withWhitespaceContent argument is not Boolean type, throw TypeError when withWhitespaceContent argument is defined.', function() {
         expect(function() {
           string.removeNoContentElements('', 0);
         }).toThrowError(TypeError);
@@ -1168,59 +1168,80 @@ describe('aid.js', function() {
       });
 
       it('input (html string), return string removed elements have no content and no whitespaces.', function() {
-        expect(string.removeNoContentElements('foo bar baz')).toEqual(
-          'foo bar baz'
-        );
+        expect(string.removeNoContentElements('foo bar baz')).toEqual('foo bar baz');
 
-        expect(string.removeNoContentElements('<span>foo</span>')).toEqual(
-          '<span>foo</span>'
-        );
-
-        expect(string.removeNoContentElements('<span> </span>')).toEqual(
-          '<span> </span>'
-        );
+        expect(string.removeNoContentElements('<span>foo</span>')).toEqual('<span>foo</span>');
 
         expect(string.removeNoContentElements('<span></span>')).toEqual('');
 
-        expect(
-          string.removeNoContentElements('<div><span> </span><p> </p></div>')
-        ).toEqual('<div><span> </span><p> </p></div>');
+        expect(string.removeNoContentElements('<span> </span>')).toEqual('<span> </span>');
+
+        expect(string.removeNoContentElements('<div><span>foo</span><p>bar</p></div>')).toEqual(
+          '<div><span>foo</span><p>bar</p></div>'
+        );
+
+        expect(string.removeNoContentElements('<div><span>foo</span><p></p><em> </em></div>')).toEqual(
+          '<div><span>foo</span><em> </em></div>'
+        );
+
+        expect(string.removeNoContentElements('<div><span> </span><p> </p></div>')).toEqual(
+          '<div><span> </span><p> </p></div>'
+        );
+
+        expect(string.removeNoContentElements('<div>foo<span></span>bar<p></p>baz</div>')).toEqual(
+          '<div>foobarbaz</div>'
+        );
+
+        expect(string.removeNoContentElements('<div><span>foo</span><p></p>baz</div>')).toEqual(
+          '<div><span>foo</span>baz</div>'
+        );
 
         expect(
-          string.removeNoContentElements(
-            '<div><span>foo</span><p>bar</p></div>'
-          )
-        ).toEqual('<div><span>foo</span><p>bar</p></div>');
+          string.removeNoContentElements('<div><span>foo</span><p><span><strong><em></em></strong></span></p></div>')
+        ).toEqual('<div><span>foo</span><p><span><strong></strong></span></p></div>');
 
-        expect(
-          string.removeNoContentElements(
-            '<div>foo<span></span>bar<p></p>baz</div>'
-          )
-        ).toEqual('<div>foobarbaz</div>');
+        expect(string.removeNoContentElements('<div><p><span><strong><em></em></strong></span></p></div>')).toEqual(
+          '<div><p><span><strong></strong></span></p></div>'
+        );
+      });
 
-        expect(
-          string.removeNoContentElements(
-            '<div><span>foo</span><p></p>baz</div>'
-          )
-        ).toEqual('<div><span>foo</span>baz</div>');
+      it('input (html string, true), return string removed elements have no content including whitespaces.', function() {
+        expect(string.removeNoContentElements('foo bar baz', true)).toEqual('foo bar baz');
 
-        expect(
-          string.removeNoContentElements(
-            '<div><span>foo</span><p><span><strong><em></em></strong></span></p></div>'
-          )
-        ).toEqual(
-          '<div><span>foo</span><p><span><strong></strong></span></p></div>'
+        expect(string.removeNoContentElements('<span>foo</span>', true)).toEqual('<span>foo</span>');
+
+        expect(string.removeNoContentElements('<span></span>', true)).toEqual('');
+
+        expect(string.removeNoContentElements('<span> </span>', true)).toEqual('');
+
+        expect(string.removeNoContentElements('<div><span>foo</span><p>bar</p></div>', true)).toEqual(
+          '<div><span>foo</span><p>bar</p></div>'
+        );
+
+        expect(string.removeNoContentElements('<div><span>foo</span><p></p><em> </em></div>', true)).toEqual(
+          '<div><span>foo</span></div>'
+        );
+
+        expect(string.removeNoContentElements('<div><span> </span><p> </p></div>', true)).toEqual('<div></div>');
+
+        expect(string.removeNoContentElements('<div>foo<span></span>bar<p></p>baz</div>', true)).toEqual(
+          '<div>foobarbaz</div>'
+        );
+
+        expect(string.removeNoContentElements('<div><span>foo</span><p></p>baz</div>', true)).toEqual(
+          '<div><span>foo</span>baz</div>'
         );
 
         expect(
           string.removeNoContentElements(
-            '<div><p><span><strong><em></em></strong></span></p></div>'
+            '<div><span>foo</span><p><span><strong><em></em></strong></span></p></div>',
+            true
           )
-        ).toEqual('<div><p><span><strong></strong></span></p></div>');
-      });
+        ).toEqual('<div><span>foo</span><p><span><strong></strong></span></p></div>');
 
-      it('input (html string, true), return string removed elements have no content.', function() {
-        // TODO: ignoreWhitespaceContent implement
+        expect(
+          string.removeNoContentElements('<div><p><span><strong><em></em></strong></span></p></div>', true)
+        ).toEqual('<div><p><span><strong></strong></span></p></div>');
       });
     });
 
@@ -1367,38 +1388,38 @@ describe('aid.js', function() {
       it('return {x: 99, y: 0}, when input "translate(99px)" string.', function() {
         expect(string.getPositionFromTranslateStr('translate(99px)')).toEqual({
           x: 99,
-          y: 0
+          y: 0,
         });
       });
       it('return {x: 99, y: 0}, when input "translate(99)" string.', function() {
         expect(string.getPositionFromTranslateStr('translate(99)')).toEqual({
           x: 99,
-          y: 0
+          y: 0,
         });
       });
       it('return {x: -99, y: 0}, when input "translate(-99px)" string.', function() {
         expect(string.getPositionFromTranslateStr('translate(-99px)')).toEqual({
           x: -99,
-          y: 0
+          y: 0,
         });
       });
       it('return {x: -99, y: 0}, when input "translate(-99)" string.', function() {
         expect(string.getPositionFromTranslateStr('translate(-99)')).toEqual({
           x: -99,
-          y: 0
+          y: 0,
         });
       });
 
       it('return {x: 99, y: 0}, when input "translateX(99px)" string.', function() {
         expect(string.getPositionFromTranslateStr('translateX(99px)')).toEqual({
           x: 99,
-          y: 0
+          y: 0,
         });
       });
       it('return {x: 99, y: 0}, when input "translateX(99)" string.', function() {
         expect(string.getPositionFromTranslateStr('translateX(99)')).toEqual({
           x: 99,
-          y: 0
+          y: 0,
         });
       });
       it('return {x: -99, y: 0}, when input "translateX(-99px)" string.', function() {
@@ -1407,20 +1428,20 @@ describe('aid.js', function() {
       it('return {x: -99, y: 0}, when input "translateX(-99)" string.', function() {
         expect(string.getPositionFromTranslateStr('translateX(-99)')).toEqual({
           x: -99,
-          y: 0
+          y: 0,
         });
       });
 
       it('return {x: 0, y: 99}, when input "translateY(99px)" string.', function() {
         expect(string.getPositionFromTranslateStr('translateY(99px)')).toEqual({
           x: 0,
-          y: 99
+          y: 99,
         });
       });
       it('return {x: 0, y: 99}, when input "translateY(99)" string.', function() {
         expect(string.getPositionFromTranslateStr('translateY(99)')).toEqual({
           x: 0,
-          y: 99
+          y: 99,
         });
       });
       it('return {x: 0, y: -99}, when input "translateY(-99px)" string.', function() {
@@ -1429,7 +1450,7 @@ describe('aid.js', function() {
       it('return {x: 0, y: -99}, when input "translateY(-99)" string.', function() {
         expect(string.getPositionFromTranslateStr('translateY(-99)')).toEqual({
           x: 0,
-          y: -99
+          y: -99,
         });
       });
     });

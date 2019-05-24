@@ -25,8 +25,7 @@
     element = {},
     file = {},
     clipboard = {},
-    monad = {}, // https://en.wikipedia.org/wiki/Monad_(functional_programming)
-    regex = {};
+    monad = {}; // https://en.wikipedia.org/wiki/Monad_(functional_programming)
 
   /**
    * is null/undefined or other
@@ -889,7 +888,7 @@
         return calls.reduce(function(ret, thunk) {
           return thunk(ret);
         }, obj);
-      }
+      },
     };
   };
 
@@ -1580,7 +1579,7 @@
       return {
         isIE: false,
         isCompatibilityMode: false,
-        compatibilityVersion: -1
+        compatibilityVersion: -1,
       };
     }
 
@@ -1589,7 +1588,7 @@
       return {
         isIE: true,
         isCompatibilityMode: false,
-        compatibilityVersion: -1
+        compatibilityVersion: -1,
       };
     }
 
@@ -1599,28 +1598,28 @@
         return {
           isIE: true,
           isCompatibilityMode: true,
-          compatibilityVersion: 7
+          compatibilityVersion: 7,
         };
 
       if (regex_msie8.test(ua))
         return {
           isIE: true,
           isCompatibilityMode: true,
-          compatibilityVersion: 8
+          compatibilityVersion: 8,
         };
 
       if (regex_msie9.test(ua))
         return {
           isIE: true,
           isCompatibilityMode: true,
-          compatibilityVersion: 9
+          compatibilityVersion: 9,
         };
 
       if (regex_msie10.test(ua))
         return {
           isIE: true,
           isCompatibilityMode: true,
-          compatibilityVersion: 10
+          compatibilityVersion: 10,
         };
     }
 
@@ -1629,7 +1628,7 @@
       return {
         isIE: true,
         isCompatibilityMode: true,
-        compatibilityVersion: 7
+        compatibilityVersion: 7,
       };
     }
 
@@ -1637,7 +1636,7 @@
     return {
       isIE: true,
       isCompatibilityMode: false,
-      compatibilityVersion: -1
+      compatibilityVersion: -1,
     };
   };
 
@@ -2035,7 +2034,7 @@
       watch: /^(?:(?:https?:)?\/\/)?(?:www\.)?youtube\.com\/watch/,
       embed: /^(?:(?:https?:)?\/\/)?(?:www\.)?youtube\.com\/(?:embed\/((?:\w|-|_){11}))/,
       v: /^(?:(?:https?:)?\/\/)?(?:www\.)?youtube\.com\/(?:v\/((?:\w|-|_){11}))/,
-      'youtu.be': /^(?:(?:https?:)?\/\/)?(?:www\.)?youtu\.be\/((?:\w|-|_){11})/
+      'youtu.be': /^(?:(?:https?:)?\/\/)?(?:www\.)?youtu\.be\/((?:\w|-|_){11})/,
     };
 
     var uriType = null;
@@ -2081,7 +2080,7 @@
       type: 'youtube',
       uri: uri,
       youtubeId: youtubeId,
-      isValidURI: isValidURI
+      isValidURI: isValidURI,
     };
   };
 
@@ -2135,7 +2134,7 @@
       liveVideo: /^(?:(?:https?:)?\/\/)?player\.twitch\.tv\/\?channel\=([a-zA-Z0-9][\w]{2,24})$/,
       chatting: /^(?:(?:https?:)?\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9][\w]{2,24})\/chat/,
       pastChannel: /^(?:(?:https?:)?\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9][\w]{2,24})\/v\/(\d+)/,
-      pastVideo: /^(?:(?:https?:)?\/\/)?player\.twitch\.tv\/\?video\=v(\d+)/
+      pastVideo: /^(?:(?:https?:)?\/\/)?player\.twitch\.tv\/\?video\=v(\d+)/,
     };
 
     var channelName = '',
@@ -2201,7 +2200,7 @@
       channelName: channelName,
       videoId: videoId,
       isChatting: isChatting,
-      isValidURI: isValidURI
+      isValidURI: isValidURI,
     };
   };
 
@@ -2282,37 +2281,31 @@
   };
 
   /**
-   * remove no content elements from html string
+   * get string removed no content elements from html
    *
    * @static
    * @method removeNoContentElements
    * @param {String} html
-   * @param (Boolean) ignoreWhitespaceContent (optional)
+   * @param (Boolean) withWhitespaceContent (optional)
    * @returns {String} return html string
    * @example
+   * console.log( aid.string.removeNoContentElements('<div><span>foo</span><p></p><em> </em></div>') ); // '<div><span>foo</span><em> </em></div>'
+   * console.log( aid.string.removeNoContentElements('<div><span>foo</span><p></p><em> </em></div>', true) ); // '<div><span>foo</span></div>'
    */
-  string.removeNoContentElements = function removeNoContentElements(
-    html,
-    ignoreWhitespaceContent
-  ) {
+  string.removeNoContentElements = function removeNoContentElements(html, withWhitespaceContent) {
     if (!aid.isString(html))
-      throw new TypeError(
-        '[aid.string.removeNoContentElements] Type of html parameter must be String.'
-      );
+      throw new TypeError('[aid.string.removeNoContentElements] Type of html parameter must be String.');
 
-    if (aid.isDefined(ignoreWhitespaceContent)) {
-      // ignoreWhitespaceContent parameter is defined
-      if (!aid.isBoolean(ignoreWhitespaceContent))
+    if (aid.isDefined(withWhitespaceContent)) {
+      // withWhitespaceContent parameter is defined
+      if (!aid.isBoolean(withWhitespaceContent))
         throw new TypeError(
-          '[aid.string.removeNoContentElements] Type of ignoreWhitespaceContent parameter must be Boolean.'
+          '[aid.string.removeNoContentElements] Type of withWhitespaceContent parameter must be Boolean.'
         );
     }
 
-    var isIgnoreWhitespaceContents = ignoreWhitespaceContent;
-
-    // TODO: ignoreWhitespaceContent implement
-
-    return html.replace(/<([^>]+)><\/\1>/g, '');
+    var regex = withWhitespaceContent ? /<([^>]+)>\s*<\/\1>/g : /<([^>]+)><\/\1>/g;
+    return html.replace(regex, '');
   };
 
   /**
@@ -2370,7 +2363,7 @@
 
     var obj = {
       x: 0,
-      y: 0
+      y: 0,
     };
     if (!aid.isDefined(str)) return obj;
 
@@ -2535,7 +2528,7 @@
 
     return {
       width: modifiedSizeW,
-      height: modifiedSizeH
+      height: modifiedSizeH,
     };
   };
 
@@ -2564,7 +2557,7 @@
 
     return {
       width: modifiedSizeW,
-      height: modifiedSizeH
+      height: modifiedSizeH,
     };
   };
 
@@ -2591,7 +2584,7 @@
 
     return {
       width: modifiedSizeW,
-      height: modifiedSizeH
+      height: modifiedSizeH,
     };
   };
 
@@ -2817,7 +2810,7 @@
       prevPageIndex: prevPageIndex,
       firstPageIndex: firstPageIndex,
       lastPageIndex: lastPageIndex,
-      nextPageIndex: nextPageIndex
+      nextPageIndex: nextPageIndex,
     };
   };
 
@@ -2959,13 +2952,13 @@
     if (diffX === 0)
       return {
         x: collinearPoint1.x,
-        y: somePoint.y
+        y: somePoint.y,
       };
 
     if (diffY === 0)
       return {
         x: somePoint.x,
-        y: collinearPoint1.y
+        y: collinearPoint1.y,
       };
 
     var lineSlope = diffY / diffX,
@@ -3161,7 +3154,7 @@
     'September',
     'October',
     'November',
-    'December'
+    'December',
   ];
 
   /**
@@ -3791,7 +3784,7 @@
         'hasOwnProperty',
         'isPrototypeOf',
         'propertyIsEnumerable',
-        'constructor'
+        'constructor',
       ],
       dontEnumsLength = dontEnums.length;
 
@@ -4437,28 +4430,6 @@
 
   monad.IO = IO;
 
-  /**
-   * new line regex
-   *
-   * @static
-   * @property regex.LINE_BREAK
-   * @returns {RegExp} return Regular expression
-   * @example
-   * // TODO:
-   */
-  regex.LINE_BREAK = /(\r\n|\n|\r)/;
-
-  /**
-   * tag has no content regex
-   *
-   * @static
-   * @property regex.TAG_HAS_NO_CONTENT
-   * @returns {RegExp} return Regular expression
-   * @example
-   * // TODO:
-   */
-  regex.TAG_HAS_NO_CONTENT = /<([^>]+)><\/\1>/;
-
   /*
    * export
    */
@@ -4474,7 +4445,6 @@
   aid.file = file;
   aid.clipboard = clipboard;
   aid.monad = monad;
-  aid.regex = regex;
 
   if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {

@@ -40,7 +40,7 @@ gulp.task('minify', function() {
 gulp.task('karma', function(done) {
   new Server(
     {
-      configFile: __dirname + '/js/tests/karma.conf.js'
+      configFile: __dirname + '/js/tests/karma.conf.js',
       // singleRun: true
     },
     done

@@ -112,7 +112,7 @@ describe('aid.js', function() {
           object.keys({
             name: 'foo',
             job: 'programmer',
-            works: [{ id: 1, year: 1999 }]
+            works: [{ id: 1, year: 1999 }],
           })
         ).toEqual(['name', 'job', 'works']);
       });
@@ -174,14 +174,14 @@ describe('aid.js', function() {
             name: 'foo',
             job: undefined,
             issue: null,
-            hasMoney: false
+            hasMoney: false,
           },
           objB = {
             id: 99,
             name: 'foo',
             job: undefined,
             issue: null,
-            hasMoney: false
+            hasMoney: false,
           };
 
         expect(object.shallowEqual(objA, objB)).toEqual(true);

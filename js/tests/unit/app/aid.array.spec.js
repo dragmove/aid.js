@@ -584,11 +584,11 @@ describe('aid.js', function() {
       it('if property key is "index", target value is 1, return null', function() {
         arrayHasObjects = [
           {
-            no: 1
+            no: 1,
           },
           {
-            no: 2
-          }
+            no: 2,
+          },
         ];
         expect(array.getFirstObjectHasProperty(arrayHasObjects, 'index', 1)).toEqual(null);
         expect(array.getFirstObjectHasProperty(arrayHasObjects, 'index', new RegExp('^1'))).toEqual(null);
@@ -598,20 +598,20 @@ describe('aid.js', function() {
       it('if property key is "no", target value is 11, return {no: 11}', function() {
         arrayHasObjects = [
           {
-            no: 11
+            no: 11,
           },
           {
-            no: 22
-          }
+            no: 22,
+          },
         ];
         expect(array.getFirstObjectHasProperty(arrayHasObjects, 'no', 11)).toEqual({
-          no: 11
+          no: 11,
         });
         expect(array.getFirstObjectHasProperty(arrayHasObjects, 'no', new RegExp('^1'))).toEqual({
-          no: 11
+          no: 11,
         });
         expect(array.getFirstObjectHasProperty(arrayHasObjects, 'no', /^(1)\d/)).toEqual({
-          no: 11
+          no: 11,
         });
       });
     });
@@ -638,8 +638,8 @@ describe('aid.js', function() {
           {
             group: 1,
             level: 1,
-            date: '2017-01-01T00:00:00.000Z'
-          }
+            date: '2017-01-01T00:00:00.000Z',
+          },
         ];
         expect(array.overlappedConditionSortByProperty(arr)).toEqual(arr);
       });
@@ -652,8 +652,8 @@ describe('aid.js', function() {
             {
               group: 1,
               level: 1,
-              date: '2017-01-01T00:00:00.000Z'
-            }
+              date: '2017-01-01T00:00:00.000Z',
+            },
           ];
         });
 
@@ -669,8 +669,8 @@ describe('aid.js', function() {
           {
             group: 1,
             level: 1,
-            date: '2017-01-01T00:00:00.000Z'
-          }
+            date: '2017-01-01T00:00:00.000Z',
+          },
         ];
         expect(array.overlappedConditionSortByProperty(arr, [])).toEqual(arr);
       });
@@ -680,13 +680,13 @@ describe('aid.js', function() {
           {
             group: 1,
             level: 1,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 1,
             level: 2,
-            date: '2017-01-01T00:00:00.000Z'
-          }
+            date: '2017-01-01T00:00:00.000Z',
+          },
         ];
 
         expect(
@@ -695,8 +695,8 @@ describe('aid.js', function() {
               property: 'level',
               func: function(a, b) {
                 return b.level - a.level;
-              }
-            }
+              },
+            },
           ])
         ).toEqual(arr.reverse());
       });
@@ -706,13 +706,13 @@ describe('aid.js', function() {
           {
             group: 1,
             level: 1,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 1,
             level: 2,
-            date: '2017-01-01T00:00:00.000Z'
-          }
+            date: '2017-01-01T00:00:00.000Z',
+          },
         ];
 
         expect(
@@ -721,8 +721,8 @@ describe('aid.js', function() {
               property: 'level',
               func: function(a, b) {
                 return b.level - a.level;
-              }
-            }
+              },
+            },
           ])
         ).toEqual(arr.reverse());
       });
@@ -732,13 +732,13 @@ describe('aid.js', function() {
           {
             group: 1,
             level: 1,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 1,
             level: 2,
-            date: '2017-01-01T00:00:00.000Z'
-          }
+            date: '2017-01-01T00:00:00.000Z',
+          },
         ];
 
         expect(
@@ -747,8 +747,8 @@ describe('aid.js', function() {
               property: 'level',
               func: function(a, b) {
                 return a.level - b.level;
-              }
-            }
+              },
+            },
           ])
         ).toEqual(arr);
 
@@ -756,18 +756,18 @@ describe('aid.js', function() {
           {
             group: 2,
             level: 1,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 2,
             level: 2,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 2,
             level: 3,
-            date: '2017-01-01T00:00:00.000Z'
-          }
+            date: '2017-01-01T00:00:00.000Z',
+          },
         ];
 
         expect(
@@ -776,8 +776,8 @@ describe('aid.js', function() {
               property: 'level',
               func: function(a, b) {
                 return b.level - a.level;
-              }
-            }
+              },
+            },
           ])
         ).toEqual(arr.reverse());
 
@@ -785,13 +785,13 @@ describe('aid.js', function() {
           {
             group: 3,
             level: 1,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 3,
             level: 1,
-            date: '2017-01-02T00:00:00.000Z'
-          }
+            date: '2017-01-02T00:00:00.000Z',
+          },
         ];
 
         expect(
@@ -800,8 +800,8 @@ describe('aid.js', function() {
               property: 'date',
               func: function(a, b) {
                 return new Date(a.date).getTime() - new Date(b.date).getTime();
-              }
-            }
+              },
+            },
           ])
         ).toEqual(arr);
       });
@@ -811,28 +811,28 @@ describe('aid.js', function() {
           {
             group: 1,
             level: 1,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 2,
             level: 2,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 2,
             level: 3,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 1,
             level: 2,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 2,
             level: 1,
-            date: '2017-01-01T00:00:00.000Z'
-          }
+            date: '2017-01-01T00:00:00.000Z',
+          },
         ];
 
         var result = array.overlappedConditionSortByProperty(arr, [
@@ -840,42 +840,42 @@ describe('aid.js', function() {
             property: 'group',
             func: function(a, b) {
               return a.group - b.group;
-            }
+            },
           },
           {
             property: 'level',
             func: function(a, b) {
               return a.level - b.level;
-            }
-          }
+            },
+          },
         ]);
 
         expect(result).toEqual([
           {
             group: 1,
             level: 1,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 1,
             level: 2,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 2,
             level: 1,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 2,
             level: 2,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 2,
             level: 3,
-            date: '2017-01-01T00:00:00.000Z'
-          }
+            date: '2017-01-01T00:00:00.000Z',
+          },
         ]);
       });
 
@@ -884,53 +884,53 @@ describe('aid.js', function() {
           {
             group: 3,
             level: 1,
-            date: '2017-02-04T00:00:00.000Z'
+            date: '2017-02-04T00:00:00.000Z',
           },
           {
             group: 1,
             level: 1,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 2,
             level: 3,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 3,
             level: 1,
-            date: '2017-01-03T00:00:00.000Z'
+            date: '2017-01-03T00:00:00.000Z',
           },
           {
             group: 2,
             level: 1,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 4,
             level: 1,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 3,
             level: 2,
-            date: '2017-01-03T00:00:00.000Z'
+            date: '2017-01-03T00:00:00.000Z',
           },
           {
             group: 1,
             level: 2,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 3,
             level: 2,
-            date: '2017-02-04T00:00:00.000Z'
+            date: '2017-02-04T00:00:00.000Z',
           },
           {
             group: 2,
             level: 2,
-            date: '2017-01-01T00:00:00.000Z'
-          }
+            date: '2017-01-01T00:00:00.000Z',
+          },
         ];
 
         var result = array.overlappedConditionSortByProperty(arr, [
@@ -938,77 +938,77 @@ describe('aid.js', function() {
             property: 'group',
             func: function(a, b) {
               return a.group - b.group;
-            }
+            },
           },
           {
             property: 'level',
             func: function(a, b) {
               return a.level - b.level;
-            }
+            },
           },
           {
             property: 'date',
             func: function(a, b) {
               return new Date(a.date).getTime() - new Date(b.date).getTime();
-            }
-          }
+            },
+          },
         ]);
 
         expect(result).toEqual([
           {
             group: 1,
             level: 1,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 1,
             level: 2,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
 
           {
             group: 2,
             level: 1,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 2,
             level: 2,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
           {
             group: 2,
             level: 3,
-            date: '2017-01-01T00:00:00.000Z'
+            date: '2017-01-01T00:00:00.000Z',
           },
 
           {
             group: 3,
             level: 1,
-            date: '2017-01-03T00:00:00.000Z'
+            date: '2017-01-03T00:00:00.000Z',
           },
           {
             group: 3,
             level: 1,
-            date: '2017-02-04T00:00:00.000Z'
+            date: '2017-02-04T00:00:00.000Z',
           },
 
           {
             group: 3,
             level: 2,
-            date: '2017-01-03T00:00:00.000Z'
+            date: '2017-01-03T00:00:00.000Z',
           },
           {
             group: 3,
             level: 2,
-            date: '2017-02-04T00:00:00.000Z'
+            date: '2017-02-04T00:00:00.000Z',
           },
 
           {
             group: 4,
             level: 1,
-            date: '2017-01-01T00:00:00.000Z'
-          }
+            date: '2017-01-01T00:00:00.000Z',
+          },
         ]);
       });
     });
