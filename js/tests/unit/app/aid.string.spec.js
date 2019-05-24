@@ -108,15 +108,11 @@ describe('aid.js', function() {
       });
 
       it('input "abcdefghijklmnopqrstuvwxyz", return true.', function() {
-        expect(string.hasUniqueChars('abcdefghijklmnopqrstuvwxyz')).toEqual(
-          true
-        );
+        expect(string.hasUniqueChars('abcdefghijklmnopqrstuvwxyz')).toEqual(true);
       });
 
       it('input "abcdefghijklmnopqrstuvwxyzz", return false.', function() {
-        expect(string.hasUniqueChars('abcdefghijklmnopqrstuvwxyzz')).toEqual(
-          false
-        );
+        expect(string.hasUniqueChars('abcdefghijklmnopqrstuvwxyzz')).toEqual(false);
       });
 
       it('input "123451", return false.', function() {
@@ -370,48 +366,33 @@ describe('aid.js', function() {
       });
 
       it('get foo from "http://www.google.com?name=foo&age=99&address=seoul#foo=1&bar=3", return ""', function() {
-        expect(
-          string.getUriParam(
-            'http://www.google.com?name=foo&age=99&address=seoul#foo=1&bar=3',
-            'foo'
-          )
-        ).toEqual('');
+        expect(string.getUriParam('http://www.google.com?name=foo&age=99&address=seoul#foo=1&bar=3', 'foo')).toEqual(
+          ''
+        );
       });
 
       it('get name from "http://www.google.com?name=foo&age=99&address=seoul#foo=1&bar=3", return ""', function() {
-        expect(
-          string.getUriParam(
-            'http://www.google.com?name=foo&age=99&address=seoul#foo=1&bar=3',
-            'name'
-          )
-        ).toEqual('foo');
+        expect(string.getUriParam('http://www.google.com?name=foo&age=99&address=seoul#foo=1&bar=3', 'name')).toEqual(
+          'foo'
+        );
       });
 
       it('get address from "http://www.google.com?name=foo&age=99&address=seoul#foo=1&bar=3", return "seoul"', function() {
         expect(
-          string.getUriParam(
-            'http://www.google.com?name=foo&age=99&address=seoul#foo=1&bar=3',
-            'address'
-          )
+          string.getUriParam('http://www.google.com?name=foo&age=99&address=seoul#foo=1&bar=3', 'address')
         ).toEqual('seoul');
       });
 
       it('get age from "http://www.google.com?age", return ""', function() {
-        expect(string.getUriParam('http://www.google.com?age', 'age')).toEqual(
-          ''
-        );
+        expect(string.getUriParam('http://www.google.com?age', 'age')).toEqual('');
       });
 
       it('get age from "http://www.google.com?age=", return ""', function() {
-        expect(string.getUriParam('http://www.google.com?age=', 'age')).toEqual(
-          ''
-        );
+        expect(string.getUriParam('http://www.google.com?age=', 'age')).toEqual('');
       });
 
       it('get age from "http://www.google.com?age===", return "=="', function() {
-        expect(
-          string.getUriParam('http://www.google.com?age===', 'age')
-        ).toEqual('==');
+        expect(string.getUriParam('http://www.google.com?age===', 'age')).toEqual('==');
       });
     });
 
@@ -496,8 +477,7 @@ describe('aid.js', function() {
       });
 
       it('get parameters from "http://www.google.com?name=foo&age=99&address=seoul#foo=1&bar=3", return {name: "foo", age: "99", address: "seoul"}', function() {
-        var uri =
-          'http://www.google.com?name=foo&age=99&address=seoul#foo=1&bar=3';
+        var uri = 'http://www.google.com?name=foo&age=99&address=seoul#foo=1&bar=3';
         expect(string.getUriParams(uri)).toEqual({
           name: 'foo',
           age: '99',
@@ -625,15 +605,11 @@ describe('aid.js', function() {
       });
 
       it('combine "#" and {name: "foo"}, return "?name=foo"', function() {
-        expect(string.getUriCombinedParams('#', { name: 'foo' })).toEqual(
-          '?name=foo'
-        );
+        expect(string.getUriCombinedParams('#', { name: 'foo' })).toEqual('?name=foo');
       });
 
       it('combine "#" and {name: "foo", age: 99}, return "?name=foo&age=99"', function() {
-        expect(
-          string.getUriCombinedParams('#', { name: 'foo', age: 99 })
-        ).toEqual('?name=foo&age=99');
+        expect(string.getUriCombinedParams('#', { name: 'foo', age: 99 })).toEqual('?name=foo&age=99');
       });
 
       it('combine "/" and {}, return "/"', function() {
@@ -641,27 +617,21 @@ describe('aid.js', function() {
       });
 
       it('combine "/" and {name: "foo"}, return "/?name=foo"', function() {
-        expect(string.getUriCombinedParams('/', { name: 'foo' })).toEqual(
-          '/?name=foo'
-        );
+        expect(string.getUriCombinedParams('/', { name: 'foo' })).toEqual('/?name=foo');
       });
 
       it('combine "/" and {name: "foo", age: 99}, return "/?name=foo&age=99"', function() {
-        expect(
-          string.getUriCombinedParams('/', { name: 'foo', age: 99 })
-        ).toEqual('/?name=foo&age=99');
+        expect(string.getUriCombinedParams('/', { name: 'foo', age: 99 })).toEqual('/?name=foo&age=99');
       });
 
       it('combine "http://www.google.com" and {}, return "http://www.google.com"', function() {
-        expect(
-          string.getUriCombinedParams('http://www.google.com', {})
-        ).toEqual('http://www.google.com');
+        expect(string.getUriCombinedParams('http://www.google.com', {})).toEqual('http://www.google.com');
       });
 
       it('combine "http://www.google.com" and {name: "foo"}, return "http://www.google.com?name=foo"', function() {
-        expect(
-          string.getUriCombinedParams('http://www.google.com', { name: 'foo' })
-        ).toEqual('http://www.google.com?name=foo');
+        expect(string.getUriCombinedParams('http://www.google.com', { name: 'foo' })).toEqual(
+          'http://www.google.com?name=foo'
+        );
       });
 
       it('combine "http://www.google.com" and {name: "foo", age: 99, address: "seoul"}, return "http://www.google.com?name=foo&age=99&address=seoul"', function() {
@@ -670,9 +640,9 @@ describe('aid.js', function() {
           age: 99,
           address: 'seoul'
         };
-        expect(
-          string.getUriCombinedParams('http://www.google.com', params)
-        ).toEqual('http://www.google.com?name=foo&age=99&address=seoul');
+        expect(string.getUriCombinedParams('http://www.google.com', params)).toEqual(
+          'http://www.google.com?name=foo&age=99&address=seoul'
+        );
       });
 
       it('combine "http://www.google.com#foo=1&bar=3" and {name: "foo", age: 99, address: "seoul"}, return "http://www.google.com?name=foo&age=99&address=seoul#foo=1&bar=3"', function() {
@@ -826,9 +796,7 @@ describe('aid.js', function() {
       });
 
       it('uri parameter is youtube url, return { ... , isValidURI: true }', function() {
-        var obj = string.getObjCheckYoutubeURI(
-          'youtube.com/watch?v=ZeGm7MDq2fo'
-        );
+        var obj = string.getObjCheckYoutubeURI('youtube.com/watch?v=ZeGm7MDq2fo');
         expect(obj).toEqual({
           type: 'youtube',
           uri: 'youtube.com/watch?v=ZeGm7MDq2fo',
@@ -844,9 +812,7 @@ describe('aid.js', function() {
           isValidURI: true
         });
 
-        obj = string.getObjCheckYoutubeURI(
-          'www.youtube.com/watch?v=ZeGm7MDq2fo'
-        );
+        obj = string.getObjCheckYoutubeURI('www.youtube.com/watch?v=ZeGm7MDq2fo');
         expect(obj).toEqual({
           type: 'youtube',
           uri: 'www.youtube.com/watch?v=ZeGm7MDq2fo',
@@ -854,9 +820,7 @@ describe('aid.js', function() {
           isValidURI: true
         });
 
-        obj = string.getObjCheckYoutubeURI(
-          '//www.youtube.com/watch?v=ZeGm7MDq2fo'
-        );
+        obj = string.getObjCheckYoutubeURI('//www.youtube.com/watch?v=ZeGm7MDq2fo');
         expect(obj).toEqual({
           type: 'youtube',
           uri: '//www.youtube.com/watch?v=ZeGm7MDq2fo',
@@ -864,9 +828,7 @@ describe('aid.js', function() {
           isValidURI: true
         });
 
-        obj = string.getObjCheckYoutubeURI(
-          'http://www.youtube.com/watch?v=ZeGm7MDq2fo'
-        );
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/watch?v=ZeGm7MDq2fo');
         expect(obj).toEqual({
           type: 'youtube',
           uri: 'http://www.youtube.com/watch?v=ZeGm7MDq2fo',
@@ -874,9 +836,7 @@ describe('aid.js', function() {
           isValidURI: true
         });
 
-        obj = string.getObjCheckYoutubeURI(
-          'https://www.youtube.com/watch?v=ZeGm7MDq2fo'
-        );
+        obj = string.getObjCheckYoutubeURI('https://www.youtube.com/watch?v=ZeGm7MDq2fo');
         expect(obj).toEqual({
           type: 'youtube',
           uri: 'https://www.youtube.com/watch?v=ZeGm7MDq2fo',
@@ -884,9 +844,7 @@ describe('aid.js', function() {
           isValidURI: true
         });
 
-        obj = string.getObjCheckYoutubeURI(
-          'http://www.youtube.com/watch?v=yVpbFMhOAwE'
-        );
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/watch?v=yVpbFMhOAwE');
         expect(obj).toEqual({
           type: 'youtube',
           uri: 'http://www.youtube.com/watch?v=yVpbFMhOAwE',
@@ -894,9 +852,7 @@ describe('aid.js', function() {
           isValidURI: true
         });
 
-        obj = string.getObjCheckYoutubeURI(
-          'http://www.youtube.com/watch?v=yVpbFMhOAwE&feature=g-vrec'
-        );
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/watch?v=yVpbFMhOAwE&feature=g-vrec');
         expect(obj).toEqual({
           type: 'youtube',
           uri: 'http://www.youtube.com/watch?v=yVpbFMhOAwE&feature=g-vrec',
@@ -904,31 +860,23 @@ describe('aid.js', function() {
           isValidURI: true
         });
 
-        obj = string.getObjCheckYoutubeURI(
-          'http://www.youtube.com/watch?v=yVpbFMhOAwE&feature=player_embedded'
-        );
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/watch?v=yVpbFMhOAwE&feature=player_embedded');
         expect(obj).toEqual({
           type: 'youtube',
-          uri:
-            'http://www.youtube.com/watch?v=yVpbFMhOAwE&feature=player_embedded',
+          uri: 'http://www.youtube.com/watch?v=yVpbFMhOAwE&feature=player_embedded',
           youtubeId: 'yVpbFMhOAwE',
           isValidURI: true
         });
 
-        obj = string.getObjCheckYoutubeURI(
-          'http://www.youtube.com/watch?NR=1&feature=endscreen&v=yVpbFMhOAwE'
-        );
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/watch?NR=1&feature=endscreen&v=yVpbFMhOAwE');
         expect(obj).toEqual({
           type: 'youtube',
-          uri:
-            'http://www.youtube.com/watch?NR=1&feature=endscreen&v=yVpbFMhOAwE',
+          uri: 'http://www.youtube.com/watch?NR=1&feature=endscreen&v=yVpbFMhOAwE',
           youtubeId: 'yVpbFMhOAwE',
           isValidURI: true
         });
 
-        obj = string.getObjCheckYoutubeURI(
-          'https://www.youtube.com/watch?v=FZu097wb8wU&list=RDFZu097wb8wU'
-        );
+        obj = string.getObjCheckYoutubeURI('https://www.youtube.com/watch?v=FZu097wb8wU&list=RDFZu097wb8wU');
         expect(obj).toEqual({
           type: 'youtube',
           uri: 'https://www.youtube.com/watch?v=FZu097wb8wU&list=RDFZu097wb8wU',
@@ -936,9 +884,7 @@ describe('aid.js', function() {
           isValidURI: true
         });
 
-        obj = string.getObjCheckYoutubeURI(
-          'http://www.youtube.com/watch?feature=g-vrec&v=yVpbFMhOAwE'
-        );
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/watch?feature=g-vrec&v=yVpbFMhOAwE');
         expect(obj).toEqual({
           type: 'youtube',
           uri: 'http://www.youtube.com/watch?feature=g-vrec&v=yVpbFMhOAwE',
@@ -946,20 +892,15 @@ describe('aid.js', function() {
           isValidURI: true
         });
 
-        obj = string.getObjCheckYoutubeURI(
-          'http://www.youtube.com/watch?feature=player_embedded&v=yVpbFMhOAwE'
-        );
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/watch?feature=player_embedded&v=yVpbFMhOAwE');
         expect(obj).toEqual({
           type: 'youtube',
-          uri:
-            'http://www.youtube.com/watch?feature=player_embedded&v=yVpbFMhOAwE',
+          uri: 'http://www.youtube.com/watch?feature=player_embedded&v=yVpbFMhOAwE',
           youtubeId: 'yVpbFMhOAwE',
           isValidURI: true
         });
 
-        obj = string.getObjCheckYoutubeURI(
-          'https://www.youtube.com/watch?list=RDFZu097wb8wU&v=FZu097wb8wU'
-        );
+        obj = string.getObjCheckYoutubeURI('https://www.youtube.com/watch?list=RDFZu097wb8wU&v=FZu097wb8wU');
         expect(obj).toEqual({
           type: 'youtube',
           uri: 'https://www.youtube.com/watch?list=RDFZu097wb8wU&v=FZu097wb8wU',
@@ -967,9 +908,7 @@ describe('aid.js', function() {
           isValidURI: true
         });
 
-        obj = string.getObjCheckYoutubeURI(
-          'https://www.youtube.com/watch?v=YgZpL-3IVoI'
-        );
+        obj = string.getObjCheckYoutubeURI('https://www.youtube.com/watch?v=YgZpL-3IVoI');
         expect(obj).toEqual({
           type: 'youtube',
           uri: 'https://www.youtube.com/watch?v=YgZpL-3IVoI',
@@ -1001,9 +940,7 @@ describe('aid.js', function() {
           isValidURI: true
         });
 
-        obj = string.getObjCheckYoutubeURI(
-          '//www.youtube.com/embed/ZeGm7MDq2fo'
-        );
+        obj = string.getObjCheckYoutubeURI('//www.youtube.com/embed/ZeGm7MDq2fo');
         expect(obj).toEqual({
           type: 'youtube',
           uri: '//www.youtube.com/embed/ZeGm7MDq2fo',
@@ -1011,9 +948,7 @@ describe('aid.js', function() {
           isValidURI: true
         });
 
-        obj = string.getObjCheckYoutubeURI(
-          'http://www.youtube.com/embed/ZeGm7MDq2fo'
-        );
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/embed/ZeGm7MDq2fo');
         expect(obj).toEqual({
           type: 'youtube',
           uri: 'http://www.youtube.com/embed/ZeGm7MDq2fo',
@@ -1021,9 +956,7 @@ describe('aid.js', function() {
           isValidURI: true
         });
 
-        obj = string.getObjCheckYoutubeURI(
-          'https://www.youtube.com/embed/ZeGm7MDq2fo'
-        );
+        obj = string.getObjCheckYoutubeURI('https://www.youtube.com/embed/ZeGm7MDq2fo');
         expect(obj).toEqual({
           type: 'youtube',
           uri: 'https://www.youtube.com/embed/ZeGm7MDq2fo',
@@ -1039,9 +972,7 @@ describe('aid.js', function() {
           isValidURI: true
         });
 
-        obj = string.getObjCheckYoutubeURI(
-          'http://www.youtube.com/v/yVpbFMhOAwE?fs=1&hl=en_US'
-        );
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/v/yVpbFMhOAwE?fs=1&hl=en_US');
         expect(obj).toEqual({
           type: 'youtube',
           uri: 'http://www.youtube.com/v/yVpbFMhOAwE?fs=1&hl=en_US',
@@ -1049,9 +980,7 @@ describe('aid.js', function() {
           isValidURI: true
         });
 
-        obj = string.getObjCheckYoutubeURI(
-          'http://www.youtube.com/v/yVpbFMhOAwE?fs=1&hl=en_US'
-        );
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/v/yVpbFMhOAwE?fs=1&hl=en_US');
         expect(obj).toEqual({
           type: 'youtube',
           uri: 'http://www.youtube.com/v/yVpbFMhOAwE?fs=1&hl=en_US',
@@ -1059,9 +988,7 @@ describe('aid.js', function() {
           isValidURI: true
         });
 
-        obj = string.getObjCheckYoutubeURI(
-          'http://www.youtube.com/v/YgZpL-3IVoI?fs=1&hl=en_US'
-        );
+        obj = string.getObjCheckYoutubeURI('http://www.youtube.com/v/YgZpL-3IVoI?fs=1&hl=en_US');
         expect(obj).toEqual({
           type: 'youtube',
           uri: 'http://www.youtube.com/v/YgZpL-3IVoI?fs=1&hl=en_US',
@@ -1425,24 +1352,16 @@ describe('aid.js', function() {
       });
 
       it('return {x: 99, y: 999}, when input "translate(99px, 999px)" string.', function() {
-        expect(
-          string.getPositionFromTranslateStr('translate(99px, 999px)')
-        ).toEqual({ x: 99, y: 999 });
+        expect(string.getPositionFromTranslateStr('translate(99px, 999px)')).toEqual({ x: 99, y: 999 });
       });
       it('return {x: 99, y: 999}, when input "translate(99 999)" string.', function() {
-        expect(string.getPositionFromTranslateStr('translate(99 999)')).toEqual(
-          { x: 99, y: 999 }
-        );
+        expect(string.getPositionFromTranslateStr('translate(99 999)')).toEqual({ x: 99, y: 999 });
       });
       it('return {x: -99, y: 999}, when input "translate(-99px, 999px)" string.', function() {
-        expect(
-          string.getPositionFromTranslateStr('translate(-99px, 999px)')
-        ).toEqual({ x: -99, y: 999 });
+        expect(string.getPositionFromTranslateStr('translate(-99px, 999px)')).toEqual({ x: -99, y: 999 });
       });
       it('return {x: -99, y: 999}, when input "translate(-99 999)" string.', function() {
-        expect(
-          string.getPositionFromTranslateStr('translate(-99 999)')
-        ).toEqual({ x: -99, y: 999 });
+        expect(string.getPositionFromTranslateStr('translate(-99 999)')).toEqual({ x: -99, y: 999 });
       });
 
       it('return {x: 99, y: 0}, when input "translate(99px)" string.', function() {
@@ -1483,9 +1402,7 @@ describe('aid.js', function() {
         });
       });
       it('return {x: -99, y: 0}, when input "translateX(-99px)" string.', function() {
-        expect(string.getPositionFromTranslateStr('translateX(-99px)')).toEqual(
-          { x: -99, y: 0 }
-        );
+        expect(string.getPositionFromTranslateStr('translateX(-99px)')).toEqual({ x: -99, y: 0 });
       });
       it('return {x: -99, y: 0}, when input "translateX(-99)" string.', function() {
         expect(string.getPositionFromTranslateStr('translateX(-99)')).toEqual({
@@ -1507,9 +1424,7 @@ describe('aid.js', function() {
         });
       });
       it('return {x: 0, y: -99}, when input "translateY(-99px)" string.', function() {
-        expect(string.getPositionFromTranslateStr('translateY(-99px)')).toEqual(
-          { x: 0, y: -99 }
-        );
+        expect(string.getPositionFromTranslateStr('translateY(-99px)')).toEqual({ x: 0, y: -99 });
       });
       it('return {x: 0, y: -99}, when input "translateY(-99)" string.', function() {
         expect(string.getPositionFromTranslateStr('translateY(-99)')).toEqual({
@@ -1787,41 +1702,19 @@ describe('aid.js', function() {
       });
 
       it('return URIError, when input string that can not encode.', function() {
-        expect(string.decodeRecursively('%%%%%%%%%')).toEqual(
-          jasmine.any(URIError)
-        );
+        expect(string.decodeRecursively('%%%%%%%%%')).toEqual(jasmine.any(URIError));
       });
 
       it('return decoded string, when input encoded string.', function() {
-        expect(
-          string.decodeRecursively(
-            encodeURIComponent(encodeURIComponent('에이드'))
-          )
-        ).toEqual('에이드');
+        expect(string.decodeRecursively(encodeURIComponent(encodeURIComponent('에이드')))).toEqual('에이드');
 
-        expect(
-          string.decodeRecursively(
-            encodeURIComponent(encodeURIComponent('エイド'))
-          )
-        ).toEqual('エイド');
+        expect(string.decodeRecursively(encodeURIComponent(encodeURIComponent('エイド')))).toEqual('エイド');
 
-        expect(
-          string.decodeRecursively(
-            encodeURIComponent(encodeURIComponent('援助'))
-          )
-        ).toEqual('援助');
+        expect(string.decodeRecursively(encodeURIComponent(encodeURIComponent('援助')))).toEqual('援助');
 
-        expect(
-          string.decodeRecursively(
-            encodeURIComponent(encodeURIComponent('viện trợ'))
-          )
-        ).toEqual('viện trợ');
+        expect(string.decodeRecursively(encodeURIComponent(encodeURIComponent('viện trợ')))).toEqual('viện trợ');
 
-        expect(
-          string.decodeRecursively(
-            encodeURIComponent(encodeURIComponent('vпомощь'))
-          )
-        ).toEqual('vпомощь');
+        expect(string.decodeRecursively(encodeURIComponent(encodeURIComponent('vпомощь')))).toEqual('vпомощь');
       });
     });
   });

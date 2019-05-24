@@ -6,8 +6,7 @@ describe('aid.js', function() {
 
     var EDGE_UA =
         'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136',
-      FIREFOX_UA =
-        'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0',
+      FIREFOX_UA = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0',
       OPERA_UA =
         'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36 OPR/43.0.2442.1144',
       CHROME_UA =
@@ -888,53 +887,35 @@ describe('aid.js', function() {
 
     describe('.getIECompatibility().isCompatibilityMode', function() {
       it('on IE7 browser, return false.', function() {
-        expect(browser.getIECompatibility(IE7_UA).isCompatibilityMode).toEqual(
-          false
-        );
+        expect(browser.getIECompatibility(IE7_UA).isCompatibilityMode).toEqual(false);
       });
 
       it('on IE8 browser, return false.', function() {
-        expect(browser.getIECompatibility(IE8_UA).isCompatibilityMode).toEqual(
-          false
-        );
+        expect(browser.getIECompatibility(IE8_UA).isCompatibilityMode).toEqual(false);
       });
       it('on IE8 browser compat view, return true.', function() {
-        expect(
-          browser.getIECompatibility(IE8_COMPAT_UA).isCompatibilityMode
-        ).toEqual(true);
+        expect(browser.getIECompatibility(IE8_COMPAT_UA).isCompatibilityMode).toEqual(true);
       });
 
       it('on IE9 browser, return false.', function() {
-        expect(browser.getIECompatibility(IE9_UA).isCompatibilityMode).toEqual(
-          false
-        );
+        expect(browser.getIECompatibility(IE9_UA).isCompatibilityMode).toEqual(false);
       });
       it('on IE9 browser compat view, return true.', function() {
-        expect(
-          browser.getIECompatibility(IE9_COMPAT_UA).isCompatibilityMode
-        ).toEqual(true);
+        expect(browser.getIECompatibility(IE9_COMPAT_UA).isCompatibilityMode).toEqual(true);
       });
 
       it('on IE10 browser, return false.', function() {
-        expect(browser.getIECompatibility(IE10_UA).isCompatibilityMode).toEqual(
-          false
-        );
+        expect(browser.getIECompatibility(IE10_UA).isCompatibilityMode).toEqual(false);
       });
       it('on IE10 browser compat view, return true.', function() {
-        expect(
-          browser.getIECompatibility(IE10_COMPAT_UA).isCompatibilityMode
-        ).toEqual(true);
+        expect(browser.getIECompatibility(IE10_COMPAT_UA).isCompatibilityMode).toEqual(true);
       });
 
       it('on IE11 browser, return false.', function() {
-        expect(browser.getIECompatibility(IE11_UA).isCompatibilityMode).toEqual(
-          false
-        );
+        expect(browser.getIECompatibility(IE11_UA).isCompatibilityMode).toEqual(false);
       });
       it('on IE11 browser compat view 8 mode, return true.', function() {
-        expect(
-          browser.getIECompatibility(IE11_COMPAT_UA).isCompatibilityMode
-        ).toEqual(true);
+        expect(browser.getIECompatibility(IE11_COMPAT_UA).isCompatibilityMode).toEqual(true);
       });
     });
 

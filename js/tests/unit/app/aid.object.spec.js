@@ -161,13 +161,9 @@ describe('aid.js', function() {
         // compare neither primitive values nor object
         expect(object.shallowEqual([], [])).toEqual(false);
 
-        expect(object.shallowEqual(function() {}, function() {})).toEqual(
-          false
-        );
+        expect(object.shallowEqual(function() {}, function() {})).toEqual(false);
 
-        expect(
-          object.shallowEqual(new RegExp('^aid'), new RegExp('^aid'))
-        ).toEqual(false);
+        expect(object.shallowEqual(new RegExp('^aid'), new RegExp('^aid'))).toEqual(false);
 
         expect(object.shallowEqual(/^aid/, /^aid/)).toEqual(false);
       });

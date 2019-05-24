@@ -830,8 +830,7 @@ describe('aid.js', function() {
 
     describe('.getHeightOfRightTriangle()', function() {
       it('input arguments are not Object type, throw TypeError.', function() {
-        var ERROR_MSG =
-          '[aid.math.getHeightOfRightTriangle] Type of parameters must be Number.';
+        var ERROR_MSG = '[aid.math.getHeightOfRightTriangle] Type of parameters must be Number.';
 
         expect(function() {
           math.getHeightOfRightTriangle(undefined, 30);
@@ -914,8 +913,7 @@ describe('aid.js', function() {
         };
 
       it('input arguments are not Object type, throw TypeError.', function() {
-        var ERROR_MSG =
-          '[aid.math.getDistanceBetweenTwoPoints] Type of parameters must be Object.';
+        var ERROR_MSG = '[aid.math.getDistanceBetweenTwoPoints] Type of parameters must be Object.';
 
         expect(function() {
           math.getDistanceBetweenTwoPoints(undefined, point2);
@@ -1047,66 +1045,29 @@ describe('aid.js', function() {
         };
 
       it('input arguments are not Object type, throw TypeError.', function() {
-        var ERROR_MSG =
-          '[aid.math.getOrthogonalPointBetweenLineAndSomePoint] Type of parameters must be Object.';
+        var ERROR_MSG = '[aid.math.getOrthogonalPointBetweenLineAndSomePoint] Type of parameters must be Object.';
 
         expect(function() {
-          math.getOrthogonalPointBetweenLineAndSomePoint(
-            undefined,
-            point2,
-            somePoint
-          );
-          math.getOrthogonalPointBetweenLineAndSomePoint(
-            point1,
-            undefined,
-            somePoint
-          );
-          math.getOrthogonalPointBetweenLineAndSomePoint(
-            point1,
-            point2,
-            undefined
-          );
+          math.getOrthogonalPointBetweenLineAndSomePoint(undefined, point2, somePoint);
+          math.getOrthogonalPointBetweenLineAndSomePoint(point1, undefined, somePoint);
+          math.getOrthogonalPointBetweenLineAndSomePoint(point1, point2, undefined);
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function() {
-          math.getOrthogonalPointBetweenLineAndSomePoint(
-            null,
-            point2,
-            somePoint
-          );
-          math.getOrthogonalPointBetweenLineAndSomePoint(
-            point1,
-            null,
-            somePoint
-          );
+          math.getOrthogonalPointBetweenLineAndSomePoint(null, point2, somePoint);
+          math.getOrthogonalPointBetweenLineAndSomePoint(point1, null, somePoint);
           math.getOrthogonalPointBetweenLineAndSomePoint(point1, point2, null);
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function() {
-          math.getOrthogonalPointBetweenLineAndSomePoint(
-            false,
-            point2,
-            somePoint
-          );
-          math.getOrthogonalPointBetweenLineAndSomePoint(
-            point1,
-            false,
-            somePoint
-          );
+          math.getOrthogonalPointBetweenLineAndSomePoint(false, point2, somePoint);
+          math.getOrthogonalPointBetweenLineAndSomePoint(point1, false, somePoint);
           math.getOrthogonalPointBetweenLineAndSomePoint(point1, point2, false);
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function() {
-          math.getOrthogonalPointBetweenLineAndSomePoint(
-            true,
-            point2,
-            somePoint
-          );
-          math.getOrthogonalPointBetweenLineAndSomePoint(
-            point1,
-            true,
-            somePoint
-          );
+          math.getOrthogonalPointBetweenLineAndSomePoint(true, point2, somePoint);
+          math.getOrthogonalPointBetweenLineAndSomePoint(point1, true, somePoint);
           math.getOrthogonalPointBetweenLineAndSomePoint(point1, point2, true);
         }).toThrowError(TypeError, ERROR_MSG);
 
@@ -1123,57 +1084,21 @@ describe('aid.js', function() {
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function() {
-          math.getOrthogonalPointBetweenLineAndSomePoint(
-            function() {},
-            point2,
-            somePoint
-          );
-          math.getOrthogonalPointBetweenLineAndSomePoint(
-            point1,
-            function() {},
-            somePoint
-          );
-          math.getOrthogonalPointBetweenLineAndSomePoint(
-            point1,
-            point2,
-            function() {}
-          );
+          math.getOrthogonalPointBetweenLineAndSomePoint(function() {}, point2, somePoint);
+          math.getOrthogonalPointBetweenLineAndSomePoint(point1, function() {}, somePoint);
+          math.getOrthogonalPointBetweenLineAndSomePoint(point1, point2, function() {});
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function() {
-          math.getOrthogonalPointBetweenLineAndSomePoint(
-            new RegExp('^aid'),
-            point2,
-            somePoint
-          );
-          math.getOrthogonalPointBetweenLineAndSomePoint(
-            point1,
-            new RegExp('^aid'),
-            somePoint
-          );
-          math.getOrthogonalPointBetweenLineAndSomePoint(
-            point1,
-            point2,
-            new RegExp('^aid')
-          );
+          math.getOrthogonalPointBetweenLineAndSomePoint(new RegExp('^aid'), point2, somePoint);
+          math.getOrthogonalPointBetweenLineAndSomePoint(point1, new RegExp('^aid'), somePoint);
+          math.getOrthogonalPointBetweenLineAndSomePoint(point1, point2, new RegExp('^aid'));
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function() {
-          math.getOrthogonalPointBetweenLineAndSomePoint(
-            /^aid/,
-            point2,
-            somePoint
-          );
-          math.getOrthogonalPointBetweenLineAndSomePoint(
-            point1,
-            /^aid/,
-            somePoint
-          );
-          math.getOrthogonalPointBetweenLineAndSomePoint(
-            point1,
-            point2,
-            /^aid/
-          );
+          math.getOrthogonalPointBetweenLineAndSomePoint(/^aid/, point2, somePoint);
+          math.getOrthogonalPointBetweenLineAndSomePoint(point1, /^aid/, somePoint);
+          math.getOrthogonalPointBetweenLineAndSomePoint(point1, point2, /^aid/);
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function() {
@@ -1266,11 +1191,7 @@ describe('aid.js', function() {
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function() {
-          math.getOrthogonalPointBetweenLineAndSomePoint(
-            point1,
-            point2,
-            somePoint
-          );
+          math.getOrthogonalPointBetweenLineAndSomePoint(point1, point2, somePoint);
         }).not.toThrowError(TypeError, ERROR_MSG);
       });
 
@@ -1291,11 +1212,7 @@ describe('aid.js', function() {
       });
 
       it('return object has x, y properties.', function() {
-        var point = math.getOrthogonalPointBetweenLineAndSomePoint(
-          point1,
-          point2,
-          somePoint
-        );
+        var point = math.getOrthogonalPointBetweenLineAndSomePoint(point1, point2, somePoint);
 
         expect(aid.isObject(point)).toBeTruthy();
         expect(aid.isNumber(point.x)).toBeTruthy();
@@ -1363,8 +1280,7 @@ describe('aid.js', function() {
 
     describe('.getRandomInt()', function() {
       it('input arguments are not Integer Number type, throw TypeError.', function() {
-        var ERROR_MSG =
-          '[aid.math.getRandomInt] Type of parameters must be Integer Number.';
+        var ERROR_MSG = '[aid.math.getRandomInt] Type of parameters must be Integer Number.';
 
         expect(function() {
           math.getRandomInt(undefined, 99);

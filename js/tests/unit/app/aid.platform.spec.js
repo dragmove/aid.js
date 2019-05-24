@@ -7,8 +7,7 @@ describe('aid.js', function() {
     // Windows
     var EDGE_UA =
         'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136',
-      FIREFOX_UA =
-        'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0',
+      FIREFOX_UA = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0',
       OPERA_UA =
         'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36 OPR/43.0.2442.1144',
       CHROME_UA =
@@ -36,8 +35,7 @@ describe('aid.js', function() {
         'mozilla/4.0 (compatible; msie 8.0; windows nt 6.1; win64; x64; trident/7.0; .net clr 2.0.50727; slcc2; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; .net4.0c; .net4.0e; infopath.3)';
 
     // Mac
-    var MAC_FIREFOX_UA =
-        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0) Gecko/20100101 Firefox/52.0',
+    var MAC_FIREFOX_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0) Gecko/20100101 Firefox/52.0',
       MAC_OPERA_UA =
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36 OPR/43.0.2442.1165',
       MAC_CHROME_UA =
@@ -169,9 +167,7 @@ describe('aid.js', function() {
       });
 
       it('on Samsung internet browser for Android phone device, return false.', function() {
-        expect(platform.isWindow(ANDROID_SAMSUNG_INTERNET_PHONE_UA)).toEqual(
-          false
-        );
+        expect(platform.isWindow(ANDROID_SAMSUNG_INTERNET_PHONE_UA)).toEqual(false);
       });
 
       it('on Samsung internet browser for Android tablet device, return false.', function() {
@@ -278,9 +274,7 @@ describe('aid.js', function() {
       });
 
       it('on Samsung internet browser for Android phone device, return false.', function() {
-        expect(platform.isMac(ANDROID_SAMSUNG_INTERNET_PHONE_UA)).toEqual(
-          false
-        );
+        expect(platform.isMac(ANDROID_SAMSUNG_INTERNET_PHONE_UA)).toEqual(false);
       });
 
       it('on Samsung internet browser for Android tablet device, return false.', function() {
@@ -387,9 +381,7 @@ describe('aid.js', function() {
       });
 
       it('on Samsung internet browser for Android phone device, return false.', function() {
-        expect(platform.isIOS(ANDROID_SAMSUNG_INTERNET_PHONE_UA)).toEqual(
-          false
-        );
+        expect(platform.isIOS(ANDROID_SAMSUNG_INTERNET_PHONE_UA)).toEqual(false);
       });
 
       it('on Samsung internet browser for Android tablet device, return false.', function() {
@@ -496,9 +488,7 @@ describe('aid.js', function() {
       });
 
       it('on Samsung internet browser for Android phone device, return false.', function() {
-        expect(platform.isIPhone(ANDROID_SAMSUNG_INTERNET_PHONE_UA)).toEqual(
-          false
-        );
+        expect(platform.isIPhone(ANDROID_SAMSUNG_INTERNET_PHONE_UA)).toEqual(false);
       });
 
       it('on Samsung internet browser for Android tablet device, return false.', function() {
@@ -605,9 +595,7 @@ describe('aid.js', function() {
       });
 
       it('on Samsung internet browser for Android phone device, return false.', function() {
-        expect(platform.isIPad(ANDROID_SAMSUNG_INTERNET_PHONE_UA)).toEqual(
-          false
-        );
+        expect(platform.isIPad(ANDROID_SAMSUNG_INTERNET_PHONE_UA)).toEqual(false);
       });
 
       it('on Samsung internet browser for Android tablet device, return false.', function() {
@@ -714,9 +702,7 @@ describe('aid.js', function() {
       });
 
       it('on Samsung internet browser for Android phone device, return true.', function() {
-        expect(platform.isAndroid(ANDROID_SAMSUNG_INTERNET_PHONE_UA)).toEqual(
-          true
-        );
+        expect(platform.isAndroid(ANDROID_SAMSUNG_INTERNET_PHONE_UA)).toEqual(true);
       });
 
       it('on Samsung internet browser for Android tablet device, return false.', function() {

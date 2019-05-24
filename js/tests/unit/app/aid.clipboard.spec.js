@@ -6,8 +6,7 @@ describe('aid.js', function() {
 
     describe('.copyText()', function() {
       it('if 1st argument is not String type, throw TypeError', function() {
-        var ERROR_MSG =
-          '[aid.clipboard.copyText] Type of str parameter must be String.';
+        var ERROR_MSG = '[aid.clipboard.copyText] Type of str parameter must be String.';
 
         expect(function() {
           clipboard.copyText(undefined);

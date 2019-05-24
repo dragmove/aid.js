@@ -212,40 +212,22 @@ describe('aid.js', function() {
           endIndex = arr.length - 1,
           middleIndex = Math.floor((startIndex + endIndex) / 2);
 
-        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([
-          1,
-          22,
-          33
-        ]);
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([1, 22, 33]);
 
         arr = [1, 33, 22];
-        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([
-          1,
-          22,
-          33
-        ]);
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([1, 22, 33]);
 
         arr = [22, 33, 1];
-        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([
-          1,
-          22,
-          33
-        ]);
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([1, 22, 33]);
 
         arr = [22, 1, 33];
-        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual(
-          [1, 22, 33]
-        );
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual([1, 22, 33]);
 
         arr = [33, 1, 22];
-        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual(
-          [1, 22, 33]
-        );
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual([1, 22, 33]);
 
         arr = [33, 22, 1];
-        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual(
-          [1, 22, 33]
-        );
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual([1, 22, 33]);
       });
 
       it('return sorted array when array has 4 elements.', function() {
@@ -255,82 +237,40 @@ describe('aid.js', function() {
           endIndex = arr.length - 1,
           middleIndex = Math.floor((startIndex + endIndex) / 2);
 
-        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([
-          1,
-          22,
-          33,
-          44
-        ]);
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([1, 22, 33, 44]);
 
         arr = [1, 33, 22, 44];
-        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([
-          1,
-          22,
-          33,
-          44
-        ]);
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([1, 22, 33, 44]);
 
         arr = [1, 44, 22, 33];
-        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([
-          1,
-          22,
-          33,
-          44
-        ]);
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([1, 22, 33, 44]);
 
         arr = [22, 33, 1, 44];
-        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([
-          1,
-          22,
-          33,
-          44
-        ]);
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([1, 22, 33, 44]);
 
         arr = [22, 44, 1, 33];
-        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([
-          1,
-          22,
-          33,
-          44
-        ]);
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([1, 22, 33, 44]);
 
         arr = [33, 44, 1, 22];
-        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([
-          1,
-          22,
-          33,
-          44
-        ]);
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).toEqual([1, 22, 33, 44]);
 
         arr = [1, 22, 44, 33];
-        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual(
-          [1, 22, 33, 44]
-        );
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual([1, 22, 33, 44]);
 
         arr = [1, 33, 44, 22];
-        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual(
-          [1, 22, 33, 44]
-        );
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual([1, 22, 33, 44]);
 
         arr = [1, 44, 33, 22];
-        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual(
-          [1, 22, 33, 44]
-        );
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual([1, 22, 33, 44]);
 
         arr = [22, 1, 33, 44];
-        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual(
-          [1, 22, 33, 44]
-        );
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual([1, 22, 33, 44]);
 
         arr = [22, 44, 33, 1];
-        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual(
-          [1, 22, 33, 44]
-        );
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual([1, 22, 33, 44]);
 
         arr = [33, 22, 1, 44];
-        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual(
-          [1, 22, 33, 44]
-        );
+        expect(array.merge(arr, startIndex, middleIndex, endIndex)).not.toEqual([1, 22, 33, 44]);
       });
     });
 
@@ -388,15 +328,7 @@ describe('aid.js', function() {
       });
 
       it('return sorted array.', function() {
-        expect(array.mergeSort(arr, 0, arr.length - 1)).toEqual([
-          6,
-          9,
-          14,
-          18,
-          22,
-          44,
-          66
-        ]);
+        expect(array.mergeSort(arr, 0, arr.length - 1)).toEqual([6, 9, 14, 18, 22, 44, 66]);
       });
     });
 
@@ -429,23 +361,17 @@ describe('aid.js', function() {
       });
 
       it('return 2 when apply arr.', function() {
-        expect(
-          array.getPivotIndexAfterPartition(arr, 0, arr.length - 1)
-        ).toEqual(2);
+        expect(array.getPivotIndexAfterPartition(arr, 0, arr.length - 1)).toEqual(2);
       });
 
       it('return 0 when arr has 2 elements.', function() {
         arr = [2, 1];
-        expect(
-          array.getPivotIndexAfterPartition(arr, 0, arr.length - 1)
-        ).toEqual(0);
+        expect(array.getPivotIndexAfterPartition(arr, 0, arr.length - 1)).toEqual(0);
       });
 
       it('return 0 when arr has 2 elements.', function() {
         arr = [1, 2];
-        expect(
-          array.getPivotIndexAfterPartition(arr, 0, arr.length - 1)
-        ).toEqual(1);
+        expect(array.getPivotIndexAfterPartition(arr, 0, arr.length - 1)).toEqual(1);
       });
 
       it('return partitioned array.', function() {
@@ -510,15 +436,7 @@ describe('aid.js', function() {
       });
 
       it('return sorted array.', function() {
-        expect(array.quickSort(arr, 0, arr.length - 1)).toEqual([
-          6,
-          9,
-          14,
-          18,
-          22,
-          44,
-          66
-        ]);
+        expect(array.quickSort(arr, 0, arr.length - 1)).toEqual([6, 9, 14, 18, 22, 44, 66]);
       });
     });
 
@@ -647,32 +565,20 @@ describe('aid.js', function() {
 
       it('if 1st element is not array, return null', function() {
         arrayHasObjects = 1;
-        expect(
-          array.getFirstObjectHasProperty(arrayHasObjects, 'no', 1)
-        ).toEqual(null);
+        expect(array.getFirstObjectHasProperty(arrayHasObjects, 'no', 1)).toEqual(null);
       });
 
       it('if array.length is 0, return null', function() {
         arrayHasObjects = [];
-        expect(
-          array.getFirstObjectHasProperty(arrayHasObjects, 'no', 1)
-        ).toEqual(null);
+        expect(array.getFirstObjectHasProperty(arrayHasObjects, 'no', 1)).toEqual(null);
       });
 
       it('if propertyKey is not string, return null', function() {
         arrayHasObjects = [];
-        expect(
-          array.getFirstObjectHasProperty(arrayHasObjects, undefined, 1)
-        ).toEqual(null);
-        expect(
-          array.getFirstObjectHasProperty(arrayHasObjects, null, 1)
-        ).toEqual(null);
-        expect(array.getFirstObjectHasProperty(arrayHasObjects, 1, 1)).toEqual(
-          null
-        );
-        expect(array.getFirstObjectHasProperty(arrayHasObjects, [], 1)).toEqual(
-          null
-        );
+        expect(array.getFirstObjectHasProperty(arrayHasObjects, undefined, 1)).toEqual(null);
+        expect(array.getFirstObjectHasProperty(arrayHasObjects, null, 1)).toEqual(null);
+        expect(array.getFirstObjectHasProperty(arrayHasObjects, 1, 1)).toEqual(null);
+        expect(array.getFirstObjectHasProperty(arrayHasObjects, [], 1)).toEqual(null);
       });
 
       it('if property key is "index", target value is 1, return null', function() {
@@ -684,19 +590,9 @@ describe('aid.js', function() {
             no: 2
           }
         ];
-        expect(
-          array.getFirstObjectHasProperty(arrayHasObjects, 'index', 1)
-        ).toEqual(null);
-        expect(
-          array.getFirstObjectHasProperty(
-            arrayHasObjects,
-            'index',
-            new RegExp('^1')
-          )
-        ).toEqual(null);
-        expect(
-          array.getFirstObjectHasProperty(arrayHasObjects, 'index', /^(1)\d/)
-        ).toEqual(null);
+        expect(array.getFirstObjectHasProperty(arrayHasObjects, 'index', 1)).toEqual(null);
+        expect(array.getFirstObjectHasProperty(arrayHasObjects, 'index', new RegExp('^1'))).toEqual(null);
+        expect(array.getFirstObjectHasProperty(arrayHasObjects, 'index', /^(1)\d/)).toEqual(null);
       });
 
       it('if property key is "no", target value is 11, return {no: 11}', function() {
@@ -708,23 +604,13 @@ describe('aid.js', function() {
             no: 22
           }
         ];
-        expect(
-          array.getFirstObjectHasProperty(arrayHasObjects, 'no', 11)
-        ).toEqual({
+        expect(array.getFirstObjectHasProperty(arrayHasObjects, 'no', 11)).toEqual({
           no: 11
         });
-        expect(
-          array.getFirstObjectHasProperty(
-            arrayHasObjects,
-            'no',
-            new RegExp('^1')
-          )
-        ).toEqual({
+        expect(array.getFirstObjectHasProperty(arrayHasObjects, 'no', new RegExp('^1'))).toEqual({
           no: 11
         });
-        expect(
-          array.getFirstObjectHasProperty(arrayHasObjects, 'no', /^(1)\d/)
-        ).toEqual({
+        expect(array.getFirstObjectHasProperty(arrayHasObjects, 'no', /^(1)\d/)).toEqual({
           no: 11
         });
       });
@@ -737,9 +623,7 @@ describe('aid.js', function() {
     describe('.overlappedConditionSortByProperty()', function() {
       it('return null when arrayHasObjects is not array.', function() {
         expect(array.overlappedConditionSortByProperty(null)).toEqual(null);
-        expect(array.overlappedConditionSortByProperty(undefined)).toEqual(
-          null
-        );
+        expect(array.overlappedConditionSortByProperty(undefined)).toEqual(null);
         expect(array.overlappedConditionSortByProperty(99)).toEqual(null);
         expect(array.overlappedConditionSortByProperty('string')).toEqual(null);
         expect(array.overlappedConditionSortByProperty(false)).toEqual(null);
@@ -774,16 +658,10 @@ describe('aid.js', function() {
         });
 
         expect(array.overlappedConditionSortByProperty(arr, null)).toEqual(arr);
-        expect(array.overlappedConditionSortByProperty(arr, undefined)).toEqual(
-          arr
-        );
+        expect(array.overlappedConditionSortByProperty(arr, undefined)).toEqual(arr);
         expect(array.overlappedConditionSortByProperty(arr, 99)).toEqual(arr);
-        expect(array.overlappedConditionSortByProperty(arr, 'string')).toEqual(
-          arr
-        );
-        expect(array.overlappedConditionSortByProperty(arr, false)).toEqual(
-          arr
-        );
+        expect(array.overlappedConditionSortByProperty(arr, 'string')).toEqual(arr);
+        expect(array.overlappedConditionSortByProperty(arr, false)).toEqual(arr);
       });
 
       it('return clone array when sortConditions has no condition.', function() {
