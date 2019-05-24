@@ -1171,6 +1171,132 @@ describe('aid.js', function() {
       });
     });
 
+    describe('.removeNoContentElements()', function() {
+      it('html argument is not String type, throw TypeError.', function() {
+        expect(function() {
+          string.removeNoContentElements(undefined);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElements(null);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElements(false);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElements(true);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElements(0);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElements({});
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElements([]);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElements(function() {});
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElements(new RegExp('^aid'));
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElements(/^aid/);
+        }).toThrowError(TypeError);
+      });
+
+      it('ignoreWhitespaceContent argument is not Boolean type, throw TypeError when ignoreWhitespaceContent argument is defined.', function() {
+        expect(function() {
+          string.removeNoContentElements('', 0);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElements('', {});
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElements('', []);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElements('', function() {});
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElements('', new RegExp('^aid'));
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElements('', /^aid/);
+        }).toThrowError(TypeError);
+      });
+
+      it('input (html string), return string removed elements have no content and no whitespaces.', function() {
+        expect(string.removeNoContentElements('foo bar baz')).toEqual(
+          'foo bar baz'
+        );
+
+        expect(string.removeNoContentElements('<span>foo</span>')).toEqual(
+          '<span>foo</span>'
+        );
+
+        expect(string.removeNoContentElements('<span> </span>')).toEqual(
+          '<span> </span>'
+        );
+
+        expect(string.removeNoContentElements('<span></span>')).toEqual('');
+
+        expect(
+          string.removeNoContentElements('<div><span> </span><p> </p></div>')
+        ).toEqual('<div><span> </span><p> </p></div>');
+
+        expect(
+          string.removeNoContentElements(
+            '<div><span>foo</span><p>bar</p></div>'
+          )
+        ).toEqual('<div><span>foo</span><p>bar</p></div>');
+
+        expect(
+          string.removeNoContentElements(
+            '<div>foo<span></span>bar<p></p>baz</div>'
+          )
+        ).toEqual('<div>foobarbaz</div>');
+
+        expect(
+          string.removeNoContentElements(
+            '<div><span>foo</span><p></p>baz</div>'
+          )
+        ).toEqual('<div><span>foo</span>baz</div>');
+
+        expect(
+          string.removeNoContentElements(
+            '<div><span>foo</span><p><span><strong><em></em></strong></span></p></div>'
+          )
+        ).toEqual(
+          '<div><span>foo</span><p><span><strong></strong></span></p></div>'
+        );
+
+        expect(
+          string.removeNoContentElements(
+            '<div><p><span><strong><em></em></strong></span></p></div>'
+          )
+        ).toEqual('<div><p><span><strong></strong></span></p></div>');
+      });
+
+      it('input (html string, true), return string removed elements have no content.', function() {
+        // TODO: ignoreWhitespaceContent implement
+      });
+    });
+
     describe('.absentToEmpty()', function() {
       it('input (null) return "".', function() {
         expect(string.absentToEmpty(null)).toEqual('');

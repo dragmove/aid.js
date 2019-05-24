@@ -2499,6 +2499,40 @@
   };
 
   /**
+   * remove no content elements from html string
+   *
+   * @static
+   * @method removeNoContentElements
+   * @param {String} html
+   * @param (Boolean) ignoreWhitespaceContent (optional)
+   * @returns {String} return html string
+   * @example
+   */
+  string.removeNoContentElements = function removeNoContentElements(
+    html,
+    ignoreWhitespaceContent
+  ) {
+    if (!aid.isString(html))
+      throw new TypeError(
+        '[aid.string.removeNoContentElements] Type of html parameter must be String.'
+      );
+
+    if (aid.isDefined(ignoreWhitespaceContent)) {
+      // ignoreWhitespaceContent parameter is defined
+      if (!aid.isBoolean(ignoreWhitespaceContent))
+        throw new TypeError(
+          '[aid.string.removeNoContentElements] Type of ignoreWhitespaceContent parameter must be Boolean.'
+        );
+    }
+
+    var isIgnoreWhitespaceContents = ignoreWhitespaceContent;
+
+    // TODO: ignoreWhitespaceContent implement
+
+    return html.replace(/<([^>]+)><\/\1>/g, '');
+  };
+
+  /**
    * null, undefined to empty string. if parameter is not null or undefined, return parameter.
    *
    * @static
