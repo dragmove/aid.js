@@ -676,14 +676,14 @@ describe('aid.js', function() {
       it('input two objects, return extended object', function() {
         var destination = {
             name: 'destination',
-            type: 'json'
+            type: 'json',
           },
           source = {
             name: 'source',
             say: 'hello, world',
             sayHello: function() {
               return 'hello';
-            }
+            },
           };
 
         aid.extend(destination, source);
@@ -706,7 +706,7 @@ describe('aid.js', function() {
           },
           getType: function() {
             return this.type;
-          }
+          },
         };
 
         aid.extend(Destination.prototype, source);
@@ -854,7 +854,7 @@ describe('aid.js', function() {
         donor = {
           say: function() {
             return 'hello, world';
-          }
+          },
         };
 
       beforeEach(function() {
@@ -983,7 +983,7 @@ describe('aid.js', function() {
         borrower = {
           say: function() {
             return "this method is borrower's";
-          }
+          },
         };
 
         expect(function() {
@@ -1058,7 +1058,7 @@ describe('aid.js', function() {
           title: 'obj - aid.js',
           getTitle: function() {
             return this.title;
-          }
+          },
         };
 
         var getObjTitle = aid.bind(obj.getTitle, obj);
@@ -1251,7 +1251,7 @@ describe('aid.js', function() {
         }).not.toThrowError();
       });
 
-      it('negate aid.existy', function() {
+      describe('negate aid.existy', function() {
         var notExisty = aid.not(aid.existy);
 
         it('return function', function() {
@@ -1291,7 +1291,7 @@ describe('aid.js', function() {
         });
       });
 
-      it('negate isNaN', function() {
+      describe('negate isNaN', function() {
         var isNotNaN = aid.not(isNaN);
 
         it('input undefined to aid.not(isNaN), return false', function() {
@@ -1621,7 +1621,7 @@ describe('aid.js', function() {
         }).not.toThrowError();
       });
 
-      it('return function', function() {
+      describe('return function', function() {
         var getTitle = aid.plucker('title');
 
         it('wether obj parameter type is not object or array or string, throw Error', function() {
@@ -1647,13 +1647,13 @@ describe('aid.js', function() {
         });
       });
 
-      it('return function', function() {
+      describe('return function', function() {
         var getTitle = aid.plucker('title');
 
         it('pluck field of object (if object has field)', function() {
           var obj = {
             title: 'aid.js',
-            description: 'A bundle of Javascript util Library for help developers. No dependency to other Libraries.'
+            description: 'A bundle of Javascript util Library for help developers. No dependency to other Libraries.',
           };
 
           expect(getTitle(obj)).toEqual('aid.js');
@@ -1661,14 +1661,14 @@ describe('aid.js', function() {
 
         it('pluck field of object (if object has not field)', function() {
           var obj = {
-            description: 'A bundle of Javascript util Library for help developers. No dependency to other Libraries.'
+            description: 'A bundle of Javascript util Library for help developers. No dependency to other Libraries.',
           };
 
           expect(getTitle(obj)).toEqual(undefined);
         });
       });
 
-      it('return function', function() {
+      describe('return function', function() {
         var getFirst = aid.plucker(0),
           getUnknown = aid.plucker(9999),
           getLength = aid.plucker('length');
@@ -1690,7 +1690,7 @@ describe('aid.js', function() {
         });
       });
 
-      it('return function', function() {
+      describe('return function', function() {
         var getFirst = aid.plucker(0),
           getUnknown = aid.plucker(9999),
           getLength = aid.plucker('length');
@@ -2296,7 +2296,7 @@ describe('aid.js', function() {
     });
 
     describe('.lazyChain()', function() {
-      it('return object', function() {
+      describe('return object', function() {
         it('has invoke function', function() {
           var lazy = aid.lazyChain([3, 2, 1]);
 

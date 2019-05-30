@@ -62,7 +62,7 @@ describe('aid.js', function() {
     describe('["!"]', function() {
       var not = aid.operator['!'];
 
-      it('negate object parameter', function() {
+      describe('negate object parameter', function() {
         it('input undefined, return true', function() {
           expect(not(undefined)).toEqual(true);
         });
@@ -75,20 +75,20 @@ describe('aid.js', function() {
           expect(not(null)).toEqual(true);
         });
 
-        it('input false, return false', function() {
-          expect(not(false)).toEqual(false);
+        it('input false, return true', function() {
+          expect(not(false)).toEqual(true);
         });
 
         it('input true, return false', function() {
           expect(not(true)).toEqual(false);
         });
 
-        it('input 0, return false', function() {
-          expect(not(0)).toEqual(false);
+        it('input 0, return true', function() {
+          expect(not(0)).toEqual(true);
         });
 
-        it('input "", return false', function() {
-          expect(not('')).toEqual(false);
+        it('input "", return true', function() {
+          expect(not('')).toEqual(true);
         });
 
         it('input {}, return false', function() {
@@ -96,7 +96,7 @@ describe('aid.js', function() {
         });
       });
 
-      it('negate isNaN with aid.compose', function() {
+      describe('negate isNaN with aid.compose', function() {
         var isNotNaN = aid.compose(
           aid.operator['!'],
           isNaN

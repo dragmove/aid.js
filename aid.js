@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.89
+ * aid.js 0.1.90
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -2311,8 +2311,52 @@
         );
     }
 
+    if (!html) return '';
+
     var regex = withWhitespaceContent ? /<([^>]+)>\s*<\/\1>/g : /<([^>]+)><\/\1>/g;
     return html.replace(regex, '');
+  };
+
+  /**
+   * get string removed no content elements recursively from html
+   *
+   * @static
+   * @method removeNoContentElementsRecursively
+   * @param {String} html
+   * @param (Boolean) withWhitespaceContent (optional)
+   * @returns {String} return html string
+   * @example
+   * console.log( aid.string.removeNoContentElementsRecursively('<div><span>foo</span><p><span><strong><em></em></strong></span></p></div>') ); // '<div><span>foo</span></div>'
+   * console.log( aid.string.removeNoContentElementsRecursively('<div>foo<span><strong> <em> </em> </strong></span>bar<p> <strong> </strong> </p>baz</div>', true) ); // '<div>foobarbaz</div>'
+   */
+  string.removeNoContentElementsRecursively = function removeNoContentElementsRecursively(html, withWhitespaceContent) {
+    if (!aid.isString(html))
+      throw new TypeError('[aid.string.removeNoContentElementsRecursively] Type of html parameter must be String.');
+
+    if (aid.isDefined(withWhitespaceContent)) {
+      // withWhitespaceContent parameter is defined
+      if (!aid.isBoolean(withWhitespaceContent))
+        throw new TypeError(
+          '[aid.string.removeNoContentElementsRecursively] Type of withWhitespaceContent parameter must be Boolean.'
+        );
+    }
+
+    if (!html) return '';
+
+    var regex = withWhitespaceContent ? /<([^>]+)>\s*<\/\1>/g : /<([^>]+)><\/\1>/g;
+
+    var htmlRemovedNoContentElements = html,
+      match = null;
+    while ((match = regex.exec(htmlRemovedNoContentElements))) {
+      htmlRemovedNoContentElements = string.removeNoContentElements(
+        htmlRemovedNoContentElements,
+        withWhitespaceContent
+      );
+
+      regex.lastIndex = 0;
+    }
+
+    return htmlRemovedNoContentElements;
   };
 
   /**

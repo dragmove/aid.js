@@ -709,7 +709,7 @@ describe('aid.js', function() {
           prevPageIndex: 0,
           firstPageIndex: 1,
           lastPageIndex: 1,
-          nextPageIndex: 0
+          nextPageIndex: 0,
         });
 
         expect(math.getObjForPagination(15, 10, 5, 1)).toEqual({
@@ -721,7 +721,7 @@ describe('aid.js', function() {
           prevPageIndex: 0,
           firstPageIndex: 1,
           lastPageIndex: 2,
-          nextPageIndex: 0
+          nextPageIndex: 0,
         });
 
         expect(math.getObjForPagination(39, 10, 5, 1)).toEqual({
@@ -733,7 +733,7 @@ describe('aid.js', function() {
           prevPageIndex: 0,
           firstPageIndex: 1,
           lastPageIndex: 4,
-          nextPageIndex: 0
+          nextPageIndex: 0,
         });
       });
     });
@@ -905,11 +905,11 @@ describe('aid.js', function() {
     describe('.getDistanceBetweenTwoPoints()', function() {
       var point1 = {
           x: 0,
-          y: 0
+          y: 0,
         },
         point2 = {
           x: 100,
-          y: 100
+          y: 100,
         };
 
       it('input arguments are not Object type, throw TypeError.', function() {
@@ -979,27 +979,14 @@ describe('aid.js', function() {
           math.getDistanceBetweenTwoPoints(
             {
               foo: 0,
-              bar: 0
+              bar: 0,
             },
             point2
           );
 
           math.getDistanceBetweenTwoPoints(point1, {
             foo: 0,
-            bar: 0
-          });
-        }).toThrowError(TypeError, ERROR_MSG);
-
-        expect(function() {
-          math.getDistanceBetweenTwoPoints(
-            {
-              x: 0
-            },
-            point2
-          );
-
-          math.getDistanceBetweenTwoPoints(point1, {
-            y: 0
+            bar: 0,
           });
         }).toThrowError(TypeError, ERROR_MSG);
 
@@ -1007,14 +994,27 @@ describe('aid.js', function() {
           math.getDistanceBetweenTwoPoints(
             {
               x: 0,
-              y: NaN
+            },
+            point2
+          );
+
+          math.getDistanceBetweenTwoPoints(point1, {
+            y: 0,
+          });
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          math.getDistanceBetweenTwoPoints(
+            {
+              x: 0,
+              y: NaN,
             },
             point2
           );
 
           math.getDistanceBetweenTwoPoints(point1, {
             x: NaN,
-            y: 0
+            y: 0,
           });
         }).toThrowError(TypeError, ERROR_MSG);
 
@@ -1033,15 +1033,15 @@ describe('aid.js', function() {
     describe('.getOrthogonalPointBetweenLineAndSomePoint()', function() {
       var point1 = {
           x: 0,
-          y: 0
+          y: 0,
         },
         point2 = {
           x: 100,
-          y: 100
+          y: 100,
         },
         somePoint = {
           x: 50,
-          y: 100
+          y: 100,
         };
 
       it('input arguments are not Object type, throw TypeError.', function() {
@@ -1122,7 +1122,7 @@ describe('aid.js', function() {
           math.getOrthogonalPointBetweenLineAndSomePoint(
             {
               foo: 0,
-              bar: 0
+              bar: 0,
             },
             point2,
             somePoint
@@ -1132,21 +1132,21 @@ describe('aid.js', function() {
             point1,
             {
               foo: 0,
-              bar: 0
+              bar: 0,
             },
             somePoint
           );
 
           math.getOrthogonalPointBetweenLineAndSomePoint(point1, point2, {
             foo: 0,
-            bar: 0
+            bar: 0,
           });
         }).toThrowError(TypeError, ERROR_MSG);
 
         expect(function() {
           math.getOrthogonalPointBetweenLineAndSomePoint(
             {
-              x: 0
+              x: 0,
             },
             point2,
             somePoint
@@ -1155,13 +1155,13 @@ describe('aid.js', function() {
           math.getOrthogonalPointBetweenLineAndSomePoint(
             point1,
             {
-              y: 0
+              y: 0,
             },
             somePoint
           );
 
           math.getOrthogonalPointBetweenLineAndSomePoint(point1, point2, {
-            x: 0
+            x: 0,
           });
         }).toThrowError(TypeError, ERROR_MSG);
 
@@ -1169,7 +1169,7 @@ describe('aid.js', function() {
           math.getOrthogonalPointBetweenLineAndSomePoint(
             {
               x: 0,
-              y: NaN
+              y: NaN,
             },
             point2,
             somePoint
@@ -1179,14 +1179,14 @@ describe('aid.js', function() {
             point1,
             {
               x: NaN,
-              y: 0
+              y: 0,
             },
             somePoint
           );
 
           math.getOrthogonalPointBetweenLineAndSomePoint(point1, point2, {
             x: NaN,
-            y: 0
+            y: 0,
           });
         }).toThrowError(TypeError, ERROR_MSG);
 
@@ -1199,11 +1199,11 @@ describe('aid.js', function() {
         var point = math.getOrthogonalPointBetweenLineAndSomePoint(
           {
             x: 99,
-            y: 99
+            y: 99,
           },
           {
             x: 99,
-            y: 99
+            y: 99,
           },
           somePoint
         );

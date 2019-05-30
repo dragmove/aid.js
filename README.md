@@ -148,6 +148,7 @@ aid.string.getObjCheckTwitchURI
 aid.string.getDocumentPrefixedProperty
 aid.string.getElementPrefixedStyle
 aid.string.removeNoContentElements
+aid.string.removeNoContentElementsRecursively
 aid.string.absentToEmpty
 aid.string.numberWithCommas
 aid.string.getPositionFromTranslateStr

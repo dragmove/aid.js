@@ -1245,6 +1245,147 @@ describe('aid.js', function() {
       });
     });
 
+    describe('.removeNoContentElementsRecursively()', function() {
+      it('html argument is not String type, throw TypeError.', function() {
+        expect(function() {
+          string.removeNoContentElementsRecursively(undefined);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElementsRecursively(null);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElementsRecursively(false);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElementsRecursively(true);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElementsRecursively(0);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElementsRecursively({});
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElementsRecursively([]);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElementsRecursively(function() {});
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElementsRecursively(new RegExp('^aid'));
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElementsRecursively(/^aid/);
+        }).toThrowError(TypeError);
+      });
+
+      it('withWhitespaceContent argument is not Boolean type, throw TypeError when withWhitespaceContent argument is defined.', function() {
+        expect(function() {
+          string.removeNoContentElementsRecursively('', 0);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElementsRecursively('', {});
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElementsRecursively('', []);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElementsRecursively('', function() {});
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElementsRecursively('', new RegExp('^aid'));
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.removeNoContentElementsRecursively('', /^aid/);
+        }).toThrowError(TypeError);
+      });
+
+      it('input (html string), return string removed elements have no content and no whitespaces recursively.', function() {
+        expect(string.removeNoContentElementsRecursively('<span></span>')).toEqual('');
+        expect(string.removeNoContentElementsRecursively('<span> </span>')).toEqual('<span> </span>');
+
+        expect(string.removeNoContentElementsRecursively('<span><em></em></span>')).toEqual('');
+        expect(string.removeNoContentElementsRecursively('<span><em> </em></span>')).toEqual('<span><em> </em></span>');
+
+        expect(string.removeNoContentElementsRecursively('<span><strong><em></em></strong></span>')).toEqual('');
+        expect(string.removeNoContentElementsRecursively('<span> <strong><em></em></strong></span>')).toEqual(
+          '<span> </span>'
+        );
+        expect(string.removeNoContentElementsRecursively('<span><strong><em></em></strong> </span>')).toEqual(
+          '<span> </span>'
+        );
+        expect(string.removeNoContentElementsRecursively('<span> <strong><em></em></strong> </span>')).toEqual(
+          '<span>  </span>'
+        );
+
+        expect(
+          string.removeNoContentElementsRecursively(
+            '<div>foo<span><strong><em></em></strong></span>bar<p><strong><u></u></strong></p>baz</div>'
+          )
+        ).toEqual('<div>foobarbaz</div>');
+
+        expect(
+          string.removeNoContentElementsRecursively(
+            '<div><span>foo</span><p><strong><em> <u></u></em></strong></p>baz</div>'
+          )
+        ).toEqual('<div><span>foo</span><p><strong><em> </em></strong></p>baz</div>');
+
+        expect(
+          string.removeNoContentElementsRecursively(
+            '<div><span>foo</span><p><span><strong><em></em></strong></span></p></div>'
+          )
+        ).toEqual('<div><span>foo</span></div>');
+
+        expect(
+          string.removeNoContentElementsRecursively(
+            '<div><span>foo</span><p><span><strong><em></em></strong></span></p></div><div><span>bar</span><p><span><strong><em></em></strong></span></p></div>'
+          )
+        ).toEqual('<div><span>foo</span></div><div><span>bar</span></div>');
+      });
+
+      it('input (html string, true), return string removed elements have no content including whitespaces recursively.', function() {
+        expect(string.removeNoContentElementsRecursively('<span> </span>', true)).toEqual('');
+
+        expect(
+          string.removeNoContentElementsRecursively('<div><span>foo</span><p> </p><em> </em></div>', true)
+        ).toEqual('<div><span>foo</span></div>');
+
+        expect(string.removeNoContentElementsRecursively('<div><span> </span><p> </p></div>', true)).toEqual('');
+
+        expect(
+          string.removeNoContentElementsRecursively(
+            '<div>foo<span><strong> <em> </em> </strong></span>bar<p> <strong> </strong> </p>baz</div>',
+            true
+          )
+        ).toEqual('<div>foobarbaz</div>');
+
+        expect(
+          string.removeNoContentElementsRecursively('<div> <span> </span> <p> </p> baz <span> </span> </div>', true)
+        ).toEqual('<div>   baz  </div>');
+
+        expect(
+          string.removeNoContentElementsRecursively(
+            '<div><span> </span> <p> <span> <strong> <em> </em> </strong> </span> </p> </div>',
+            true
+          )
+        ).toEqual('');
+      });
+    });
+
     describe('.absentToEmpty()', function() {
       it('input (null) return "".', function() {
         expect(string.absentToEmpty(null)).toEqual('');

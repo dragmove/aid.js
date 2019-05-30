@@ -35,6 +35,10 @@ module.exports = function(config) {
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
 
+    browserDisconnectTolerance: 3,
+
+    browserNoActivityTimeout: 30000,
+
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['PhantomJS' /*, 'Chrome', 'IE', 'IE7', 'Firefox', 'Safari' */],

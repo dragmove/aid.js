@@ -5,7 +5,7 @@ describe('aid.js', function() {
     var array = aid.array;
 
     describe('.indexOf()', function() {
-      var tmpArr = ['foo', 1, 'bar', 2, null, 99];
+      var arr = ['foo', 1, 'bar', 2, null, 99];
 
       it('if 1st argument is not Array type, throw TypeError', function() {
         expect(function() {
@@ -14,18 +14,18 @@ describe('aid.js', function() {
       });
 
       it('return index of element.', function() {
-        expect(array.indexOf(tmpArr, 'foo')).toEqual(0);
-        expect(array.indexOf(tmpArr, 1)).toEqual(1);
-        expect(array.indexOf(tmpArr, 'bar')).toEqual(2);
-        expect(array.indexOf(tmpArr, 2)).toEqual(3);
-        expect(array.indexOf(tmpArr, null)).toEqual(4);
-        expect(array.indexOf(tmpArr, 99)).toEqual(5);
+        expect(array.indexOf(arr, 'foo')).toEqual(0);
+        expect(array.indexOf(arr, 1)).toEqual(1);
+        expect(array.indexOf(arr, 'bar')).toEqual(2);
+        expect(array.indexOf(arr, 2)).toEqual(3);
+        expect(array.indexOf(arr, null)).toEqual(4);
+        expect(array.indexOf(arr, 99)).toEqual(5);
       });
 
       it('if cannot find element, return -1', function() {
-        expect(array.indexOf(tmpArr, undefined)).toEqual(-1);
-        expect(array.indexOf(tmpArr, '')).toEqual(-1);
-        expect(array.indexOf(tmpArr, 999)).toEqual(-1);
+        expect(array.indexOf(arr, undefined)).toEqual(-1);
+        expect(array.indexOf(arr, '')).toEqual(-1);
+        expect(array.indexOf(arr, 999)).toEqual(-1);
       });
 
       it('if first argument is empty array, return -1', function() {
@@ -34,7 +34,7 @@ describe('aid.js', function() {
     });
 
     describe('.indexOfMin()', function() {
-      var tmpArr = [18, 6, 66, 44, 9, 22, 14];
+      var arr = [18, 6, 66, 44, 9, 22, 14];
 
       it('return -1 when 1st parameter type is not array.', function() {
         expect(array.indexOfMin(null, 0)).toEqual(-1);
@@ -45,104 +45,104 @@ describe('aid.js', function() {
       });
 
       it('return -1 when startSearchIndex is not Int.', function() {
-        expect(array.indexOfMin(tmpArr, -0.5)).toEqual(-1);
-        expect(array.indexOfMin(tmpArr, 0.5)).toEqual(-1);
+        expect(array.indexOfMin(arr, -0.5)).toEqual(-1);
+        expect(array.indexOfMin(arr, 0.5)).toEqual(-1);
       });
 
       it('return -1 when startSearchIndex is greater than array.length', function() {
-        expect(array.indexOfMin(tmpArr, 7)).toEqual(-1);
-        expect(array.indexOfMin(tmpArr, 99)).toEqual(-1);
+        expect(array.indexOfMin(arr, 7)).toEqual(-1);
+        expect(array.indexOfMin(arr, 99)).toEqual(-1);
       });
 
       it('return index of minimum element.', function() {
-        expect(array.indexOfMin(tmpArr, -1)).toEqual(1);
-        expect(array.indexOfMin(tmpArr, 0)).toEqual(1);
-        expect(array.indexOfMin(tmpArr, 1)).toEqual(1);
-        expect(array.indexOfMin(tmpArr, 2)).toEqual(4);
-        expect(array.indexOfMin(tmpArr, 2)).toEqual(4);
-        expect(array.indexOfMin(tmpArr, 4)).toEqual(4);
-        expect(array.indexOfMin(tmpArr, 5)).toEqual(6);
-        expect(array.indexOfMin(tmpArr, 6)).toEqual(6);
+        expect(array.indexOfMin(arr, -1)).toEqual(1);
+        expect(array.indexOfMin(arr, 0)).toEqual(1);
+        expect(array.indexOfMin(arr, 1)).toEqual(1);
+        expect(array.indexOfMin(arr, 2)).toEqual(4);
+        expect(array.indexOfMin(arr, 2)).toEqual(4);
+        expect(array.indexOfMin(arr, 4)).toEqual(4);
+        expect(array.indexOfMin(arr, 5)).toEqual(6);
+        expect(array.indexOfMin(arr, 6)).toEqual(6);
       });
     });
 
     describe('.swap()', function() {
-      var tmpArr = [18, 6, 66, 44, 9, 22, 14];
+      var arr = [18, 6, 66, 44, 9, 22, 14];
 
       beforeEach(function() {
-        tmpArr = [18, 6, 66, 44, 9, 22, 14];
+        arr = [18, 6, 66, 44, 9, 22, 14];
       });
 
       it('no change when parameter length is not 3.', function() {
-        array.swap(tmpArr);
-        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+        array.swap(arr);
+        expect(arr).toEqual([18, 6, 66, 44, 9, 22, 14]);
 
-        array.swap(tmpArr, 0);
-        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+        array.swap(arr, 0);
+        expect(arr).toEqual([18, 6, 66, 44, 9, 22, 14]);
 
-        array.swap(tmpArr, 0, 1, 2);
-        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+        array.swap(arr, 0, 1, 2);
+        expect(arr).toEqual([18, 6, 66, 44, 9, 22, 14]);
       });
 
       it('no change when 1st parameter type is not array.', function() {
         array.swap(null, 1, 2);
-        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+        expect(arr).toEqual([18, 6, 66, 44, 9, 22, 14]);
 
         array.swap(undefined, 1, 2);
-        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+        expect(arr).toEqual([18, 6, 66, 44, 9, 22, 14]);
 
         array.swap(99, 1, 2);
-        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+        expect(arr).toEqual([18, 6, 66, 44, 9, 22, 14]);
 
         array.swap('string', 1, 2);
-        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+        expect(arr).toEqual([18, 6, 66, 44, 9, 22, 14]);
 
         array.swap(false, 1, 2);
-        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+        expect(arr).toEqual([18, 6, 66, 44, 9, 22, 14]);
 
         array.swap({}, 1, 2);
-        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+        expect(arr).toEqual([18, 6, 66, 44, 9, 22, 14]);
       });
 
       it('no change when 2nd, 3rd parameter is not Integer.', function() {
-        array.swap(tmpArr, 1.5, 2);
-        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+        array.swap(arr, 1.5, 2);
+        expect(arr).toEqual([18, 6, 66, 44, 9, 22, 14]);
 
-        array.swap(tmpArr, 1, 2.5);
-        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+        array.swap(arr, 1, 2.5);
+        expect(arr).toEqual([18, 6, 66, 44, 9, 22, 14]);
 
-        array.swap(tmpArr, 1.5, 2.5);
-        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+        array.swap(arr, 1.5, 2.5);
+        expect(arr).toEqual([18, 6, 66, 44, 9, 22, 14]);
       });
 
       it('no change when array does not include firstIndex, secondIndex elements', function() {
-        array.swap(tmpArr, -1, 3);
-        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+        array.swap(arr, -1, 3);
+        expect(arr).toEqual([18, 6, 66, 44, 9, 22, 14]);
 
-        array.swap(tmpArr, 99, 3);
-        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+        array.swap(arr, 99, 3);
+        expect(arr).toEqual([18, 6, 66, 44, 9, 22, 14]);
 
-        array.swap(tmpArr, 3, -1);
-        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+        array.swap(arr, 3, -1);
+        expect(arr).toEqual([18, 6, 66, 44, 9, 22, 14]);
 
-        array.swap(tmpArr, 3, 99);
-        expect(tmpArr).toEqual([18, 6, 66, 44, 9, 22, 14]);
+        array.swap(arr, 3, 99);
+        expect(arr).toEqual([18, 6, 66, 44, 9, 22, 14]);
       });
 
       it('no change when array does not include firstIndex, secondIndex elements', function() {
-        expect(array.swap(tmpArr, 0, 1)).toEqual([6, 18, 66, 44, 9, 22, 14]);
-        expect(array.swap(tmpArr, 0, 2)).toEqual([66, 18, 6, 44, 9, 22, 14]);
-        expect(array.swap(tmpArr, 1, 2)).toEqual([66, 6, 18, 44, 9, 22, 14]);
-        expect(array.swap(tmpArr, 3, 5)).toEqual([66, 6, 18, 22, 9, 44, 14]);
-        expect(array.swap(tmpArr, 3, 1)).toEqual([66, 22, 18, 6, 9, 44, 14]);
+        expect(array.swap(arr, 0, 1)).toEqual([6, 18, 66, 44, 9, 22, 14]);
+        expect(array.swap(arr, 0, 2)).toEqual([66, 18, 6, 44, 9, 22, 14]);
+        expect(array.swap(arr, 1, 2)).toEqual([66, 6, 18, 44, 9, 22, 14]);
+        expect(array.swap(arr, 3, 5)).toEqual([66, 6, 18, 22, 9, 44, 14]);
+        expect(array.swap(arr, 3, 1)).toEqual([66, 22, 18, 6, 9, 44, 14]);
       });
     });
 
     describe('.selectionSort()', function() {
-      var tmpArr = [18, 6, 66, 44, 9, 22, 14];
+      var arr = [18, 6, 66, 44, 9, 22, 14];
 
       beforeEach(function() {
-        tmpArr = [18, 6, 66, 44, 9, 22, 14];
+        arr = [18, 6, 66, 44, 9, 22, 14];
       });
 
       it('return null when parameter is not array.', function() {
@@ -158,7 +158,7 @@ describe('aid.js', function() {
       });
 
       it('return sorted array.', function() {
-        expect(array.selectionSort(tmpArr)).toEqual([6, 9, 14, 18, 22, 44, 66]);
+        expect(array.selectionSort(arr)).toEqual([6, 9, 14, 18, 22, 44, 66]);
       });
     });
 
@@ -644,7 +644,7 @@ describe('aid.js', function() {
         expect(array.overlappedConditionSortByProperty(arr)).toEqual(arr);
       });
 
-      it('return clone array when sortConditions is not array.', function() {
+      describe('return clone array', function() {
         var arr = [];
 
         beforeEach(function() {
@@ -657,11 +657,13 @@ describe('aid.js', function() {
           ];
         });
 
-        expect(array.overlappedConditionSortByProperty(arr, null)).toEqual(arr);
-        expect(array.overlappedConditionSortByProperty(arr, undefined)).toEqual(arr);
-        expect(array.overlappedConditionSortByProperty(arr, 99)).toEqual(arr);
-        expect(array.overlappedConditionSortByProperty(arr, 'string')).toEqual(arr);
-        expect(array.overlappedConditionSortByProperty(arr, false)).toEqual(arr);
+        it('when sortConditions are not array.', function() {
+          expect(array.overlappedConditionSortByProperty(arr, null)).toEqual(arr);
+          expect(array.overlappedConditionSortByProperty(arr, undefined)).toEqual(arr);
+          expect(array.overlappedConditionSortByProperty(arr, 99)).toEqual(arr);
+          expect(array.overlappedConditionSortByProperty(arr, 'string')).toEqual(arr);
+          expect(array.overlappedConditionSortByProperty(arr, false)).toEqual(arr);
+        });
       });
 
       it('return clone array when sortConditions has no condition.', function() {
