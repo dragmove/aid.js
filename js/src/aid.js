@@ -1148,6 +1148,181 @@
     return new LinkedList();
   };
 
+  // BinarySearchTree
+  var BinarySearchTree = function() {
+    var Node = function(key) {
+      this.key = key;
+      this.left = null;
+      this.right = null;
+    };
+
+    var root = null;
+
+    var insertNode = function(node, newNode) {
+      if (newNode.key < node.key) {
+        if (aid.isDefined(node.left)) {
+          insertNode(node.left, newNode);
+        } else {
+          node.left = newNode;
+        }
+      } else {
+        if (aid.isDefined(node.right)) {
+          insertNode(node.right, newNode);
+        } else {
+          node.right = newNode;
+        }
+      }
+    };
+
+    // in-order traversal - 중위 순회. 작은 값에서 큰 값 방향으로 방문한다(좌, 자신, 우). 트리 정렬시 사용되는 방법
+    // function printNode(value) { console.log(value); }
+    // tree.inOrderTraverse(printNode);
+    var inOrderTraverseNode = function(node, callback) {
+      if (aid.isDefined(node)) {
+        inOrderTraverseNode(node.left, callback);
+        callback(node.key);
+        inOrderTraverseNode(node.right, callback);
+      }
+    };
+
+    // pre-order traversal - 전위 순회. 자식 노드보다 노드 자신을 먼저 방문한다(자신, 좌, 우). 구조화된 문서를 출력할 때 많이 이용하는 방법
+    var preOrderTraverseNode = function(node, callback) {
+      if (aid.isDefined(node)) {
+        callback(node.key);
+        preOrderTraverseNode(node.left, callback);
+        preOrderTraverseNode(node.right, callback);
+      }
+    };
+
+    // post-order traversal - 후위 순회. 자식 노드를 노드 자신보다 먼저 방문한다(좌, 우, 자신). 디렉토리와 서브 디렉토리의 파일 용량을 계산할 때 사용하는 방법
+    var postOrderTraverseNode = function(node, callback) {
+      if (aid.isDefined(node)) {
+        postOrderTraverseNode(node.left, callback);
+        postOrderTraverseNode(node.right, callback);
+        callback(node.key);
+      }
+    };
+
+    var minNode = function(node) {
+      if (aid.isDefined(node)) {
+        while (node && node.left !== null) {
+          node = node.left;
+        }
+
+        return node.key;
+      }
+
+      return null;
+    };
+
+    var maxNode = function(node) {
+      if (aid.isDefined(node)) {
+        while (node && node.right !== null) {
+          node = node.right;
+        }
+
+        return node.key;
+      }
+
+      return null;
+    };
+
+    var findMinNode = function(node) {
+      while (node && node.left !== null) {
+        node = node.left;
+      }
+
+      return node;
+    };
+
+    var searchNode = function(node, key) {
+      if (!aid.isDefined(node)) return false;
+
+      if (key < node.key) {
+        return searchNode(node.left, key);
+      } else if (key > node.key) {
+        return searchNode(node.right, key);
+      } else {
+        return true;
+      }
+    };
+
+    var removeNode = function(node, key) {
+      if (!aid.isDefined(node)) return null;
+
+      if (key < node.key) {
+        node.left = removeNode(node.left, key);
+        return node;
+      } else if (key > node.key) {
+        node.right = removeNode(node.right, key);
+        return node;
+      } else {
+        // case: leaf node
+        if (!aid.isDefined(node.left) && !aid.isDefined(node.right)) {
+          node = null;
+          return node;
+        }
+
+        // case: node has one child
+        if (!aid.isDefined(node.left)) {
+          node = node.right;
+          return node;
+        } else if (!aid.isDefined(node.right)) {
+          node = node.left;
+          return node;
+        }
+
+        // case: node has two children
+        var aux = findMinNode(node.right);
+        node.key = aux.key;
+        node.right = removeNode(node.right, aux.key);
+        return node;
+      }
+    };
+
+    this.getRoot = function() {
+      return root;
+    };
+
+    this.insert = function(key) {
+      var newNode = new Node(key);
+
+      if (aid.isDefined(root)) {
+        insertNode(root, newNode);
+      } else {
+        root = newNode;
+      }
+    };
+
+    this.search = function(key) {
+      return searchNode(root, key);
+    };
+
+    this.remove = function(key) {
+      root = removeNode(root, key);
+    };
+
+    this.min = function() {
+      return minNode(root);
+    };
+
+    this.max = function() {
+      return maxNode(root);
+    };
+
+    this.inOrderTraverse = function(callback) {
+      inOrderTraverseNode(root, callback);
+    };
+
+    this.preOrderTraverse = function(callback) {
+      preOrderTraverseNode(root, callback);
+    };
+
+    this.postOrderTraverse = function(callback) {
+      postOrderTraverseNode(root, callback);
+    };
+  };
+
   /**
    * plus(+) operator
    *
