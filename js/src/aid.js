@@ -1027,29 +1027,38 @@
     this._top = 0;
   };
 
-  Stack.prototype.push = function push(element) {
+  Stack.prototype.push = function stack_push(element) {
     if (this._top < 0) this._top = 0;
     this._dataStore[this._top++] = element;
   };
 
-  Stack.prototype.pop = function pop() {
+  Stack.prototype.pop = function stack_pop() {
     return this._dataStore[--this._top];
   };
 
-  Stack.prototype.peek = function peek() {
+  Stack.prototype.peek = function stack_peek() {
     return this._dataStore[this._top - 1];
   };
 
-  Stack.prototype.length = function length() {
+  Stack.prototype.length = function stack_length() {
     return this._top > 0 ? this._top : 0;
   };
 
-  Stack.prototype.clear = function clear() {
+  Stack.prototype.clear = function stack_clear() {
     this._dataStore = [];
     this._top = 0;
   };
 
-  aid.createStack = function() {
+  /**
+   * createStack
+   *
+   * @static
+   * @method createStack
+   * @returns {Stack} return stack instance
+   * @example
+   * var stack = aid.createStack(); // use push, pop, peek, length, clear methods
+   */
+  aid.createStack = function createStack() {
     return new Stack();
   };
 
@@ -1058,31 +1067,40 @@
     this._dataStore = [];
   };
 
-  Queue.prototype.enqueue = function enqueue(element) {
+  Queue.prototype.enqueue = function queue_enqueue(element) {
     this._dataStore.push(element);
   };
 
-  Queue.prototype.dequeue = function dequeue() {
+  Queue.prototype.dequeue = function queue_dequeue() {
     return this._dataStore.shift();
   };
 
-  Queue.prototype.front = function front() {
+  Queue.prototype.front = function queue_front() {
     return this._dataStore[0];
   };
 
-  Queue.prototype.rear = function rear() {
+  Queue.prototype.rear = function queue_rear() {
     return this._dataStore[this._dataStore.length - 1];
   };
 
-  Queue.prototype.length = function length() {
+  Queue.prototype.length = function queue_length() {
     return this._dataStore.length;
   };
 
-  Queue.prototype.isEmpty = function isEmpty() {
+  Queue.prototype.isEmpty = function queue_isEmpty() {
     if (this._dataStore.length <= 0) return true;
     return false;
   };
 
+  /**
+   * createQueue
+   *
+   * @static
+   * @method createQueue
+   * @returns {Queue} return queue instance
+   * @example
+   * var queue = aid.createQueue(); // use enqueue, dequeue, front, rear, length, isEmpty methods
+   */
   aid.createQueue = function createQueue() {
     return new Queue();
   };
@@ -1098,7 +1116,7 @@
     this.head = new LinkedListNode('head');
   };
 
-  LinkedList.prototype.find = function find(data) {
+  LinkedList.prototype.find = function linkedList_find(data) {
     var node = this.head;
     while (node.data !== data) {
       node = node.next;
@@ -1107,7 +1125,7 @@
     return node;
   };
 
-  LinkedList.prototype.findPrevious = function findPrevious(data) {
+  LinkedList.prototype.findPrevious = function linkedList_findPrevious(data) {
     if (this.head.data === data) return null;
 
     var node = this.head;
@@ -1125,7 +1143,7 @@
     prevNode.next = insertNode;
   };
 
-  LinkedList.prototype.remove = function remove(data) {
+  LinkedList.prototype.remove = function linkedList_remove(data) {
     var prevNode = this.findPrevious(data);
 
     if (prevNode.next !== null) {
@@ -1133,7 +1151,7 @@
     }
   };
 
-  LinkedList.prototype.getAllNodes = function getAllNodes() {
+  LinkedList.prototype.getAllNodes = function linkedList_getAllNodes() {
     var nodes = [this.head],
       node = this.head;
 
@@ -1144,8 +1162,237 @@
     return nodes;
   };
 
+  /**
+   * createLinkedList
+   *
+   * @static
+   * @method createLinkedList
+   * @returns {LinkedList} return linkedList instance
+   * @example
+   * var linkedList = aid.createLinkedList(); // use find, findPrevious, insert, remove, getAllNodes methods
+   */
   aid.createLinkedList = function createLinkedList() {
     return new LinkedList();
+  };
+
+  // BinarySearchTree node
+  var BinarySearchTreeNode = function(data) {
+    this.data = data;
+    this.left = null;
+    this.right = null;
+  };
+
+  // BinarySearchTree node
+  var BinarySearchTree = function() {
+    this.root = null;
+  };
+
+  BinarySearchTree.prototype._insertNode = function(node, newNode) {
+    if (!aid.isDefined(node) || !aid.isDefined(newNode))
+      throw new TypeError('[BinarySearchTree.prototype._insertNode] node and newNode parameters must be defined.');
+
+    // duplicated value is not allowed in this BinarySearchTree
+    if (node.data === newNode.data) return;
+
+    if (newNode.data < node.data) {
+      aid.isDefined(node.left) ? this._insertNode(node.left, newNode) : (node.left = newNode);
+    } else {
+      aid.isDefined(node.right) ? this._insertNode(node.right, newNode) : (node.right = newNode);
+    }
+  };
+
+  BinarySearchTree.prototype._searchNode = function(node, data) {
+    if (!aid.isDefined(node)) return false;
+
+    if (!aid.isDefined(data))
+      throw new TypeError('[BinarySearchTree.prototype._searchNode] data parameters must be defined.');
+
+    if (data < node.data) {
+      return this._searchNode(node.left, data);
+    } else if (data > node.data) {
+      return this._searchNode(node.right, data);
+    } else {
+      return true;
+    }
+  };
+
+  BinarySearchTree.prototype._findMinNode = function(node) {
+    if (!aid.isDefined(node)) return null;
+
+    while (node && aid.isDefined(node.left)) {
+      node = node.left;
+    }
+
+    return node;
+  };
+
+  BinarySearchTree.prototype._removeNode = function(node, data) {
+    if (!aid.isDefined(data))
+      throw new TypeError('[BinarySearchTree.prototype._removeNode] data parameters must be defined.');
+
+    if (!aid.isDefined(node)) return null;
+
+    if (data < node.data) {
+      node.left = this._removeNode(node.left, data);
+      return node;
+    } else if (data > node.data) {
+      node.right = this._removeNode(node.right, data);
+      return node;
+    } else {
+      // case: remove leaf node
+      if (!aid.isDefined(node.left) && !aid.isDefined(node.right)) {
+        node = null;
+        return node;
+      }
+
+      // case: remove node has one child node
+      if (!aid.isDefined(node.left)) {
+        node = node.right;
+        return node;
+      } else if (!aid.isDefined(node.right)) {
+        node = node.left;
+        return node;
+      }
+
+      // case: remove node has two children nodes
+      var aux = this._findMinNode(node.right);
+      node.data = aux.data;
+      node.right = this._removeNode(node.right, aux.data);
+      return node;
+    }
+  };
+
+  BinarySearchTree.prototype._minNode = function(node) {
+    if (!aid.isDefined(node)) return null;
+
+    while (node && aid.isDefined(node.left)) node = node.left;
+
+    return node.data;
+  };
+
+  BinarySearchTree.prototype._maxNode = function(node) {
+    if (!aid.isDefined(node)) return null;
+
+    while (node && aid.isDefined(node.right)) node = node.right;
+
+    return node.data;
+  };
+
+  BinarySearchTree.prototype._inOrderTraverseNode = function(node, callback) {
+    if (!aid.isFunction(callback))
+      throw new TypeError(
+        '[BinarySearchTree.prototype._inOrderTraverseNode] Type of callback parameter must be Function.'
+      );
+
+    // visit node.left, node.data, node.right
+    if (aid.isDefined(node)) {
+      this._inOrderTraverseNode(node.left, callback);
+      callback(node.data);
+      this._inOrderTraverseNode(node.right, callback);
+    }
+  };
+
+  BinarySearchTree.prototype._preOrderTraverseNode = function(node, callback) {
+    if (!aid.isFunction(callback))
+      throw new TypeError(
+        '[BinarySearchTree.prototype._preOrderTraverseNode] Type of callback parameter must be Function.'
+      );
+
+    // visit node.data, node.left, node.right
+    if (aid.isDefined(node)) {
+      callback(node.data);
+      this._preOrderTraverseNode(node.left, callback);
+      this._preOrderTraverseNode(node.right, callback);
+    }
+  };
+
+  BinarySearchTree.prototype._postOrderTraverseNode = function(node, callback) {
+    if (!aid.isFunction(callback))
+      throw new TypeError(
+        '[BinarySearchTree.prototype._postOrderTraverseNode] Type of callback parameter must be Function.'
+      );
+
+    // visit node.left, node.right, node.data
+    if (aid.isDefined(node)) {
+      this._postOrderTraverseNode(node.left, callback);
+      this._postOrderTraverseNode(node.right, callback);
+      callback(node.data);
+    }
+  };
+
+  BinarySearchTree.prototype.getRoot = function binarySearchTree_getRoot() {
+    return this.root;
+  };
+
+  BinarySearchTree.prototype.insert = function binarySearchTree_insert(data) {
+    if (!aid.isDefined(data))
+      throw new TypeError('[BinarySearchTree.prototype.insert] data parameter must be defined.');
+
+    var newNode = new BinarySearchTreeNode(data);
+
+    if (aid.isDefined(this.root)) {
+      this._insertNode(this.root, newNode);
+    } else {
+      this.root = newNode;
+    }
+  };
+
+  BinarySearchTree.prototype.search = function binarySearchTree_search(data) {
+    if (!aid.isDefined(data))
+      throw new TypeError('[BinarySearchTree.prototype.search] data parameter must be defined.');
+
+    return this._searchNode(this.root, data);
+  };
+
+  BinarySearchTree.prototype.remove = function binarySearchTree_remove(data) {
+    if (!aid.isDefined(data))
+      throw new TypeError('[BinarySearchTree.prototype.remove] data parameter must be defined.');
+
+    this.root = this._removeNode(this.root, data);
+  };
+
+  BinarySearchTree.prototype.min = function binarySearchTree_min() {
+    return this._minNode(this.root);
+  };
+
+  BinarySearchTree.prototype.max = function binarySearchTree_max() {
+    return this._maxNode(this.root);
+  };
+
+  BinarySearchTree.prototype.inOrderTraverse = function binarySearchTree_inOrderTraverse(callback) {
+    if (!aid.isFunction(callback))
+      throw new TypeError('[BinarySearchTree.prototype.inOrderTraverse] Type of callback parameter must be Function.');
+
+    this._inOrderTraverseNode(this.root, callback);
+  };
+
+  BinarySearchTree.prototype.preOrderTraverse = function binarySearchTree_preOrderTraverse(callback) {
+    if (!aid.isFunction(callback))
+      throw new TypeError('[BinarySearchTree.prototype.preOrderTraverse] Type of callback parameter must be Function.');
+
+    this._preOrderTraverseNode(this.root, callback);
+  };
+
+  BinarySearchTree.prototype.postOrderTraverse = function binarySearchTree_postOrderTraverse(callback) {
+    if (!aid.isFunction(callback))
+      throw new TypeError(
+        '[BinarySearchTree.prototype.postOrderTraverse] Type of callback parameter must be Function.'
+      );
+
+    this._postOrderTraverseNode(this.root, callback);
+  };
+
+  /**
+   * createBinarySearchTree
+   *
+   * @static
+   * @method createBinarySearchTree
+   * @returns {BinarySearchTree} return BinarySearchTree instance
+   * @example
+   * var binarySearchTree = aid.createBinarySearchTree(); // use getRoot, insert, search, remove, min, max, inOrderTraverse, preOrderTraverse, postOrderTraverse methods
+   */
+  aid.createBinarySearchTree = function createBinarySearchTree() {
+    return new BinarySearchTree();
   };
 
   /**
