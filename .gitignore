@@ -1,4 +1,10 @@
+# Node build artifacts
 node_modules
-.sass-cache
-.idea
+npm-debug.log
+
+# Editors
 .vscode
+.idea
+
+# Local development
+.DS_Store

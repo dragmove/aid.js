@@ -2729,74 +2729,303 @@ describe('aid.js', function() {
       var stack = aid.createStack();
 
       it('created Stack is exist', function() {
-        expect(stack).not.toEqual(null);
+        expect(stack).not.toBe(null);
       });
 
       it('new stack.length() is 0', function() {
-        expect(stack.length()).toEqual(0);
+        expect(stack.length()).toBe(0);
       });
 
       it('new stack.peek() is undefined', function() {
-        expect(stack.peek()).toEqual(undefined);
+        expect(stack.peek()).toBe(undefined);
       });
 
       it('after execute stack.push("foo"), stack.length() is increased', function() {
         stack.push('foo');
-        expect(stack.length()).toEqual(1);
-        expect(stack.peek()).toEqual('foo');
+        expect(stack.length()).toBe(1);
+        expect(stack.peek()).toBe('foo');
 
         stack.push('bar');
-        expect(stack.length()).toEqual(2);
-        expect(stack.peek()).toEqual('bar');
+        expect(stack.length()).toBe(2);
+        expect(stack.peek()).toBe('bar');
       });
 
       it('after execute stack.pop(), stack.length() is decreased', function() {
         var val = stack.pop();
-        expect(val).toEqual('bar');
-        expect(stack.peek()).toEqual('foo');
-        expect(stack.length()).toEqual(1);
+        expect(val).toBe('bar');
+        expect(stack.peek()).toBe('foo');
+        expect(stack.length()).toBe(1);
 
         val = stack.pop();
-        expect(val).toEqual('foo');
-        expect(stack.peek()).toEqual(undefined);
-        expect(stack.length()).toEqual(0);
+        expect(val).toBe('foo');
+        expect(stack.peek()).toBe(undefined);
+        expect(stack.length()).toBe(0);
 
         val = stack.pop();
-        expect(val).toEqual(undefined);
-        expect(stack.length()).toEqual(0);
+        expect(val).toBe(undefined);
+        expect(stack.length()).toBe(0);
       });
 
       it('after execute stack.clear(), stack.length() is 0', function() {
         for (var i = 0; i < 5; ++i) {
           stack.push(i);
         }
-        expect(stack.length()).toEqual(5);
+        expect(stack.length()).toBe(5);
 
         stack.clear();
-        expect(stack.length()).toEqual(0);
+        expect(stack.length()).toBe(0);
 
         var val = stack.pop();
-        expect(val).toEqual(undefined);
+        expect(val).toBe(undefined);
       });
     });
 
     describe('.createQueue()', function() {
-      // TODO - createQueue
+      // TODO: write test cases
     });
 
     describe('.createLinkedList()', function() {
       var linkedList = aid.createLinkedList();
 
       it('created LinkedList is exist', function() {
-        expect(linkedList).not.toEqual(null);
+        expect(linkedList).not.toBe(null);
       });
 
       it('getAllNodes() return head node, when LinkedList created', function() {
         var node = linkedList.getAllNodes();
-        expect(node[0]).toEqual(linkedList.head);
+        expect(node[0]).toBe(linkedList.head);
       });
 
-      /// TODO - createLinkedList
+      // TODO: write test cases
+    });
+
+    describe('.createBinarySearchTree()', function() {
+      var binarySearchTree = aid.createBinarySearchTree();
+
+      it('created binarySearchTree is exist', function() {
+        expect(binarySearchTree).not.toBe(null);
+      });
+
+      describe('.getRoot()', function() {
+        it('default value is null', function() {
+          expect(binarySearchTree.getRoot()).toBe(null);
+        });
+
+        it('after execute binarySearchTree.insert(50), .data is 50', function() {
+          binarySearchTree.insert(50);
+          expect(binarySearchTree.getRoot()).not.toBe(null);
+          expect(binarySearchTree.getRoot().data).toBe(50);
+        });
+      });
+
+      describe('.insert()', function() {
+        it('if data parameter type is not defined, throw TypeError', function() {
+          var ERROR_MSG = '[BinarySearchTree.prototype.insert] data parameter must be defined.';
+
+          expect(function() {
+            binarySearchTree.insert(null);
+          }).toThrowError(TypeError, ERROR_MSG);
+        });
+
+        it('after execute binarySearchTree.insert(30), root.left.data is 30', function() {
+          binarySearchTree.insert(30);
+          expect(binarySearchTree.getRoot().left.data).toBe(30);
+        });
+
+        it('after execute binarySearchTree.insert(35), root.left.right.data is 35', function() {
+          binarySearchTree.insert(35);
+          expect(binarySearchTree.getRoot().left.right.data).toBe(35);
+        });
+
+        it('after execute binarySearchTree.insert(32), root.left.right.left.data is 32', function() {
+          binarySearchTree.insert(32);
+          expect(binarySearchTree.getRoot().left.right.left.data).toBe(32);
+        });
+
+        it('after execute binarySearchTree.insert(37), root.left.right.right.data is 37', function() {
+          binarySearchTree.insert(37);
+          expect(binarySearchTree.getRoot().left.right.right.data).toBe(37);
+        });
+
+        it('after execute binarySearchTree.insert(20), root.left.left.data is 20', function() {
+          binarySearchTree.insert(20);
+          expect(binarySearchTree.getRoot().left.left.data).toBe(20);
+        });
+
+        it('after execute binarySearchTree.insert(25), root.left.left.right.data is 25', function() {
+          binarySearchTree.insert(25);
+          expect(binarySearchTree.getRoot().left.left.right.data).toBe(25);
+        });
+
+        it('after execute binarySearchTree.insert(22), root.left.left.right.left.data is 22', function() {
+          binarySearchTree.insert(22);
+          expect(binarySearchTree.getRoot().left.left.right.left.data).toBe(22);
+        });
+
+        it('after execute binarySearchTree.insert(15), root.left.left.left.data is 15', function() {
+          binarySearchTree.insert(15);
+          expect(binarySearchTree.getRoot().left.left.left.data).toBe(15);
+        });
+
+        it('after execute binarySearchTree.insert(70), root.right.data is 70', function() {
+          binarySearchTree.insert(70);
+          expect(binarySearchTree.getRoot().right.data).toBe(70);
+        });
+
+        it('after execute binarySearchTree.insert(60), root.right.left.data is 60', function() {
+          binarySearchTree.insert(60);
+          expect(binarySearchTree.getRoot().right.left.data).toBe(60);
+        });
+
+        it('after execute binarySearchTree.insert(65), root.right.left.right.data is 65', function() {
+          binarySearchTree.insert(65);
+          expect(binarySearchTree.getRoot().right.left.right.data).toBe(65);
+        });
+      });
+
+      describe('.inOrderTraverse()', function() {
+        it('if callback parameter type is not defined, throw TypeError', function() {
+          var ERROR_MSG = '[BinarySearchTree.prototype.inOrderTraverse] Type of callback parameter must be Function.';
+
+          expect(function() {
+            binarySearchTree.inOrderTraverse(null);
+          }).toThrowError(TypeError, ERROR_MSG);
+        });
+
+        it('visit node.data, node.left, node.right', function() {
+          var datas = [];
+          binarySearchTree.inOrderTraverse(function(data) {
+            datas.push(data);
+          });
+
+          expect(datas.join(',')).toBe('15,20,22,25,30,32,35,37,50,60,65,70');
+        });
+      });
+
+      describe('.preOrderTraverse()', function() {
+        it('if callback parameter type is not defined, throw TypeError', function() {
+          var ERROR_MSG = '[BinarySearchTree.prototype.preOrderTraverse] Type of callback parameter must be Function.';
+
+          expect(function() {
+            binarySearchTree.preOrderTraverse(null);
+          }).toThrowError(TypeError, ERROR_MSG);
+        });
+
+        it('visit node.data, node.left, node.right', function() {
+          var datas = [];
+          binarySearchTree.preOrderTraverse(function(data) {
+            datas.push(data);
+          });
+
+          expect(datas.join(',')).toBe('50,30,20,15,25,22,35,32,37,70,60,65');
+        });
+      });
+
+      describe('.postOrderTraverse()', function() {
+        it('if callback parameter type is not defined, throw TypeError', function() {
+          var ERROR_MSG = '[BinarySearchTree.prototype.postOrderTraverse] Type of callback parameter must be Function.';
+
+          expect(function() {
+            binarySearchTree.postOrderTraverse(null);
+          }).toThrowError(TypeError, ERROR_MSG);
+        });
+
+        it('visit node.left, node.right, node.data', function() {
+          var datas = [];
+          binarySearchTree.postOrderTraverse(function(data) {
+            datas.push(data);
+          });
+
+          expect(datas.join(',')).toBe('15,22,25,20,32,37,35,30,65,60,70,50');
+        });
+      });
+
+      describe('.min()', function() {
+        it('return 15', function() {
+          expect(binarySearchTree.min()).toBe(15);
+        });
+
+        it('if insert no value, return null', function() {
+          var bst = aid.createBinarySearchTree();
+          expect(bst.min()).toBe(null);
+        });
+      });
+
+      describe('.max()', function() {
+        it('return 70', function() {
+          expect(binarySearchTree.max()).toBe(70);
+        });
+
+        it('if insert no value, return null', function() {
+          var bst = aid.createBinarySearchTree();
+          expect(bst.max()).toBe(null);
+        });
+      });
+
+      describe('.search()', function() {
+        it('if data parameter type is not defined, throw TypeError', function() {
+          var ERROR_MSG = '[BinarySearchTree.prototype.search] data parameter must be defined.';
+
+          expect(function() {
+            binarySearchTree.search(null);
+          }).toThrowError(TypeError, ERROR_MSG);
+        });
+
+        it('if already has value, return true', function() {
+          expect(binarySearchTree.search(20)).toBe(true);
+          expect(binarySearchTree.search(30)).toBe(true);
+          expect(binarySearchTree.search(50)).toBe(true);
+          expect(binarySearchTree.search(70)).toBe(true);
+        });
+
+        it('if has not value, return false', function() {
+          expect(binarySearchTree.search(1111)).toBe(false);
+          expect(binarySearchTree.search(9999)).toBe(false);
+
+          var bst = aid.createBinarySearchTree();
+          expect(bst.min()).toBe(null);
+        });
+      });
+
+      describe('.remove()', function() {
+        it('if data parameter type is not defined, throw TypeError', function() {
+          var ERROR_MSG = '[BinarySearchTree.prototype.remove] data parameter must be defined.';
+
+          expect(function() {
+            binarySearchTree.remove(null);
+          }).toThrowError(TypeError, ERROR_MSG);
+        });
+
+        it('if already has value, remove value', function() {
+          // case: remove leaf node
+          binarySearchTree.remove(65);
+          expect(binarySearchTree.getRoot().right.left.right).toBe(null);
+          expect(binarySearchTree.search(65)).toBe(false);
+
+          // case: remove node has one child node
+          binarySearchTree.remove(25);
+          expect(binarySearchTree.getRoot().left.left.right.data).not.toBe(25);
+          expect(binarySearchTree.search(25)).toBe(false);
+
+          binarySearchTree.remove(70);
+          expect(binarySearchTree.getRoot().right.data).not.toBe(70);
+          expect(binarySearchTree.search(70)).toBe(false);
+
+          // case: remove node has two children nodes
+          binarySearchTree.remove(30);
+          expect(binarySearchTree.getRoot().left.left.left.data).not.toBe(30);
+          expect(binarySearchTree.search(30)).toBe(false);
+
+          binarySearchTree.remove(20);
+          expect(binarySearchTree.getRoot().left.left.data).not.toBe(20);
+          expect(binarySearchTree.search(20)).toBe(false);
+
+          // case: remove root node
+          binarySearchTree.remove(50);
+          expect(binarySearchTree.getRoot().data).not.toBe(50);
+          expect(binarySearchTree.search(50)).toBe(false);
+        });
+      });
     });
   });
 });
