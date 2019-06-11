@@ -1879,5 +1879,58 @@ describe('aid.js', function() {
         expect(string.decodeRecursively(encodeURIComponent(encodeURIComponent('vпомощь')))).toEqual('vпомощь');
       });
     });
+
+    describe('.escapeRegExp()', function() {
+      it('1st argument is not String type, throw TypeError.', function() {
+        expect(function() {
+          string.escapeRegExp(undefined);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.escapeRegExp(null);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.escapeRegExp(false);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.escapeRegExp(true);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.escapeRegExp(0);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.escapeRegExp('aid.js');
+        }).not.toThrowError(TypeError);
+
+        expect(function() {
+          string.escapeRegExp({});
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.escapeRegExp([]);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.escapeRegExp(function() {});
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.escapeRegExp(new RegExp('^aid'));
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.escapeRegExp(/^aid/);
+        }).toThrowError(TypeError);
+      });
+
+      it('return escaped string, when input string has speical meta characters for RegExp.', function() {
+        expect(string.escapeRegExp('Developers access (https://google.com) website.')).toEqual('');
+        // TODO: Add tests
+      });
+    });
   });
 });
