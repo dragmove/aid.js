@@ -157,6 +157,7 @@ aid.string.getPositionFromTranslateStr
 aid.string.isPalindrome
 aid.string.isDecoded
 aid.string.decodeRecursively
+aid.string.escapeRegExp
 ```
 
 * math utils
