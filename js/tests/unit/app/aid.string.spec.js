@@ -1879,5 +1879,83 @@ describe('aid.js', function() {
         expect(string.decodeRecursively(encodeURIComponent(encodeURIComponent('vпомощь')))).toEqual('vпомощь');
       });
     });
+
+    describe('.escapeRegExp()', function() {
+      it('1st argument is not String type, throw TypeError.', function() {
+        expect(function() {
+          string.escapeRegExp(undefined);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.escapeRegExp(null);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.escapeRegExp(false);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.escapeRegExp(true);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.escapeRegExp(0);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.escapeRegExp('aid.js');
+        }).not.toThrowError(TypeError);
+
+        expect(function() {
+          string.escapeRegExp({});
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.escapeRegExp([]);
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.escapeRegExp(function() {});
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.escapeRegExp(new RegExp('^aid'));
+        }).toThrowError(TypeError);
+
+        expect(function() {
+          string.escapeRegExp(/^aid/);
+        }).toThrowError(TypeError);
+      });
+
+      it('return escaped string to use in RegExp constructor, when input string has speical meta characters.', function() {
+        expect(function() {
+          new RegExp('meta characters: .*+?^${}()|[]/');
+        }).toThrowError(SyntaxError);
+
+        expect(string.escapeRegExp('meta characters: .*+?^${}()|[]/')).toEqual(
+          'meta characters: \\.\\*\\+\\?\\^\\$\\{\\}\\(\\)\\|\\[\\]/'
+        ); // returned string is 'meta characters: \.\*\+\?\^\$\{\}\(\)\|\[\]/'
+
+        expect(function() {
+          new RegExp(string.escapeRegExp('meta characters: .*+?^${}()|[]/'), 'g');
+        }).not.toThrowError(SyntaxError);
+
+        expect(function() {
+          var regex = new RegExp(string.escapeRegExp('meta characters: .*+?^${}()|[]/'), 'g');
+          return regex.exec('meta characters: .*+?^${}()|[]/', 'g');
+        }).not.toThrowError(SyntaxError);
+
+        expect(
+          new RegExp(string.escapeRegExp('meta characters: .*+?^${}()|[]/'), 'g').exec(
+            'meta characters: .*+?^${}()|[]/',
+            'g'
+          )
+        ).not.toEqual(null);
+
+        expect(
+          new RegExp(string.escapeRegExp('meta characters: .*+?^${}()|[]/'), 'g').exec('unmatched some string', 'g')
+        ).toEqual(null);
+      });
+    });
   });
 });

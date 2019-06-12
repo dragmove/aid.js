@@ -193,7 +193,7 @@
 
   /**
    * check type is Error (can check Error, EvalError, InternalError, RangeError, ReferenceError, SyntaxError, TypeError, URIError)
-   * // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
+   * refer to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
    *
    * @static
    * @method isError
@@ -233,7 +233,7 @@
 
   /**
    * check type is HTML element
-   * // https://developer.mozilla.org/en-US/docs/Web/API/Element
+   * refer to https://developer.mozilla.org/en-US/docs/Web/API/Element
    *
    * @static
    * @method isElement
@@ -932,9 +932,7 @@
    * TODO:
    */
   aid.tab = function tab(func) {
-    if (!aid.isFunction(func)) {
-      throw new TypeError('[aid.tab] Type of func parameter must be Function.');
-    }
+    if (!aid.isFunction(func)) throw new TypeError('[aid.tab] Type of func parameter must be Function.');
 
     return function(value) {
       func(value);
@@ -2714,9 +2712,7 @@
   string.isDecoded = function isDecoded(str, decodeFunc) {
     var decodeFn = global.decodeURIComponent;
 
-    if (!aid.isString(str)) {
-      throw new TypeError('[aid.string.isDecoded] Type of str parameter must be String.');
-    }
+    if (!aid.isString(str)) throw new TypeError('[aid.string.isDecoded] Type of str parameter must be String.');
 
     if (aid.isDefined(decodeFunc)) {
       // decodeFunc parameter is defined
@@ -2758,9 +2754,7 @@
   string.decodeRecursively = function decodeRecursively(str, decodeFunc) {
     var decodeFn = global.decodeURIComponent;
 
-    if (!aid.isString(str)) {
-      throw new TypeError('[aid.string.decodeRecursively] Type of str parameter must be String.');
-    }
+    if (!aid.isString(str)) throw new TypeError('[aid.string.decodeRecursively] Type of str parameter must be String.');
 
     if (aid.isDefined(decodeFunc)) {
       // decodeFunc parameter is defined
@@ -2788,6 +2782,24 @@
     }
 
     return decodedStr;
+  };
+
+  /**
+   * get escaped string to use in RegExp constructor
+   * refer to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Escaping
+   *
+   * @static
+   * @method escapeRegExp
+   * @param {String} str
+   * @returns {String} return string
+   * @example
+   * console.log( aid.string.escapeRegExp('meta characters: .*+?^${}()|[]\/') );
+   */
+  string.escapeRegExp = function escapeRegExp(str) {
+    if (!aid.isString(str)) throw new TypeError('[aid.string.escapeRegExp] Type of str parameter must be String.');
+
+    // escape RegExp meta characters: ., *, +, ?, ^, $, {, }, (, ), |, [, ], \
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   };
 
   /**
