@@ -1393,6 +1393,94 @@
     return new BinarySearchTree();
   };
 
+  // Dictionary
+  function Dictionary() {
+    // TODO: Use prototype
+
+    var items = {};
+
+    this.has = function(key) {
+      return key in items;
+    };
+
+    this.set = function(key, value) {
+      items[key] = value;
+    };
+
+    this.remove = function(key) {
+      if (this.has(key)) {
+        delete items[key];
+        return true;
+      }
+
+      return false;
+    };
+
+    this.get = function(key) {
+      return this.has(key) ? items[key] : undefined;
+    };
+
+    this.values = function() {
+      var values = [];
+      for (var key in items) {
+        if (this.has(key)) values.push(items[key]);
+      }
+
+      return values;
+    };
+
+    this.clear = function() {
+      items = {};
+    };
+
+    this.size = function() {
+      return Object.keys(items).length;
+    };
+
+    this.keys = function() {
+      return Object.keys(items);
+    };
+
+    this.getItems = function() {
+      return items;
+    };
+  }
+
+  /**
+   * createDictionary
+   *
+   * @static
+   * @method createDictionary
+   * @returns {Dictionary} return Dictionary instance
+   * @example
+   * var dictionary = aid.createDictionary();
+   */
+  aid.createDictionary = function createDictionary() {
+    // TODO: test
+    return new Dictionary();
+  };
+
+  // Graph
+  function Graph() {
+    var vertices = [];
+
+    // TODO:
+  }
+
+  /**
+   * createGraph
+   *
+   * @static
+   * @method createGraph
+   * @returns {Graph} return Graph instance
+   * @example
+   * var graph = aid.createGraph();
+   */
+  aid.createGraph = function createGraph() {
+    // TODO: test
+    return new BinarySearchTree();
+  };
+
   /**
    * plus(+) operator
    *
