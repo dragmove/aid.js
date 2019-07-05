@@ -1173,6 +1173,71 @@
     return new LinkedList();
   };
 
+  // Dictionary
+  function Dictionary() {
+    this.items = {};
+  }
+
+  Dictionary.prototype.has = function(key) {
+    return _hasOwnProperty.call(this.items, key);
+  };
+
+  Dictionary.prototype.get = function(key) {
+    return this.has(key) ? this.items[key] : undefined;
+  };
+
+  Dictionary.prototype.set = function(key, value) {
+    this.items[key] = value;
+  };
+
+  Dictionary.prototype.remove = function(key) {
+    if (this.has(key)) {
+      delete this.items[key];
+      return true;
+    }
+
+    return false;
+  };
+
+  Dictionary.prototype.clear = function() {
+    this.items = {};
+  };
+
+  Dictionary.prototype.keys = function() {
+    return Object.keys(this.items);
+  };
+
+  Dictionary.prototype.values = function() {
+    var values = [];
+
+    for (var key in this.items) {
+      if (this.has(key)) values.push(this.items[key]);
+    }
+
+    return values;
+  };
+
+  Dictionary.prototype.size = function() {
+    return Object.keys(this.items).length;
+  };
+
+  Dictionary.prototype.getItems = function(key) {
+    return this.items;
+  };
+
+  /**
+   * createDictionary
+   *
+   * @static
+   * @method createDictionary
+   * @returns {Dictionary} return Dictionary instance
+   * @example
+   * var dictionary = aid.createDictionary(); // use has, get, set, remove, clear, keys, values, size, getItems methods
+   */
+  aid.createDictionary = function createDictionary() {
+    return new Dictionary();
+  };
+
   // BinarySearchTree node
   var BinarySearchTreeNode = function(data) {
     this.data = data;
@@ -1391,73 +1456,6 @@
    */
   aid.createBinarySearchTree = function createBinarySearchTree() {
     return new BinarySearchTree();
-  };
-
-  // Dictionary
-  function Dictionary() {
-    // TODO: Use prototype
-
-    var items = {};
-
-    this.has = function(key) {
-      return key in items;
-    };
-
-    this.set = function(key, value) {
-      items[key] = value;
-    };
-
-    this.remove = function(key) {
-      if (this.has(key)) {
-        delete items[key];
-        return true;
-      }
-
-      return false;
-    };
-
-    this.get = function(key) {
-      return this.has(key) ? items[key] : undefined;
-    };
-
-    this.values = function() {
-      var values = [];
-      for (var key in items) {
-        if (this.has(key)) values.push(items[key]);
-      }
-
-      return values;
-    };
-
-    this.clear = function() {
-      items = {};
-    };
-
-    this.size = function() {
-      return Object.keys(items).length;
-    };
-
-    this.keys = function() {
-      return Object.keys(items);
-    };
-
-    this.getItems = function() {
-      return items;
-    };
-  }
-
-  /**
-   * createDictionary
-   *
-   * @static
-   * @method createDictionary
-   * @returns {Dictionary} return Dictionary instance
-   * @example
-   * var dictionary = aid.createDictionary();
-   */
-  aid.createDictionary = function createDictionary() {
-    // TODO: test
-    return new Dictionary();
   };
 
   // Graph

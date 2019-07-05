@@ -2799,6 +2799,128 @@ describe('aid.js', function() {
       // TODO: write test cases
     });
 
+    describe('.createDictionary()', function() {
+      var dictionary = aid.createDictionary();
+
+      beforeEach(function() {
+        dictionary.clear();
+      });
+
+      it('created Dictionary is exist', function() {
+        expect(dictionary).not.toBe(null);
+      });
+
+      describe('.has()', function() {
+        it('return false, when Dictionary has not key', function() {
+          expect(dictionary.has('foo')).toBe(false);
+        });
+
+        it('return true, when Dictionary has key', function() {
+          dictionary.set('foo', 99);
+          expect(dictionary.has('foo')).toBe(true);
+        });
+      });
+
+      describe('.get()', function() {
+        it('return undefined, when Dictionary has not key', function() {
+          expect(dictionary.get('foo')).toBe(undefined);
+        });
+
+        it('return value, when Dictionary has key', function() {
+          dictionary.set('foo', 99);
+          expect(dictionary.get('foo')).toBe(99);
+        });
+      });
+
+      describe('.set()', function() {
+        it('set key and value', function() {
+          dictionary.set('foo', 99);
+          dictionary.set('bar', 'aid');
+
+          expect(dictionary.get('foo')).toBe(99);
+          expect(dictionary.get('bar')).toBe('aid');
+        });
+      });
+
+      describe('.remove()', function() {
+        it('return true, when success to remove key', function() {
+          dictionary.set('foo', 99);
+          expect(dictionary.has('foo')).toBe(true);
+
+          dictionary.set('bar', 'aid');
+          expect(dictionary.has('bar')).toBe(true);
+
+          expect(dictionary.remove('apple')).toBe(false);
+          expect(dictionary.remove('google')).toBe(false);
+
+          expect(dictionary.remove('foo')).toBe(true);
+          expect(dictionary.has('foo')).toBe(false);
+
+          expect(dictionary.remove('bar')).toBe(true);
+          expect(dictionary.has('bar')).toBe(false);
+        });
+      });
+
+      describe('.clear()', function() {
+        it('empty items of dictionary', function() {
+          dictionary.set('foo', 99);
+          dictionary.set('bar', 'aid');
+
+          dictionary.clear();
+
+          expect(dictionary.has('foo')).toBe(false);
+          expect(dictionary.has('bar')).toBe(false);
+        });
+      });
+
+      describe('.keys()', function() {
+        it('return array has keys', function() {
+          expect(dictionary.keys()).toEqual([]);
+
+          dictionary.set('foo', 99);
+          dictionary.set('bar', 'aid');
+
+          expect(dictionary.keys()).toEqual(['foo', 'bar']);
+        });
+      });
+
+      describe('.values()', function() {
+        it('return array has values', function() {
+          expect(dictionary.values()).toEqual([]);
+
+          dictionary.set('foo', 99);
+          dictionary.set('bar', 'aid');
+
+          expect(dictionary.values()).toEqual([99, 'aid']);
+        });
+      });
+
+      describe('.size()', function() {
+        it('return array has keys', function() {
+          expect(dictionary.size()).toBe(0);
+
+          dictionary.set('foo', 99);
+          dictionary.set('bar', 'aid');
+
+          expect(dictionary.size()).toBe(2);
+        });
+      });
+
+      describe('.getItems()', function() {
+        it('return items of dictionary', function() {
+          expect(dictionary.getItems()).toEqual({});
+
+          dictionary.set('foo', 99);
+          dictionary.set('bar', 'aid');
+
+          expect(dictionary.getItems()).toEqual({
+            foo: 99,
+            bar: 'aid',
+          });
+        });
+      });
+    });
+
     describe('.createBinarySearchTree()', function() {
       var binarySearchTree = aid.createBinarySearchTree();
 
