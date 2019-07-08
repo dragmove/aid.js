@@ -3149,5 +3149,25 @@ describe('aid.js', function() {
         });
       });
     });
+
+    describe('.createGraph()', function() {
+      var graph = aid.createGraph();
+
+      it('created graph is exist', function() {
+        expect(graph).not.toBe(null);
+      });
+
+      describe('.addVertex()', function() {
+        // it('default value is null', function() {
+        //   expect(binarySearchTree.getRoot()).toBe(null);
+        // });
+
+        // it('after execute binarySearchTree.insert(50), .data is 50', function() {
+        //   binarySearchTree.insert(50);
+        //   expect(binarySearchTree.getRoot()).not.toBe(null);
+        //   expect(binarySearchTree.getRoot().data).toBe(50);
+        // });
+      });
+    });
   });
 });

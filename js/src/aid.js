@@ -1460,10 +1460,25 @@
 
   // Graph
   function Graph() {
-    var vertices = [];
-
-    // TODO:
+    this.vertices = [];
+    this.adjacencyList = aid.createDictionary();
   }
+
+  Graph.prototype.addVertex = function(vertex) {
+    // TODO: 이전에 이미 존재하는 vertex 와 vertex 키가 겹치면 에러 발샐 필요
+
+    this.vertices.push(vertex);
+    this.adjacencyList.set(vertex, []);
+  };
+
+  Graph.prototype.addEdge = function(v, w) {
+    this.adjacencyList.get(v).push(w);
+    this.adjacencyList.get(w).push(v);
+  };
+
+  // BFS(breadth-first serach)
+
+  // DFS(depth-first search)
 
   /**
    * createGraph
@@ -1475,8 +1490,7 @@
    * var graph = aid.createGraph();
    */
   aid.createGraph = function createGraph() {
-    // TODO: test
-    return new BinarySearchTree();
+    return new Graph();
   };
 
   /**
