@@ -1465,6 +1465,46 @@
     // TODO:
   }
 
+  Graph.prototype.initializeVerticesColor = function() {
+    // 3 types of vertex color :
+    // 'white' : vertex is not visited
+    // 'grey' : vertex is visited but hasn't been explored
+    // 'black' : vertex is visited and has been explored
+    var colors = [];
+
+    this.vertices.forEach(function(vertex) {
+      color[vertex] = 'white';
+    });
+
+    return colors;
+  };
+
+  Graph.prototype.bfs = function(startVertex, callback) {
+    var colors = this.initializeVerticesColor(),
+      queue = new aid.createQueue();
+
+    queue.enqueue(startVertex);
+
+    while (!queue.isEmpty()) {
+      var v = queue.dequeue(),
+        neighborVertices = this.adjacencyList.get(v);
+
+      colors[v] = 'grey';
+
+      neighborVertices.forEach(function(nv) {
+        if (colors[nv] === 'white') {
+          colors[nv] = 'grey';
+
+          queue.enqueue(nv);
+        }
+      });
+
+      colors[v] = 'black';
+
+      if (callback) callback.call(null, v);
+    }
+  };
+
   /**
    * createGraph
    *
