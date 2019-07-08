@@ -1464,21 +1464,71 @@
     this.adjacencyList = aid.createDictionary();
   }
 
-  Graph.prototype.addVertex = function(vertex) {
-    // TODO: 이전에 이미 존재하는 vertex 와 vertex 키가 겹치면 에러 발샐 필요
+  Graph.prototype.addVertex = function(vertexLabel) {
+    if (array.indexOf(this.vertices, vertexLabel) >= 0)
+      throw new Error('[Graph.prototype.addVertex] this.vertices already has the same vertexLabel.');
 
-    this.vertices.push(vertex);
-    this.adjacencyList.set(vertex, []);
+    this.vertices.push(vertexLabel);
+    this.adjacencyList.set(vertexLabel, []);
   };
 
-  Graph.prototype.addEdge = function(v, w) {
-    this.adjacencyList.get(v).push(w);
-    this.adjacencyList.get(w).push(v);
+  Graph.prototype.addEdge = function(fromVertexLabel, toVertexLabel) {
+    if (array.indexOf(this.vertices, fromVertexLabel) < 0)
+      throw new Error('[Graph.prototype.addVertex] this.vertices has not fromVertexLabel.');
+
+    if (array.indexOf(this.vertices, toVertexLabel) < 0)
+      throw new Error('[Graph.prototype.addVertex] this.vertices has not toVertexLabel.');
+
+    this.adjacencyList.get(fromVertexLabel).push(toVertexLabel);
+    this.adjacencyList.get(toVertexLabel).push(fromVertexLabel);
   };
 
-  // BFS(breadth-first serach)
+  Graph.prototype.bfs = function(startVertexLabel, callback) {
+    // breadth-first serach
+    if (array.indexOf(this.vertices, startVertexLabel) < 0)
+      throw new Error('[Graph.prototype.bfs] this.vertices has not startVertexLabel.');
 
-  // DFS(depth-first search)
+    if (aid.isDefined(callback) && !aid.isFunction(callback))
+      throw new TypeError('[Graph.prototype.bfs] Type of callback parameter must be undefined or null or Function.');
+    
+    var colors = this.initializeVerticesColor(),
+      queue = new aid.createQueue();
+
+    queue.enqueue(startVertexLabel);
+
+    while (!queue.isEmpty()) {
+      var v = queue.dequeue(),
+        neighborVertices = this.adjacencyList.get(v);
+
+      colors[v] = 'grey';
+
+      neighborVertices.forEach(function(nv) {
+        if (colors[nv] === 'white') {
+          colors[nv] = 'grey';
+
+          queue.enqueue(nv);
+        }
+      });
+
+      colors[v] = 'black';
+
+      if (callback) callback.call(null, v);
+    }
+  };
+
+  Graph.prototype.initializeVerticesColor = function() {
+    // 3 types of vertex color :
+    // 'white' : vertex is not visited
+    // 'grey' : vertex is visited but hasn't been explored
+    // 'black' : vertex is visited and has been explored
+    var colors = [];
+
+    this.vertices.forEach(function(vertex) {
+      color[vertex] = 'white';
+    });
+
+    return colors;
+  };
 
   /**
    * createGraph

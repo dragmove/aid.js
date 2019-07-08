@@ -3151,22 +3151,55 @@ describe('aid.js', function() {
     });
 
     describe('.createGraph()', function() {
-      var graph = aid.createGraph();
-
       it('created graph is exist', function() {
+        var graph = aid.createGraph();
         expect(graph).not.toBe(null);
       });
+    });
 
-      describe('.addVertex()', function() {
-        // it('default value is null', function() {
-        //   expect(binarySearchTree.getRoot()).toBe(null);
-        // });
+    describe('.addVertex()', function() {
+      var vertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+      var graph = aid.createGraph();
 
-        // it('after execute binarySearchTree.insert(50), .data is 50', function() {
-        //   binarySearchTree.insert(50);
-        //   expect(binarySearchTree.getRoot()).not.toBe(null);
-        //   expect(binarySearchTree.getRoot().data).toBe(50);
-        // });
+      vertices.forEach(function(v) {
+        graph.addVertex(v);
+      });
+
+      it('add vertex to graph.vertices', function() {
+        expect(graph.vertices.length).toBe(vertices.length);
+        expect(graph.vertices).toEqual(vertices);
+      });
+    });
+
+    describe('.addEdge()', function() {
+      var vertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+      var graph = aid.createGraph();
+
+      vertices.forEach(function(v) {
+        graph.addVertex(v);
+      });
+
+      graph.addEdge('A', 'B');
+      graph.addEdge('A', 'C');
+      graph.addEdge('A', 'D');
+      graph.addEdge('C', 'D');
+      graph.addEdge('C', 'G');
+      graph.addEdge('D', 'G');
+      graph.addEdge('D', 'H');
+      graph.addEdge('B', 'E');
+      graph.addEdge('B', 'F');
+      graph.addEdge('E', 'I');
+
+      it('add edge from start vertex to end vertex', function() {
+        expect(graph.adjacencyList.get('A')).toEqual(['B', 'C', 'D']);
+        expect(graph.adjacencyList.get('B')).toEqual(['A', 'E', 'F']);
+        expect(graph.adjacencyList.get('C')).toEqual(['A', 'D', 'G']);
+        expect(graph.adjacencyList.get('D')).toEqual(['A', 'C', 'G', 'H']);
+        expect(graph.adjacencyList.get('E')).toEqual(['B', 'I']);
+        expect(graph.adjacencyList.get('F')).toEqual(['B']);
+        expect(graph.adjacencyList.get('G')).toEqual(['C', 'D']);
+        expect(graph.adjacencyList.get('H')).toEqual(['D']);
+        expect(graph.adjacencyList.get('I')).toEqual(['E']);
       });
     });
   });
