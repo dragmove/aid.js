@@ -1535,6 +1535,39 @@
     };
   };
 
+  Graph.prototype.getBfsPaths = function(fromVertexLabel) {
+    var bfsPaths = [];
+
+    var datasFromBfs = this.bfs(fromVertexLabel);
+
+    var toVertices = this.vertices.filter(function(v) {
+      return v !== fromVertexLabel;
+    });
+
+    toVertices.forEach(function(toVertexLabel) {
+      var searchPath = aid.createStack();
+
+      for (var v = toVertexLabel; v !== fromVertexLabel; v = datasFromBfs.predecessors[v]) {
+        searchPath.push(v);
+      }
+      searchPath.push(fromVertexLabel);
+
+      var edgesNum = searchPath.length() - 1;
+
+      var path = searchPath.pop();
+      while (searchPath.length()) {
+        path += ' - ' + searchPath.pop();
+      }
+
+      bfsPaths.push({
+        path: path,
+        edgesNum: edgesNum,
+      });
+    });
+
+    return bfsPaths;
+  };
+
   /**
    * createGraph
    *

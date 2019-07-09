@@ -3231,7 +3231,7 @@ describe('aid.js', function() {
       // TODO:
     });
 
-    describe('.printAllPaths()', function() {
+    describe('.getBfsPaths()', function() {
       var vertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
       var graph = aid.createGraph();
 
@@ -3251,29 +3251,8 @@ describe('aid.js', function() {
       graph.addEdge('E', 'I');
 
       // TODO: print searching path
-      var fromVertexLabel = 'A';
-      var pathDataFromVertexA = graph.bfs(fromVertexLabel);
-      console.log('pathDataFromVertexA :', pathDataFromVertexA);
-
-      vertices
-        .filter(function(v) {
-          return v !== fromVertexLabel;
-        })
-        .forEach(function(toVertexLabel) {
-          var searchPath = aid.createStack();
-
-          for (var v = toVertexLabel; v !== fromVertexLabel; v = pathDataFromVertexA.predecessors[v]) {
-            searchPath.push(v);
-          }
-          searchPath.push(fromVertexLabel);
-
-          var path = searchPath.pop();
-          while (searchPath.length()) {
-            path += ' - ' + searchPath.pop();
-          }
-
-          console.log('path :', path);
-        });
+      var bfsPaths = graph.getBfsPaths('A');
+      console.log('bfsPaths :', bfsPaths);
     });
   });
 });
