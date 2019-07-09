@@ -3230,5 +3230,50 @@ describe('aid.js', function() {
     describe('.bfs()', function() {
       // TODO:
     });
+
+    describe('.printAllPaths()', function() {
+      var vertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+      var graph = aid.createGraph();
+
+      vertices.forEach(function(v) {
+        graph.addVertex(v);
+      });
+
+      graph.addEdge('A', 'B');
+      graph.addEdge('A', 'C');
+      graph.addEdge('A', 'D');
+      graph.addEdge('C', 'D');
+      graph.addEdge('C', 'G');
+      graph.addEdge('D', 'G');
+      graph.addEdge('D', 'H');
+      graph.addEdge('B', 'E');
+      graph.addEdge('B', 'F');
+      graph.addEdge('E', 'I');
+
+      // TODO: print searching path
+      var fromVertexLabel = 'A';
+      var pathDataFromVertexA = graph.bfs(fromVertexLabel);
+      console.log('pathDataFromVertexA :', pathDataFromVertexA);
+
+      vertices
+        .filter(function(v) {
+          return v !== fromVertexLabel;
+        })
+        .forEach(function(toVertexLabel) {
+          var searchPath = aid.createStack();
+
+          for (var v = toVertexLabel; v !== fromVertexLabel; v = pathDataFromVertexA.predecessors[v]) {
+            searchPath.push(v);
+          }
+          searchPath.push(fromVertexLabel);
+
+          var path = searchPath.pop();
+          while (searchPath.length()) {
+            path += ' - ' + searchPath.pop();
+          }
+
+          console.log('path :', path);
+        });
+    });
   });
 });

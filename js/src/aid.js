@@ -1496,12 +1496,12 @@
     // 'grey' : vertex is visited but hasn't been explored
     // 'black' : vertex is visited and has been explored
     var colors = [], // this.initializeVerticesColor(),
-      distances = [],
-      predecessors = [],
+      distances = {},
+      predecessors = {},
       queue = new aid.createQueue();
 
     this.vertices.forEach(function(v) {
-      color[v] = 'white';
+      colors[v] = 'white';
       distances[v] = 0;
       predecessors[v] = null;
     });
