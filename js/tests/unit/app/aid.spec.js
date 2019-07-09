@@ -3169,6 +3169,14 @@ describe('aid.js', function() {
         expect(graph.vertices.length).toBe(vertices.length);
         expect(graph.vertices).toEqual(vertices);
       });
+
+      it('vertexLabel parameter is already added, throw Error', function() {
+        var ERROR_MSG = '[Graph.prototype.addVertex] this.vertices already has the same vertexLabel.';
+
+        expect(function() {
+          graph.addVertex(vertices[0]);
+        }).toThrowError(Error, ERROR_MSG);
+      });
     });
 
     describe('.addEdge()', function() {
@@ -3201,6 +3209,26 @@ describe('aid.js', function() {
         expect(graph.adjacencyList.get('H')).toEqual(['D']);
         expect(graph.adjacencyList.get('I')).toEqual(['E']);
       });
+
+      it('fromVertexLabel parameter has never been added before, throw Error', function() {
+        var ERROR_MSG = '[Graph.prototype.addVertex] this.vertices has not fromVertexLabel.';
+
+        expect(function() {
+          graph.addEdge('V', 'A');
+        }).toThrowError(Error, ERROR_MSG);
+      });
+
+      it('toVertexLabel parameter has never been added before, throw Error', function() {
+        var ERROR_MSG = '[Graph.prototype.addVertex] this.vertices has not toVertexLabel.';
+
+        expect(function() {
+          graph.addEdge('A', 'Z');
+        }).toThrowError(Error, ERROR_MSG);
+      });
+    });
+
+    describe('.bfs()', function() {
+      // TODO:
     });
   });
 });

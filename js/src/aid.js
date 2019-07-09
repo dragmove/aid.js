@@ -1490,9 +1490,21 @@
 
     if (aid.isDefined(callback) && !aid.isFunction(callback))
       throw new TypeError('[Graph.prototype.bfs] Type of callback parameter must be undefined or null or Function.');
-    
-    var colors = this.initializeVerticesColor(),
+
+    // colors array has 3 types of vertex color
+    // 'white' : vertex is not visited
+    // 'grey' : vertex is visited but hasn't been explored
+    // 'black' : vertex is visited and has been explored
+    var colors = [], // this.initializeVerticesColor(),
+      distances = [],
+      predecessors = [],
       queue = new aid.createQueue();
+
+    this.vertices.forEach(function(v) {
+      color[v] = 'white';
+      distances[v] = 0;
+      predecessors[v] = null;
+    });
 
     queue.enqueue(startVertexLabel);
 
@@ -1505,6 +1517,8 @@
       neighborVertices.forEach(function(nv) {
         if (colors[nv] === 'white') {
           colors[nv] = 'grey';
+          distances[nv] = distances[v] + 1;
+          predecessors[nv] = v;
 
           queue.enqueue(nv);
         }
@@ -1514,20 +1528,11 @@
 
       if (callback) callback.call(null, v);
     }
-  };
 
-  Graph.prototype.initializeVerticesColor = function() {
-    // 3 types of vertex color :
-    // 'white' : vertex is not visited
-    // 'grey' : vertex is visited but hasn't been explored
-    // 'black' : vertex is visited and has been explored
-    var colors = [];
-
-    this.vertices.forEach(function(vertex) {
-      color[vertex] = 'white';
-    });
-
-    return colors;
+    return {
+      distances: distances,
+      predecessors: predecessors,
+    };
   };
 
   /**
