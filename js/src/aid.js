@@ -1474,10 +1474,10 @@
 
   Graph.prototype.addEdge = function(fromVertexLabel, toVertexLabel) {
     if (array.indexOf(this.vertices, fromVertexLabel) < 0)
-      throw new Error('[Graph.prototype.addVertex] this.vertices has not fromVertexLabel.');
+      throw new Error('[Graph.prototype.addEdge] this.vertices has not fromVertexLabel.');
 
     if (array.indexOf(this.vertices, toVertexLabel) < 0)
-      throw new Error('[Graph.prototype.addVertex] this.vertices has not toVertexLabel.');
+      throw new Error('[Graph.prototype.addEdge] this.vertices has not toVertexLabel.');
 
     this.adjacencyList.get(fromVertexLabel).push(toVertexLabel);
     this.adjacencyList.get(toVertexLabel).push(fromVertexLabel);
@@ -1491,11 +1491,11 @@
     if (aid.isDefined(callback) && !aid.isFunction(callback))
       throw new TypeError('[Graph.prototype.bfs] Type of callback parameter must be undefined or null or Function.');
 
-    // colors array has 3 types of vertex color
+    // colors has 3 types of vertex color
     // 'white' : vertex is not visited
     // 'grey' : vertex is visited but hasn't been explored
     // 'black' : vertex is visited and has been explored
-    var colors = [], // this.initializeVerticesColor(),
+    var colors = {}, // this.initializeVerticesColor(),
       distances = {},
       predecessors = {},
       queue = new aid.createQueue();
@@ -1566,6 +1566,63 @@
     });
 
     return bfsPaths;
+  };
+
+  Graph.prototype.dfs = function(fromVertexLabel, callback) {
+    // depth-first serach
+    if (array.indexOf(this.vertices, fromVertexLabel) < 0)
+      throw new Error('[Graph.prototype.dfs] this.vertices has not fromVertexLabel.');
+
+    if (aid.isDefined(callback) && !aid.isFunction(callback))
+      throw new TypeError('[Graph.prototype.dfs] Type of callback parameter must be undefined or null or Function.');
+
+    var datas = {
+      time: 0,
+      colors: {},
+      discovered: {},
+      finished: {},
+      predecessors: {},
+    };
+
+    this.vertices.forEach(function(v) {
+      // colors has 3 types of vertex color
+      // 'white' : vertex is not visited
+      // 'grey' : vertex is visited but hasn't been explored
+      // 'black' : vertex is visited and has been explored
+      datas.colors[v] = 'white';
+      datas.discovered[v] = 0;
+      datas.finished[v] = 0;
+      datas.predecessors[v] = null;
+    });
+
+    this._dfsVisit(fromVertexLabel, datas, callback);
+
+    return datas;
+  };
+
+  Graph.prototype._dfsVisit = function(vertex, datas, callback) {
+    var _ = this,
+      colors = datas.colors,
+      discovered = datas.discovered,
+      finished = datas.finished,
+      predecessors = datas.predecessors;
+
+    colors[vertex] = 'grey';
+    discovered[vertex] = ++datas.time;
+
+    if (callback) callback.call(null, vertex);
+
+    var neighborVertices = this.adjacencyList.get(vertex);
+    neighborVertices.forEach(function(nv) {
+      if (colors[nv] === 'white') {
+        predecessors[nv] = vertex;
+
+        _._dfsVisit(nv, datas, callback);
+      }
+    });
+
+    colors[vertex] = 'black';
+    finished[vertex] = ++datas.time;
   };
 
   /**

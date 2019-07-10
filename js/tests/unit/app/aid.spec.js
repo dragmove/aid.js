@@ -3211,7 +3211,7 @@ describe('aid.js', function() {
       });
 
       it('fromVertexLabel parameter has never been added before, throw Error', function() {
-        var ERROR_MSG = '[Graph.prototype.addVertex] this.vertices has not fromVertexLabel.';
+        var ERROR_MSG = '[Graph.prototype.addEdge] this.vertices has not fromVertexLabel.';
 
         expect(function() {
           graph.addEdge('V', 'A');
@@ -3219,7 +3219,7 @@ describe('aid.js', function() {
       });
 
       it('toVertexLabel parameter has never been added before, throw Error', function() {
-        var ERROR_MSG = '[Graph.prototype.addVertex] this.vertices has not toVertexLabel.';
+        var ERROR_MSG = '[Graph.prototype.addEdge] this.vertices has not toVertexLabel.';
 
         expect(function() {
           graph.addEdge('A', 'Z');
@@ -3253,6 +3253,82 @@ describe('aid.js', function() {
       // TODO: print searching path
       var bfsPaths = graph.getBfsPaths('A');
       console.log('bfsPaths :', bfsPaths);
+    });
+
+    describe('.dfs()', function() {
+      var vertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+      var graph = aid.createGraph();
+
+      vertices.forEach(function(v) {
+        graph.addVertex(v);
+      });
+
+      graph.addEdge('A', 'B');
+      graph.addEdge('A', 'C');
+      graph.addEdge('A', 'D');
+      graph.addEdge('C', 'D');
+      graph.addEdge('C', 'G');
+      graph.addEdge('D', 'G');
+      graph.addEdge('D', 'H');
+      graph.addEdge('B', 'E');
+      graph.addEdge('B', 'F');
+      graph.addEdge('E', 'I');
+
+      it('return datas has time, colors, discovered, finished, predecessors properties', function() {
+        var dfsDatas = graph.dfs('A', function(vertex) {
+          // console.log('dfs vertex :', vertex);
+        });
+
+        expect(dfsDatas.time).toBeDefined();
+      });
+
+      it('fromVertexLabel parameter has never been added before, throw Error', function() {
+        var ERROR_MSG = '[Graph.prototype.dfs] this.vertices has not fromVertexLabel.';
+
+        expect(function() {
+          graph.dfs('Z');
+        }).toThrowError(Error, ERROR_MSG);
+      });
+
+      it('toVertexLabel parameter has never been added before, throw Error', function() {
+        var ERROR_MSG = '[Graph.prototype.dfs] Type of callback parameter must be undefined or null or Function.';
+
+        expect(function() {
+          graph.dfs('A', false);
+        }).toThrowError(Error, ERROR_MSG);
+
+        expect(function() {
+          graph.dfs('A', true);
+        }).toThrowError(Error, ERROR_MSG);
+
+        expect(function() {
+          graph.dfs('A', 0);
+        }).toThrowError(Error, ERROR_MSG);
+
+        expect(function() {
+          graph.dfs('A', NaN);
+        }).toThrowError(Error, ERROR_MSG);
+
+        expect(function() {
+          graph.dfs('A', '');
+        }).toThrowError(Error, ERROR_MSG);
+
+        expect(function() {
+          graph.dfs('A', {});
+        }).toThrowError(Error, ERROR_MSG);
+
+        expect(function() {
+          graph.dfs('A', []);
+        }).toThrowError(Error, ERROR_MSG);
+
+        expect(function() {
+          graph.dfs('A', /aid.js/);
+        }).toThrowError(Error, ERROR_MSG);
+
+        expect(function() {
+          graph.dfs('A', function() {});
+        }).not.toThrowError(Error, ERROR_MSG);
+      });
     });
   });
 });
