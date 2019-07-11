@@ -3227,7 +3227,110 @@ describe('aid.js', function() {
       });
 
       describe('.bfs()', function() {
-        // TODO:
+        it('return datas has distances, predecessors properties', function() {
+          var graph = aid.createGraph();
+
+          vertices.forEach(function(v) {
+            graph.addVertex(v);
+          });
+
+          graph.addEdge('A', 'B');
+          graph.addEdge('A', 'C');
+          graph.addEdge('A', 'D');
+          graph.addEdge('C', 'D');
+          graph.addEdge('C', 'G');
+          graph.addEdge('D', 'G');
+          graph.addEdge('D', 'H');
+          graph.addEdge('B', 'E');
+          graph.addEdge('B', 'F');
+          graph.addEdge('E', 'I');
+
+          var dfsDatas = graph.bfs('A', function(vertex) {});
+
+          expect(dfsDatas.distances).toBeDefined();
+          expect(dfsDatas.predecessors).toBeDefined();
+        });
+
+        it('no vertices throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.bfs] this.vertices has not fromVertexLabel.';
+
+          var graph = aid.createGraph();
+
+          expect(function() {
+            graph.bfs('A');
+          }).toThrowError(Error, ERROR_MSG);
+        });
+
+        it('no edge throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.bfs] fromVertexLabel is not connected to any vertices.';
+
+          var graph = aid.createGraph();
+
+          vertices.forEach(function(v) {
+            graph.addVertex(v);
+          });
+
+          expect(function() {
+            graph.bfs('A');
+          }).toThrowError(Error, ERROR_MSG);
+        });
+
+        it('if callback parameter is defined but type is not function, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.bfs] Type of callback parameter must be undefined or null or Function.';
+
+          var graph = aid.createGraph();
+
+          vertices.forEach(function(v) {
+            graph.addVertex(v);
+          });
+
+          graph.addEdge('A', 'B');
+          graph.addEdge('A', 'C');
+          graph.addEdge('A', 'D');
+          graph.addEdge('C', 'D');
+          graph.addEdge('C', 'G');
+          graph.addEdge('D', 'G');
+          graph.addEdge('D', 'H');
+          graph.addEdge('B', 'E');
+          graph.addEdge('B', 'F');
+          graph.addEdge('E', 'I');
+
+          expect(function() {
+            graph.bfs('A', false);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.bfs('A', true);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.bfs('A', 0);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.bfs('A', NaN);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.bfs('A', '');
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.bfs('A', {});
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.bfs('A', []);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.bfs('A', /aid.js/);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.bfs('A', function() {});
+          }).not.toThrowError(Error, ERROR_MSG);
+        });
       });
 
       describe('.getBfsPaths()', function() {
@@ -3319,7 +3422,7 @@ describe('aid.js', function() {
           }).toThrowError(Error, ERROR_MSG);
         });
 
-        it('toVertexLabel parameter has never been added before, throw Error', function() {
+        it('if callback parameter is defined but type is not function, throw Error', function() {
           var ERROR_MSG = '[Graph.prototype.dfs] Type of callback parameter must be undefined or null or Function.';
 
           expect(function() {
