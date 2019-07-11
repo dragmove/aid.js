@@ -3171,7 +3171,7 @@ describe('aid.js', function() {
         });
 
         it('vertexLabel parameter is already added, throw Error', function() {
-          var ERROR_MSG = '[Graph.prototype.addVertex] this.vertices already has the same vertexLabel.';
+          var ERROR_MSG = '[Graph.prototype.addVertex] this.vertices already has the same vertex.';
 
           expect(function() {
             graph.addVertex(vertices[0]);
@@ -3209,16 +3209,16 @@ describe('aid.js', function() {
           expect(graph.adjacencyList.get('I')).toEqual(['E']);
         });
 
-        it('fromVertexLabel parameter has never been added before, throw Error', function() {
-          var ERROR_MSG = '[Graph.prototype.addEdge] this.vertices has not fromVertexLabel.';
+        it('fromVertex parameter has never been added before, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.addEdge] this.vertices has not fromVertex.';
 
           expect(function() {
             graph.addEdge('V', 'A');
           }).toThrowError(Error, ERROR_MSG);
         });
 
-        it('toVertexLabel parameter has never been added before, throw Error', function() {
-          var ERROR_MSG = '[Graph.prototype.addEdge] this.vertices has not toVertexLabel.';
+        it('toVertex parameter has never been added before, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.addEdge] this.vertices has not toVertex.';
 
           expect(function() {
             graph.addEdge('A', 'Z');
@@ -3227,9 +3227,13 @@ describe('aid.js', function() {
       });
 
       describe('.bfs()', function() {
-        it('return datas has distances, predecessors properties', function() {
-          var graph = aid.createGraph();
+        var graph;
 
+        beforeEach(function() {
+          graph = aid.createGraph();
+        });
+
+        it('return object has distances, predecessors properties', function() {
           vertices.forEach(function(v) {
             graph.addVertex(v);
           });
@@ -3251,20 +3255,16 @@ describe('aid.js', function() {
           expect(dfsDatas.predecessors).toBeDefined();
         });
 
-        it('no vertices throw Error', function() {
-          var ERROR_MSG = '[Graph.prototype.bfs] this.vertices has not fromVertexLabel.';
-
-          var graph = aid.createGraph();
+        it('if called with no vertices, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.bfs] this.vertices has not fromVertex.';
 
           expect(function() {
             graph.bfs('A');
           }).toThrowError(Error, ERROR_MSG);
         });
 
-        it('no edge throw Error', function() {
-          var ERROR_MSG = '[Graph.prototype.bfs] fromVertexLabel is not connected to any vertices.';
-
-          var graph = aid.createGraph();
+        it('if called with no edge, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.bfs] fromVertex is not connected to any vertices.';
 
           vertices.forEach(function(v) {
             graph.addVertex(v);
@@ -3277,8 +3277,6 @@ describe('aid.js', function() {
 
         it('if callback parameter is defined but type is not function, throw Error', function() {
           var ERROR_MSG = '[Graph.prototype.bfs] Type of callback parameter must be undefined or null or Function.';
-
-          var graph = aid.createGraph();
 
           vertices.forEach(function(v) {
             graph.addVertex(v);
@@ -3334,9 +3332,13 @@ describe('aid.js', function() {
       });
 
       describe('.getBfsPaths()', function() {
-        it('return array has { path, edgesNum } object', function() {
-          var graph = aid.createGraph();
+        var graph;
 
+        beforeEach(function() {
+          graph = aid.createGraph();
+        });
+
+        it('return array has { path, edgesNum } object', function() {
           vertices.forEach(function(v) {
             graph.addVertex(v);
           });
@@ -3357,20 +3359,16 @@ describe('aid.js', function() {
           expect(bfsPaths[1]).toEqual({ path: 'A - C', edgesNum: 1 });
         });
 
-        it('no vertices throw Error', function() {
-          var ERROR_MSG = '[Graph.prototype.getBfsPaths] fromVertexLabel is not connected to any vertices.';
-
-          var graph = aid.createGraph();
+        it('if called with no vertices, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.getBfsPaths] fromVertex is not connected to any vertices.';
 
           expect(function() {
             graph.getBfsPaths('A');
           }).toThrowError(Error, ERROR_MSG);
         });
 
-        it('no edge throw Error', function() {
-          var ERROR_MSG = '[Graph.prototype.getBfsPaths] fromVertexLabel is not connected to any vertices.';
-
-          var graph = aid.createGraph();
+        it('if called with no edge, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.getBfsPaths] fromVertex is not connected to any vertices.';
 
           vertices.forEach(function(v) {
             graph.addVertex(v);
@@ -3400,7 +3398,7 @@ describe('aid.js', function() {
         graph.addEdge('B', 'F');
         graph.addEdge('E', 'I');
 
-        it('return datas has time, colors, discovered, finished, predecessors properties', function() {
+        it('return object has time, colors, discovered, finished, predecessors properties', function() {
           var dfsDatas = graph.dfs('A', function(vertex) {});
 
           expect(dfsDatas.time).toBeDefined();
@@ -3410,8 +3408,8 @@ describe('aid.js', function() {
           expect(dfsDatas.predecessors).toBeDefined();
         });
 
-        it('fromVertexLabel parameter has never been added before, throw Error', function() {
-          var ERROR_MSG = '[Graph.prototype.dfs] this.vertices has not fromVertexLabel.';
+        it('fromVertex parameter has never been added before, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.dfs] this.vertices has not fromVertex.';
 
           expect(function() {
             graph.dfs('C');

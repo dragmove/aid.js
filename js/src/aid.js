@@ -1221,7 +1221,7 @@
     return Object.keys(this.items).length;
   };
 
-  Dictionary.prototype.getItems = function(key) {
+  Dictionary.prototype.getItems = function() {
     return this.items;
   };
 
@@ -1464,33 +1464,33 @@
     this.adjacencyList = aid.createDictionary();
   }
 
-  Graph.prototype.addVertex = function(vertexLabel) {
-    if (array.indexOf(this.vertices, vertexLabel) >= 0)
-      throw new Error('[Graph.prototype.addVertex] this.vertices already has the same vertexLabel.');
+  Graph.prototype.addVertex = function(vertex) {
+    if (array.indexOf(this.vertices, vertex) >= 0)
+      throw new Error('[Graph.prototype.addVertex] this.vertices already has the same vertex.');
 
-    this.vertices.push(vertexLabel);
-    this.adjacencyList.set(vertexLabel, []);
+    this.vertices.push(vertex);
+    this.adjacencyList.set(vertex, []);
   };
 
-  Graph.prototype.addEdge = function(fromVertexLabel, toVertexLabel) {
-    if (array.indexOf(this.vertices, fromVertexLabel) < 0)
-      throw new Error('[Graph.prototype.addEdge] this.vertices has not fromVertexLabel.');
+  Graph.prototype.addEdge = function(fromVertex, toVertex) {
+    if (array.indexOf(this.vertices, fromVertex) < 0)
+      throw new Error('[Graph.prototype.addEdge] this.vertices has not fromVertex.');
 
-    if (array.indexOf(this.vertices, toVertexLabel) < 0)
-      throw new Error('[Graph.prototype.addEdge] this.vertices has not toVertexLabel.');
+    if (array.indexOf(this.vertices, toVertex) < 0)
+      throw new Error('[Graph.prototype.addEdge] this.vertices has not toVertex.');
 
-    this.adjacencyList.get(fromVertexLabel).push(toVertexLabel);
-    this.adjacencyList.get(toVertexLabel).push(fromVertexLabel);
+    this.adjacencyList.get(fromVertex).push(toVertex);
+    this.adjacencyList.get(toVertex).push(fromVertex);
   };
 
-  Graph.prototype.bfs = function(fromVertexLabel, callback) {
+  Graph.prototype.bfs = function(fromVertex, callback) {
     // breadth-first serach
-    if (array.indexOf(this.vertices, fromVertexLabel) < 0)
-      throw new Error('[Graph.prototype.bfs] this.vertices has not fromVertexLabel.');
+    if (array.indexOf(this.vertices, fromVertex) < 0)
+      throw new Error('[Graph.prototype.bfs] this.vertices has not fromVertex.');
 
-    var neighbors = this.adjacencyList.get(fromVertexLabel);
+    var neighbors = this.adjacencyList.get(fromVertex);
     if (!neighbors || neighbors.length <= 0)
-      throw new Error('[Graph.prototype.bfs] fromVertexLabel is not connected to any vertices.');
+      throw new Error('[Graph.prototype.bfs] fromVertex is not connected to any vertices.');
 
     if (aid.isDefined(callback) && !aid.isFunction(callback))
       throw new TypeError('[Graph.prototype.bfs] Type of callback parameter must be undefined or null or Function.');
@@ -1510,7 +1510,7 @@
       predecessors[v] = null;
     });
 
-    queue.enqueue(fromVertexLabel);
+    queue.enqueue(fromVertex);
 
     while (!queue.isEmpty()) {
       var v = queue.dequeue(),
@@ -1539,26 +1539,26 @@
     };
   };
 
-  Graph.prototype.getBfsPaths = function(fromVertexLabel) {
-    var neighbors = this.adjacencyList.get(fromVertexLabel);
+  Graph.prototype.getBfsPaths = function(fromVertex) {
+    var neighbors = this.adjacencyList.get(fromVertex);
     if (!neighbors || neighbors.length <= 0)
-      throw new Error('[Graph.prototype.getBfsPaths] fromVertexLabel is not connected to any vertices.');
+      throw new Error('[Graph.prototype.getBfsPaths] fromVertex is not connected to any vertices.');
 
     var bfsPaths = [];
 
-    var datasFromBfs = this.bfs(fromVertexLabel);
+    var datasFromBfs = this.bfs(fromVertex);
 
     var toVertices = this.vertices.filter(function(v) {
-      return v !== fromVertexLabel;
+      return v !== fromVertex;
     });
 
-    toVertices.forEach(function(toVertexLabel) {
+    toVertices.forEach(function(toVertex) {
       var searchPath = aid.createStack();
 
-      for (var v = toVertexLabel; v !== fromVertexLabel; v = datasFromBfs.predecessors[v]) {
+      for (var v = toVertex; v !== fromVertex; v = datasFromBfs.predecessors[v]) {
         searchPath.push(v);
       }
-      searchPath.push(fromVertexLabel);
+      searchPath.push(fromVertex);
 
       var edgesNum = searchPath.length() - 1;
 
@@ -1576,10 +1576,10 @@
     return bfsPaths;
   };
 
-  Graph.prototype.dfs = function(fromVertexLabel, callback) {
+  Graph.prototype.dfs = function(fromVertex, callback) {
     // depth-first serach
-    if (array.indexOf(this.vertices, fromVertexLabel) < 0)
-      throw new Error('[Graph.prototype.dfs] this.vertices has not fromVertexLabel.');
+    if (array.indexOf(this.vertices, fromVertex) < 0)
+      throw new Error('[Graph.prototype.dfs] this.vertices has not fromVertex.');
 
     if (aid.isDefined(callback) && !aid.isFunction(callback))
       throw new TypeError('[Graph.prototype.dfs] Type of callback parameter must be undefined or null or Function.');
@@ -1604,7 +1604,7 @@
     });
 
     // update datas recursively
-    this._dfsVisit(fromVertexLabel, datas, callback);
+    this._dfsVisit(fromVertex, datas, callback);
 
     return datas;
   };
@@ -1641,7 +1641,15 @@
    * @method createGraph
    * @returns {Graph} return Graph instance
    * @example
-   * var graph = aid.createGraph();
+   * var vertices = ['A', 'B', 'C', 'D'];
+   * var graph = aid.createGraph(); // use addVertex, addEdge, bfs, getBfsPaths, dfs methods
+   * vertices.forEach(function(v) { graph.addVertex(v); });
+   * graph.addEdge('A', 'B');
+   * graph.addEdge('A', 'C');
+   * graph.addEdge('A', 'D');
+   * graph.addEdge('B', 'D');
+   * graph.addEdge('C', 'D');
+   * console.log(  graph.dfs('A') );
    */
   aid.createGraph = function createGraph() {
     return new Graph();
