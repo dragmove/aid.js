@@ -2799,6 +2799,128 @@ describe('aid.js', function() {
       // TODO: write test cases
     });
 
+    describe('.createDictionary()', function() {
+      var dictionary = aid.createDictionary();
+
+      beforeEach(function() {
+        dictionary.clear();
+      });
+
+      it('created Dictionary is exist', function() {
+        expect(dictionary).not.toBe(null);
+      });
+
+      describe('.has()', function() {
+        it('return false, when Dictionary has not key', function() {
+          expect(dictionary.has('foo')).toBe(false);
+        });
+
+        it('return true, when Dictionary has key', function() {
+          dictionary.set('foo', 99);
+          expect(dictionary.has('foo')).toBe(true);
+        });
+      });
+
+      describe('.get()', function() {
+        it('return undefined, when Dictionary has not key', function() {
+          expect(dictionary.get('foo')).toBe(undefined);
+        });
+
+        it('return value, when Dictionary has key', function() {
+          dictionary.set('foo', 99);
+          expect(dictionary.get('foo')).toBe(99);
+        });
+      });
+
+      describe('.set()', function() {
+        it('set key and value', function() {
+          dictionary.set('foo', 99);
+          dictionary.set('bar', 'aid');
+
+          expect(dictionary.get('foo')).toBe(99);
+          expect(dictionary.get('bar')).toBe('aid');
+        });
+      });
+
+      describe('.remove()', function() {
+        it('return true, when success to remove key', function() {
+          dictionary.set('foo', 99);
+          expect(dictionary.has('foo')).toBe(true);
+
+          dictionary.set('bar', 'aid');
+          expect(dictionary.has('bar')).toBe(true);
+
+          expect(dictionary.remove('apple')).toBe(false);
+          expect(dictionary.remove('google')).toBe(false);
+
+          expect(dictionary.remove('foo')).toBe(true);
+          expect(dictionary.has('foo')).toBe(false);
+
+          expect(dictionary.remove('bar')).toBe(true);
+          expect(dictionary.has('bar')).toBe(false);
+        });
+      });
+
+      describe('.clear()', function() {
+        it('empty items of dictionary', function() {
+          dictionary.set('foo', 99);
+          dictionary.set('bar', 'aid');
+
+          dictionary.clear();
+
+          expect(dictionary.has('foo')).toBe(false);
+          expect(dictionary.has('bar')).toBe(false);
+        });
+      });
+
+      describe('.keys()', function() {
+        it('return array has keys', function() {
+          expect(dictionary.keys()).toEqual([]);
+
+          dictionary.set('foo', 99);
+          dictionary.set('bar', 'aid');
+
+          expect(dictionary.keys()).toEqual(['foo', 'bar']);
+        });
+      });
+
+      describe('.values()', function() {
+        it('return array has values', function() {
+          expect(dictionary.values()).toEqual([]);
+
+          dictionary.set('foo', 99);
+          dictionary.set('bar', 'aid');
+
+          expect(dictionary.values()).toEqual([99, 'aid']);
+        });
+      });
+
+      describe('.size()', function() {
+        it('return array has keys', function() {
+          expect(dictionary.size()).toBe(0);
+
+          dictionary.set('foo', 99);
+          dictionary.set('bar', 'aid');
+
+          expect(dictionary.size()).toBe(2);
+        });
+      });
+
+      describe('.getItems()', function() {
+        it('return items of dictionary', function() {
+          expect(dictionary.getItems()).toEqual({});
+
+          dictionary.set('foo', 99);
+          dictionary.set('bar', 'aid');
+
+          expect(dictionary.getItems()).toEqual({
+            foo: 99,
+            bar: 'aid',
+          });
+        });
+      });
+    });
+
     describe('.createBinarySearchTree()', function() {
       var binarySearchTree = aid.createBinarySearchTree();
 
@@ -3024,6 +3146,318 @@ describe('aid.js', function() {
           binarySearchTree.remove(50);
           expect(binarySearchTree.getRoot().data).not.toBe(50);
           expect(binarySearchTree.search(50)).toBe(false);
+        });
+      });
+    });
+
+    describe('.createGraph()', function() {
+      var vertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+
+      it('created graph is exist', function() {
+        var graph = aid.createGraph();
+        expect(graph).not.toBe(null);
+      });
+
+      describe('.addVertex()', function() {
+        var graph = aid.createGraph();
+
+        vertices.forEach(function(v) {
+          graph.addVertex(v);
+        });
+
+        it('add vertex to graph.vertices', function() {
+          expect(graph.vertices.length).toBe(vertices.length);
+          expect(graph.vertices).toEqual(vertices);
+        });
+
+        it('vertexLabel parameter is already added, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.addVertex] this.vertices already has the same vertex.';
+
+          expect(function() {
+            graph.addVertex(vertices[0]);
+          }).toThrowError(Error, ERROR_MSG);
+        });
+      });
+
+      describe('.addEdge()', function() {
+        var graph = aid.createGraph();
+
+        vertices.forEach(function(v) {
+          graph.addVertex(v);
+        });
+
+        graph.addEdge('A', 'B');
+        graph.addEdge('A', 'C');
+        graph.addEdge('A', 'D');
+        graph.addEdge('C', 'D');
+        graph.addEdge('C', 'G');
+        graph.addEdge('D', 'G');
+        graph.addEdge('D', 'H');
+        graph.addEdge('B', 'E');
+        graph.addEdge('B', 'F');
+        graph.addEdge('E', 'I');
+
+        it('add edge from start vertex to end vertex', function() {
+          expect(graph.adjacencyList.get('A')).toEqual(['B', 'C', 'D']);
+          expect(graph.adjacencyList.get('B')).toEqual(['A', 'E', 'F']);
+          expect(graph.adjacencyList.get('C')).toEqual(['A', 'D', 'G']);
+          expect(graph.adjacencyList.get('D')).toEqual(['A', 'C', 'G', 'H']);
+          expect(graph.adjacencyList.get('E')).toEqual(['B', 'I']);
+          expect(graph.adjacencyList.get('F')).toEqual(['B']);
+          expect(graph.adjacencyList.get('G')).toEqual(['C', 'D']);
+          expect(graph.adjacencyList.get('H')).toEqual(['D']);
+          expect(graph.adjacencyList.get('I')).toEqual(['E']);
+        });
+
+        it('fromVertex parameter has never been added before, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.addEdge] this.vertices has not fromVertex.';
+
+          expect(function() {
+            graph.addEdge('V', 'A');
+          }).toThrowError(Error, ERROR_MSG);
+        });
+
+        it('toVertex parameter has never been added before, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.addEdge] this.vertices has not toVertex.';
+
+          expect(function() {
+            graph.addEdge('A', 'Z');
+          }).toThrowError(Error, ERROR_MSG);
+        });
+      });
+
+      describe('.bfs()', function() {
+        var graph;
+
+        beforeEach(function() {
+          graph = aid.createGraph();
+        });
+
+        it('return object has distances, predecessors properties', function() {
+          vertices.forEach(function(v) {
+            graph.addVertex(v);
+          });
+
+          graph.addEdge('A', 'B');
+          graph.addEdge('A', 'C');
+          graph.addEdge('A', 'D');
+          graph.addEdge('C', 'D');
+          graph.addEdge('C', 'G');
+          graph.addEdge('D', 'G');
+          graph.addEdge('D', 'H');
+          graph.addEdge('B', 'E');
+          graph.addEdge('B', 'F');
+          graph.addEdge('E', 'I');
+
+          var dfsDatas = graph.bfs('A', function(vertex) {});
+
+          expect(dfsDatas.distances).toBeDefined();
+          expect(dfsDatas.predecessors).toBeDefined();
+        });
+
+        it('if called with no vertices, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.bfs] this.vertices has not fromVertex.';
+
+          expect(function() {
+            graph.bfs('A');
+          }).toThrowError(Error, ERROR_MSG);
+        });
+
+        it('if called with no edge, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.bfs] fromVertex is not connected to any vertices.';
+
+          vertices.forEach(function(v) {
+            graph.addVertex(v);
+          });
+
+          expect(function() {
+            graph.bfs('A');
+          }).toThrowError(Error, ERROR_MSG);
+        });
+
+        it('if callback parameter is defined but type is not function, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.bfs] Type of callback parameter must be undefined or null or Function.';
+
+          vertices.forEach(function(v) {
+            graph.addVertex(v);
+          });
+
+          graph.addEdge('A', 'B');
+          graph.addEdge('A', 'C');
+          graph.addEdge('A', 'D');
+          graph.addEdge('C', 'D');
+          graph.addEdge('C', 'G');
+          graph.addEdge('D', 'G');
+          graph.addEdge('D', 'H');
+          graph.addEdge('B', 'E');
+          graph.addEdge('B', 'F');
+          graph.addEdge('E', 'I');
+
+          expect(function() {
+            graph.bfs('A', false);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.bfs('A', true);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.bfs('A', 0);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.bfs('A', NaN);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.bfs('A', '');
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.bfs('A', {});
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.bfs('A', []);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.bfs('A', /aid.js/);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.bfs('A', function() {});
+          }).not.toThrowError(Error, ERROR_MSG);
+        });
+      });
+
+      describe('.getBfsPaths()', function() {
+        var graph;
+
+        beforeEach(function() {
+          graph = aid.createGraph();
+        });
+
+        it('return array has { path, edgesNum } object', function() {
+          vertices.forEach(function(v) {
+            graph.addVertex(v);
+          });
+
+          graph.addEdge('A', 'B');
+          graph.addEdge('A', 'C');
+          graph.addEdge('A', 'D');
+          graph.addEdge('C', 'D');
+          graph.addEdge('C', 'G');
+          graph.addEdge('D', 'G');
+          graph.addEdge('D', 'H');
+          graph.addEdge('B', 'E');
+          graph.addEdge('B', 'F');
+          graph.addEdge('E', 'I');
+
+          var bfsPaths = graph.getBfsPaths('A');
+          expect(bfsPaths[0]).toEqual({ path: 'A - B', edgesNum: 1 });
+          expect(bfsPaths[1]).toEqual({ path: 'A - C', edgesNum: 1 });
+        });
+
+        it('if called with no vertices, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.getBfsPaths] fromVertex is not connected to any vertices.';
+
+          expect(function() {
+            graph.getBfsPaths('A');
+          }).toThrowError(Error, ERROR_MSG);
+        });
+
+        it('if called with no edge, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.getBfsPaths] fromVertex is not connected to any vertices.';
+
+          vertices.forEach(function(v) {
+            graph.addVertex(v);
+          });
+
+          expect(function() {
+            graph.getBfsPaths('A');
+          }).toThrowError(Error, ERROR_MSG);
+        });
+      });
+
+      describe('.dfs()', function() {
+        var graph = aid.createGraph();
+
+        vertices.forEach(function(v) {
+          graph.addVertex(v);
+        });
+
+        graph.addEdge('A', 'B');
+        graph.addEdge('A', 'C');
+        graph.addEdge('A', 'D');
+        graph.addEdge('C', 'D');
+        graph.addEdge('C', 'G');
+        graph.addEdge('D', 'G');
+        graph.addEdge('D', 'H');
+        graph.addEdge('B', 'E');
+        graph.addEdge('B', 'F');
+        graph.addEdge('E', 'I');
+
+        it('return object has time, colors, discovered, finished, predecessors properties', function() {
+          var dfsDatas = graph.dfs('A', function(vertex) {});
+
+          expect(dfsDatas.time).toBeDefined();
+          expect(dfsDatas.colors).toBeDefined();
+          expect(dfsDatas.discovered).toBeDefined();
+          expect(dfsDatas.finished).toBeDefined();
+          expect(dfsDatas.predecessors).toBeDefined();
+        });
+
+        it('fromVertex parameter has never been added before, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.dfs] this.vertices has not fromVertex.';
+
+          expect(function() {
+            graph.dfs('C');
+          }).not.toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.dfs('Z');
+          }).toThrowError(Error, ERROR_MSG);
+        });
+
+        it('if callback parameter is defined but type is not function, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.dfs] Type of callback parameter must be undefined or null or Function.';
+
+          expect(function() {
+            graph.dfs('A', false);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.dfs('A', true);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.dfs('A', 0);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.dfs('A', NaN);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.dfs('A', '');
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.dfs('A', {});
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.dfs('A', []);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.dfs('A', /aid.js/);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.dfs('A', function() {});
+          }).not.toThrowError(Error, ERROR_MSG);
         });
       });
     });

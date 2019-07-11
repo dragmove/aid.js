@@ -1173,6 +1173,71 @@
     return new LinkedList();
   };
 
+  // Dictionary
+  function Dictionary() {
+    this.items = {};
+  }
+
+  Dictionary.prototype.has = function(key) {
+    return _hasOwnProperty.call(this.items, key);
+  };
+
+  Dictionary.prototype.get = function(key) {
+    return this.has(key) ? this.items[key] : undefined;
+  };
+
+  Dictionary.prototype.set = function(key, value) {
+    this.items[key] = value;
+  };
+
+  Dictionary.prototype.remove = function(key) {
+    if (this.has(key)) {
+      delete this.items[key];
+      return true;
+    }
+
+    return false;
+  };
+
+  Dictionary.prototype.clear = function() {
+    this.items = {};
+  };
+
+  Dictionary.prototype.keys = function() {
+    return Object.keys(this.items);
+  };
+
+  Dictionary.prototype.values = function() {
+    var values = [];
+
+    for (var key in this.items) {
+      if (this.has(key)) values.push(this.items[key]);
+    }
+
+    return values;
+  };
+
+  Dictionary.prototype.size = function() {
+    return Object.keys(this.items).length;
+  };
+
+  Dictionary.prototype.getItems = function() {
+    return this.items;
+  };
+
+  /**
+   * createDictionary
+   *
+   * @static
+   * @method createDictionary
+   * @returns {Dictionary} return Dictionary instance
+   * @example
+   * var dictionary = aid.createDictionary(); // use has, get, set, remove, clear, keys, values, size, getItems methods
+   */
+  aid.createDictionary = function createDictionary() {
+    return new Dictionary();
+  };
+
   // BinarySearchTree node
   var BinarySearchTreeNode = function(data) {
     this.data = data;
@@ -1391,6 +1456,203 @@
    */
   aid.createBinarySearchTree = function createBinarySearchTree() {
     return new BinarySearchTree();
+  };
+
+  // Graph
+  function Graph() {
+    this.vertices = [];
+    this.adjacencyList = aid.createDictionary();
+  }
+
+  Graph.prototype.addVertex = function(vertex) {
+    if (array.indexOf(this.vertices, vertex) >= 0)
+      throw new Error('[Graph.prototype.addVertex] this.vertices already has the same vertex.');
+
+    this.vertices.push(vertex);
+    this.adjacencyList.set(vertex, []);
+  };
+
+  Graph.prototype.addEdge = function(fromVertex, toVertex) {
+    if (array.indexOf(this.vertices, fromVertex) < 0)
+      throw new Error('[Graph.prototype.addEdge] this.vertices has not fromVertex.');
+
+    if (array.indexOf(this.vertices, toVertex) < 0)
+      throw new Error('[Graph.prototype.addEdge] this.vertices has not toVertex.');
+
+    this.adjacencyList.get(fromVertex).push(toVertex);
+    this.adjacencyList.get(toVertex).push(fromVertex);
+  };
+
+  Graph.prototype.bfs = function(fromVertex, callback) {
+    // breadth-first serach
+    if (array.indexOf(this.vertices, fromVertex) < 0)
+      throw new Error('[Graph.prototype.bfs] this.vertices has not fromVertex.');
+
+    var neighbors = this.adjacencyList.get(fromVertex);
+    if (!neighbors || neighbors.length <= 0)
+      throw new Error('[Graph.prototype.bfs] fromVertex is not connected to any vertices.');
+
+    if (aid.isDefined(callback) && !aid.isFunction(callback))
+      throw new TypeError('[Graph.prototype.bfs] Type of callback parameter must be undefined or null or Function.');
+
+    // colors has 3 types of vertex color
+    // 'white' : vertex is not visited
+    // 'grey' : vertex is visited but hasn't been explored
+    // 'black' : vertex is visited and has been explored
+    var colors = {}, // this.initializeVerticesColor(),
+      distances = {},
+      predecessors = {},
+      queue = new aid.createQueue();
+
+    this.vertices.forEach(function(v) {
+      colors[v] = 'white';
+      distances[v] = 0;
+      predecessors[v] = null;
+    });
+
+    queue.enqueue(fromVertex);
+
+    while (!queue.isEmpty()) {
+      var v = queue.dequeue(),
+        neighborVertices = this.adjacencyList.get(v);
+
+      colors[v] = 'grey';
+
+      neighborVertices.forEach(function(nv) {
+        if (colors[nv] === 'white') {
+          colors[nv] = 'grey';
+          distances[nv] = distances[v] + 1;
+          predecessors[nv] = v;
+
+          queue.enqueue(nv);
+        }
+      });
+
+      colors[v] = 'black';
+
+      if (callback) callback.call(null, v);
+    }
+
+    return {
+      distances: distances,
+      predecessors: predecessors,
+    };
+  };
+
+  Graph.prototype.getBfsPaths = function(fromVertex) {
+    var neighbors = this.adjacencyList.get(fromVertex);
+    if (!neighbors || neighbors.length <= 0)
+      throw new Error('[Graph.prototype.getBfsPaths] fromVertex is not connected to any vertices.');
+
+    var bfsPaths = [];
+
+    var datasFromBfs = this.bfs(fromVertex);
+
+    var toVertices = this.vertices.filter(function(v) {
+      return v !== fromVertex;
+    });
+
+    toVertices.forEach(function(toVertex) {
+      var searchPath = aid.createStack();
+
+      for (var v = toVertex; v !== fromVertex; v = datasFromBfs.predecessors[v]) {
+        searchPath.push(v);
+      }
+      searchPath.push(fromVertex);
+
+      var edgesNum = searchPath.length() - 1;
+
+      var path = searchPath.pop();
+      while (searchPath.length()) {
+        path += ' - ' + searchPath.pop();
+      }
+
+      bfsPaths.push({
+        path: path,
+        edgesNum: edgesNum,
+      });
+    });
+
+    return bfsPaths;
+  };
+
+  Graph.prototype.dfs = function(fromVertex, callback) {
+    // depth-first serach
+    if (array.indexOf(this.vertices, fromVertex) < 0)
+      throw new Error('[Graph.prototype.dfs] this.vertices has not fromVertex.');
+
+    if (aid.isDefined(callback) && !aid.isFunction(callback))
+      throw new TypeError('[Graph.prototype.dfs] Type of callback parameter must be undefined or null or Function.');
+
+    var datas = {
+      time: 0,
+      colors: {},
+      discovered: {},
+      finished: {},
+      predecessors: {},
+    };
+
+    this.vertices.forEach(function(v) {
+      // colors has 3 types of vertex color
+      // 'white' : vertex is not visited
+      // 'grey' : vertex is visited but hasn't been explored
+      // 'black' : vertex is visited and has been explored
+      datas.colors[v] = 'white';
+      datas.discovered[v] = 0;
+      datas.finished[v] = 0;
+      datas.predecessors[v] = null;
+    });
+
+    // update datas recursively
+    this._dfsVisit(fromVertex, datas, callback);
+
+    return datas;
+  };
+
+  Graph.prototype._dfsVisit = function(vertex, datas, callback) {
+    var _ = this,
+      colors = datas.colors,
+      discovered = datas.discovered,
+      finished = datas.finished,
+      predecessors = datas.predecessors;
+
+    colors[vertex] = 'grey';
+    discovered[vertex] = ++datas.time;
+
+    if (callback) callback.call(null, vertex);
+
+    var neighborVertices = this.adjacencyList.get(vertex);
+    neighborVertices.forEach(function(nv) {
+      if (colors[nv] === 'white') {
+        predecessors[nv] = vertex;
+
+        _._dfsVisit(nv, datas, callback);
+      }
+    });
+
+    colors[vertex] = 'black';
+    finished[vertex] = ++datas.time;
+  };
+
+  /**
+   * createGraph
+   *
+   * @static
+   * @method createGraph
+   * @returns {Graph} return Graph instance
+   * @example
+   * var vertices = ['A', 'B', 'C', 'D'];
+   * var graph = aid.createGraph(); // use addVertex, addEdge, bfs, getBfsPaths, dfs methods
+   * vertices.forEach(function(v) { graph.addVertex(v); });
+   * graph.addEdge('A', 'B');
+   * graph.addEdge('A', 'C');
+   * graph.addEdge('A', 'D');
+   * graph.addEdge('B', 'D');
+   * graph.addEdge('C', 'D');
+   * console.log(  graph.dfs('A') );
+   */
+  aid.createGraph = function createGraph() {
+    return new Graph();
   };
 
   /**

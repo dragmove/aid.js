@@ -264,7 +264,9 @@ aid.monad.IO
 aid.createStack
 aid.createQueue
 aid.createLinkedList
+aid.createDictionary
 aid.createBinarySearchTree
+aid.createGraph
 ```
 
 ## Contact
