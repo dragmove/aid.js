@@ -12,6 +12,12 @@
     "js",
     "functional",
     "monad",
+    "stack",
+    "queue",
+    "linkedList",
+    "dictionary",
+    "binarySearchTree",
+    "graph",
     "dragmove"
   ],
   "homepage": "https://www.npmjs.com/package/aid.js",
