@@ -3151,183 +3151,213 @@ describe('aid.js', function() {
     });
 
     describe('.createGraph()', function() {
+      var vertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+
       it('created graph is exist', function() {
         var graph = aid.createGraph();
         expect(graph).not.toBe(null);
       });
-    });
 
-    describe('.addVertex()', function() {
-      var vertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
-      var graph = aid.createGraph();
+      describe('.addVertex()', function() {
+        var graph = aid.createGraph();
 
-      vertices.forEach(function(v) {
-        graph.addVertex(v);
-      });
-
-      it('add vertex to graph.vertices', function() {
-        expect(graph.vertices.length).toBe(vertices.length);
-        expect(graph.vertices).toEqual(vertices);
-      });
-
-      it('vertexLabel parameter is already added, throw Error', function() {
-        var ERROR_MSG = '[Graph.prototype.addVertex] this.vertices already has the same vertexLabel.';
-
-        expect(function() {
-          graph.addVertex(vertices[0]);
-        }).toThrowError(Error, ERROR_MSG);
-      });
-    });
-
-    describe('.addEdge()', function() {
-      var vertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
-      var graph = aid.createGraph();
-
-      vertices.forEach(function(v) {
-        graph.addVertex(v);
-      });
-
-      graph.addEdge('A', 'B');
-      graph.addEdge('A', 'C');
-      graph.addEdge('A', 'D');
-      graph.addEdge('C', 'D');
-      graph.addEdge('C', 'G');
-      graph.addEdge('D', 'G');
-      graph.addEdge('D', 'H');
-      graph.addEdge('B', 'E');
-      graph.addEdge('B', 'F');
-      graph.addEdge('E', 'I');
-
-      it('add edge from start vertex to end vertex', function() {
-        expect(graph.adjacencyList.get('A')).toEqual(['B', 'C', 'D']);
-        expect(graph.adjacencyList.get('B')).toEqual(['A', 'E', 'F']);
-        expect(graph.adjacencyList.get('C')).toEqual(['A', 'D', 'G']);
-        expect(graph.adjacencyList.get('D')).toEqual(['A', 'C', 'G', 'H']);
-        expect(graph.adjacencyList.get('E')).toEqual(['B', 'I']);
-        expect(graph.adjacencyList.get('F')).toEqual(['B']);
-        expect(graph.adjacencyList.get('G')).toEqual(['C', 'D']);
-        expect(graph.adjacencyList.get('H')).toEqual(['D']);
-        expect(graph.adjacencyList.get('I')).toEqual(['E']);
-      });
-
-      it('fromVertexLabel parameter has never been added before, throw Error', function() {
-        var ERROR_MSG = '[Graph.prototype.addEdge] this.vertices has not fromVertexLabel.';
-
-        expect(function() {
-          graph.addEdge('V', 'A');
-        }).toThrowError(Error, ERROR_MSG);
-      });
-
-      it('toVertexLabel parameter has never been added before, throw Error', function() {
-        var ERROR_MSG = '[Graph.prototype.addEdge] this.vertices has not toVertexLabel.';
-
-        expect(function() {
-          graph.addEdge('A', 'Z');
-        }).toThrowError(Error, ERROR_MSG);
-      });
-    });
-
-    describe('.bfs()', function() {
-      // TODO:
-    });
-
-    describe('.getBfsPaths()', function() {
-      var vertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
-      var graph = aid.createGraph();
-
-      vertices.forEach(function(v) {
-        graph.addVertex(v);
-      });
-
-      graph.addEdge('A', 'B');
-      graph.addEdge('A', 'C');
-      graph.addEdge('A', 'D');
-      graph.addEdge('C', 'D');
-      graph.addEdge('C', 'G');
-      graph.addEdge('D', 'G');
-      graph.addEdge('D', 'H');
-      graph.addEdge('B', 'E');
-      graph.addEdge('B', 'F');
-      graph.addEdge('E', 'I');
-
-      // TODO: print searching path
-      var bfsPaths = graph.getBfsPaths('A');
-      console.log('bfsPaths :', bfsPaths);
-    });
-
-    describe('.dfs()', function() {
-      var vertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
-      var graph = aid.createGraph();
-
-      vertices.forEach(function(v) {
-        graph.addVertex(v);
-      });
-
-      graph.addEdge('A', 'B');
-      graph.addEdge('A', 'C');
-      graph.addEdge('A', 'D');
-      graph.addEdge('C', 'D');
-      graph.addEdge('C', 'G');
-      graph.addEdge('D', 'G');
-      graph.addEdge('D', 'H');
-      graph.addEdge('B', 'E');
-      graph.addEdge('B', 'F');
-      graph.addEdge('E', 'I');
-
-      it('return datas has time, colors, discovered, finished, predecessors properties', function() {
-        var dfsDatas = graph.dfs('A', function(vertex) {
-          // console.log('dfs vertex :', vertex);
+        vertices.forEach(function(v) {
+          graph.addVertex(v);
         });
 
-        expect(dfsDatas.time).toBeDefined();
+        it('add vertex to graph.vertices', function() {
+          expect(graph.vertices.length).toBe(vertices.length);
+          expect(graph.vertices).toEqual(vertices);
+        });
+
+        it('vertexLabel parameter is already added, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.addVertex] this.vertices already has the same vertexLabel.';
+
+          expect(function() {
+            graph.addVertex(vertices[0]);
+          }).toThrowError(Error, ERROR_MSG);
+        });
       });
 
-      it('fromVertexLabel parameter has never been added before, throw Error', function() {
-        var ERROR_MSG = '[Graph.prototype.dfs] this.vertices has not fromVertexLabel.';
+      describe('.addEdge()', function() {
+        var graph = aid.createGraph();
 
-        expect(function() {
-          graph.dfs('Z');
-        }).toThrowError(Error, ERROR_MSG);
+        vertices.forEach(function(v) {
+          graph.addVertex(v);
+        });
+
+        graph.addEdge('A', 'B');
+        graph.addEdge('A', 'C');
+        graph.addEdge('A', 'D');
+        graph.addEdge('C', 'D');
+        graph.addEdge('C', 'G');
+        graph.addEdge('D', 'G');
+        graph.addEdge('D', 'H');
+        graph.addEdge('B', 'E');
+        graph.addEdge('B', 'F');
+        graph.addEdge('E', 'I');
+
+        it('add edge from start vertex to end vertex', function() {
+          expect(graph.adjacencyList.get('A')).toEqual(['B', 'C', 'D']);
+          expect(graph.adjacencyList.get('B')).toEqual(['A', 'E', 'F']);
+          expect(graph.adjacencyList.get('C')).toEqual(['A', 'D', 'G']);
+          expect(graph.adjacencyList.get('D')).toEqual(['A', 'C', 'G', 'H']);
+          expect(graph.adjacencyList.get('E')).toEqual(['B', 'I']);
+          expect(graph.adjacencyList.get('F')).toEqual(['B']);
+          expect(graph.adjacencyList.get('G')).toEqual(['C', 'D']);
+          expect(graph.adjacencyList.get('H')).toEqual(['D']);
+          expect(graph.adjacencyList.get('I')).toEqual(['E']);
+        });
+
+        it('fromVertexLabel parameter has never been added before, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.addEdge] this.vertices has not fromVertexLabel.';
+
+          expect(function() {
+            graph.addEdge('V', 'A');
+          }).toThrowError(Error, ERROR_MSG);
+        });
+
+        it('toVertexLabel parameter has never been added before, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.addEdge] this.vertices has not toVertexLabel.';
+
+          expect(function() {
+            graph.addEdge('A', 'Z');
+          }).toThrowError(Error, ERROR_MSG);
+        });
       });
 
-      it('toVertexLabel parameter has never been added before, throw Error', function() {
-        var ERROR_MSG = '[Graph.prototype.dfs] Type of callback parameter must be undefined or null or Function.';
+      describe('.bfs()', function() {
+        // TODO:
+      });
 
-        expect(function() {
-          graph.dfs('A', false);
-        }).toThrowError(Error, ERROR_MSG);
+      describe('.getBfsPaths()', function() {
+        it('return array has { path, edgesNum } object', function() {
+          var graph = aid.createGraph();
 
-        expect(function() {
-          graph.dfs('A', true);
-        }).toThrowError(Error, ERROR_MSG);
+          vertices.forEach(function(v) {
+            graph.addVertex(v);
+          });
 
-        expect(function() {
-          graph.dfs('A', 0);
-        }).toThrowError(Error, ERROR_MSG);
+          graph.addEdge('A', 'B');
+          graph.addEdge('A', 'C');
+          graph.addEdge('A', 'D');
+          graph.addEdge('C', 'D');
+          graph.addEdge('C', 'G');
+          graph.addEdge('D', 'G');
+          graph.addEdge('D', 'H');
+          graph.addEdge('B', 'E');
+          graph.addEdge('B', 'F');
+          graph.addEdge('E', 'I');
 
-        expect(function() {
-          graph.dfs('A', NaN);
-        }).toThrowError(Error, ERROR_MSG);
+          var bfsPaths = graph.getBfsPaths('A');
+          expect(bfsPaths[0]).toEqual({ path: 'A - B', edgesNum: 1 });
+          expect(bfsPaths[1]).toEqual({ path: 'A - C', edgesNum: 1 });
+        });
 
-        expect(function() {
-          graph.dfs('A', '');
-        }).toThrowError(Error, ERROR_MSG);
+        it('no vertices throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.getBfsPaths] fromVertexLabel is not connected to any vertices.';
 
-        expect(function() {
-          graph.dfs('A', {});
-        }).toThrowError(Error, ERROR_MSG);
+          var graph = aid.createGraph();
 
-        expect(function() {
-          graph.dfs('A', []);
-        }).toThrowError(Error, ERROR_MSG);
+          expect(function() {
+            graph.getBfsPaths('A');
+          }).toThrowError(Error, ERROR_MSG);
+        });
 
-        expect(function() {
-          graph.dfs('A', /aid.js/);
-        }).toThrowError(Error, ERROR_MSG);
+        it('no edge throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.getBfsPaths] fromVertexLabel is not connected to any vertices.';
 
-        expect(function() {
-          graph.dfs('A', function() {});
-        }).not.toThrowError(Error, ERROR_MSG);
+          var graph = aid.createGraph();
+
+          vertices.forEach(function(v) {
+            graph.addVertex(v);
+          });
+
+          expect(function() {
+            graph.getBfsPaths('A');
+          }).toThrowError(Error, ERROR_MSG);
+        });
+      });
+
+      describe('.dfs()', function() {
+        var graph = aid.createGraph();
+
+        vertices.forEach(function(v) {
+          graph.addVertex(v);
+        });
+
+        graph.addEdge('A', 'B');
+        graph.addEdge('A', 'C');
+        graph.addEdge('A', 'D');
+        graph.addEdge('C', 'D');
+        graph.addEdge('C', 'G');
+        graph.addEdge('D', 'G');
+        graph.addEdge('D', 'H');
+        graph.addEdge('B', 'E');
+        graph.addEdge('B', 'F');
+        graph.addEdge('E', 'I');
+
+        it('return datas has time, colors, discovered, finished, predecessors properties', function() {
+          var dfsDatas = graph.dfs('A', function(vertex) {});
+
+          expect(dfsDatas.time).toBeDefined();
+          expect(dfsDatas.colors).toBeDefined();
+          expect(dfsDatas.discovered).toBeDefined();
+          expect(dfsDatas.finished).toBeDefined();
+          expect(dfsDatas.predecessors).toBeDefined();
+        });
+
+        it('fromVertexLabel parameter has never been added before, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.dfs] this.vertices has not fromVertexLabel.';
+
+          expect(function() {
+            graph.dfs('C');
+          }).not.toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.dfs('Z');
+          }).toThrowError(Error, ERROR_MSG);
+        });
+
+        it('toVertexLabel parameter has never been added before, throw Error', function() {
+          var ERROR_MSG = '[Graph.prototype.dfs] Type of callback parameter must be undefined or null or Function.';
+
+          expect(function() {
+            graph.dfs('A', false);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.dfs('A', true);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.dfs('A', 0);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.dfs('A', NaN);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.dfs('A', '');
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.dfs('A', {});
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.dfs('A', []);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.dfs('A', /aid.js/);
+          }).toThrowError(Error, ERROR_MSG);
+
+          expect(function() {
+            graph.dfs('A', function() {});
+          }).not.toThrowError(Error, ERROR_MSG);
+        });
       });
     });
   });

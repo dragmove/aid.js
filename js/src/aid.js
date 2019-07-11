@@ -1483,10 +1483,14 @@
     this.adjacencyList.get(toVertexLabel).push(fromVertexLabel);
   };
 
-  Graph.prototype.bfs = function(startVertexLabel, callback) {
+  Graph.prototype.bfs = function(fromVertexLabel, callback) {
     // breadth-first serach
-    if (array.indexOf(this.vertices, startVertexLabel) < 0)
-      throw new Error('[Graph.prototype.bfs] this.vertices has not startVertexLabel.');
+    if (array.indexOf(this.vertices, fromVertexLabel) < 0)
+      throw new Error('[Graph.prototype.bfs] this.vertices has not fromVertexLabel.');
+
+    var neighbors = this.adjacencyList.get(fromVertexLabel);
+    if (!neighbors || neighbors.length <= 0)
+      throw new Error('[Graph.prototype.bfs] fromVertexLabel is not connected to any vertices.');
 
     if (aid.isDefined(callback) && !aid.isFunction(callback))
       throw new TypeError('[Graph.prototype.bfs] Type of callback parameter must be undefined or null or Function.');
@@ -1506,7 +1510,7 @@
       predecessors[v] = null;
     });
 
-    queue.enqueue(startVertexLabel);
+    queue.enqueue(fromVertexLabel);
 
     while (!queue.isEmpty()) {
       var v = queue.dequeue(),
@@ -1536,6 +1540,10 @@
   };
 
   Graph.prototype.getBfsPaths = function(fromVertexLabel) {
+    var neighbors = this.adjacencyList.get(fromVertexLabel);
+    if (!neighbors || neighbors.length <= 0)
+      throw new Error('[Graph.prototype.getBfsPaths] fromVertexLabel is not connected to any vertices.');
+
     var bfsPaths = [];
 
     var datasFromBfs = this.bfs(fromVertexLabel);
@@ -1595,6 +1603,7 @@
       datas.predecessors[v] = null;
     });
 
+    // update datas recursively
     this._dfsVisit(fromVertexLabel, datas, callback);
 
     return datas;
