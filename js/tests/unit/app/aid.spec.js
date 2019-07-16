@@ -849,6 +849,134 @@ describe('aid.js', function() {
       });
     });
 
+    describe('.memoize()', function() {
+      it('if func parameter type is not function, throw Error', function() {
+        var ERROR_MSG = '[aid.memoize] Type of func parameter must be Function.';
+
+        expect(function() {
+          aid.memoize(undefined);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.memoize(null);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.memoize(false);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.memoize(true);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.memoize(0);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.memoize('aid');
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.memoize([]);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.memoize(NaN);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.memoize(/aid.js/);
+        }).toThrowError(TypeError, ERROR_MSG);
+
+        expect(function() {
+          aid.memoize(function() {});
+        }).not.toThrowError(TypeError, ERROR_MSG);
+      });
+
+      it('if hasher parameter is defined but type is not function, throw Error', function() {
+        var ERROR_MSG = '[aid.memoize] Type of hasher parameter must be undefined or null or Function.';
+
+        expect(function() {
+          aid.memoize(function() {}, false);
+        }).toThrowError(Error, ERROR_MSG);
+
+        expect(function() {
+          aid.memoize(function() {}, true);
+        }).toThrowError(Error, ERROR_MSG);
+
+        expect(function() {
+          aid.memoize(function() {}, 0);
+        }).toThrowError(Error, ERROR_MSG);
+
+        expect(function() {
+          aid.memoize(function() {}, NaN);
+        }).toThrowError(Error, ERROR_MSG);
+
+        expect(function() {
+          aid.memoize(function() {}, '');
+        }).toThrowError(Error, ERROR_MSG);
+
+        expect(function() {
+          aid.memoize(function() {}, {});
+        }).toThrowError(Error, ERROR_MSG);
+
+        expect(function() {
+          aid.memoize(function() {}, []);
+        }).toThrowError(Error, ERROR_MSG);
+
+        expect(function() {
+          aid.memoize(function() {}, /aid.js/);
+        }).toThrowError(Error, ERROR_MSG);
+
+        expect(function() {
+          aid.memoize(function() {}, function() {});
+        }).not.toThrowError(Error, ERROR_MSG);
+      });
+
+      it('return memoized value, after memoize a function', function() {
+        var obj = {
+          plus: function(a, b) {
+            return a + b;
+          },
+        };
+        expect(obj.plus('google', '.js')).toBe('google.js');
+
+        var memoized = aid.memoize(obj.plus);
+        var cache = memoized.cache;
+        expect(cache.get('google')).toBe(undefined);
+        expect(memoized('google', '.js')).toBe('google.js');
+
+        expect(cache.has('google')).toBe(true);
+        expect(cache.get('google')).toBe('google.js');
+
+        obj.plus = memoized;
+        expect(obj.plus('google', '.js')).toBe('google.js');
+      });
+
+      it('return memoized value when use a hasher function', function() {
+        var obj = {
+          plus: function(a, b) {
+            return a + b;
+          },
+        };
+
+        var memoized = aid.memoize(obj.plus, function(a, b) {
+          return a + '_foo_' + b;
+        });
+        var cache = memoized.cache;
+
+        expect(cache.get('google_foo_.js')).toBe(undefined);
+        expect(memoized('google', '.js')).toBe('google.js');
+
+        expect(cache.has('google_foo_.js')).toBe(true);
+        expect(cache.get('google_foo_.js')).toBe('google.js');
+
+        obj.plus = memoized;
+        expect(obj.plus('google', '.js')).toBe('google.js');
+      });
+    });
+
     describe('.borrow()', function() {
       var borrower = {},
         donor = {

@@ -340,6 +340,42 @@
   };
 
   /**
+   * return memoized function
+   *
+   * @static
+   * @method memoize
+   * @param {Function} func
+   * @param {Function} hasher (optional)
+   * @returns {Function} return function
+   * @example
+   * var plus = function(a, b) { return a + b; };
+   * var memoized = aid.memoize(plus);
+   * console.log( memoized('aid', '.js') ); // aid.js
+   */
+  aid.memoize = function memoize(func, hasher) {
+    if (!aid.isFunction(func)) throw new TypeError('[aid.memoize] Type of func parameter must be Function.');
+
+    if (aid.isDefined(hasher) && !aid.isFunction(hasher))
+      throw new TypeError('[aid.memoize] Type of hasher parameter must be undefined or null or Function.');
+
+    var memoized = function(_key) {
+      var cache = memoized.cache;
+
+      var key = hasher ? hasher.apply(null, _slice.call(arguments)) : _key;
+      if (cache.has(key)) return cache.get(key);
+
+      var result = func.apply(null, _slice.call(arguments));
+      cache.set(key, result);
+
+      return result;
+    };
+
+    memoized.cache = aid.createDictionary();
+
+    return memoized;
+  };
+
+  /**
    * borrow method from donor object
    *
    * @static
