@@ -55,6 +55,7 @@ aid.isElement
 aid.extend
 aid.inherit
 aid.namespace
+aid.memoize
 aid.borrow
 aid.bind
 aid.compose
