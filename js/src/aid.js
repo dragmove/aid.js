@@ -1185,6 +1185,22 @@
     }
   };
 
+  LinkedList.prototype.append = function linkedList_append(data) {
+    var node = new LinkedListNode(data),
+      current = null;
+
+    if (this.head === null) {
+      this.head = node;
+    } else {
+      current = this.head;
+      while (current.next) {
+        current = current.next;
+      }
+
+      current.next = node;
+    }
+  };
+
   LinkedList.prototype.getAllNodes = function linkedList_getAllNodes() {
     var nodes = [this.head],
       node = this.head;
@@ -1207,6 +1223,54 @@
    */
   aid.createLinkedList = function createLinkedList() {
     return new LinkedList();
+  };
+
+  // HashTable
+  var HashTable = function(data) {
+    this.table = [];
+  };
+
+  HashTable.prototype.put = function(key, data) {
+    var position = this._looseHashCode(key);
+
+    if (this.table[position] === undefined) {
+      this.table[position] = aid.createLinkedList();
+    }
+
+    var linkedList = this.table[position];
+    linkedList.append({ key: key, data: data });
+  };
+
+  HashTable.prototype.get = function(key) {
+    // var position = this._looseHashCode(key);
+    // return this.table[position];
+  };
+
+  HashTable.prototype.remove = function(key) {
+    // var position = this._looseHashCode(key);
+    // this.table[position] = undefined;
+  };
+
+  HashTable.prototype._looseHashCode = function(key) {
+    var hash = 0;
+    for (var i = 0, max = key.length; i < max; i++) {
+      hash += key.charCodeAt(i);
+    }
+
+    return hash % 37;
+  };
+
+  /**
+   * createHashTable
+   *
+   * @static
+   * @method createQueue
+   * @returns {Queue} return hashTable instance
+   * @example
+   * var HashTable = aid.createHashTable();
+   */
+  aid.createHashTable = function createHashTable() {
+    return new HashTable();
   };
 
   // Dictionary

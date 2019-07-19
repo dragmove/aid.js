@@ -2927,6 +2927,24 @@ describe('aid.js', function() {
       // TODO: write test cases
     });
 
+    describe('.createHashTable()', function() {
+      var hashTable = aid.createHashTable();
+      console.log('hashTable :', hashTable);
+
+      it('created HashTable is exist', function() {
+        expect(hashTable).not.toBe(null);
+      });
+
+      it('can put key, value in LinkedList in HashTable', function() {
+        hashTable.put('aid', 99);
+
+        var hash = hashTable._looseHashCode('aid');
+        expect(hashTable.table[hash]).not.toBe(undefined);
+      });
+
+      // TODO: write test cases
+    });
+
     describe('.createDictionary()', function() {
       var dictionary = aid.createDictionary();
 
