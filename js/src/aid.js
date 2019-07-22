@@ -1150,6 +1150,10 @@
     this.head = new LinkedListNode('head');
   };
 
+  LinkedList.prototype.getHead = function linkedList_getHead() {
+    return this.head;
+  };
+
   LinkedList.prototype.find = function linkedList_find(data) {
     var node = this.head;
     while (node.data !== data) {
@@ -1169,7 +1173,7 @@
     return node;
   };
 
-  LinkedList.prototype.insert = function insert(data, prevNodeData) {
+  LinkedList.prototype.insert = function linkedList_insert(data, prevNodeData) {
     var insertNode = new LinkedListNode(data),
       prevNode = this.find(prevNodeData);
 
@@ -1186,19 +1190,14 @@
   };
 
   LinkedList.prototype.append = function linkedList_append(data) {
-    var node = new LinkedListNode(data),
-      current = null;
+    var appendNode = new LinkedListNode(data);
 
-    if (this.head === null) {
-      this.head = node;
-    } else {
-      current = this.head;
-      while (current.next) {
-        current = current.next;
-      }
-
-      current.next = node;
+    var node = this.head;
+    while (node.next) {
+      node = node.next;
     }
+
+    node.next = appendNode;
   };
 
   LinkedList.prototype.getAllNodes = function linkedList_getAllNodes() {
@@ -1226,11 +1225,11 @@
   };
 
   // HashTable
-  var HashTable = function(data) {
+  var HashTable = function() {
     this.table = [];
   };
 
-  HashTable.prototype.put = function(key, data) {
+  HashTable.prototype.put = function(key, value) {
     var position = this._looseHashCode(key);
 
     if (this.table[position] === undefined) {
@@ -1238,12 +1237,26 @@
     }
 
     var linkedList = this.table[position];
-    linkedList.append({ key: key, data: data });
+    linkedList.append({ key: key, value: value });
   };
 
   HashTable.prototype.get = function(key) {
-    // var position = this._looseHashCode(key);
-    // return this.table[position];
+    var position = this._loosehashCode(key);
+
+    var linkedList = this.table[position];
+    if (linkedList !== undefined) {
+      var node = linkedList.getHead();
+
+      while (node.next) {
+        if (node.data.key === key) return node.data.value;
+        node = node.next;
+      }
+
+      // TODO: head node or end node
+      if (node.data.key === key) return node.data.value;
+    }
+
+    return undefined;
   };
 
   HashTable.prototype.remove = function(key) {

@@ -2929,17 +2929,27 @@ describe('aid.js', function() {
 
     describe('.createHashTable()', function() {
       var hashTable = aid.createHashTable();
-      console.log('hashTable :', hashTable);
 
       it('created HashTable is exist', function() {
         expect(hashTable).not.toBe(null);
       });
 
-      it('can put key, value in LinkedList in HashTable', function() {
+      describe('.put()', function() {
         hashTable.put('aid', 99);
 
         var hash = hashTable._looseHashCode('aid');
-        expect(hashTable.table[hash]).not.toBe(undefined);
+
+        var linkedList = hashTable.table[hash];
+
+        it('create LinkedList in HashTable', function() {
+          expect(linkedList).not.toBe(undefined);
+        });
+
+        // TODO: linkedList 로부터 aid 키 값으로 99 를 조회해본다.
+        it('get value of key in LinkedList', function() {
+          console.log("hashTable.get('aid') :", hashTable.get('aid'));
+          // expect(hashTable.get('aid').value).toBe(99);
+        })
       });
 
       // TODO: write test cases
