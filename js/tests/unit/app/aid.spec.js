@@ -2919,12 +2919,82 @@ describe('aid.js', function() {
         expect(linkedList).not.toBe(null);
       });
 
-      it('getAllNodes() return head node, when LinkedList created', function() {
-        var node = linkedList.getAllNodes();
-        expect(node[0]).toBe(linkedList.head);
+      /*
+      it('getAllNodes() return empty array, when LinkedList created', function() {
+        var nodes = linkedList.getAllNodes();
+        expect(nodes.length).toEqual(1);
+      });
+      
+      describe('.append()', function() {
+        beforeEach(function() {
+          linkedList = aid.createLinkedList();
+        });
+
+        it('append node has data property', function() {
+          linkedList.append('foo');
+          linkedList.append('bar');
+          linkedList.append('baz');
+
+          expect(linkedList.size()).toBe(3);
+          expect(linkedList.find('foo').data).toBe('foo');
+          expect(linkedList.find('bar').data).toBe('bar');
+          expect(linkedList.find('baz').data).toBe('baz');
+          expect(linkedList.findPrevious('foo')).toBe(null);
+          expect(linkedList.findPrevious('bar').data).toBe('foo');
+          expect(linkedList.findPrevious('baz').data).toBe('bar');
+        });
       });
 
-      // TODO: write test cases
+      describe('.remove()', function() {
+        beforeEach(function() {
+          linkedList = aid.createLinkedList();
+        });
+
+        it('remove node', function() {
+          linkedList.remove('foo');
+          expect(linkedList.size()).toBe(0);
+
+          linkedList.append('foo');
+          expect(linkedList.size()).toBe(1);
+          linkedList.remove('foo');
+          expect(linkedList.size()).toBe(0);
+
+          linkedList.append('foo');
+          linkedList.append('bar');
+          linkedList.append('baz');
+          expect(linkedList.size()).toBe(3);
+          expect(linkedList.remove('baz'));
+          expect(linkedList.size()).toBe(2);
+          expect(linkedList.remove('bar'));
+          expect(linkedList.size()).toBe(1);
+          expect(linkedList.remove('google'));
+          expect(linkedList.size()).toBe(1);
+          expect(linkedList.remove('foo'));
+          expect(linkedList.size()).toBe(0);
+        });
+      });
+
+      describe('.insert()', function() {
+        beforeEach(function() {
+          linkedList = aid.createLinkedList();
+        });
+
+        it('insert node', function() {
+          linkedList.insert('bar', 'foo');
+          expect(linkedList.size()).toBe(0);
+
+          linkedList.append('foo');
+          expect(linkedList.size()).toBe(1);
+
+          linkedList.insert('bar', 'aid');
+          expect(linkedList.size()).toBe(1);
+
+          linkedList.insert('bar', 'foo');
+          expect(linkedList.size()).toBe(2);
+          
+        });
+      });
+      */
     });
 
     describe('.createHashTable()', function() {
@@ -2935,24 +3005,41 @@ describe('aid.js', function() {
       });
 
       describe('.put()', function() {
-        hashTable.put('aid', 99);
+        hashTable.put('aid', 11);
+        hashTable.put('adi', 22);
+        hashTable.put('ida', 33);
 
-        var hash = hashTable._looseHashCode('aid');
+        hashTable.put('bar', 99);
+        hashTable.put('abr', 88);
 
-        var linkedList = hashTable.table[hash];
-
-        it('create LinkedList in HashTable', function() {
-          expect(linkedList).not.toBe(undefined);
+        it('create linkedList', function() {
+          var tmpHash = hashTable._looseHashCode('aid');
+          expect(hashTable.table[tmpHash]).not.toBe(undefined);
         });
 
-        // TODO: linkedList 로부터 aid 키 값으로 99 를 조회해본다.
-        it('get value of key in LinkedList', function() {
-          console.log("hashTable.get('aid') :", hashTable.get('aid'));
-          // expect(hashTable.get('aid').value).toBe(99);
-        })
+        it('increase nodes of linkedList', function() {
+          var tmpHash = hashTable._looseHashCode('aid');
+          expect(hashTable.table[tmpHash].getAllNodes().length - 1).toBe(3);
+        });
+
+        it('get value of key', function() {
+          var tmpHash = hashTable._looseHashCode('bar');
+          expect(hashTable.table[tmpHash]).not.toBe(undefined);
+
+          expect(hashTable.get('foo')).toBe(undefined);
+
+          expect(hashTable.get('aid')).toBe(11);
+          expect(hashTable.get('adi')).toBe(22);
+          expect(hashTable.get('ida')).toBe(33);
+
+          expect(hashTable.get('bar')).toBe(99);
+          expect(hashTable.get('abr')).toBe(88);
+        });
       });
 
-      // TODO: write test cases
+      describe('.remove()', function() {
+        // TODO: 
+      });
     });
 
     describe('.createDictionary()', function() {

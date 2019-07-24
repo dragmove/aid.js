@@ -1181,23 +1181,23 @@
     prevNode.next = insertNode;
   };
 
+  LinkedList.prototype.append = function linkedList_appen(data) {
+    var appendNode = new LinkedListNode(data),
+      node = this.head;
+
+    while (node.next !== null) {
+      node = node.next;
+    }
+
+    node.next = appendNode;
+  };
+
   LinkedList.prototype.remove = function linkedList_remove(data) {
     var prevNode = this.findPrevious(data);
 
     if (prevNode.next !== null) {
       prevNode.next = prevNode.next.next;
     }
-  };
-
-  LinkedList.prototype.append = function linkedList_append(data) {
-    var appendNode = new LinkedListNode(data);
-
-    var node = this.head;
-    while (node.next) {
-      node = node.next;
-    }
-
-    node.next = appendNode;
   };
 
   LinkedList.prototype.getAllNodes = function linkedList_getAllNodes() {
@@ -1241,18 +1241,17 @@
   };
 
   HashTable.prototype.get = function(key) {
-    var position = this._loosehashCode(key);
+    var position = this._looseHashCode(key);
 
     var linkedList = this.table[position];
     if (linkedList !== undefined) {
-      var node = linkedList.getHead();
+      var node = linkedList.getHead().next;
 
       while (node.next) {
         if (node.data.key === key) return node.data.value;
         node = node.next;
       }
 
-      // TODO: head node or end node
       if (node.data.key === key) return node.data.value;
     }
 
@@ -1260,8 +1259,14 @@
   };
 
   HashTable.prototype.remove = function(key) {
-    // var position = this._looseHashCode(key);
-    // this.table[position] = undefined;
+    var position = this._looseHashCode(key);
+
+    var linkedList = this.table[position];
+    if (linkedList !== undefined) {
+      var node = linkedList.getHead();
+
+      // TODO:
+    }
   };
 
   HashTable.prototype._looseHashCode = function(key) {
