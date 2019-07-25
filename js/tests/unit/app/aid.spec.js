@@ -2978,11 +2978,29 @@ describe('aid.js', function() {
       });
 
       describe('.remove()', function() {
-        // TODO:
         var hashTable = aid.createHashTable();
 
-        it('return undefine, when HashTable does not have any values', function() {
-          expect(hashTable.remove('aid')).toBe(undefined);
+        /*
+        it('return false, when HashTable did not remove any values', function() {
+          expect(hashTable.remove('aid')).toBe(false);
+        });
+        */
+
+        it('return true, when HashTable remove value', function() {
+          hashTable.put('aid', 1);
+          hashTable.put('adi', 2);
+          hashTable.put('ida', 3);
+          hashTable.put('iad', 4);
+          hashTable.put('dai', 5);
+          hashTable.put('dia', 6);
+
+          var hash = hashTable._looseHashCode('aid');
+          var linkedList = hashTable.table[hash];
+          
+          expect(linkedList.getAllNodes().length - 1).toBe(6);
+          expect(hashTable.remove('aid')).toBe(true);
+
+          expect(linkedList.getAllNodes().length - 1).toBe(5);
         });
       });
 

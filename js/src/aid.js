@@ -1261,13 +1261,12 @@
     var position = this.hashFunc.call(null, key);
 
     var linkedList = this.table[position];
-    console.log('linkedList :', linkedList);
     if (linkedList) {
-      // TODO:
       var node = linkedList.getHead();
 
       while (node.next) {
         if (node.data.key === key) {
+          console.log('key in while :', key);
           // TODO: remove
 
           return true;
@@ -1277,6 +1276,7 @@
       }
 
       if (node.data.key === key) {
+        console.log('key :', key);
         // TODO: remove
 
         return true;
