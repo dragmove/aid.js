@@ -2979,6 +2979,11 @@ describe('aid.js', function() {
 
       describe('.remove()', function() {
         // TODO:
+        var hashTable = aid.createHashTable();
+
+        it('return undefine, when HashTable does not have any values', function() {
+          expect(hashTable.remove('aid')).toBe(undefined);
+        });
       });
 
       // TODO: input hashFunc when create HashTable

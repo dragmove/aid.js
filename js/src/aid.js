@@ -1231,7 +1231,7 @@
   };
 
   HashTable.prototype.put = function hashTable_put(key, value) {
-    var position = this.hashFunc(key);
+    var position = this.hashFunc.call(null, key);
 
     if (this.table[position] === undefined) this.table[position] = aid.createLinkedList();
 
@@ -1240,7 +1240,7 @@
   };
 
   HashTable.prototype.get = function hashTable_get(key) {
-    var position = this.hashFunc(key);
+    var position = this.hashFunc.call(null, key);
 
     var linkedList = this.table[position];
     if (linkedList) {
@@ -1258,7 +1258,32 @@
   };
 
   HashTable.prototype.remove = function hashTable_remove(key) {
-    // TODO:
+    var position = this.hashFunc.call(null, key);
+
+    var linkedList = this.table[position];
+    console.log('linkedList :', linkedList);
+    if (linkedList) {
+      // TODO:
+      var node = linkedList.getHead();
+
+      while (node.next) {
+        if (node.data.key === key) {
+          // TODO: remove
+
+          return true;
+        }
+
+        node = node.next;
+      }
+
+      if (node.data.key === key) {
+        // TODO: remove
+
+        return true;
+      }
+    }
+
+    return false;
   };
 
   HashTable.prototype._looseHashCode = function(key) {
