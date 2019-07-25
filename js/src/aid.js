@@ -1181,23 +1181,23 @@
     prevNode.next = insertNode;
   };
 
-  LinkedList.prototype.append = function linkedList_appen(data) {
-    var appendNode = new LinkedListNode(data),
-      node = this.head;
-
-    while (node.next !== null) {
-      node = node.next;
-    }
-
-    node.next = appendNode;
-  };
-
   LinkedList.prototype.remove = function linkedList_remove(data) {
     var prevNode = this.findPrevious(data);
 
     if (prevNode.next !== null) {
       prevNode.next = prevNode.next.next;
     }
+  };
+
+  LinkedList.prototype.append = function linkedList_append(data) {
+    var appendNode = new LinkedListNode(data);
+
+    var node = this.head;
+    while (node.next) {
+      node = node.next;
+    }
+
+    node.next = appendNode;
   };
 
   LinkedList.prototype.getAllNodes = function linkedList_getAllNodes() {
@@ -1225,27 +1225,26 @@
   };
 
   // HashTable
-  var HashTable = function() {
+  var HashTable = function(hashFunc) {
     this.table = [];
+    this.hashFunc = aid.isFunction(hashFunc) ? hashFunc : this._looseHashCode;
   };
 
-  HashTable.prototype.put = function(key, value) {
-    var position = this._looseHashCode(key);
+  HashTable.prototype.put = function hashTable_put(key, value) {
+    var position = this.hashFunc(key);
 
-    if (this.table[position] === undefined) {
-      this.table[position] = aid.createLinkedList();
-    }
+    if (this.table[position] === undefined) this.table[position] = aid.createLinkedList();
 
     var linkedList = this.table[position];
     linkedList.append({ key: key, value: value });
   };
 
-  HashTable.prototype.get = function(key) {
-    var position = this._looseHashCode(key);
+  HashTable.prototype.get = function hashTable_get(key) {
+    var position = this.hashFunc(key);
 
     var linkedList = this.table[position];
-    if (linkedList !== undefined) {
-      var node = linkedList.getHead().next;
+    if (linkedList) {
+      var node = linkedList.getHead();
 
       while (node.next) {
         if (node.data.key === key) return node.data.value;
@@ -1258,15 +1257,8 @@
     return undefined;
   };
 
-  HashTable.prototype.remove = function(key) {
-    var position = this._looseHashCode(key);
-
-    var linkedList = this.table[position];
-    if (linkedList !== undefined) {
-      var node = linkedList.getHead();
-
-      // TODO:
-    }
+  HashTable.prototype.remove = function hashTable_remove(key) {
+    // TODO:
   };
 
   HashTable.prototype._looseHashCode = function(key) {
@@ -1285,10 +1277,10 @@
    * @method createQueue
    * @returns {Queue} return hashTable instance
    * @example
-   * var HashTable = aid.createHashTable();
+   * var HashTable = aid.createHashTable(); // use put, get, remove methods
    */
-  aid.createHashTable = function createHashTable() {
-    return new HashTable();
+  aid.createHashTable = function createHashTable(hashFunc) {
+    return new HashTable(hashFunc);
   };
 
   // Dictionary
