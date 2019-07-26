@@ -1,5 +1,5 @@
 /*
- * aid.js 0.1.94
+ * aid.js 0.1.95
  * https://www.npmjs.com/package/aid.js
  *
  * The MIT License (MIT)
@@ -1154,15 +1154,25 @@
 
   // LinkedList
   var LinkedList = function() {
-    this.head = new LinkedListNode('head');
+    this.head = new LinkedListNode('LinkedListHead_' + Date.now());
+  };
+
+  LinkedList.prototype.getHead = function linkedList_getHead() {
+    return this.head;
+  };
+
+  LinkedList.prototype.isEmpty = function linkedList_isEmpty() {
+    return !this.head.next;
   };
 
   LinkedList.prototype.find = function linkedList_find(data) {
     var node = this.head;
+
     while (node.data !== data) {
       node = node.next;
-      if (node === null) return node;
+      if (!node) return node;
     }
+
     return node;
   };
 
@@ -1170,36 +1180,55 @@
     if (this.head.data === data) return null;
 
     var node = this.head;
-    while (node.next !== null && node.next.data !== data) {
+    while (node.next && node.next.data !== data) {
       node = node.next;
     }
+
     return node;
   };
 
-  LinkedList.prototype.insert = function insert(data, prevNodeData) {
-    var insertNode = new LinkedListNode(data),
-      prevNode = this.find(prevNodeData);
+  LinkedList.prototype.insert = function linkedList_insert(data, prevNodeData) {
+    var prevNode = this.find(prevNodeData);
+    if (!prevNode) return false;
 
+    var insertNode = new LinkedListNode(data);
     insertNode.next = prevNode.next;
     prevNode.next = insertNode;
+
+    return true;
   };
 
   LinkedList.prototype.remove = function linkedList_remove(data) {
     var prevNode = this.findPrevious(data);
 
-    if (prevNode.next !== null) {
+    if (prevNode && prevNode.next) {
       prevNode.next = prevNode.next.next;
+      return true;
     }
+
+    return false;
+  };
+
+  LinkedList.prototype.append = function linkedList_append(data) {
+    var appendNode = new LinkedListNode(data);
+
+    var node = this.head;
+    while (node.next) {
+      node = node.next;
+    }
+
+    node.next = appendNode;
   };
 
   LinkedList.prototype.getAllNodes = function linkedList_getAllNodes() {
     var nodes = [this.head],
       node = this.head;
 
-    while (node.next !== null) {
+    while (node.next) {
       nodes.push(node.next);
       node = node.next;
     }
+
     return nodes;
   };
 
@@ -1210,10 +1239,93 @@
    * @method createLinkedList
    * @returns {LinkedList} return linkedList instance
    * @example
-   * var linkedList = aid.createLinkedList(); // use find, findPrevious, insert, remove, getAllNodes methods
+   * var linkedList = aid.createLinkedList(); // use getHead, isEmpty, find, findPrevious, insert, remove, append, getAllNodes methods
    */
   aid.createLinkedList = function createLinkedList() {
     return new LinkedList();
+  };
+
+  // HashTable
+  var HashTable = function(hashFunc) {
+    this.table = [];
+    this._hashFunc = aid.isFunction(hashFunc) ? hashFunc : this._djb2Hash;
+  };
+
+  HashTable.prototype.put = function hashTable_put(key, value) {
+    var position = this._hashFunc.call(null, key);
+
+    if (this.table[position] === undefined) this.table[position] = aid.createLinkedList();
+
+    var linkedList = this.table[position];
+    linkedList.append({ key: key, value: value });
+  };
+
+  HashTable.prototype.get = function hashTable_get(key) {
+    var position = this._hashFunc.call(null, key);
+
+    var linkedList = this.table[position];
+    if (linkedList) {
+      var head = linkedList.getHead();
+      if (!head.next) return undefined;
+
+      var node = head;
+      while (node && node.data && node.data.key !== key) {
+        node = node.next;
+      }
+
+      if (node && node.data) return node.data.value;
+    }
+
+    return undefined;
+  };
+
+  HashTable.prototype.remove = function hashTable_remove(key) {
+    var position = this._hashFunc.call(null, key);
+
+    var linkedList = this.table[position];
+    if (linkedList) {
+      var head = linkedList.getHead();
+      if (!head.next) return false;
+
+      // find previous node
+      var node = head;
+      while (node.next && node.next.data && node.next.data.key !== key) {
+        node = node.next;
+      }
+
+      // remove node
+      if (node && node.next) {
+        node.next = node.next.next;
+        if (linkedList.isEmpty()) this.table[position] = undefined;
+
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  HashTable.prototype._djb2Hash = function hashTable_djb2Hash(key) {
+    var hash = 5381;
+
+    for (var i = 0, max = key.length; i < max; i++) {
+      hash = hash * 33 + key.charCodeAt(i);
+    }
+
+    return hash % 1013;
+  };
+
+  /**
+   * createHashTable
+   *
+   * @static
+   * @method createQueue
+   * @returns {Queue} return hashTable instance that use djb2 hash function.
+   * @example
+   * var HashTable = aid.createHashTable(); // use put, get, remove methods
+   */
+  aid.createHashTable = function createHashTable(hashFunc) {
+    return new HashTable(hashFunc);
   };
 
   // Dictionary

@@ -265,6 +265,7 @@ aid.monad.IO
 aid.createStack
 aid.createQueue
 aid.createLinkedList
+aid.createHashTable
 aid.createDictionary
 aid.createBinarySearchTree
 aid.createGraph
@@ -274,7 +275,7 @@ aid.createGraph
 
 * @Website : http://www.dragmove.xyz
 * @Blog : http://blog.naver.com/dragmove
-* @LinkedIn : https://www.linkedin.com/in/hyun-seok-kim-99748295/
+* @LinkedIn : https://www.linkedin.com/in/hyunseok-kim-99748295/
 * @E-mail : dragmove@gmail.com
 
 ## License
