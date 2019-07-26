@@ -1,6 +1,6 @@
 {
   "name": "aid.js",
-  "version": "0.1.94",
+  "version": "0.1.95",
   "description": "A Bundle of Javascript util Library to help developers. No dependency to other Libraries.",
   "keywords": [
     "aid.js",
@@ -15,6 +15,7 @@
     "stack",
     "queue",
     "linkedList",
+    "hashTable",
     "dictionary",
     "binarySearchTree",
     "graph",

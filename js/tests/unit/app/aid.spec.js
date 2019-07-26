@@ -2913,18 +2913,337 @@ describe('aid.js', function() {
     });
 
     describe('.createLinkedList()', function() {
-      var linkedList = aid.createLinkedList();
-
       it('created LinkedList is exist', function() {
+        var linkedList = aid.createLinkedList();
         expect(linkedList).not.toBe(null);
       });
 
-      it('getAllNodes() return head node, when LinkedList created', function() {
-        var node = linkedList.getAllNodes();
-        expect(node[0]).toBe(linkedList.head);
+      describe('.getHead()', function() {
+        var linkedList = aid.createLinkedList();
+
+        it('return head node', function() {
+          var node = linkedList.getHead();
+
+          expect(linkedList.head).toBe(node);
+          expect(linkedList.getAllNodes()[0]).toBe(node);
+        });
       });
 
-      // TODO: write test cases
+      describe('.isEmpty()', function() {
+        var linkedList = aid.createLinkedList();
+
+        it('return true, when linkedList has only head node', function() {
+          expect(linkedList.isEmpty()).toBe(true);
+        });
+
+        it('return false, when linkedList has nodes', function() {
+          linkedList.append('aid');
+          expect(linkedList.isEmpty()).toBe(false);
+        });
+      });
+
+      describe('.find()', function() {
+        var linkedList = aid.createLinkedList();
+        linkedList.append('foo');
+        linkedList.append('bar');
+
+        it('return null when find data that linkedList does not have', function() {
+          expect(linkedList.find('baz')).toBe(null);
+        });
+
+        it('return node when there is a node that has data', function() {
+          var node = linkedList.find('foo');
+          expect(node.data).toBe('foo');
+
+          node = linkedList.find('bar');
+          expect(node.data).toBe('bar');
+
+          expect(linkedList.find('baz')).toBe(null);
+        });
+      });
+
+      describe('.findPrevious()', function() {
+        var linkedList = aid.createLinkedList();
+        linkedList.append('foo');
+        linkedList.append('bar');
+        linkedList.append('baz');
+
+        var head = linkedList.getHead();
+
+        it('return null when find data of head node', function() {
+          expect(linkedList.findPrevious(linkedList.getHead().data)).toBe(null);
+        });
+
+        it('return previous node when find data of node', function() {
+          expect(linkedList.findPrevious('foo')).toBe(head);
+          expect(linkedList.findPrevious('bar').data).toBe('foo');
+          expect(linkedList.findPrevious('baz').data).toBe('bar');
+        });
+      });
+
+      describe('.insert()', function() {
+        var linkedList = aid.createLinkedList();
+        linkedList.append('foo');
+        linkedList.append('baz');
+
+        var head = linkedList.getHead();
+
+        it('return false, when cannot insert new node', function() {
+          expect(linkedList.insert('aid', '')).toBe(false);
+        });
+
+        it('return true, when finish inserting node', function() {
+          expect(linkedList.getAllNodes().length).toBe(3);
+
+          var result = linkedList.insert('aid', head.data);
+          expect(result).toBe(true);
+          expect(linkedList.getAllNodes().length).toBe(4);
+          expect(
+            linkedList.getAllNodes().map(function(node) {
+              return node.data;
+            })
+          ).toEqual([head.data, 'aid', 'foo', 'baz']);
+
+          result = linkedList.insert('google', 'foo');
+          expect(result).toBe(true);
+          expect(
+            linkedList.getAllNodes().map(function(node) {
+              return node.data;
+            })
+          ).toEqual([head.data, 'aid', 'foo', 'google', 'baz']);
+
+          result = linkedList.insert('apple', 'baz');
+          expect(result).toBe(true);
+          expect(
+            linkedList.getAllNodes().map(function(node) {
+              return node.data;
+            })
+          ).toEqual([head.data, 'aid', 'foo', 'google', 'baz', 'apple']);
+        });
+      });
+
+      describe('.remove()', function() {
+        var linkedList = aid.createLinkedList();
+        linkedList.append('foo');
+        linkedList.append('bar');
+        linkedList.append('baz');
+
+        var head = linkedList.getHead();
+
+        it('return false, when cannot remove node', function() {
+          var result = linkedList.remove('google');
+          expect(result).toBe(false);
+          expect(
+            linkedList.getAllNodes().map(function(node) {
+              return node.data;
+            })
+          ).toEqual([head.data, 'foo', 'bar', 'baz']);
+        });
+
+        it('return true, when finish removing node', function() {
+          var result = linkedList.remove('bar');
+          expect(result).toBe(true);
+          expect(
+            linkedList.getAllNodes().map(function(node) {
+              return node.data;
+            })
+          ).toEqual([head.data, 'foo', 'baz']);
+
+          result = linkedList.remove('baz');
+          expect(result).toBe(true);
+          expect(
+            linkedList.getAllNodes().map(function(node) {
+              return node.data;
+            })
+          ).toEqual([head.data, 'foo']);
+
+          result = linkedList.remove('foo');
+          expect(result).toBe(true);
+          expect(
+            linkedList.getAllNodes().map(function(node) {
+              return node.data;
+            })
+          ).toEqual([head.data]);
+        });
+      });
+
+      describe('.append()', function() {
+        var linkedList = aid.createLinkedList();
+        var head = linkedList.getHead();
+
+        it('append node', function() {
+          linkedList.append('foo');
+          expect(
+            linkedList.getAllNodes().map(function(node) {
+              return node.data;
+            })
+          ).toEqual([head.data, 'foo']);
+
+          linkedList.append('bar');
+          expect(
+            linkedList.getAllNodes().map(function(node) {
+              return node.data;
+            })
+          ).toEqual([head.data, 'foo', 'bar']);
+
+          linkedList.append('baz');
+          expect(
+            linkedList.getAllNodes().map(function(node) {
+              return node.data;
+            })
+          ).toEqual([head.data, 'foo', 'bar', 'baz']);
+        });
+      });
+
+      describe('.getAllNodes()', function() {
+        var linkedList = aid.createLinkedList();
+
+        it('return all nodes', function() {
+          var head = linkedList.getHead();
+          expect(linkedList.getAllNodes()[0]).toBe(head);
+          expect(linkedList.getAllNodes().length).toBe(1);
+
+          linkedList.append('foo');
+          linkedList.append('bar');
+          expect(linkedList.getAllNodes().length).toBe(3);
+        });
+      });
+    });
+
+    describe('.createHashTable()', function() {
+      var looseHashFunc = function(key) {
+        var hash = 0;
+        for (var i = 0, max = key.length; i < max; i++) {
+          hash += key.charCodeAt(i);
+        }
+        return hash % 37;
+      };
+
+      it('created HashTable is exist', function() {
+        var hashTable = aid.createHashTable();
+        expect(hashTable).not.toBe(null);
+      });
+
+      it('can use internal hash function', function() {
+        var hashTable = aid.createHashTable();
+        hashTable.put('aid', 1);
+        hashTable.put('iad', 2);
+
+        var hash = hashTable._hashFunc('iad');
+        expect(hashTable.get('aid')).toBe(1);
+        expect(hashTable.get('iad')).toBe(2);
+      });
+
+      describe('.put()', function() {
+        var hashTable = aid.createHashTable();
+        hashTable.put('aid', 99);
+
+        var hash = hashTable._hashFunc('aid');
+        var linkedList = hashTable.table[hash];
+
+        it('create LinkedList in HashTable', function() {
+          expect(linkedList).not.toBe(undefined);
+          expect(linkedList.getAllNodes().length - 1).toBe(1);
+        });
+
+        it('get value of key in LinkedList', function() {
+          expect(hashTable.get('aid')).toBe(99);
+        });
+      });
+
+      describe('.get()', function() {
+        it('return undefine, when HashTable does not have any values', function() {
+          var hashTable = aid.createHashTable();
+          expect(hashTable.get('aid')).toBe(undefined);
+          expect(hashTable.get('google')).toBe(undefined);
+        });
+
+        it('get value of key after putting key and value', function() {
+          var hashTable = aid.createHashTable();
+          hashTable.put('aid', 1);
+
+          expect(hashTable.get('aid')).toBe(1);
+          expect(hashTable.get('iad')).toBe(undefined);
+        });
+
+        it('get value of key after putting key and value', function() {
+          var hashTable = aid.createHashTable();
+          hashTable.put('aid', 1);
+          hashTable.put('iad', 2);
+          hashTable.put('dai', 3);
+          hashTable.put('foo', 11);
+          hashTable.put('ofo', 22);
+          hashTable.put('google', 'google');
+          hashTable.put('apple', { name: 'apple' });
+
+          expect(hashTable.get('aid')).toBe(1);
+          expect(hashTable.get('iad')).toBe(2);
+          expect(hashTable.get('dai')).toBe(3);
+          expect(hashTable.get('foo')).toBe(11);
+          expect(hashTable.get('ofo')).toBe(22);
+          expect(hashTable.get('google')).toBe('google');
+          expect(hashTable.get('apple')).toEqual({ name: 'apple' });
+        });
+      });
+
+      describe('.remove()', function() {
+        it('return false, when HashTable did not remove any values', function() {
+          var hashTable = aid.createHashTable();
+          expect(hashTable.remove('aid')).toBe(false);
+        });
+
+        it('return true, when HashTable remove value', function() {
+          var hashTable = aid.createHashTable(looseHashFunc);
+          hashTable.put('aid', 1);
+
+          var hash = hashTable._hashFunc('aid');
+          var linkedList = hashTable.table[hash];
+          expect(linkedList.getAllNodes().length - 1).toBe(1);
+          expect(hashTable.remove('aid')).toBe(true);
+          expect(linkedList.getAllNodes().length - 1).toBe(0);
+          expect(hashTable.table[hash]).toBe(undefined);
+
+          hashTable.put('aid', 1);
+          hashTable.put('adi', 2);
+          hash = hashTable._hashFunc('aid');
+          linkedList = hashTable.table[hash];
+          expect(linkedList.getAllNodes().length - 1).toBe(2);
+          expect(hashTable.remove('aid')).toBe(true);
+          expect(linkedList.getAllNodes().length - 1).toBe(1);
+          expect(hashTable.table[hash]).not.toBe(undefined);
+          expect(hashTable.remove('adi')).toBe(true);
+          expect(linkedList.getAllNodes().length - 1).toBe(0);
+          expect(hashTable.table[hash]).toBe(undefined);
+
+          hashTable.put('aid', 1);
+          hashTable.put('adi', 2);
+          hash = hashTable._hashFunc('aid');
+          linkedList = hashTable.table[hash];
+          expect(linkedList.getAllNodes().length - 1).toBe(2);
+          expect(hashTable.remove('adi')).toBe(true);
+          expect(linkedList.getAllNodes().length - 1).toBe(1);
+          expect(hashTable.table[hash]).not.toBe(undefined);
+          expect(hashTable.remove('aid')).toBe(true);
+          expect(linkedList.getAllNodes().length - 1).toBe(0);
+          expect(hashTable.table[hash]).toBe(undefined);
+
+          hashTable.put('aid', 1);
+          hashTable.put('adi', 2);
+          hashTable.put('iad', 3);
+          hash = hashTable._hashFunc('aid');
+          linkedList = hashTable.table[hash];
+          expect(hashTable.remove('adi')).toBe(true);
+          expect(linkedList.getAllNodes().length - 1).toBe(2);
+          expect(hashTable.table[hash]).not.toBe(undefined);
+
+          expect(hashTable.remove('iad')).toBe(true);
+          expect(linkedList.getAllNodes().length - 1).toBe(1);
+          expect(hashTable.table[hash]).not.toBe(undefined);
+          expect(hashTable.remove('aid')).toBe(true);
+          expect(linkedList.getAllNodes().length - 1).toBe(0);
+          expect(hashTable.table[hash]).toBe(undefined);
+        });
+      });
     });
 
     describe('.createDictionary()', function() {
