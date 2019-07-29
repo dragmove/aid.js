@@ -1238,6 +1238,106 @@
     return new LinkedList();
   };
 
+  // Set
+  var _Set = function() {
+    this.items = {};
+  };
+
+  _Set.prototype.size = function set_size() {
+    return this.values().length;
+  };
+
+  _Set.prototype.add = function set_add(value) {
+    if (!this.has(value)) {
+      this.items[value] = value;
+      return true;
+    }
+
+    return false;
+  };
+
+  _Set.prototype.remove = function set_remove(value) {
+    if (!this.has(value)) {
+      delete this.items[value];
+      return true;
+    }
+
+    return false;
+  };
+
+  _Set.prototype.clear = function set_clear() {
+    this.items = {};
+  };
+
+  _Set.prototype.has = function set_has(value) {
+    return _hasOwnProperty.call(this.items, value);
+  };
+
+  _Set.prototype.values = function set_values() {
+    return Object.keys(this.items);
+  };
+
+  // A ∪ B
+  _Set.prototype.union = function set_union(otherSet) {
+    var unionSet = new _Set();
+
+    this.values().forEach(function(val) {
+      unionSet.add(val);
+    });
+
+    otherSet.values().forEach(function(val) {
+      unionSet.add(val);
+    });
+
+    return unionSet;
+  };
+
+  // A ∩ B
+  _Set.prototype.intersection = function set_intersection(otherSet) {
+    var intersectionSet = new _Set();
+
+    this.values().forEach(function(val) {
+      if (otherSet.has(val)) intersectionSet.add(val);
+    });
+
+    return intersectionSet;
+  };
+
+  // A - B
+  _Set.prototype.difference = function set_difference(otherSet) {
+    var differenceSet = new _Set();
+
+    this.values().forEach(function(val) {
+      if (!otherSet.has(val)) differenceSet.add(val);
+    });
+
+    return differenceSet;
+  };
+
+  // A ⊆ B
+  _Set.prototype.isSubset = function set_subset(superset) {
+    if (this.size() > superset.size()) return false;
+
+    var isSupersetContainsSubset = this.values().every(function(val) {
+      return superset.has(val);
+    });
+
+    return isSupersetContainsSubset;
+  };
+
+  /**
+   * createSet
+   *
+   * @static
+   * @method createSet
+   * @returns {Set} return set instance
+   * @example
+   * var set = aid.createSet();
+   */
+  aid.createSet = function createSet() {
+    return new _Set();
+  };
+
   // HashTable
   var HashTable = function(hashFunc) {
     this.table = [];
@@ -4488,7 +4588,6 @@
    * console.log( aid.object.keys(obj) ); // ['name', 'job', 'works']
    */
   object.keys = function keys(obj) {
-    // var hasOwnProperty = Object.prototype.hasOwnProperty,
     var hasDontEnumBug = !{ toString: null }.propertyIsEnumerable('toString'),
       dontEnums = [
         'toString',

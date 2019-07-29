@@ -3246,6 +3246,10 @@ describe('aid.js', function() {
       });
     });
 
+    describe('.createSet()', function() {
+      // TODO:
+    });
+
     describe('.createDictionary()', function() {
       var dictionary = aid.createDictionary();
 
