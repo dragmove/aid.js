@@ -1240,16 +1240,16 @@
 
   // Set
   var _Set = function() {
-    this.items = {};
+    this.store = [];
   };
 
   _Set.prototype.size = function set_size() {
-    return this.values().length;
+    return this.store.length;
   };
 
   _Set.prototype.add = function set_add(value) {
     if (!this.has(value)) {
-      this.items[value] = value;
+      this.store.push(value);
       return true;
     }
 
@@ -1257,8 +1257,9 @@
   };
 
   _Set.prototype.remove = function set_remove(value) {
-    if (!this.has(value)) {
-      delete this.items[value];
+    var pos = this.store.indexOf(value);
+    if (pos >= 0) {
+      this.store.splice(pos, 1);
       return true;
     }
 
@@ -1266,15 +1267,15 @@
   };
 
   _Set.prototype.clear = function set_clear() {
-    this.items = {};
+    this.store = [];
   };
 
   _Set.prototype.has = function set_has(value) {
-    return _hasOwnProperty.call(this.items, value);
+    return this.store.indexOf(value) >= 0;
   };
 
   _Set.prototype.values = function set_values() {
-    return Object.keys(this.items);
+    return this.store;
   };
 
   // A ∪ B
@@ -3117,7 +3118,7 @@
    * @example
    * console.log( aid.string.absentToEmpty(null) ); // null to ''.
    * console.log( aid.string.absentToEmpty(undefined) ); // undefined to ''.
-   * console.log( aid.string.absentToEmpty('javascript') ); // if parameter is exist, return parameter.
+   * console.log( aid.string.absentToEmpty('javascript') ); // if parameter exists, return parameter.
    */
   string.absentToEmpty = function absentToEmpty(absentableStr) {
     if (!aid.existy(absentableStr) || !aid.isString(absentableStr)) return '';

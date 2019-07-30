@@ -2856,8 +2856,8 @@ describe('aid.js', function() {
     describe('.createStack()', function() {
       var stack = aid.createStack();
 
-      it('created Stack is exist', function() {
-        expect(stack).not.toBe(null);
+      it('created Stack exists', function() {
+        expect(stack).not.toBeUndefined();
       });
 
       it('new stack.length() is 0', function() {
@@ -2913,9 +2913,9 @@ describe('aid.js', function() {
     });
 
     describe('.createLinkedList()', function() {
-      it('created LinkedList is exist', function() {
+      it('created LinkedList exists', function() {
         var linkedList = aid.createLinkedList();
-        expect(linkedList).not.toBe(null);
+        expect(linkedList).not.toBeUndefined();
       });
 
       describe('.getHead()', function() {
@@ -3119,9 +3119,9 @@ describe('aid.js', function() {
         return hash % 37;
       };
 
-      it('created HashTable is exist', function() {
+      it('created HashTable exists', function() {
         var hashTable = aid.createHashTable();
-        expect(hashTable).not.toBe(null);
+        expect(hashTable).not.toBeUndefined();
       });
 
       it('can use internal hash function', function() {
@@ -3142,7 +3142,7 @@ describe('aid.js', function() {
         var linkedList = hashTable.table[hash];
 
         it('create LinkedList in HashTable', function() {
-          expect(linkedList).not.toBe(undefined);
+          expect(linkedList).not.toBeUndefined();
           expect(linkedList.getAllNodes().length - 1).toBe(1);
         });
 
@@ -3210,7 +3210,7 @@ describe('aid.js', function() {
           expect(linkedList.getAllNodes().length - 1).toBe(2);
           expect(hashTable.remove('aid')).toBe(true);
           expect(linkedList.getAllNodes().length - 1).toBe(1);
-          expect(hashTable.table[hash]).not.toBe(undefined);
+          expect(hashTable.table[hash]).not.toBeUndefined();
           expect(hashTable.remove('adi')).toBe(true);
           expect(linkedList.getAllNodes().length - 1).toBe(0);
           expect(hashTable.table[hash]).toBe(undefined);
@@ -3222,7 +3222,7 @@ describe('aid.js', function() {
           expect(linkedList.getAllNodes().length - 1).toBe(2);
           expect(hashTable.remove('adi')).toBe(true);
           expect(linkedList.getAllNodes().length - 1).toBe(1);
-          expect(hashTable.table[hash]).not.toBe(undefined);
+          expect(hashTable.table[hash]).not.toBeUndefined();
           expect(hashTable.remove('aid')).toBe(true);
           expect(linkedList.getAllNodes().length - 1).toBe(0);
           expect(hashTable.table[hash]).toBe(undefined);
@@ -3234,11 +3234,11 @@ describe('aid.js', function() {
           linkedList = hashTable.table[hash];
           expect(hashTable.remove('adi')).toBe(true);
           expect(linkedList.getAllNodes().length - 1).toBe(2);
-          expect(hashTable.table[hash]).not.toBe(undefined);
+          expect(hashTable.table[hash]).not.toBeUndefined();
 
           expect(hashTable.remove('iad')).toBe(true);
           expect(linkedList.getAllNodes().length - 1).toBe(1);
-          expect(hashTable.table[hash]).not.toBe(undefined);
+          expect(hashTable.table[hash]).not.toBeUndefined();
           expect(hashTable.remove('aid')).toBe(true);
           expect(linkedList.getAllNodes().length - 1).toBe(0);
           expect(hashTable.table[hash]).toBe(undefined);
@@ -3247,7 +3247,140 @@ describe('aid.js', function() {
     });
 
     describe('.createSet()', function() {
-      // TODO:
+      var set = aid.createSet();
+
+      beforeEach(function() {
+        set.clear();
+      });
+
+      it('created Set exists', function() {
+        expect(set).not.toBeUndefined();
+      });
+
+      describe('.size()', function() {
+        it('return 0, when Set has not values', function() {
+          expect(set.size()).toBe(0);
+        });
+
+        it('return number of values, when Set has values', function() {
+          set.add(1);
+          set.add(99);
+          expect(set.size()).toBe(2);
+
+          set.remove(1);
+          set.remove(99);
+          expect(set.size()).toBe(0);
+        });
+      });
+
+      describe('.add()', function() {
+        it('return true, when add value', function() {
+          expect(set.add(1)).toBe(true);
+          expect(set.add('aid')).toBe(true);
+        });
+
+        it('return false, when cannot add value', function() {
+          expect(set.add(1)).toBe(true);
+          expect(set.add('aid')).toBe(true);
+          expect(set.add(1)).toBe(false);
+          expect(set.add('aid')).toBe(false);
+        });
+
+        it('add value are not overlapped', function() {
+          set.add(1);
+          set.add(99);
+          set.add('aid');
+          expect(set.size()).toBe(3);
+          expect(set.values()).toEqual([1, 99, 'aid']);
+
+          set.add(99);
+          set.add(99);
+          expect(set.size()).toBe(3);
+          expect(set.values()).toEqual([1, 99, 'aid']);
+        });
+      });
+
+      describe('.remove()', function() {
+        it('return true, when remove value', function() {
+          set.add('aid');
+          expect(set.remove('aid')).toBe(true);
+        });
+
+        it('return false, when cannot remove value', function() {
+          expect(set.remove('aid')).toBe(false);
+        });
+
+        it('remove value', function() {
+          set.remove('aid');
+          expect(set.size()).toBe(0);
+
+          set.add(1);
+          set.add(99);
+          expect(set.size()).toBe(2);
+
+          set.remove(99);
+          expect(set.size()).toBe(1);
+
+          set.remove('aid');
+          expect(set.size()).toBe(1);
+
+          set.remove(1);
+          expect(set.size()).toBe(0);
+        });
+      });
+
+      describe('.clear()', function() {
+        it('clear all values', function() {
+          set.clear();
+          expect(set.size()).toBe(0);
+
+          set.add(1);
+          set.add(99);
+          expect(set.size()).toBe(2);
+
+          set.clear();
+          expect(set.size()).toBe(0);
+        });
+      });
+
+      describe('.has()', function() {
+        it('return true, when Set has value', function() {
+          set.add(1);
+          set.add(99);
+          expect(set.has(1)).toBe(true);
+        });
+
+        it('return false, when Set has not value', function() {
+          expect(set.has('aid')).toBe(false);
+        });
+      });
+
+      describe('.values()', function() {
+        it('return values', function() {
+          expect(set.values()).toEqual([]);
+
+          set.add(1);
+          set.add(99);
+          set.add('aid');
+          expect(set.values()).toEqual([1, 99, 'aid']);
+        });
+      });
+
+      describe('.union()', function() {
+        // TODO:
+      });
+
+      describe('.intersection()', function() {
+        // TODO:
+      });
+
+      describe('.difference()', function() {
+        // TODO:
+      });
+
+      describe('.isSubset()', function() {
+        // TODO:
+      });
     });
 
     describe('.createDictionary()', function() {
@@ -3257,8 +3390,8 @@ describe('aid.js', function() {
         dictionary.clear();
       });
 
-      it('created Dictionary is exist', function() {
-        expect(dictionary).not.toBe(null);
+      it('created Dictionary exists', function() {
+        expect(dictionary).not.toBeUndefined();
       });
 
       describe('.has()', function() {
@@ -3375,8 +3508,8 @@ describe('aid.js', function() {
     describe('.createBinarySearchTree()', function() {
       var binarySearchTree = aid.createBinarySearchTree();
 
-      it('created binarySearchTree is exist', function() {
-        expect(binarySearchTree).not.toBe(null);
+      it('created binarySearchTree exists', function() {
+        expect(binarySearchTree).not.toBeUndefined();
       });
 
       describe('.getRoot()', function() {
@@ -3604,9 +3737,9 @@ describe('aid.js', function() {
     describe('.createGraph()', function() {
       var vertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
 
-      it('created graph is exist', function() {
+      it('created graph exists', function() {
         var graph = aid.createGraph();
-        expect(graph).not.toBe(null);
+        expect(graph).not.toBeUndefined();
       });
 
       describe('.addVertex()', function() {
