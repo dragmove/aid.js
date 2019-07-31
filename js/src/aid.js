@@ -1238,6 +1238,107 @@
     return new LinkedList();
   };
 
+  // Set
+  var _Set = function() {
+    this.store = [];
+  };
+
+  _Set.prototype.size = function set_size() {
+    return this.store.length;
+  };
+
+  _Set.prototype.add = function set_add(value) {
+    if (!this.has(value)) {
+      this.store.push(value);
+      return true;
+    }
+
+    return false;
+  };
+
+  _Set.prototype.remove = function set_remove(value) {
+    var pos = this.store.indexOf(value);
+    if (pos >= 0) {
+      this.store.splice(pos, 1);
+      return true;
+    }
+
+    return false;
+  };
+
+  _Set.prototype.clear = function set_clear() {
+    this.store = [];
+  };
+
+  _Set.prototype.has = function set_has(value) {
+    return this.store.indexOf(value) >= 0;
+  };
+
+  _Set.prototype.values = function set_values() {
+    return this.store;
+  };
+
+  // A ∪ B
+  _Set.prototype.union = function set_union(otherSet) {
+    var unionSet = new _Set();
+
+    this.values().forEach(function(val) {
+      unionSet.add(val);
+    });
+
+    otherSet.values().forEach(function(val) {
+      unionSet.add(val);
+    });
+
+    return unionSet;
+  };
+
+  // A ∩ B
+  _Set.prototype.intersection = function set_intersection(otherSet) {
+    var intersectionSet = new _Set();
+
+    this.values().forEach(function(val) {
+      if (otherSet.has(val)) intersectionSet.add(val);
+    });
+
+    return intersectionSet;
+  };
+
+  // A - B
+  _Set.prototype.difference = function set_difference(otherSet) {
+    var differenceSet = new _Set();
+
+    this.values().forEach(function(val) {
+      if (!otherSet.has(val)) differenceSet.add(val);
+    });
+
+    return differenceSet;
+  };
+
+  // A ⊆ B
+  _Set.prototype.isSubset = function set_subset(superset) {
+    if (this.size() > superset.size()) return false;
+
+    var isSupersetContainsSubset = this.values().every(function(val) {
+      return superset.has(val);
+    });
+
+    return isSupersetContainsSubset;
+  };
+
+  /**
+   * createSet
+   *
+   * @static
+   * @method createSet
+   * @returns {Set} return set instance
+   * @example
+   * var set = aid.createSet(); // use size, add, remove, clear, has, values, union, intersection, difference, isSubset methods
+   */
+  aid.createSet = function createSet() {
+    return new _Set();
+  };
+
   // HashTable
   var HashTable = function(hashFunc) {
     this.table = [];
@@ -3017,7 +3118,7 @@
    * @example
    * console.log( aid.string.absentToEmpty(null) ); // null to ''.
    * console.log( aid.string.absentToEmpty(undefined) ); // undefined to ''.
-   * console.log( aid.string.absentToEmpty('javascript') ); // if parameter is exist, return parameter.
+   * console.log( aid.string.absentToEmpty('javascript') ); // if parameter exists, return parameter.
    */
   string.absentToEmpty = function absentToEmpty(absentableStr) {
     if (!aid.existy(absentableStr) || !aid.isString(absentableStr)) return '';
@@ -4488,7 +4589,6 @@
    * console.log( aid.object.keys(obj) ); // ['name', 'job', 'works']
    */
   object.keys = function keys(obj) {
-    // var hasOwnProperty = Object.prototype.hasOwnProperty,
     var hasDontEnumBug = !{ toString: null }.propertyIsEnumerable('toString'),
       dontEnums = [
         'toString',
