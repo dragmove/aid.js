@@ -1333,7 +1333,7 @@
    * @method createSet
    * @returns {Set} return set instance
    * @example
-   * var set = aid.createSet();
+   * var set = aid.createSet(); // use size, add, remove, clear, has, values, union, intersection, difference, isSubset methods
    */
   aid.createSet = function createSet() {
     return new _Set();

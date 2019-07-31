@@ -3367,19 +3367,85 @@ describe('aid.js', function() {
       });
 
       describe('.union()', function() {
-        // TODO:
+        it('return union set', function() {
+          expect(set.union(aid.createSet()).values()).toEqual([]);
+
+          set.add(1);
+          set.add(99);
+
+          var otherSet = aid.createSet();
+          otherSet.add(1);
+          otherSet.add('aid');
+
+          expect(set.union(otherSet).values()).toEqual([1, 99, 'aid']);
+        });
       });
 
       describe('.intersection()', function() {
-        // TODO:
+        it('return intersection set', function() {
+          expect(set.intersection(aid.createSet()).values()).toEqual([]);
+
+          set.add(1);
+          set.add(99);
+
+          var otherSet = aid.createSet();
+          otherSet.add(1);
+          otherSet.add('aid');
+
+          expect(set.intersection(otherSet).values()).toEqual([1]);
+        });
       });
 
       describe('.difference()', function() {
-        // TODO:
+        it('return difference set', function() {
+          expect(set.difference(aid.createSet()).values()).toEqual([]);
+
+          set.add(1);
+          set.add(99);
+
+          var otherSet = aid.createSet();
+          otherSet.add(1);
+          otherSet.add('aid');
+
+          expect(set.difference(otherSet).values()).toEqual([99]);
+        });
       });
 
       describe('.isSubset()', function() {
-        // TODO:
+        it('return true, when set is equal to superset', function() {
+          expect(set.isSubset(aid.createSet())).toBe(true);
+
+          set.add(1);
+          set.add(99);
+          set.add('aid');
+
+          var superset = aid.createSet();
+          superset.add(1);
+          superset.add(99);
+          superset.add('aid');
+          expect(set.isSubset(superset)).toBe(true);
+        });
+
+        it('return true, when set is subset of superset', function() {
+          set.add(1);
+          set.add(99);
+
+          var superset = aid.createSet();
+          superset.add(1);
+          superset.add(99);
+          superset.add('aid');
+          expect(set.isSubset(superset)).toBe(true);
+        });
+
+        it('return true, when set is subset of superset', function() {
+          set.add(1);
+          set.add(99);
+
+          var superset = aid.createSet();
+          superset.add(1);
+          superset.add('aid');
+          expect(set.isSubset(superset)).toBe(false);
+        });
       });
     });
 

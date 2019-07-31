@@ -265,6 +265,7 @@ aid.monad.IO
 aid.createStack
 aid.createQueue
 aid.createLinkedList
+aid.createSet
 aid.createHashTable
 aid.createDictionary
 aid.createBinarySearchTree
