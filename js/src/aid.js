@@ -2041,6 +2041,21 @@
   };
 
   /**
+   * is electron
+   *
+   * @static
+   * @method isElectron
+   * @param {String} userAgent
+   * @returns {Boolean} return boolean
+   * @example
+   */
+  platform.isElectron = function isElectron(userAgent) {
+    if (/Electron/.test(userAgent)) return true;
+
+    return false;
+  };
+
+  /**
    * is IE browser
    *
    * @static

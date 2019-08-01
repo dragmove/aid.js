@@ -68,6 +68,11 @@ describe('aid.js', function() {
       // 'Mozilla/5.0 (Linux; Android 8.0.0; SAMSUNG SM-G950N Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/7.4 Chrome/59.0.3071.125 Mobile Safari/537.36', // Galaxy S8
       ANDROID_SAMSUNG_INTERNET_TABLET_UA = ''; // TODO: Check on device
 
+    var WINDOWS_ELECTRON_UA =
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) my-app/0.0.1 Chrome/73.0.3683.121 Electron/5.0.4 Safari/537.36',
+      // TODO:
+      MAC_ELECTRON_UA = '';
+
     describe('.isWindow()', function() {
       // Windows
       it('on Window Chrome browser, return true.', function() {
@@ -703,6 +708,118 @@ describe('aid.js', function() {
 
       it('on Samsung internet browser for Android phone device, return true.', function() {
         expect(platform.isAndroid(ANDROID_SAMSUNG_INTERNET_PHONE_UA)).toEqual(true);
+      });
+
+      it('on Samsung internet browser for Android tablet device, return false.', function() {
+        // TODO:
+      });
+    });
+
+    describe('.isElectron()', function() {
+      it('at window chrome browser, return false.', function() {
+        expect(platform.isElectron(CHROME_UA)).toEqual(false);
+      });
+      it('on Window Firefox browser, return false.', function() {
+        expect(platform.isElectron(FIREFOX_UA)).toEqual(false);
+      });
+      it('on Window Opera browser, return false.', function() {
+        expect(platform.isElectron(OPERA_UA)).toEqual(false);
+      });
+      it('on Window Safari browser, return false.', function() {
+        expect(platform.isElectron(SAFARI_UA)).toEqual(false);
+      });
+      it('on Window Edge browser, return false.', function() {
+        expect(platform.isElectron(EDGE_UA)).toEqual(false);
+      });
+      it('on Window Electron, return true.', function() {
+        expect(platform.isElectron(WINDOWS_ELECTRON_UA)).toEqual(true);
+      });
+
+      it('on Window IE7 browser, return false.', function() {
+        expect(platform.isElectron(IE7_UA)).toEqual(false);
+      });
+
+      it('on Window IE8 browser, return false.', function() {
+        expect(platform.isElectron(IE8_UA)).toEqual(false);
+      });
+      it('on Window IE8 browser compat view, return false.', function() {
+        expect(platform.isElectron(IE8_COMPAT_UA)).toEqual(false);
+      });
+
+      it('on Window IE9 browser, return false.', function() {
+        expect(platform.isElectron(IE9_UA)).toEqual(false);
+      });
+      it('on Window IE9 browser compat view, return false.', function() {
+        expect(platform.isElectron(IE9_COMPAT_UA)).toEqual(false);
+      });
+
+      it('on Window IE10 browser, return false.', function() {
+        expect(platform.isElectron(IE10_UA)).toEqual(false);
+      });
+      it('on Window IE10 browser compat view, return false.', function() {
+        expect(platform.isElectron(IE10_COMPAT_UA)).toEqual(false);
+      });
+
+      it('on Window IE11 browser, return false.', function() {
+        expect(platform.isElectron(IE11_UA)).toEqual(false);
+      });
+      it('on Window IE11 browser compat view 8 mode, return false.', function() {
+        expect(platform.isElectron(IE11_COMPAT_UA)).toEqual(false);
+      });
+
+      // Mac
+      it('on Mac Chrome browser, return false.', function() {
+        expect(platform.isElectron(MAC_CHROME_UA)).toEqual(false);
+      });
+      it('on Mac Firefox browser, return false.', function() {
+        expect(platform.isElectron(MAC_FIREFOX_UA)).toEqual(false);
+      });
+      it('on Mac Opera browser, return false.', function() {
+        expect(platform.isElectron(MAC_OPERA_UA)).toEqual(false);
+      });
+      it('on Mac Safari browser, return false.', function() {
+        expect(platform.isElectron(MAC_SAFARI_UA)).toEqual(false);
+      });
+      it('on Mac Electron, return true.', function() {
+        expect(platform.isElectron(MAC_ELECTRON_UA)).toEqual(true);
+      });
+
+      // iOS
+      it('on Chrome browser for iOS phone device, return false.', function() {
+        expect(platform.isElectron(IOS_CHROME_PHONE_UA)).toEqual(false);
+      });
+
+      it('on Chrome browser for iOS tablet device, return false.', function() {
+        expect(platform.isElectron(IOS_CHROME_TABLET_UA)).toEqual(false);
+      });
+
+      it('on Safari browser for iOS phone device, return false.', function() {
+        expect(platform.isElectron(IOS_SAFARI_PHONE_UA)).toEqual(false);
+      });
+
+      it('on Safari browser for iOS tablet device, return false.', function() {
+        expect(platform.isElectron(IOS_SAFARI_TABLET_UA)).toEqual(false);
+      });
+
+      // Android
+      it('on old Webview for Android device, return false.', function() {
+        expect(platform.isElectron(ANDROID_OLD_WEBVIEW_UA)).toEqual(false);
+      });
+
+      it('on Kitkat Webview for Android device, return false.', function() {
+        expect(platform.isElectron(ANDROID_KITKAT_WEBVIEW_UA)).toEqual(false);
+      });
+
+      it('on Chrome browser for Android phone device, return false.', function() {
+        expect(platform.isElectron(ANDROID_CHROME_PHONE_UA)).toEqual(false);
+      });
+
+      it('on Chrome browser for Android tablet device, return false.', function() {
+        expect(platform.isElectron(ANDROID_CHROME_TABLET_UA)).toEqual(false);
+      });
+
+      it('on Samsung internet browser for Android phone device, return false.', function() {
+        expect(platform.isElectron(ANDROID_SAMSUNG_INTERNET_PHONE_UA)).toEqual(false);
       });
 
       it('on Samsung internet browser for Android tablet device, return false.', function() {
