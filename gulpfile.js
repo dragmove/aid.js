@@ -12,19 +12,15 @@ var banner = `/*
  * ${pkg.homepage}
  *
  * The MIT License (MIT)
- * Copyright (c) 2016-2019 Hyun-Seok.Kim, dragmove@gmail.com
+ * Copyright (c) 2016-2020 Hyun-Seok.Kim, dragmove@gmail.com
  */
 `;
 
 gulp.task('lint', () => {
-  return gulp
-    .src('./js/src/aid.js')
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError());
+  return gulp.src('./js/src/aid.js').pipe(eslint()).pipe(eslint.format()).pipe(eslint.failAfterError());
 });
 
-gulp.task('minify', function() {
+gulp.task('minify', function () {
   return gulp
     .src('js/src/aid.js')
     .pipe(header(banner, { pkg: pkg }))
@@ -37,7 +33,7 @@ gulp.task('minify', function() {
     .pipe(gulp.dest('./'));
 });
 
-gulp.task('karma', function(done) {
+gulp.task('karma', function (done) {
   new Server(
     {
       configFile: __dirname + '/js/tests/karma.conf.js',

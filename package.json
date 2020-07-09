@@ -39,8 +39,8 @@
     "url": "https://github.com/dragmove/aid.js"
   },
   "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-plugin-jasmine": "^2.10.1",
+    "eslint": "^7.4.0",
+    "eslint-plugin-jasmine": "^4.1.1",
     "gulp": "^4.0.2",
     "gulp-eslint": "^5.0.0",
     "gulp-header": "^2.0.7",

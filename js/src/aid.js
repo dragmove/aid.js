@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   // Establish the global object, `window` (`self`) in the browser, `global`
@@ -295,9 +295,9 @@
    * @param {class} ParentClass - parent class function
    * @example
    */
-  aid.inherit = (function() {
+  aid.inherit = (function () {
     // use closure, protect gabarge collection.
-    var F = function() {};
+    var F = function () {};
 
     return function inherit(ChildClass, ParentClass) {
       F.prototype = ParentClass.prototype;
@@ -319,7 +319,7 @@
    * @example
    * aid.namespace('first.second.third'); // create first.second.third object
    */
-  aid.namespace = function(namespace, parent) {
+  aid.namespace = function (namespace, parent) {
     if (!aid.isString(namespace)) throw new TypeError('[aid.namespace] Type of namespace parameter must be String.');
 
     if (!(aid.isObject(parent) || !aid.isDefined(parent))) {
@@ -330,7 +330,7 @@
     if (namespace) {
       var parts = namespace.split('.');
 
-      parts.forEach(function(part) {
+      parts.forEach(function (part) {
         if (!ns[part]) ns[part] = {};
         ns = ns[part];
       });
@@ -358,7 +358,7 @@
     if (aid.isDefined(hasher) && !aid.isFunction(hasher))
       throw new TypeError('[aid.memoize] Type of hasher parameter must be undefined or null or Function.');
 
-    var memoized = function(_key) {
+    var memoized = function (_key) {
       var cache = memoized.cache;
 
       var key = hasher ? hasher.apply(null, _slice.call(arguments)) : _key;
@@ -400,7 +400,7 @@
     if (aid.isDefined(borrower[funcName]))
       throw new Error('[aid.borrow] borrower object parameter already has function with funcName parameter.');
 
-    borrower[funcName] = function() {
+    borrower[funcName] = function () {
       var args = _slice.call(arguments);
       return donor[funcName].apply(this, args);
     };
@@ -424,7 +424,7 @@
   aid.bind = function bind(func, context) {
     if (!aid.isFunction(func)) throw new TypeError('[aid.bind] Type of func parameter must be Function.');
 
-    return function() {
+    return function () {
       return func.apply(context, arguments);
     };
   };
@@ -446,7 +446,7 @@
       throw new TypeError('[aid.compose] Type of func_a, func_b parameters must be Function.');
     }
 
-    return function() {
+    return function () {
       return func_a(func_b.apply(null, arguments));
     };
   };
@@ -465,7 +465,7 @@
   aid.not = function not(func) {
     if (!aid.isFunction(func)) throw new TypeError('[aid.not] Type of func parameter must be Function.');
 
-    return function() {
+    return function () {
       return !func.apply(null, arguments);
     };
   };
@@ -565,7 +565,7 @@
   aid.allOf = function allOf(/*args*/) {
     var args = _slice.call(arguments);
 
-    return args.every(function(val) {
+    return args.every(function (val) {
       return val === true;
     });
   };
@@ -583,7 +583,7 @@
   aid.anyOf = function anyOf(/*args*/) {
     var args = _slice.call(arguments);
 
-    return args.some(function(val) {
+    return args.some(function (val) {
       return val === true;
     });
   };
@@ -601,7 +601,7 @@
    * console.log( aid.constant(obj)() === obj ); // true
    */
   aid.constant = function constant(obj) {
-    return function() {
+    return function () {
       return obj;
     };
   };
@@ -631,7 +631,7 @@
       throw new TypeError('[aid.plucker] Type of field parameter must be String or Number.');
     }
 
-    return function(obj) {
+    return function (obj) {
       if (!(aid.isObject(obj) || aid.isArray(obj) || aid.isString(obj))) {
         throw new TypeError('[aid.plucker] Type of obj parameter must be Object or Array or String.');
       }
@@ -656,7 +656,7 @@
 
     if (!aid.isArray(array)) throw new TypeError('[aid.best] Type of array parameter must be Array.');
 
-    return array.reduce(function(previousValue, currentValue) {
+    return array.reduce(function (previousValue, currentValue) {
       return conditionFunc(previousValue, currentValue) ? previousValue : currentValue;
     });
   };
@@ -703,7 +703,7 @@
   aid.curry = function curry(func) {
     if (!aid.isFunction(func)) throw new TypeError('[aid.curry] Type of func parameter must be Function.');
 
-    return function(arg) {
+    return function (arg) {
       return func(arg);
     };
   };
@@ -722,8 +722,8 @@
   aid.curry2 = function curry2(func) {
     if (!aid.isFunction(func)) throw new TypeError('[aid.curry2] Type of func parameter must be Function.');
 
-    return function(secondArg) {
-      return function(firstArg) {
+    return function (secondArg) {
+      return function (firstArg) {
         return func(firstArg, secondArg);
       };
     };
@@ -752,7 +752,7 @@
 
       return args.length >= arity
         ? func.apply(context, args)
-        : function() {
+        : function () {
             var rest = _slice.call(arguments);
             return curried.apply(context, args.concat(rest));
           };
@@ -774,7 +774,7 @@
   aid.reverseArgs = function reverseArgs(func) {
     if (!aid.isFunction(func)) throw new TypeError('[aid.reverseArgs] Type of func parameter must be Function.');
 
-    return function(/* args... */) {
+    return function (/* args... */) {
       var args = _slice.call(arguments);
 
       return func.apply(null, args.concat().reverse());
@@ -805,7 +805,7 @@
 
     var args = aid.rest(_slice.call(arguments));
 
-    return function(/* args... */) {
+    return function (/* args... */) {
       return func.apply(func, args.concat(_slice.call(arguments)));
     };
   };
@@ -827,7 +827,7 @@
 
     var args = aid.rest(_slice.call(arguments));
 
-    return function(/* args... */) {
+    return function (/* args... */) {
       return func.apply(null, _slice.call(arguments).concat(args));
     };
   };
@@ -873,13 +873,13 @@
 
     aid.each(
       restArgs,
-      function(value) {
+      function (value) {
         if (!aid.isFunction(value)) throw new TypeError('[aid.pipeline] Type of rest parameters must be Function.');
       },
       null
     );
 
-    return restArgs.reduce(function(prev, current) {
+    return restArgs.reduce(function (prev, current) {
       return current(prev);
     }, seed);
   };
@@ -904,10 +904,10 @@
     var calls = [];
 
     return {
-      invoke: function(methodName /*, args */) {
+      invoke: function (methodName /*, args */) {
         var args = aid.rest(_slice.call(arguments));
 
-        calls.push(function(target) {
+        calls.push(function (target) {
           var method = target[methodName];
 
           if (!aid.isDefined(method)) {
@@ -920,8 +920,8 @@
         return this;
       },
 
-      force: function() {
-        return calls.reduce(function(ret, thunk) {
+      force: function () {
+        return calls.reduce(function (ret, thunk) {
           return thunk(ret);
         }, obj);
       },
@@ -939,7 +939,7 @@
    * @example
    * console.log( aid.eq(99)(99) ); // true
    */
-  aid.eq = aid.curry2(function(lhs, rhs) {
+  aid.eq = aid.curry2(function (lhs, rhs) {
     return lhs === rhs;
   });
 
@@ -970,7 +970,7 @@
   aid.tab = function tab(func) {
     if (!aid.isFunction(func)) throw new TypeError('[aid.tab] Type of func parameter must be Function.');
 
-    return function(value) {
+    return function (value) {
       func(value);
 
       return value;
@@ -994,7 +994,7 @@
       throw new TypeError('[aid.alt] Type of func_a, func_b parameters must be Function.');
     }
 
-    return function(value) {
+    return function (value) {
       var result_a = func_a(value);
 
       // undefined, null, false
@@ -1018,12 +1018,12 @@
   aid.seq = function seq(/* functions */) {
     var funcs = _slice.call(arguments);
 
-    funcs.forEach(function(func) {
+    funcs.forEach(function (func) {
       if (!aid.isFunction(func)) throw new TypeError('[aid.seq] Requires function parameters.');
     });
 
-    return function(value) {
-      funcs.forEach(function(func) {
+    return function (value) {
+      funcs.forEach(function (func) {
         func.call(null, value);
       });
     };
@@ -1047,7 +1047,7 @@
       throw new TypeError('[aid.fork] Type of join, func_a, func_b parameters must be Function.');
     }
 
-    return function(value) {
+    return function (value) {
       return join.call(null, func_a.call(null, value), func_b.call(null, value));
     };
   };
@@ -1056,7 +1056,7 @@
    * Data Structure
    */
   // Stack
-  var Stack = function() {
+  var Stack = function () {
     this._dataStore = [];
     this._top = 0;
   };
@@ -1097,7 +1097,7 @@
   };
 
   // Queue
-  var Queue = function() {
+  var Queue = function () {
     this._dataStore = [];
   };
 
@@ -1140,13 +1140,13 @@
   };
 
   // LinkedList node
-  var LinkedListNode = function(data) {
+  var LinkedListNode = function (data) {
     this.data = data;
     this.next = null;
   };
 
   // LinkedList
-  var LinkedList = function() {
+  var LinkedList = function () {
     this.head = new LinkedListNode('LinkedListHead_' + Date.now());
   };
 
@@ -1239,7 +1239,7 @@
   };
 
   // Set
-  var _Set = function() {
+  var _Set = function () {
     this.store = [];
   };
 
@@ -1282,11 +1282,11 @@
   _Set.prototype.union = function set_union(otherSet) {
     var unionSet = new _Set();
 
-    this.values().forEach(function(val) {
+    this.values().forEach(function (val) {
       unionSet.add(val);
     });
 
-    otherSet.values().forEach(function(val) {
+    otherSet.values().forEach(function (val) {
       unionSet.add(val);
     });
 
@@ -1297,7 +1297,7 @@
   _Set.prototype.intersection = function set_intersection(otherSet) {
     var intersectionSet = new _Set();
 
-    this.values().forEach(function(val) {
+    this.values().forEach(function (val) {
       if (otherSet.has(val)) intersectionSet.add(val);
     });
 
@@ -1308,7 +1308,7 @@
   _Set.prototype.difference = function set_difference(otherSet) {
     var differenceSet = new _Set();
 
-    this.values().forEach(function(val) {
+    this.values().forEach(function (val) {
       if (!otherSet.has(val)) differenceSet.add(val);
     });
 
@@ -1319,7 +1319,7 @@
   _Set.prototype.isSubset = function set_subset(superset) {
     if (this.size() > superset.size()) return false;
 
-    var isSupersetContainsSubset = this.values().every(function(val) {
+    var isSupersetContainsSubset = this.values().every(function (val) {
       return superset.has(val);
     });
 
@@ -1340,7 +1340,7 @@
   };
 
   // HashTable
-  var HashTable = function(hashFunc) {
+  var HashTable = function (hashFunc) {
     this.table = [];
     this._hashFunc = aid.isFunction(hashFunc) ? hashFunc : this._djb2Hash;
   };
@@ -1427,19 +1427,19 @@
     this.items = {};
   }
 
-  Dictionary.prototype.has = function(key) {
+  Dictionary.prototype.has = function (key) {
     return _hasOwnProperty.call(this.items, key);
   };
 
-  Dictionary.prototype.get = function(key) {
+  Dictionary.prototype.get = function (key) {
     return this.has(key) ? this.items[key] : undefined;
   };
 
-  Dictionary.prototype.set = function(key, value) {
+  Dictionary.prototype.set = function (key, value) {
     this.items[key] = value;
   };
 
-  Dictionary.prototype.remove = function(key) {
+  Dictionary.prototype.remove = function (key) {
     if (this.has(key)) {
       delete this.items[key];
       return true;
@@ -1448,15 +1448,15 @@
     return false;
   };
 
-  Dictionary.prototype.clear = function() {
+  Dictionary.prototype.clear = function () {
     this.items = {};
   };
 
-  Dictionary.prototype.keys = function() {
+  Dictionary.prototype.keys = function () {
     return Object.keys(this.items);
   };
 
-  Dictionary.prototype.values = function() {
+  Dictionary.prototype.values = function () {
     var values = [];
 
     for (var key in this.items) {
@@ -1466,11 +1466,11 @@
     return values;
   };
 
-  Dictionary.prototype.size = function() {
+  Dictionary.prototype.size = function () {
     return Object.keys(this.items).length;
   };
 
-  Dictionary.prototype.getItems = function() {
+  Dictionary.prototype.getItems = function () {
     return this.items;
   };
 
@@ -1488,18 +1488,18 @@
   };
 
   // BinarySearchTree node
-  var BinarySearchTreeNode = function(data) {
+  var BinarySearchTreeNode = function (data) {
     this.data = data;
     this.left = null;
     this.right = null;
   };
 
   // BinarySearchTree node
-  var BinarySearchTree = function() {
+  var BinarySearchTree = function () {
     this.root = null;
   };
 
-  BinarySearchTree.prototype._insertNode = function(node, newNode) {
+  BinarySearchTree.prototype._insertNode = function (node, newNode) {
     if (!aid.isDefined(node) || !aid.isDefined(newNode))
       throw new TypeError('[BinarySearchTree.prototype._insertNode] node and newNode parameters must be defined.');
 
@@ -1513,7 +1513,7 @@
     }
   };
 
-  BinarySearchTree.prototype._searchNode = function(node, data) {
+  BinarySearchTree.prototype._searchNode = function (node, data) {
     if (!aid.isDefined(node)) return false;
 
     if (!aid.isDefined(data))
@@ -1528,7 +1528,7 @@
     }
   };
 
-  BinarySearchTree.prototype._findMinNode = function(node) {
+  BinarySearchTree.prototype._findMinNode = function (node) {
     if (!aid.isDefined(node)) return null;
 
     while (node && aid.isDefined(node.left)) {
@@ -1538,7 +1538,7 @@
     return node;
   };
 
-  BinarySearchTree.prototype._removeNode = function(node, data) {
+  BinarySearchTree.prototype._removeNode = function (node, data) {
     if (!aid.isDefined(data))
       throw new TypeError('[BinarySearchTree.prototype._removeNode] data parameters must be defined.');
 
@@ -1574,7 +1574,7 @@
     }
   };
 
-  BinarySearchTree.prototype._minNode = function(node) {
+  BinarySearchTree.prototype._minNode = function (node) {
     if (!aid.isDefined(node)) return null;
 
     while (node && aid.isDefined(node.left)) node = node.left;
@@ -1582,7 +1582,7 @@
     return node.data;
   };
 
-  BinarySearchTree.prototype._maxNode = function(node) {
+  BinarySearchTree.prototype._maxNode = function (node) {
     if (!aid.isDefined(node)) return null;
 
     while (node && aid.isDefined(node.right)) node = node.right;
@@ -1590,7 +1590,7 @@
     return node.data;
   };
 
-  BinarySearchTree.prototype._inOrderTraverseNode = function(node, callback) {
+  BinarySearchTree.prototype._inOrderTraverseNode = function (node, callback) {
     if (!aid.isFunction(callback))
       throw new TypeError(
         '[BinarySearchTree.prototype._inOrderTraverseNode] Type of callback parameter must be Function.'
@@ -1604,7 +1604,7 @@
     }
   };
 
-  BinarySearchTree.prototype._preOrderTraverseNode = function(node, callback) {
+  BinarySearchTree.prototype._preOrderTraverseNode = function (node, callback) {
     if (!aid.isFunction(callback))
       throw new TypeError(
         '[BinarySearchTree.prototype._preOrderTraverseNode] Type of callback parameter must be Function.'
@@ -1618,7 +1618,7 @@
     }
   };
 
-  BinarySearchTree.prototype._postOrderTraverseNode = function(node, callback) {
+  BinarySearchTree.prototype._postOrderTraverseNode = function (node, callback) {
     if (!aid.isFunction(callback))
       throw new TypeError(
         '[BinarySearchTree.prototype._postOrderTraverseNode] Type of callback parameter must be Function.'
@@ -1713,7 +1713,7 @@
     this.adjacencyList = aid.createDictionary();
   }
 
-  Graph.prototype.addVertex = function(vertex) {
+  Graph.prototype.addVertex = function (vertex) {
     if (array.indexOf(this.vertices, vertex) >= 0)
       throw new Error('[Graph.prototype.addVertex] this.vertices already has the same vertex.');
 
@@ -1721,7 +1721,7 @@
     this.adjacencyList.set(vertex, []);
   };
 
-  Graph.prototype.addEdge = function(fromVertex, toVertex) {
+  Graph.prototype.addEdge = function (fromVertex, toVertex) {
     if (array.indexOf(this.vertices, fromVertex) < 0)
       throw new Error('[Graph.prototype.addEdge] this.vertices has not fromVertex.');
 
@@ -1732,7 +1732,7 @@
     this.adjacencyList.get(toVertex).push(fromVertex);
   };
 
-  Graph.prototype.bfs = function(fromVertex, callback) {
+  Graph.prototype.bfs = function (fromVertex, callback) {
     // breadth-first serach
     if (array.indexOf(this.vertices, fromVertex) < 0)
       throw new Error('[Graph.prototype.bfs] this.vertices has not fromVertex.');
@@ -1753,7 +1753,7 @@
       predecessors = {},
       queue = new aid.createQueue();
 
-    this.vertices.forEach(function(v) {
+    this.vertices.forEach(function (v) {
       colors[v] = 'white';
       distances[v] = 0;
       predecessors[v] = null;
@@ -1767,7 +1767,7 @@
 
       colors[v] = 'grey';
 
-      neighborVertices.forEach(function(nv) {
+      neighborVertices.forEach(function (nv) {
         if (colors[nv] === 'white') {
           colors[nv] = 'grey';
           distances[nv] = distances[v] + 1;
@@ -1788,7 +1788,7 @@
     };
   };
 
-  Graph.prototype.getBfsPaths = function(fromVertex) {
+  Graph.prototype.getBfsPaths = function (fromVertex) {
     var neighbors = this.adjacencyList.get(fromVertex);
     if (!neighbors || neighbors.length <= 0)
       throw new Error('[Graph.prototype.getBfsPaths] fromVertex is not connected to any vertices.');
@@ -1797,11 +1797,11 @@
 
     var datasFromBfs = this.bfs(fromVertex);
 
-    var toVertices = this.vertices.filter(function(v) {
+    var toVertices = this.vertices.filter(function (v) {
       return v !== fromVertex;
     });
 
-    toVertices.forEach(function(toVertex) {
+    toVertices.forEach(function (toVertex) {
       var searchPath = aid.createStack();
 
       for (var v = toVertex; v !== fromVertex; v = datasFromBfs.predecessors[v]) {
@@ -1825,7 +1825,7 @@
     return bfsPaths;
   };
 
-  Graph.prototype.dfs = function(fromVertex, callback) {
+  Graph.prototype.dfs = function (fromVertex, callback) {
     // depth-first serach
     if (array.indexOf(this.vertices, fromVertex) < 0)
       throw new Error('[Graph.prototype.dfs] this.vertices has not fromVertex.');
@@ -1841,7 +1841,7 @@
       predecessors: {},
     };
 
-    this.vertices.forEach(function(v) {
+    this.vertices.forEach(function (v) {
       // colors has 3 types of vertex color
       // 'white' : vertex is not visited
       // 'grey' : vertex is visited but hasn't been explored
@@ -1858,7 +1858,7 @@
     return datas;
   };
 
-  Graph.prototype._dfsVisit = function(vertex, datas, callback) {
+  Graph.prototype._dfsVisit = function (vertex, datas, callback) {
     var _ = this,
       colors = datas.colors,
       discovered = datas.discovered,
@@ -1871,7 +1871,7 @@
     if (callback) callback.call(null, vertex);
 
     var neighborVertices = this.adjacencyList.get(vertex);
-    neighborVertices.forEach(function(nv) {
+    neighborVertices.forEach(function (nv) {
       if (colors[nv] === 'white') {
         predecessors[nv] = vertex;
 
@@ -1947,7 +1947,7 @@
    * var isNotNaN = aid.compose(aid.operator['!'], isNaN);
    * console.log( isNotNaN(0) ); // true
    */
-  operator['!'] = function(obj) {
+  operator['!'] = function (obj) {
     return !obj;
   };
 
@@ -3582,6 +3582,33 @@
   };
 
   /**
+   * get flag whether number is prime or not
+   *
+   * @static
+   * @method isPrime
+   * @param {Number} Int number
+   * @returns {Boolean} return boolean
+   * @example
+   * console.log( aid.math.isPrime(1) ); // false
+   * console.log( aid.math.isPrime(2) ); // true
+   */
+  math.isPrime = function isPrime(number) {
+    if (!aid.isInteger(number)) throw new TypeError('[aid.math.isPrime] Type of parameters must be Integer Number.');
+
+    var sqrtNum = Math.floor(Math.sqrt(number));
+    var _isPrime = number !== 1;
+
+    for (var i = 2; i <= sqrtNum; i++) {
+      if (number % i === 0) {
+        _isPrime = false;
+        break;
+      }
+    }
+
+    return _isPrime;
+  };
+
+  /**
    * get board pagination info object
    *
    * @static
@@ -3890,7 +3917,7 @@
    * @example
    * console.log( aid.math.gt(1)(9) ); // true
    */
-  math.gt = aid.curry2(function(lhs, rhs) {
+  math.gt = aid.curry2(function (lhs, rhs) {
     if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs)))
       throw new TypeError('[aid.math.gt] Type of parameters must be Number.');
 
@@ -3908,7 +3935,7 @@
    * @example
    * console.log( aid.math.lt(9)(1) ); // true
    */
-  math.lt = aid.curry2(function(lhs, rhs) {
+  math.lt = aid.curry2(function (lhs, rhs) {
     if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs)))
       throw new TypeError('[aid.math.lt] Type of parameters must be Number.');
 
@@ -3927,7 +3954,7 @@
    * console.log( aid.math.gte(1)(1) ); // true
    * console.log( aid.math.gte(1)(9) ); // true
    */
-  math.gte = aid.curry2(function(lhs, rhs) {
+  math.gte = aid.curry2(function (lhs, rhs) {
     if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs)))
       throw new TypeError('[aid.math.gte] Type of parameters must be Number.');
 
@@ -3946,7 +3973,7 @@
    * console.log( aid.math.lte(1)(1) ); // true
    * console.log( aid.math.lte(9)(1) ); // true
    */
-  math.lte = aid.curry2(function(lhs, rhs) {
+  math.lte = aid.curry2(function (lhs, rhs) {
     if (!aid.allOf(aid.isNumber(lhs), aid.isNumber(rhs)))
       throw new TypeError('[aid.math.lte] Type of parameters must be Number.');
 
@@ -4564,7 +4591,7 @@
         memoArr[j] = array.overlappedConditionSortByProperty(arr, sortConditions, nextConditionIndex);
       }
 
-      return memoArr.reduce(function(acc, curVal) {
+      return memoArr.reduce(function (acc, curVal) {
         return acc.concat(curVal);
       });
     }
@@ -4774,7 +4801,7 @@
       if (typeof script.onreadystatechange === 'undefined') {
         script.onload = loadCompleteCallback;
       } else {
-        script.onreadystatechange = function() {
+        script.onreadystatechange = function () {
           if (script.readyState === 'loaded' || script.readyState === 'complete') {
             script.onreadystatechange = null;
             loadCompleteCallback();
@@ -4855,10 +4882,10 @@
     } else {
       // https://developer.mozilla.org/en-US/docs/Web/API/Clipboard
       navigator.clipboard.writeText(str).then(
-        function() {
+        function () {
           if (successCallback) successCallback.call(null, str);
         },
-        function(error) {
+        function (error) {
           if (errorCallback) errorCallback.call(null, error);
         }
       );
@@ -4874,15 +4901,15 @@
    * @example
    * TODO:
    */
-  var Identity = function(value) {
+  var Identity = function (value) {
     this._value = value;
   };
 
-  Identity.prototype.bind = function(func) {
+  Identity.prototype.bind = function (func) {
     return func(this._value);
   };
 
-  Identity.prototype.toString = function() {
+  Identity.prototype.toString = function () {
     return 'Identity (' + this._value + ')';
   };
 
@@ -4895,17 +4922,17 @@
    * @example
    * TODO:
    */
-  var Empty = function() {};
+  var Empty = function () {};
 
-  Empty.prototype.map = function(/*func*/) {
+  Empty.prototype.map = function (/*func*/) {
     return this;
   };
 
-  Empty.prototype.flatmap = function(/*_*/) {
+  Empty.prototype.flatmap = function (/*_*/) {
     return new Empty();
   };
 
-  Empty.prototype.toString = function() {
+  Empty.prototype.toString = function () {
     return 'Empty ()';
   };
 
@@ -4919,29 +4946,29 @@
    * @example
    * TODO:
    */
-  var Wrapper = function(value) {
+  var Wrapper = function (value) {
     this._value = value;
   };
 
-  Wrapper.of = function(value) {
+  Wrapper.of = function (value) {
     return new Wrapper(value);
   };
 
-  Wrapper.prototype.map = function(func) {
+  Wrapper.prototype.map = function (func) {
     return Wrapper.of(func(this._value));
   };
 
-  Wrapper.prototype.join = function() {
+  Wrapper.prototype.join = function () {
     if (!(this._value instanceof Wrapper)) return this;
 
     return this._value.join();
   };
 
-  Wrapper.prototype.get = function() {
+  Wrapper.prototype.get = function () {
     return this._value;
   };
 
-  Wrapper.prototype.toString = function() {
+  Wrapper.prototype.toString = function () {
     return 'Wrapper (' + this._value + ')';
   };
 
@@ -4954,29 +4981,29 @@
    * @example
    * TODO:
    */
-  var Nothing = function() {};
+  var Nothing = function () {};
 
-  Nothing.prototype.value = function(/*value*/) {
+  Nothing.prototype.value = function (/*value*/) {
     throw new TypeError('[aid.monad.Nothing] Cannot extract the value.');
   };
 
-  Nothing.prototype.map = function(/*func*/) {
+  Nothing.prototype.map = function (/*func*/) {
     return this;
   };
 
-  Nothing.prototype.getOrElse = function(other) {
+  Nothing.prototype.getOrElse = function (other) {
     return other;
   };
 
-  Nothing.prototype.filter = function(/*func*/) {
+  Nothing.prototype.filter = function (/*func*/) {
     return this._value;
   };
 
-  Nothing.prototype.chain = function(/*func*/) {
+  Nothing.prototype.chain = function (/*func*/) {
     return this;
   };
 
-  Nothing.prototype.toString = function() {
+  Nothing.prototype.toString = function () {
     return 'Maybe.Nothing';
   };
 
@@ -4990,31 +5017,31 @@
    * @example
    * TODO:
    */
-  var Just = function(value) {
+  var Just = function (value) {
     this._value = value;
   };
 
-  Just.prototype.value = function(/*value*/) {
+  Just.prototype.value = function (/*value*/) {
     throw this._value;
   };
 
-  Just.prototype.map = function(func) {
+  Just.prototype.map = function (func) {
     return Maybe.fromNullable(func(this._value));
   };
 
-  Just.prototype.getOrElse = function() {
+  Just.prototype.getOrElse = function () {
     return this._value;
   };
 
-  Just.prototype.filter = function(func) {
+  Just.prototype.filter = function (func) {
     Maybe.fromNullable(func(this._value) ? this._value : null);
   };
 
-  Just.prototype.chain = function(func) {
+  Just.prototype.chain = function (func) {
     return func(this._value);
   };
 
-  Just.prototype.toString = function() {
+  Just.prototype.toString = function () {
     return 'Maybe.Just (' + this._value + ')';
   };
 
@@ -5031,21 +5058,21 @@
    * var safeName = safeUriParams(uri).map(function(params) { return params.name; });
    * var name = safeName.getOrElse('no parameter'); // 'no parameter'
    */
-  var Maybe = function() {};
+  var Maybe = function () {};
 
-  Maybe.just = function(value) {
+  Maybe.just = function (value) {
     return new Just(value);
   };
 
-  Maybe.nothing = function() {
+  Maybe.nothing = function () {
     return new Nothing();
   };
 
-  Maybe.of = function(value) {
+  Maybe.of = function (value) {
     return Maybe.just(value);
   };
 
-  Maybe.fromNullable = function(value) {
+  Maybe.fromNullable = function (value) {
     return aid.isDefined(value) ? Maybe.just(value) : Maybe.nothing();
   };
 
@@ -5059,39 +5086,39 @@
    * @example
    * TODO:
    */
-  var Left = function(value) {
+  var Left = function (value) {
     this._value = value;
   };
 
-  Left.prototype.map = function(/*_*/) {
+  Left.prototype.map = function (/*_*/) {
     return this;
   };
 
-  Left.prototype.value = function() {
+  Left.prototype.value = function () {
     throw new TypeError('[aid.monad.Left] Cannot extract the value.');
   };
 
-  Left.prototype.getOrElse = function(other) {
+  Left.prototype.getOrElse = function (other) {
     return other;
   };
 
-  Left.prototype.orElse = function(func) {
+  Left.prototype.orElse = function (func) {
     return func(this._value);
   };
 
-  Left.prototype.chain = function(/*func*/) {
+  Left.prototype.chain = function (/*func*/) {
     return this;
   };
 
-  Left.prototype.getOrElseThrow = function(errorMessage) {
+  Left.prototype.getOrElseThrow = function (errorMessage) {
     throw new Error(errorMessage);
   };
 
-  Left.prototype.filter = function(/*func*/) {
+  Left.prototype.filter = function (/*func*/) {
     return this;
   };
 
-  Left.prototype.toString = function() {
+  Left.prototype.toString = function () {
     return 'Either.Left (' + this._value + ')';
   };
 
@@ -5105,35 +5132,35 @@
    * @example
    * TODO:
    */
-  var Right = function(value) {
+  var Right = function (value) {
     this._value = value;
   };
 
-  Right.prototype.map = function(func) {
+  Right.prototype.map = function (func) {
     return Either.of(func(this._value));
   };
 
-  Right.prototype.getOrElse = function(/*other*/) {
+  Right.prototype.getOrElse = function (/*other*/) {
     return this._value;
   };
 
-  Right.prototype.orElse = function() {
+  Right.prototype.orElse = function () {
     return this;
   };
 
-  Right.prototype.chain = function(func) {
+  Right.prototype.chain = function (func) {
     return func(this._value);
   };
 
-  Right.prototype.getOrElseThrow = function(/*_*/) {
+  Right.prototype.getOrElseThrow = function (/*_*/) {
     return this._value;
   };
 
-  Right.prototype.filter = function(func) {
+  Right.prototype.filter = function (func) {
     return Either.fromNullable(func(this._value) ? this._value : null);
   };
 
-  Right.prototype.toString = function() {
+  Right.prototype.toString = function () {
     return 'Either.Right (' + this._value + ')';
   };
 
@@ -5174,27 +5201,27 @@
    * console.log(splitDecodedStrUseMonad(' % '));
    * console.log(splitDecodedStrUseMonad(' https%3A%2F%2Fgithub.com%2F '));
    */
-  var Either = function(value) {
+  var Either = function (value) {
     this._value = value;
   };
 
-  Either.left = function(value) {
+  Either.left = function (value) {
     return new monad.Left(value);
   };
 
-  Either.right = function(value) {
+  Either.right = function (value) {
     return new monad.Right(value);
   };
 
-  Either.fromNullable = function(value) {
+  Either.fromNullable = function (value) {
     return aid.isDefined(value) ? Either.right(value) : Either.left(value);
   };
 
-  Either.of = function(value) {
+  Either.of = function (value) {
     return Either.right(value);
   };
 
-  Either.prototype.value = function() {
+  Either.prototype.value = function () {
     return this._value;
   };
 
@@ -5224,35 +5251,35 @@
    * var readAndWriteUppercase = IO.from(readDOM('#dummy')).map(uppercase).map(writeDOM('#dummy'));
    * readAndWriteUppercase.run();
    */
-  var IO = function(effect) {
+  var IO = function (effect) {
     if (!aid.isFunction(effect)) throw new TypeError('[aid.monad.IO] Type of effect parameter must be Function.');
 
     this.effect = effect;
   };
 
-  IO.of = function(value) {
-    return new IO(function() {
+  IO.of = function (value) {
+    return new IO(function () {
       return value;
     });
   };
 
-  IO.from = function(func) {
+  IO.from = function (func) {
     return new IO(func);
   };
 
-  IO.prototype.map = function(func) {
+  IO.prototype.map = function (func) {
     var self = this;
 
-    return new IO(function() {
+    return new IO(function () {
       return func(self.effect());
     });
   };
 
-  IO.prototype.chain = function(func) {
+  IO.prototype.chain = function (func) {
     return func(this.effect());
   };
 
-  IO.prototype.run = function() {
+  IO.prototype.run = function () {
     return this.effect();
   };
 
@@ -5279,7 +5306,7 @@
       exports = module.exports = aid;
     }
   } else if (typeof define === 'function' && define.amd) {
-    define('aid', [], function() {
+    define('aid', [], function () {
       return aid;
     });
   } else {
