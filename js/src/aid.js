@@ -4118,14 +4118,36 @@
    */
   array.swap = function swap(arr, firstIndex, secondIndex) {
     if (arguments.length !== 3) return null;
-
     if (!aid.isArray(arr) || !aid.isInteger(firstIndex) || !aid.isInteger(secondIndex)) return null;
-
     if (firstIndex < 0 || firstIndex >= arr.length || secondIndex < 0 || secondIndex >= arr.length) return null;
+
+    if (firstIndex === secondIndex) return arr;
 
     var tmp = arr[firstIndex];
     arr[firstIndex] = arr[secondIndex];
     arr[secondIndex] = tmp;
+
+    return arr;
+  };
+
+  /**
+   * apply bubble sort in Array
+   *
+   * @static
+   * @method bubbleSort
+   * @param {Array} arr
+   * @returns {Array} return array or null
+   * @example
+   */
+  array.bubbleSort = function bubbleSort(arr) {
+    if (!aid.isArray(arr) || arr.length <= 0) return null;
+
+    var max = arr.length;
+    for (var i = max; i >= 2; i--) {
+      for (var j = 0; j <= i - 1; j++) {
+        if (arr[j] > arr[j + 1]) array.swap(arr, j, j + 1);
+      }
+    }
 
     return arr;
   };
